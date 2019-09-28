@@ -5,7 +5,7 @@
 ### Group
 
  Hexanome-14
- java
+ java or C#
 
 ### Team Members
 
@@ -62,10 +62,9 @@ Max Boksem
 
 
 Tingyu Shen
-    
-    
-    
-    
+    Generally write sketch for our Use Cases
+    Communicate with team members to discuss Our Deisgn
+    Reread lecture notes
     
     
     
@@ -89,11 +88,9 @@ Tingyu Shen
  
 ### 3 most critical bugs in current functionality (optional)
 
-
----ANYONE CAN FILL THESE OUT 
- * *when monsters advance, they do do not skip fields of the target field is already occupied by a monster.*
- * *game crashes when farmers are hit by monsters*
- * *game issues only green runestones*
+ * * No bug*
+ * * No bug*
+ * * No bug*
 
 ### Contribution statement
 
@@ -137,9 +134,10 @@ Max Boksem
 
 
 Tingyu Shen
-    
-  
-    
+    Came to every meeting and helped with design and layout
+    Wrote several parts of Text Explanation
+    Draw the finalized flow chart
+    Contributed roughly 25% of the work
 
 ### Team mood
 
