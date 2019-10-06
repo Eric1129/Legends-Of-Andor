@@ -1,1 +1,1 @@
-Legend of Andor
+Legendsof Andor
