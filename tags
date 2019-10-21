@@ -1,0 +1,55 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
+2019-09-30	reports/2019-09-30.md	/^# 2019-09-30$/;"	c
+2019-10-07	reports/2019-10-07.md	/^# 2019-10-07$/;"	c
+2019-10-14	reports/2019-10-14.md	/^# 2019-10-14$/;"	c
+2019-10-21	reports/2019-10-21.md	/^# 2019-10-21$/;"	c
+3 most critical bugs in current functionality (optional)	reports/2019-09-30.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
+3 most critical bugs in current functionality (optional)	reports/2019-10-07.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
+3 most critical bugs in current functionality (optional)	reports/2019-10-14.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
+3 most critical bugs in current functionality (optional)	reports/2019-10-21.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
+3 most outstanding tasks scheduled until the next report, per team member	reports/2019-09-30.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
+3 most outstanding tasks scheduled until the next report, per team member	reports/2019-10-07.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
+3 most outstanding tasks scheduled until the next report, per team member	reports/2019-10-14.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
+3 most outstanding tasks scheduled until the next report, per team member	reports/2019-10-21.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
+Contribution statement	reports/2019-09-30.md	/^### Contribution statement$/;"	S
+Contribution statement	reports/2019-10-07.md	/^### Contribution statement$/;"	S
+Contribution statement	reports/2019-10-14.md	/^### Contribution statement$/;"	S
+Contribution statement	reports/2019-10-21.md	/^### Contribution statement$/;"	S
+Group	reports/2019-09-30.md	/^### Group$/;"	S
+Group	reports/2019-10-07.md	/^### Group$/;"	S
+Group	reports/2019-10-14.md	/^### Group$/;"	S
+Group	reports/2019-10-21.md	/^### Group$/;"	S
+Meta Information	reports/2019-09-30.md	/^## Meta Information$/;"	s
+Meta Information	reports/2019-10-07.md	/^## Meta Information$/;"	s
+Meta Information	reports/2019-10-14.md	/^## Meta Information$/;"	s
+Meta Information	reports/2019-10-21.md	/^## Meta Information$/;"	s
+Status	reports/2019-09-30.md	/^## Status$/;"	s
+Status	reports/2019-10-07.md	/^## Status$/;"	s
+Status	reports/2019-10-14.md	/^## Status$/;"	s
+Status	reports/2019-10-21.md	/^## Status$/;"	s
+Tasks missed, scheduled for this report	reports/2019-09-30.md	/^### Tasks missed, scheduled for this report$/;"	S
+Tasks missed, scheduled for this report	reports/2019-10-07.md	/^### Tasks missed, scheduled for this report$/;"	S
+Tasks missed, scheduled for this report	reports/2019-10-14.md	/^### Tasks missed, scheduled for this report$/;"	S
+Tasks missed, scheduled for this report	reports/2019-10-21.md	/^### Tasks missed, scheduled for this report$/;"	S
+Team Members	reports/2019-09-30.md	/^### Team Members$/;"	S
+Team Members	reports/2019-10-07.md	/^### Team Members$/;"	S
+Team Members	reports/2019-10-14.md	/^### Team Members$/;"	S
+Team Members	reports/2019-10-21.md	/^### Team Members$/;"	S
+Team mood	reports/2019-09-30.md	/^### Team mood$/;"	S
+Team mood	reports/2019-10-07.md	/^### Team mood$/;"	S
+Team mood	reports/2019-10-14.md	/^### Team mood$/;"	S
+Team mood	reports/2019-10-21.md	/^### Team mood$/;"	S
+Top 3 lessons learned since last report	reports/2019-09-30.md	/^### Top 3 lessons learned since last report$/;"	S
+Top 3 lessons learned since last report	reports/2019-10-07.md	/^### Top 3 lessons learned since last report$/;"	S
+Top 3 lessons learned since last report	reports/2019-10-14.md	/^### Top 3 lessons learned since last report$/;"	S
+Top 3 lessons learned since last report	reports/2019-10-21.md	/^### Top 3 lessons learned since last report$/;"	S
+Top 3 unexpected challenges encountered since last report	reports/2019-09-30.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
+Top 3 unexpected challenges encountered since last report	reports/2019-10-07.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
+Top 3 unexpected challenges encountered since last report	reports/2019-10-14.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
+Top 3 unexpected challenges encountered since last report	reports/2019-10-21.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
