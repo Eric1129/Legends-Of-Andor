@@ -96,4 +96,4 @@
 
 ### Team mood
 
- * *Everyone is great!*
+ * *Everyone is doing great!*
