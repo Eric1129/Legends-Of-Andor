@@ -5,7 +5,7 @@
 ### Group
 
  * Hexanome-*14*
- * *java or c#(unity)*
+ * *C# (unity)*
 
 ### Team Members
 
