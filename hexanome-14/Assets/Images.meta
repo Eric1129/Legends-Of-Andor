@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD:hexanome-14/Assets/Images.meta
 guid: 4332885d7e6164fafa9416195ee3f504
+=======
+guid: 6d8f434323ee54d15a677dd479d9f0b6
+>>>>>>> master:hexanome-14/Assets/C#.meta
+=======
+guid: 4332885d7e6164fafa9416195ee3f504
+>>>>>>> master
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
