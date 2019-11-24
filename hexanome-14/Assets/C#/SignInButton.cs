@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class SignInButton : MonoBehaviour
 {
+    private const string SceneName = "Log_In";
+
     public void SignIn()
     {
-        SceneManager.LoadScene("Log_In");
+        SceneManager.LoadScene(SceneName);
 
     }
 
