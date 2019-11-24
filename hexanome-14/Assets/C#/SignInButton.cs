@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SignInButton : MonoBehaviour
 {
-    private const string SceneName = "Log_In";
+    private const string SceneName = "Main_Menu";
 
     public void SignIn()
     {
