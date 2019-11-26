@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/GameSetupScreen.unity
     guid: b17e57b1aca054a4c8ce42f6f6377df4
   - enabled: 1
-    path: Assets/Scenes/Log_In.unity
-    guid: 85ad2a5d408dc4d439183129b52b50d9
-  - enabled: 1
     path: Assets/Scenes/Main_Menu.unity
     guid: d0acff5deaeb6480cb4ee21e8de5b6db
   - enabled: 1
@@ -29,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Play_Game.unity
     guid: ca24634d0b43f4c53beb97a32986f8ce
+  - enabled: 1
+    path: Assets/Scenes/Choose Player.unity
+    guid: 56b6cd943f8b745e29eda9063b7c74c0
   m_configObjects: {}
