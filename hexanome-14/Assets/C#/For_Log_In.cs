@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//This script enables redirection from Sign in Button to Login page in Legends of Andor
-
-public class SignInButton : MonoBehaviour
+public class For_Log_In : MonoBehaviour
 {
-    private const string SceneName = "Log_In";
+  
+    private const string SceneName = "Main_Menu";
 
     public void SignIn()
     {
