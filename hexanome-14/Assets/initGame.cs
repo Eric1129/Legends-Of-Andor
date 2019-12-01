@@ -63,7 +63,7 @@ public class initGame : MonoBehaviour
 
     void Start()
     {
-        createCamera(new Vector3(-38.0f, 22.0f, -38.0f));
+        createCamera(new Vector3(-40.0f, 15.0f, -60.0f));
 
     }
 

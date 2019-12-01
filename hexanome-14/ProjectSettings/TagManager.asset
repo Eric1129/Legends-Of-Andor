@@ -3,7 +3,28 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - 8
+  - 9
+  - 15
+  - 7
+  - 5
+  - 666
+  - Third
+  - Fourth
+  - Fifth
+  - Sixth
+  - Seventh
+  - First
+  - Second
+  - Eighth
+  - sphere_childOf_First
+  - sphere_childOf_Second
+  - sphere_childOf_Third
+  - sphere_childOf_Fourth
+  - sphere_childOf_Fifth
+  - Master
+  - camera
   layers:
   - Default
   - TransparentFX

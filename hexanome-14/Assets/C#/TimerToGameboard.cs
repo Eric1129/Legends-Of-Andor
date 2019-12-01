@@ -26,7 +26,7 @@ public class TimerToGameboard : MonoBehaviour
         //timerSeconds.text = timer.ToString("f0");
         if (timer <= 0){
 
-            SceneManager.LoadScene("Main_Board");
+            SceneManager.LoadScene("UnityMadeMeSaveToFile");
         }
         
     }

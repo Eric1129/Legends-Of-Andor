@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Choose Player.unity
     guid: 56b6cd943f8b745e29eda9063b7c74c0
+  - enabled: 1
+    path: Assets/Scenes/UnityMadeMeSaveToFile.unity
+    guid: 7c6b1dde7e85293689c288a9f9d1d11e
   m_configObjects: {}
