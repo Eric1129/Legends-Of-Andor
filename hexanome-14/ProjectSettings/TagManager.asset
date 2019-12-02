@@ -25,6 +25,12 @@ TagManager:
   - sphere_childOf_Fifth
   - Master
   - camera
+  - 50
+  - 51
+  - 52
+  - 53
+  - 54
+  - 55
   layers:
   - Default
   - TransparentFX
