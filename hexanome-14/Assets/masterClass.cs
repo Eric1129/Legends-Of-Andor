@@ -75,9 +75,11 @@ public class masterClass : MonoBehaviour
         newGameObject.transform.parent = gameObject.transform;
 
         newGameObject.AddComponent<SpriteRenderer>();
+        //newGameObject.AddComponent<SpriteAtlas>();
         SpriteRenderer spriteRenderer = newGameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite;
         newGameObject.AddComponent<LineRenderer>();
+
 
         newGameObject.AddComponent<PolygonCollider2D>();
         newGameObject.AddComponent<BoardPosition>();
@@ -105,9 +107,9 @@ public class masterClass : MonoBehaviour
         heroObject.AddComponent<Hero>();
 
         // this adds the hero's image to their sphere
-        // Sprite heroSprite = heroAtlas.GetSprite(hero_name);
-        // SpriteRenderer spriteRenderer = heroObject.GetComponent<SpriteRenderer>();
-        // spriteRenderer.sprite = heroSprite;
+         Sprite heroSprite = heroAtlas.GetSprite(hero_name);
+         SpriteRenderer spriteRenderer = heroObject.GetComponent<SpriteRenderer>();
+         spriteRenderer.sprite = heroSprite;
 
         playerObject.AddComponent<Player>();
         playerObject.AddComponent<Hero>();

@@ -29,14 +29,17 @@ SpriteAtlas:
       enableRotation: 1
       enableTightPacking: 1
     variantMultiplier: 1
-    packables: []
-    totalSpriteSurfaceArea: 0
+    packables:
+    - {fileID: 21300000, guid: c2a6452d6b41943dd827f9713fdd2b4c, type: 3}
+    totalSpriteSurfaceArea: 237440
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
       Hash: 00000000000000000000000000000000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: c2a6452d6b41943dd827f9713fdd2b4c, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Warrior
   m_Tag: HeroAtlas
   m_IsVariant: 0
