@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 558603835}
   - component: {fileID: 558603834}
   m_Layer: 5
-  m_Name: Open Saved Game
+  m_Name: Open Saved Game Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -438,7 +438,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 558603835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1684833993}
+        m_MethodName: OpenSavedGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &558603835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b416141e5c0194ced8d58d231a0b8f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicClip: {fileID: 8300000, guid: a87bbdcf5f1e643a3b88dc287ea327f2, type: 3}
+  MusicClip: {fileID: 8300000, guid: f57bcb62b153645c9a71be3e555c6bf0, type: 3}
   MusicSource: {fileID: 825537540}
 --- !u!82 &825537540
 AudioSource:
@@ -779,6 +790,7 @@ GameObject:
   - component: {fileID: 1684833991}
   - component: {fileID: 1684833990}
   - component: {fileID: 1684833989}
+  - component: {fileID: 1684833993}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -869,6 +881,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1684833993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684833988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fbbaba3c38654aa2bb8b058f2ef1601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1763766500
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +972,7 @@ GameObject:
   - component: {fileID: 1789399764}
   - component: {fileID: 1789399763}
   m_Layer: 5
-  m_Name: Host Game
+  m_Name: Start New Game Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1016,7 +1040,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1789399764}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1684833993}
+        m_MethodName: StartNewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1789399764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1066,7 +1101,7 @@ GameObject:
   - component: {fileID: 2131011561}
   - component: {fileID: 2131011560}
   m_Layer: 5
-  m_Name: Join Game
+  m_Name: Play Game Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1134,7 +1169,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2131011561}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1684833993}
+        m_MethodName: PlayGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2131011561
 MonoBehaviour:
   m_ObjectHideFlags: 0
