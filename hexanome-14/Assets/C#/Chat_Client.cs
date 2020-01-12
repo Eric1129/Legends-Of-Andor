@@ -7,7 +7,7 @@ public class Chat_Client
 {
     #region variables
     public static IPAddress SERVER_ADDRESS = IPAddress.Parse("127.0.0.1");
-    private static string delem = new string("" + (char)(10));
+    public static string delem = "" + (char)(10);
 
     // Username as a unique identifier
     private string username;
