@@ -99,7 +99,7 @@ public class Chat_Server
         void OnRead(IAsyncResult ar)
         {
             string message = getTextFromStream(ar);
-            string[] parts = message.Split(new string("" + (char)(10)));
+            string[] parts = message.Split(Chat_Client.delem[0]);
             string code = parts[0];
 
             // Decode code
@@ -110,7 +110,7 @@ public class Chat_Server
             }
             else if (code.Equals("1"))  // Send to specific players
             {
-                ReadMsgToSend(parts[1].Split(","), parts[2]);
+                ReadMsgToSend(parts[1].Split(','), parts[2]);
                 Console.WriteLine("Sending Message!");
             }
             else if (code.Equals("2"))  // Send to all players
