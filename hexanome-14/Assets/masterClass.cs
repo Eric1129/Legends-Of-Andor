@@ -88,7 +88,7 @@ public class masterClass : MonoBehaviour
 
         if (gameCellNumber == 8)
         {
-            string hero_name = "mage_female";
+            string hero_name = "Warrior";
             createHero(hero_name);
         }
     }
@@ -110,6 +110,9 @@ public class masterClass : MonoBehaviour
          Sprite heroSprite = heroAtlas.GetSprite(hero_name);
          SpriteRenderer spriteRenderer = heroObject.GetComponent<SpriteRenderer>();
          spriteRenderer.sprite = heroSprite;
+       
+            
+
 
         playerObject.AddComponent<Player>();
         playerObject.AddComponent<Hero>();
