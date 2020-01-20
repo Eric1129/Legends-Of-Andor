@@ -165,14 +165,8 @@
 *squid*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[*squid*]$/;"	s
 *www4mail/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[*www4mail\/*]$/;"	s
 *www4mail/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[*www4mail\/*]$/;"	s
-0	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-0	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-1	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-1	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
 12345	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[12345]$/;"	s
 12345	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[12345]$/;"	s
-2	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-2	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
 2019-09-30	reports/2019-09-30.md	/^# 2019-09-30$/;"	c
 2019-10-07	reports/2019-10-07.md	/^# 2019-10-07$/;"	c
 2019-10-14	reports/2019-10-14.md	/^# 2019-10-14$/;"	c
@@ -182,9 +176,9 @@
 2019-11-11	reports/2019-11-11.md	/^# 2019-11-11$/;"	c
 2019-11-18	reports/2019-11-18.md	/^# 2019-11-18$/;"	c
 2019-11-25	reports/2019-11-25.md	/^# 2019-11-25$/;"	c
-2019-xx-xx	reports/group template.md	/^# 2019-xx-xx$/;"	c
-3	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-3	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
+2019-12-02	reports/2019-12-02.md	/^# 2019-12-02$/;"	c
+2020-01-20	reports/2020-01-20.md	/^# 2020-01-20$/;"	c
+2020-01-20	reports/group template.md	/^# 2020-01-20$/;"	c
 3 most critical bugs in current functionality (optional)	reports/2019-09-30.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
 3 most critical bugs in current functionality (optional)	reports/2019-10-07.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
 3 most critical bugs in current functionality (optional)	reports/2019-10-14.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
@@ -194,6 +188,8 @@
 3 most critical bugs in current functionality (optional)	reports/2019-11-11.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
 3 most critical bugs in current functionality (optional)	reports/2019-11-18.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
 3 most critical bugs in current functionality (optional)	reports/2019-11-25.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
+3 most critical bugs in current functionality (optional)	reports/2019-12-02.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
+3 most critical bugs in current functionality (optional)	reports/2020-01-20.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
 3 most critical bugs in current functionality (optional)	reports/group template.md	/^### 3 most critical bugs in current functionality (optional)$/;"	S
 3 most outstanding tasks scheduled until the next report, per team member	reports/2019-09-30.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
 3 most outstanding tasks scheduled until the next report, per team member	reports/2019-10-07.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
@@ -204,15 +200,13 @@
 3 most outstanding tasks scheduled until the next report, per team member	reports/2019-11-11.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
 3 most outstanding tasks scheduled until the next report, per team member	reports/2019-11-18.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
 3 most outstanding tasks scheduled until the next report, per team member	reports/2019-11-25.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
+3 most outstanding tasks scheduled until the next report, per team member	reports/2019-12-02.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
+3 most outstanding tasks scheduled until the next report, per team member	reports/2020-01-20.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
 3 most outstanding tasks scheduled until the next report, per team member	reports/group template.md	/^### 3 most outstanding tasks scheduled until the next report, per team member$/;"	S
 3D-FTP/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[3D-FTP\/*]$/;"	s
 3D-FTP/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[3D-FTP\/*]$/;"	s
 3wGet/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[3wGet\/*]$/;"	s
 3wGet/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[3wGet\/*]$/;"	s
-4	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-5	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-6	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
-7	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n	array:m_ExpandedSceneGameObjectInstanceIDs
 8484 Boston Project*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[8484 Boston Project*]$/;"	s
 8484 Boston Project*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[8484 Boston Project*]$/;"	s
 A .NET Web Crawler	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[A .NET Web Crawler]$/;"	s
@@ -357,6 +351,7 @@ Artera (Version *)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/br
 Artera (Version *)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Artera (Version *)]$/;"	s
 Ask	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Ask]$/;"	s
 Ask	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Ask]$/;"	s
+AudioScript	hexanome-14/Assets/C#/AudioScript.cs	/^public class AudioScript : MonoBehaviour$/;"	c
 AuthenticodeUpdate	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^AuthenticodeUpdate=0$/;"	k	section:*
 AuthenticodeUpdate	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^AuthenticodeUpdate=0$/;"	k	section:*
 AutoHotkey	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[AutoHotkey]$/;"	s
@@ -571,6 +566,9 @@ Blue Coat Systems	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/bro
 Blue Coat Systems	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Blue Coat Systems]$/;"	s
 BlueCoat ProxySG	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[BlueCoat ProxySG]$/;"	s
 BlueCoat ProxySG	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[BlueCoat ProxySG]$/;"	s
+BoardPosition	hexanome-14/Assets/BoardPosition.cs	/^    public BoardPosition(int boardNumber)$/;"	m	class:BoardPosition
+BoardPosition	hexanome-14/Assets/BoardPosition.cs	/^    public BoardPosition(int boardNumber, Vector2[] boundaryVertices)$/;"	m	class:BoardPosition
+BoardPosition	hexanome-14/Assets/BoardPosition.cs	/^public class BoardPosition : MonoBehaviour$/;"	c
 Boitho	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Boitho]$/;"	s
 Boitho	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Boitho]$/;"	s
 Bookdog/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Bookdog\/*]$/;"	s
@@ -3149,6 +3147,10 @@ CazoodleBot/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browsca
 CazoodleBot/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CazoodleBot\/*]$/;"	s
 CerberianDrtrs/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CerberianDrtrs\/*]$/;"	s
 CerberianDrtrs/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CerberianDrtrs\/*]$/;"	s
+Chat_Client	hexanome-14/Assets/C#/Chat_Client.cs	/^    public Chat_Client(string username)$/;"	m	class:Chat_Client
+Chat_Client	hexanome-14/Assets/C#/Chat_Client.cs	/^public class Chat_Client$/;"	c
+Chat_Server	hexanome-14/Assets/C#/Chat_Server.cs	/^    public Chat_Server()$/;"	m	class:Chat_Server
+Chat_Server	hexanome-14/Assets/C#/Chat_Server.cs	/^public class Chat_Server$/;"	c
 CheckLinks/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CheckLinks\/*]$/;"	s
 CheckLinks/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CheckLinks\/*]$/;"	s
 Checkbot*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Checkbot*]$/;"	s
@@ -3175,6 +3177,8 @@ Chrome 3.0	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.i
 Chrome 3.0	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Chrome 3.0]$/;"	s
 CipinetBot (http://www.cipinet.com/bot.html)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CipinetBot (http:\/\/www.cipinet.com\/bot.html)]$/;"	s
 CipinetBot (http://www.cipinet.com/bot.html)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CipinetBot (http:\/\/www.cipinet.com\/bot.html)]$/;"	s
+Client_Connection	hexanome-14/Assets/C#/Chat_Server.cs	/^        public Client_Connection(TcpClient connection, Chat_Server server)$/;"	m	class:Chat_Server.Client_Connection
+Client_Connection	hexanome-14/Assets/C#/Chat_Server.cs	/^    public class Client_Connection$/;"	c	class:Chat_Server
 ClrVersion	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^ClrVersion=0$/;"	k	section:*
 ClrVersion	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^ClrVersion=0$/;"	k	section:*
 CobWeb/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[CobWeb\/*]$/;"	s
@@ -3200,6 +3204,8 @@ Contribution statement	reports/2019-11-04.md	/^### Contribution statement$/;"	S
 Contribution statement	reports/2019-11-11.md	/^### Contribution statement$/;"	S
 Contribution statement	reports/2019-11-18.md	/^### Contribution statement$/;"	S
 Contribution statement	reports/2019-11-25.md	/^### Contribution statement$/;"	S
+Contribution statement	reports/2019-12-02.md	/^### Contribution statement$/;"	S
+Contribution statement	reports/2020-01-20.md	/^### Contribution statement$/;"	S
 Contribution statement	reports/group template.md	/^### Contribution statement$/;"	S
 Convera	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Convera]$/;"	s
 Convera	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Convera]$/;"	s
@@ -3642,6 +3648,7 @@ Crawler	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini
 CreateAccount	hexanome-14/Assets/C#/Create_Account.cs	/^    public void CreateAccount()$/;"	m	class:Create_Account
 CreateAccount	hexanome-14/Assets/C#/MainMenuButtons.cs	/^    public void CreateAccount()$/;"	m	class:NewBehaviourScript1
 Create_Account	hexanome-14/Assets/C#/Create_Account.cs	/^public class Create_Account : MonoBehaviour$/;"	c
+Create_Account	hexanome-14/Assets/C#/For_Log_In.cs	/^    public void Create_Account()$/;"	m	class:For_Log_In
 Create_Account	hexanome-14/Assets/C#/SignInButton.cs	/^    public void Create_Account()$/;"	m	class:SignInButton
 CssVersion	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^CssVersion=0$/;"	k	section:*
 CssVersion	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^CssVersion=0$/;"	k	section:DefaultProperties
@@ -4295,6 +4302,7 @@ EmailSiphon*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap
 EmailSiphon*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[EmailSiphon*]$/;"	s
 EmailWolf*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[EmailWolf*]$/;"	s
 EmailWolf*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[EmailWolf*]$/;"	s
+EndConnect	hexanome-14/Assets/C#/Chat_Client.cs	/^    internal void EndConnect(IAsyncResult ar)$/;"	m	class:Chat_Client	file:
 Enigma Browser*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Enigma Browser*]$/;"	s
 Enigma Browser*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Enigma Browser*]$/;"	s
 Entireweb	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Entireweb]$/;"	s
@@ -4439,6 +4447,7 @@ Foobot*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	
 Foobot*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Foobot*]$/;"	s
 Fooky.com/ScorpionBot/ScoutOut;*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Fooky.com\/ScorpionBot\/ScoutOut;*]$/;"	s
 Fooky.com/ScorpionBot/ScoutOut;*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Fooky.com\/ScorpionBot\/ScoutOut;*]$/;"	s
+For_Log_In	hexanome-14/Assets/C#/For_Log_In.cs	/^public class For_Log_In : MonoBehaviour$/;"	c
 Forschungsportal/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Forschungsportal\/*]$/;"	s
 Forschungsportal/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Forschungsportal\/*]$/;"	s
 Frames	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^Frames=false$/;"	k	section:* (compatible; Googlebot-Mobile/2.1; *http://www.google.com/bot.html)
@@ -4882,6 +4891,8 @@ Group	reports/2019-11-04.md	/^### Group$/;"	S
 Group	reports/2019-11-11.md	/^### Group$/;"	S
 Group	reports/2019-11-18.md	/^### Group$/;"	S
 Group	reports/2019-11-25.md	/^### Group$/;"	S
+Group	reports/2019-12-02.md	/^### Group$/;"	S
+Group	reports/2020-01-20.md	/^### Group$/;"	S
 Group	reports/group template.md	/^### Group$/;"	S
 Gulper Web *	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Gulper Web *]$/;"	s
 Gulper Web *	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Gulper Web *]$/;"	s
@@ -4921,6 +4932,7 @@ Healthbot/Health_and_Longevity_Project_(HealthHaven.com) 	hexanome-14/Testing.ap
 Healthbot/Health_and_Longevity_Project_(HealthHaven.com) 	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Healthbot\/Health_and_Longevity_Project_(HealthHaven.com) ]$/;"	s
 HenryTheMiragoRobot*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[HenryTheMiragoRobot*]$/;"	s
 HenryTheMiragoRobot*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[HenryTheMiragoRobot*]$/;"	s
+Hero	hexanome-14/Assets/Hero.cs	/^public class Hero : MonoBehaviour$/;"	c
 HiddenMarket-*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[HiddenMarket-*]$/;"	s
 HiddenMarket-*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[HiddenMarket-*]$/;"	s
 Holmes/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Holmes\/*]$/;"	s
@@ -6051,6 +6063,7 @@ MagpieRSS/* (*)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/brows
 MagpieRSS/* (*)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[MagpieRSS\/* (*)]$/;"	s
 Mail.Ru/1.0	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Mail.Ru\/1.0]$/;"	s
 Mail.Ru/1.0	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Mail.Ru\/1.0]$/;"	s
+Main	hexanome-14/Assets/C#/Chat_Client.cs	/^    static void Main(string[] args)$/;"	m	class:Chat_Client	file:
 MajorVer	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^MajorVer=0$/;"	k	section:*
 MajorVer	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^MajorVer=0$/;"	k	section:ConveraMultiMediaCrawler/0.1*
 MajorVer	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^MajorVer=0$/;"	k	section:DefaultProperties
@@ -6856,6 +6869,8 @@ Meta Information	reports/2019-11-04.md	/^## Meta Information$/;"	s
 Meta Information	reports/2019-11-11.md	/^## Meta Information$/;"	s
 Meta Information	reports/2019-11-18.md	/^## Meta Information$/;"	s
 Meta Information	reports/2019-11-25.md	/^## Meta Information$/;"	s
+Meta Information	reports/2019-12-02.md	/^## Meta Information$/;"	s
+Meta Information	reports/2020-01-20.md	/^## Meta Information$/;"	s
 Meta Information	reports/group template.md	/^## Meta Information$/;"	s
 MetaGer-LinkChecker	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[MetaGer-LinkChecker]$/;"	s
 MetaGer-LinkChecker	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[MetaGer-LinkChecker]$/;"	s
@@ -11061,6 +11076,8 @@ Mozilla/?.? (compatible; MSIE 5.1*; *Mac_PowerPC*	hexanome-14/Testing.app/Conten
 Mozilla/?.? (compatible; MSIE 5.1*; *Mac_PowerPC*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Mozilla\/?.? (compatible; MSIE 5.1*; *Mac_PowerPC*]$/;"	s
 Mozilla/?.? (compatible; MSIE 5.2*; *Mac_PowerPC*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Mozilla\/?.? (compatible; MSIE 5.2*; *Mac_PowerPC*]$/;"	s
 Mozilla/?.? (compatible; MSIE 5.2*; *Mac_PowerPC*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Mozilla\/?.? (compatible; MSIE 5.2*; *Mac_PowerPC*]$/;"	s
+MusicClip	hexanome-14/Assets/C#/AudioScript.cs	/^    public AudioClip MusicClip;$/;"	f	class:AudioScript
+MusicSource	hexanome-14/Assets/C#/AudioScript.cs	/^    public AudioSource MusicSource;$/;"	f	class:AudioScript
 My Browser	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[My Browser]$/;"	s
 My Browser	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[My Browser]$/;"	s
 Myst Monitor Service v*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Myst Monitor Service v*]$/;"	s
@@ -11175,6 +11192,7 @@ Netvibes (*)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap
 Netvibes (*)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Netvibes (*)]$/;"	s
 NewBehaviourScript	hexanome-14/Assets/NewBehaviourScript.cs	/^public class NewBehaviourScript : MonoBehaviour$/;"	c
 NewBehaviourScript1	hexanome-14/Assets/C#/MainMenuButtons.cs	/^public class NewBehaviourScript1 : MonoBehaviour$/;"	c
+NewBehaviourScript3	hexanome-14/Assets/C#/Main_Menu.cs	/^public class NewBehaviourScript3 : MonoBehaviour$/;"	c
 NewsAlloy/* (*)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[NewsAlloy\/* (*)]$/;"	s
 NewsAlloy/* (*)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[NewsAlloy\/* (*)]$/;"	s
 NewsFire/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[NewsFire\/*]$/;"	s
@@ -11233,6 +11251,13 @@ OmniWeb	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	
 OmniWeb	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[OmniWeb]$/;"	s
 Omnipelagos*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Omnipelagos*]$/;"	s
 Omnipelagos*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Omnipelagos*]$/;"	s
+OnDisconnect	hexanome-14/Assets/C#/Chat_Server.cs	/^    public void OnDisconnect(Client_Connection client)$/;"	m	class:Chat_Server
+OnMouseDown	hexanome-14/Assets/BoardPosition.cs	/^    void OnMouseDown()$/;"	m	class:BoardPosition	file:
+OnMouseExit	hexanome-14/Assets/BoardPosition.cs	/^    void OnMouseExit()$/;"	m	class:BoardPosition	file:
+OnMouseOver	hexanome-14/Assets/BoardPosition.cs	/^    void OnMouseOver()$/;"	m	class:BoardPosition	file:
+OnRead	hexanome-14/Assets/C#/Chat_Client.cs	/^    internal void OnRead(IAsyncResult ar)$/;"	m	class:Chat_Client	file:
+OnRead	hexanome-14/Assets/C#/Chat_Server.cs	/^        void OnRead(IAsyncResult ar)$/;"	m	class:Chat_Server.Client_Connection	file:
+OnServerConnect	hexanome-14/Assets/C#/Chat_Server.cs	/^    void OnServerConnect(IAsyncResult ar)$/;"	m	class:Chat_Server	file:
 Online Scanners	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Online Scanners]$/;"	s
 Online Scanners	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Online Scanners]$/;"	s
 Open Web Analytics Bot*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Open Web Analytics Bot*]$/;"	s
@@ -11241,6 +11266,8 @@ OpenDNS Domain Crawler noc@opendns.com	hexanome-14/Testing.app/Contents/MonoBlee
 OpenDNS Domain Crawler noc@opendns.com	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[OpenDNS Domain Crawler noc@opendns.com]$/;"	s
 OpenISearch/1.*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[OpenISearch\/1.*]$/;"	s
 OpenISearch/1.*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[OpenISearch\/1.*]$/;"	s
+OpenSavedGame	hexanome-14/Assets/C#/Main_Menu.cs	/^    public void OpenSavedGame()$/;"	m	class:NewBehaviourScript3
+OpenSavedGame	hexanome-14/Assets/C#/Start_New_Game.cs	/^    public void OpenSavedGame()$/;"	m	class:Start_New_Game
 OpenTaggerBot (http://www.opentagger.com/opentaggerbot.htm)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[OpenTaggerBot (http:\/\/www.opentagger.com\/opentaggerbot.htm)]$/;"	s
 OpenTaggerBot (http://www.opentagger.com/opentaggerbot.htm)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[OpenTaggerBot (http:\/\/www.opentagger.com\/opentaggerbot.htm)]$/;"	s
 Openwave Mobile Browser	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Openwave Mobile Browser]$/;"	s
@@ -21779,6 +21806,10 @@ Platform	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.in
 Platform	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^Platform=iPhone OSX$/;"	k	section:iTunes
 Platform	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^Platform=unknown$/;"	k	section:*
 Platform	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^Platform=unknown$/;"	k	section:DefaultProperties
+PlayGame	hexanome-14/Assets/C#/Main_Menu.cs	/^    public void PlayGame()$/;"	m	class:NewBehaviourScript3
+PlayGame	hexanome-14/Assets/C#/Start_New_Game.cs	/^    public void PlayGame()$/;"	m	class:Start_New_Game
+Play_Game	hexanome-14/Assets/C#/Play_Game.cs	/^public class Play_Game : MonoBehaviour$/;"	c
+Player	hexanome-14/Assets/Player.cs	/^public class Player : MonoBehaviour$/;"	c
 Playstation	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Playstation]$/;"	s
 Playstation	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Playstation]$/;"	s
 PluckItCrawler/1.0 (*)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[PluckItCrawler\/1.0 (*)]$/;"	s
@@ -21923,6 +21954,7 @@ RSS Menu/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.i
 RSS Menu/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[RSS Menu\/*]$/;"	s
 Radiation Retriever*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Radiation Retriever*]$/;"	s
 Radiation Retriever*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Radiation Retriever*]$/;"	s
+ReadMsgToSend	hexanome-14/Assets/C#/Chat_Server.cs	/^        void ReadMsgToSend(string[] username_list, string msg)$/;"	m	class:Chat_Server.Client_Connection	file:
 RealDownload/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[RealDownload\/*]$/;"	s
 RealDownload/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[RealDownload\/*]$/;"	s
 RealPlayer*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[RealPlayer*]$/;"	s
@@ -21963,6 +21995,7 @@ SCEJ PSP BROWSER 0102pspNavigator	hexanome-14/Testing.app/Contents/MonoBleedingE
 SCEJ PSP BROWSER 0102pspNavigator	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SCEJ PSP BROWSER 0102pspNavigator]$/;"	s
 SEMC Browser	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SEMC Browser]$/;"	s
 SEMC Browser	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SEMC Browser]$/;"	s
+SERVER_ADDRESS	hexanome-14/Assets/C#/Chat_Client.cs	/^    public static IPAddress SERVER_ADDRESS = IPAddress.Parse("127.0.0.1");$/;"	f	class:Chat_Client
 SITECHECKER	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SITECHECKER]$/;"	s
 SITECHECKER	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SITECHECKER]$/;"	s
 SMBot/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SMBot\/*]$/;"	s
@@ -21984,7 +22017,10 @@ Safari 4.0	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.
 SafariBookmarkChecker*(?http://www.coriolis.ch/)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SafariBookmarkChecker*(?http:\/\/www.coriolis.ch\/)]$/;"	s
 SafariBookmarkChecker*(?http://www.coriolis.ch/)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SafariBookmarkChecker*(?http:\/\/www.coriolis.ch\/)]$/;"	s
 SceneName	hexanome-14/Assets/C#/Create_Account.cs	/^    private const string SceneName = "Main_Menu";$/;"	f	class:Create_Account	file:
+SceneName	hexanome-14/Assets/C#/For_Log_In.cs	/^    private const string SceneName = "Main_Menu";$/;"	f	class:For_Log_In	file:
+SceneName	hexanome-14/Assets/C#/Play_Game.cs	/^	private const string SceneName = "Play_Game";$/;"	f	class:Play_Game	file:
 SceneName	hexanome-14/Assets/C#/SignInButton.cs	/^    private const string SceneName = "Log_In";$/;"	f	class:SignInButton	file:
+SceneName	hexanome-14/Assets/C#/Start_New_Game.cs	/^    private const string SceneName = "GameSetupScreen";$/;"	f	class:Start_New_Game	file:
 ScollSpider/2.*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ScollSpider\/2.*]$/;"	s
 ScollSpider/2.*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ScollSpider\/2.*]$/;"	s
 Scooter/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Scooter\/*]$/;"	s
@@ -22017,6 +22053,10 @@ Seekbot/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.in
 Seekbot/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Seekbot\/*]$/;"	s
 Seeker.lookseek.com	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Seeker.lookseek.com]$/;"	s
 Seeker.lookseek.com	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Seeker.lookseek.com]$/;"	s
+Send	hexanome-14/Assets/C#/Chat_Client.cs	/^    internal void Send(string message)$/;"	m	class:Chat_Client	file:
+Send	hexanome-14/Assets/C#/Chat_Server.cs	/^        internal void Send(string message)$/;"	m	class:Chat_Server.Client_Connection	file:
+SendMessage	hexanome-14/Assets/C#/Chat_Client.cs	/^    internal void SendMessage(string message)$/;"	m	class:Chat_Client	file:
+SendMessage	hexanome-14/Assets/C#/Chat_Client.cs	/^    internal void SendMessage(string message, string[] players)$/;"	m	class:Chat_Client	file:
 Seram Server	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Seram Server]$/;"	s
 Seram Server	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Seram Server]$/;"	s
 SeznamBot/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[SeznamBot\/*]$/;"	s
@@ -22033,6 +22073,7 @@ ShopWiki/1.0*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browsca
 ShopWiki/1.0*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ShopWiki\/1.0*]$/;"	s
 ShowXML/1.0 libwww/5.4.0	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ShowXML\/1.0 libwww\/5.4.0]$/;"	s
 ShowXML/1.0 libwww/5.4.0	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ShowXML\/1.0 libwww\/5.4.0]$/;"	s
+SignIn	hexanome-14/Assets/C#/For_Log_In.cs	/^    public void SignIn()$/;"	m	class:For_Log_In
 SignIn	hexanome-14/Assets/C#/MainMenuButtons.cs	/^    public void SignIn()$/;"	m	class:NewBehaviourScript1
 SignIn	hexanome-14/Assets/C#/SignInButton.cs	/^    public void SignIn()$/;"	m	class:SignInButton
 SignInButton	hexanome-14/Assets/C#/SignInButton.cs	/^public class SignInButton : MonoBehaviour$/;"	c
@@ -22122,7 +22163,13 @@ StackRambler/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browsc
 StackRambler/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[StackRambler\/*]$/;"	s
 Star*Downloader/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Star*Downloader\/*]$/;"	s
 Star*Downloader/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Star*Downloader\/*]$/;"	s
+Start	hexanome-14/Assets/C#/AudioScript.cs	/^    void Start()$/;"	m	class:AudioScript	file:
+Start	hexanome-14/Assets/C#/TimerToGameboard.cs	/^    void Start()$/;"	m	class:TimerToGameboard	file:
 Start	hexanome-14/Assets/NewBehaviourScript.cs	/^    void Start()$/;"	m	class:NewBehaviourScript	file:
+Start	hexanome-14/Assets/initGame.cs	/^    void Start()$/;"	m	class:initGame	file:
+StartNewGame	hexanome-14/Assets/C#/Main_Menu.cs	/^    public void StartNewGame()$/;"	m	class:NewBehaviourScript3
+StartNewGame	hexanome-14/Assets/C#/Start_New_Game.cs	/^    public void StartNewGame()$/;"	m	class:Start_New_Game
+Start_New_Game	hexanome-14/Assets/C#/Start_New_Game.cs	/^public class Start_New_Game : MonoBehaviour$/;"	c
 Status	reports/2019-09-30.md	/^## Status$/;"	s
 Status	reports/2019-10-07.md	/^## Status$/;"	s
 Status	reports/2019-10-14.md	/^## Status$/;"	s
@@ -22132,6 +22179,8 @@ Status	reports/2019-11-04.md	/^## Status$/;"	s
 Status	reports/2019-11-11.md	/^## Status$/;"	s
 Status	reports/2019-11-18.md	/^## Status$/;"	s
 Status	reports/2019-11-25.md	/^## Status$/;"	s
+Status	reports/2019-12-02.md	/^## Status$/;"	s
+Status	reports/2020-01-20.md	/^## Status$/;"	s
 Status	reports/group template.md	/^## Status$/;"	s
 Steeler/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Steeler\/*]$/;"	s
 Steeler/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Steeler\/*]$/;"	s
@@ -22556,6 +22605,8 @@ Tasks missed, scheduled for this report	reports/2019-11-04.md	/^### Tasks missed
 Tasks missed, scheduled for this report	reports/2019-11-11.md	/^### Tasks missed, scheduled for this report$/;"	S
 Tasks missed, scheduled for this report	reports/2019-11-18.md	/^### Tasks missed, scheduled for this report$/;"	S
 Tasks missed, scheduled for this report	reports/2019-11-25.md	/^### Tasks missed, scheduled for this report$/;"	S
+Tasks missed, scheduled for this report	reports/2019-12-02.md	/^### Tasks missed, scheduled for this report$/;"	S
+Tasks missed, scheduled for this report	reports/2020-01-20.md	/^### Tasks missed, scheduled for this report$/;"	S
 Tasks missed, scheduled for this report	reports/group template.md	/^### Tasks missed, scheduled for this report$/;"	S
 Tcl http client package*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Tcl http client package*]$/;"	s
 Tcl http client package*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Tcl http client package*]$/;"	s
@@ -22568,6 +22619,8 @@ Team Members	reports/2019-11-04.md	/^### Team Members$/;"	S
 Team Members	reports/2019-11-11.md	/^### Team Members$/;"	S
 Team Members	reports/2019-11-18.md	/^### Team Members$/;"	S
 Team Members	reports/2019-11-25.md	/^### Team Members$/;"	S
+Team Members	reports/2019-12-02.md	/^### Team Members$/;"	S
+Team Members	reports/2020-01-20.md	/^### Team Members$/;"	S
 Team Members	reports/group template.md	/^### Team Members$/;"	S
 Team mood	reports/2019-09-30.md	/^### Team mood$/;"	S
 Team mood	reports/2019-10-07.md	/^### Team mood$/;"	S
@@ -22578,6 +22631,8 @@ Team mood	reports/2019-11-04.md	/^### Team mood$/;"	S
 Team mood	reports/2019-11-11.md	/^### Team mood$/;"	S
 Team mood	reports/2019-11-18.md	/^### Team mood$/;"	S
 Team mood	reports/2019-11-25.md	/^### Team mood$/;"	S
+Team mood	reports/2019-12-02.md	/^### Team mood$/;"	S
+Team mood	reports/2020-01-20.md	/^### Team mood$/;"	S
 Team mood	reports/group template.md	/^### Team mood$/;"	S
 Technoratibot/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Technoratibot\/*]$/;"	s
 Technoratibot/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Technoratibot\/*]$/;"	s
@@ -22595,6 +22650,7 @@ Theme Spider*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browsca
 Theme Spider*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Theme Spider*]$/;"	s
 TherapeuticResearch	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[TherapeuticResearch]$/;"	s
 TherapeuticResearch	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[TherapeuticResearch]$/;"	s
+TimerToGameboard	hexanome-14/Assets/C#/TimerToGameboard.cs	/^public class TimerToGameboard : MonoBehaviour$/;"	c
 Titanium 2005 (4.02.01)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Titanium 2005 (4.02.01)]$/;"	s
 Titanium 2005 (4.02.01)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Titanium 2005 (4.02.01)]$/;"	s
 Tkensaku/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Tkensaku\/*]$/;"	s
@@ -22610,6 +22666,8 @@ Top 3 lessons learned since last report	reports/2019-11-04.md	/^### Top 3 lesson
 Top 3 lessons learned since last report	reports/2019-11-11.md	/^### Top 3 lessons learned since last report$/;"	S
 Top 3 lessons learned since last report	reports/2019-11-18.md	/^### Top 3 lessons learned since last report$/;"	S
 Top 3 lessons learned since last report	reports/2019-11-25.md	/^### Top 3 lessons learned since last report$/;"	S
+Top 3 lessons learned since last report	reports/2019-12-02.md	/^### Top 3 lessons learned since last report$/;"	S
+Top 3 lessons learned since last report	reports/2020-01-20.md	/^### Top 3 lessons learned since last report$/;"	S
 Top 3 lessons learned since last report	reports/group template.md	/^### Top 3 lessons learned since last report$/;"	S
 Top 3 unexpected challenges encountered since last report	reports/2019-09-30.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
 Top 3 unexpected challenges encountered since last report	reports/2019-10-07.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
@@ -22620,6 +22678,8 @@ Top 3 unexpected challenges encountered since last report	reports/2019-11-04.md	
 Top 3 unexpected challenges encountered since last report	reports/2019-11-11.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
 Top 3 unexpected challenges encountered since last report	reports/2019-11-18.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
 Top 3 unexpected challenges encountered since last report	reports/2019-11-25.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
+Top 3 unexpected challenges encountered since last report	reports/2019-12-02.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
+Top 3 unexpected challenges encountered since last report	reports/2020-01-20.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
 Top 3 unexpected challenges encountered since last report	reports/group template.md	/^### Top 3 unexpected challenges encountered since last report$/;"	S
 TouchStone	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[TouchStone]$/;"	s
 TouchStone	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[TouchStone]$/;"	s
@@ -22671,9 +22731,14 @@ UofTDB_experiment* (leehyun@cs.toronto.edu)	hexanome-14/Testing.app/Contents/Mon
 UofTDB_experiment* (leehyun@cs.toronto.edu)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[UofTDB_experiment* (leehyun@cs.toronto.edu)]$/;"	s
 UpTime Checker*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[UpTime Checker*]$/;"	s
 UpTime Checker*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[UpTime Checker*]$/;"	s
+Update	hexanome-14/Assets/C#/AudioScript.cs	/^    void Update()$/;"	m	class:AudioScript	file:
+Update	hexanome-14/Assets/C#/TimerToGameboard.cs	/^    void Update()$/;"	m	class:TimerToGameboard	file:
 Update	hexanome-14/Assets/NewBehaviourScript.cs	/^    void Update()$/;"	m	class:NewBehaviourScript	file:
+Update	hexanome-14/Assets/Player.cs	/^    void Update()$/;"	m	class:Player	file:
+Update	hexanome-14/Assets/initGame.cs	/^    void Update()$/;"	m	class:initGame	file:
 UpdateBrowscap*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[UpdateBrowscap*]$/;"	s
 UpdateBrowscap*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[UpdateBrowscap*]$/;"	s
+UpdateUsername	hexanome-14/Assets/C#/Chat_Client.cs	/^    internal void UpdateUsername(string username)$/;"	m	class:Chat_Client	file:
 User*Agent:*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[User*Agent:*]$/;"	s
 User*Agent:*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[User*Agent:*]$/;"	s
 UtilMind HTTPGet	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[UtilMind HTTPGet]$/;"	s
@@ -23642,6 +23707,7 @@ WWW_Browser/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browsca
 WWW_Browser/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[WWW_Browser\/*]$/;"	s
 WWWeasel Robot v*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[WWWeasel Robot v*]$/;"	s
 WWWeasel Robot v*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[WWWeasel Robot v*]$/;"	s
+Waiting	hexanome-14/Assets/C#/Play_Game.cs	/^	public void Waiting()$/;"	m	class:Play_Game
 WeBoX/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[WeBoX\/*]$/;"	s
 WeBoX/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[WeBoX\/*]$/;"	s
 Web Downloader*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[Web Downloader*]$/;"	s
@@ -25556,6 +25622,7 @@ adidxbot/1.1 (?http://search.msn.com/msnbot.htm)	hexanome-14/Testing.app/Content
 adidxbot/1.1 (?http://search.msn.com/msnbot.htm)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[adidxbot\/1.1 (?http:\/\/search.msn.com\/msnbot.htm)]$/;"	s
 ah-ha.com crawler (crawler@ah-ha.com)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ah-ha.com crawler (crawler@ah-ha.com)]$/;"	s
 ah-ha.com crawler (crawler@ah-ha.com)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ah-ha.com crawler (crawler@ah-ha.com)]$/;"	s
+alpha	hexanome-14/Assets/BoardPosition.cs	/^    private float alpha = 0.2f;$/;"	f	class:BoardPosition	file:
 amaya/7.*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[amaya\/7.*]$/;"	s
 amaya/7.*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[amaya\/7.*]$/;"	s
 amaya/8.0*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[amaya\/8.0*]$/;"	s
@@ -25606,14 +25673,12 @@ aolVersion	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.
 aolVersion	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^aolVersion=9.0$/;"	k	section:AOL 9.0/IE 7.0
 appie*(www.walhello.com)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[appie*(www.walhello.com)]$/;"	s
 appie*(www.walhello.com)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[appie*(www.walhello.com)]$/;"	s
-audioPlay	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-audioPlay	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-audioPlay	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-audioPlay	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-audioPlay	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-audioPlay	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
 b2w/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[b2w\/*]$/;"	s
 b2w/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[b2w\/*]$/;"	s
+baseCamera	hexanome-14/Assets/initGame.cs	/^    private GameObject baseCamera;$/;"	f	class:initGame	file:
+baseObject	hexanome-14/Assets/initGame.cs	/^    private GameObject baseObject;$/;"	f	class:initGame	file:
+baseObject	hexanome-14/Assets/masterClass.cs	/^    private GameObject baseObject;$/;"	f	class:masterClass	file:
+beginSetup	hexanome-14/Assets/masterClass.cs	/^    private void beginSetup()$/;"	m	class:masterClass	file:
 blogsearchbot-pumpkin-2	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[blogsearchbot-pumpkin-2]$/;"	s
 blogsearchbot-pumpkin-2	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[blogsearchbot-pumpkin-2]$/;"	s
 boitho.com-dc/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[boitho.com-dc\/*]$/;"	s
@@ -25626,12 +25691,8 @@ browsers.garykeith.com browscap.ini bot BETA	hexanome-14/Testing.app/Contents/Mo
 browsers.garykeith.com browscap.ini bot BETA	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[browsers.garykeith.com browscap.ini bot BETA]$/;"	s
 btbot/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[btbot\/*]$/;"	s
 btbot/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[btbot\/*]$/;"	s
-cameraMode	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-cameraMode	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-cameraMode	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-cameraMode	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-cameraMode	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-cameraMode	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
+calculateCentroid	hexanome-14/Assets/BoardPosition.cs	/^ public PointF calculateCentroid()$/;"	m	class:BoardPosition
+clientList	hexanome-14/Assets/C#/Chat_Server.cs	/^    List<Client_Connection> clientList = new List<Client_Connection>();$/;"	f	class:Chat_Server	file:
 com.unity.2d.sprite	hexanome-14/Packages/manifest.json	/^    "com.unity.2d.sprite": "1.0.0",$/;"	s	object:dependencies
 com.unity.2d.tilemap	hexanome-14/Packages/manifest.json	/^    "com.unity.2d.tilemap": "1.0.0",$/;"	s	object:dependencies
 com.unity.collab-proxy	hexanome-14/Packages/manifest.json	/^    "com.unity.collab-proxy": "1.2.16",$/;"	s	object:dependencies
@@ -25678,21 +25739,26 @@ com.unity.ugui	hexanome-14/Packages/manifest.json	/^    "com.unity.ugui": "1.0.0
 com.unity.xr.legacyinputhelpers	hexanome-14/Packages/manifest.json	/^    "com.unity.xr.legacyinputhelpers": "2.0.2",$/;"	s	object:dependencies
 compatible; Mozilla 4.0; MSIE 5.5; (SqwidgeBot v1.01 - http://www.sqwidge.com/bot/)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[compatible; Mozilla 4.0; MSIE 5.5; (SqwidgeBot v1.01 - http:\/\/www.sqwidge.com\/bot\/)]$/;"	s
 compatible; Mozilla 4.0; MSIE 5.5; (SqwidgeBot v1.01 - http://www.sqwidge.com/bot/)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[compatible; Mozilla 4.0; MSIE 5.5; (SqwidgeBot v1.01 - http:\/\/www.sqwidge.com\/bot\/)]$/;"	s
+connected	hexanome-14/Assets/C#/Chat_Client.cs	/^    public Boolean connected()$/;"	m	class:Chat_Client
+connection	hexanome-14/Assets/C#/Chat_Client.cs	/^    private TcpClient connection;$/;"	f	class:Chat_Client	file:
+connection	hexanome-14/Assets/C#/Chat_Server.cs	/^        TcpClient connection;$/;"	f	class:Chat_Server.Client_Connection	file:
+convertToInt	hexanome-14/Assets/masterClass.cs	/^    private int convertToInt(string prev)$/;"	m	class:masterClass	file:
 copyright sheriff (*)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[copyright sheriff (*)]$/;"	s
 copyright sheriff (*)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[copyright sheriff (*)]$/;"	s
 cosmos*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[cosmos*]$/;"	s
 cosmos*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[cosmos*]$/;"	s
+createBoard	hexanome-14/Assets/masterClass.cs	/^    private void createBoard(Sprite sprite)$/;"	m	class:masterClass	file:
+createCamera	hexanome-14/Assets/initGame.cs	/^    private void createCamera(Vector3 cameraPosition)$/;"	m	class:initGame	file:
+createHero	hexanome-14/Assets/masterClass.cs	/^    private void createHero(string hero_name)$/;"	m	class:masterClass	file:
 curl/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[curl\/*]$/;"	s
 curl/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[curl\/*]$/;"	s
+currentlySelected	hexanome-14/Assets/BoardPosition.cs	/^    private bool currentlySelected = false;$/;"	f	class:BoardPosition	file:
+currentlySelectedBoardPos	hexanome-14/Assets/masterClass.cs	/^    private string currentlySelectedBoardPos;$/;"	f	class:masterClass	file:
 ddetailsbot (http://www.displaydetails.com)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ddetailsbot (http:\/\/www.displaydetails.com)]$/;"	s
 ddetailsbot (http://www.displaydetails.com)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ddetailsbot (http:\/\/www.displaydetails.com)]$/;"	s
+delem	hexanome-14/Assets/C#/Chat_Client.cs	/^    public static string delem = "" + (char)(10);$/;"	f	class:Chat_Client
 dependencies	hexanome-14/Packages/manifest.json	/^  "dependencies": {$/;"	o
-drawMode	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:cameraMode
-drawMode	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:cameraMode
-drawMode	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:cameraMode
-drawMode	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:cameraMode
-drawMode	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:cameraMode
-drawMode	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:cameraMode
+drawLine	hexanome-14/Assets/BoardPosition.cs	/^    void drawLine(bool shouldEnable)$/;"	m	class:BoardPosition	file:
 e-SocietyRobot(http://www.yama.info.waseda.ac.jp/~yamana/es/)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[e-SocietyRobot(http:\/\/www.yama.info.waseda.ac.jp\/~yamana\/es\/)]$/;"	s
 e-SocietyRobot(http://www.yama.info.waseda.ac.jp/~yamana/es/)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[e-SocietyRobot(http:\/\/www.yama.info.waseda.ac.jp\/~yamana\/es\/)]$/;"	s
 eCatch*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[eCatch*]$/;"	s
@@ -25753,10 +25819,15 @@ fetch libfetch/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/brow
 fetch libfetch/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[fetch libfetch\/*]$/;"	s
 flatlandbot/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[flatlandbot\/*]$/;"	s
 flatlandbot/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[flatlandbot\/*]$/;"	s
+fullBoardSprite	hexanome-14/Assets/initGame.cs	/^    private Sprite fullBoardSprite;$/;"	f	class:initGame	file:
+gameLocation	hexanome-14/Assets/BoardPosition.cs	/^    private int gameLocation;$/;"	f	class:BoardPosition	file:
 gazz/*(gazz@nttr.co.jp)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[gazz\/*(gazz@nttr.co.jp)]$/;"	s
 gazz/*(gazz@nttr.co.jp)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[gazz\/*(gazz@nttr.co.jp)]$/;"	s
 geniebot*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[geniebot*]$/;"	s
 geniebot*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[geniebot*]$/;"	s
+getMiddle	hexanome-14/Assets/BoardPosition.cs	/^    public Vector3 getMiddle()$/;"	m	class:BoardPosition
+getPlayerTagFromTurn	hexanome-14/Assets/masterClass.cs	/^    private string getPlayerTagFromTurn()$/;"	m	class:masterClass	file:
+getTextFromStream	hexanome-14/Assets/C#/Chat_Server.cs	/^        private string getTextFromStream(IAsyncResult ar)$/;"	m	class:Chat_Server.Client_Connection	file:
 gnome-vfs/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[gnome-vfs\/*]$/;"	s
 gnome-vfs/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[gnome-vfs\/*]$/;"	s
 googlebot-urlconsole	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[googlebot-urlconsole]$/;"	s
@@ -25765,6 +25836,11 @@ gsa-crawler*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap
 gsa-crawler*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[gsa-crawler*]$/;"	s
 hcat/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[hcat\/*]$/;"	s
 hcat/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[hcat\/*]$/;"	s
+heroAtlas	hexanome-14/Assets/initGame.cs	/^    private SpriteAtlas heroAtlas;$/;"	f	class:initGame	file:
+heroAtlas	hexanome-14/Assets/masterClass.cs	/^    private SpriteAtlas heroAtlas;$/;"	f	class:masterClass	file:
+heroNumber	hexanome-14/Assets/Player.cs	/^    private int heroNumber;$/;"	f	class:Player	file:
+hero_type	hexanome-14/Assets/Hero.cs	/^    private string hero_type;$/;"	f	class:Hero	file:
+hideBorderHighlight	hexanome-14/Assets/BoardPosition.cs	/^    public void hideBorderHighlight()$/;"	m	class:BoardPosition
 hitcrawler_0.*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[hitcrawler_0.*]$/;"	s
 hitcrawler_0.*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[hitcrawler_0.*]$/;"	s
 htdig/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[htdig\/*]$/;"	s
@@ -25847,14 +25923,12 @@ ia_archiver*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap
 ia_archiver*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ia_archiver*]$/;"	s
 iexplore.exe	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[iexplore.exe]$/;"	s
 iexplore.exe	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[iexplore.exe]$/;"	s
-in2DMode	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-in2DMode	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-in2DMode	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-in2DMode	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-in2DMode	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-in2DMode	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
 inetbot/* (?http://www.inetbot.com/bot.html)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[inetbot\/* (?http:\/\/www.inetbot.com\/bot.html)]$/;"	s
 inetbot/* (?http://www.inetbot.com/bot.html)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[inetbot\/* (?http:\/\/www.inetbot.com\/bot.html)]$/;"	s
+init	hexanome-14/Assets/BoardPosition.cs	/^    public void init()$/;"	m	class:BoardPosition
+init	hexanome-14/Assets/Hero.cs	/^    public void init(GameObject theSphere, string hero_name)$/;"	m	class:Hero
+initGame	hexanome-14/Assets/initGame.cs	/^public class initGame : MonoBehaviour$/;"	c
+initMasterClass	hexanome-14/Assets/masterClass.cs	/^    public void initMasterClass(string callingObjectTag, GameObject theSphere, SpriteAtlas theHe/;"	m	class:masterClass
 intraVnews/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[intraVnews\/*]$/;"	s
 intraVnews/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[intraVnews\/*]$/;"	s
 isBanned	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isBanned=false$/;"	k	section:*
@@ -26233,6 +26307,7 @@ isBanned	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.in
 isBanned	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isBanned=true$/;"	k	section:vobsub
 isBanned	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isBanned=true$/;"	k	section:wadaino.jp-crawler*
 isBanned	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isBanned=true$/;"	k	section:webcollage/*
+isCurrentlySelected	hexanome-14/Assets/masterClass.cs	/^    public bool isCurrentlySelected(string newlySelected)$/;"	m	class:masterClass
 isMobileDevice	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isMobileDevice=false$/;"	k	section:*
 isMobileDevice	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isMobileDevice=false$/;"	k	section:DefaultProperties
 isMobileDevice	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isMobileDevice=true$/;"	k	section:Android
@@ -26293,6 +26368,8 @@ isMobileDevice	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/brows
 isMobileDevice	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isMobileDevice=true$/;"	k	section:YahooSeeker/*
 isMobileDevice	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isMobileDevice=true$/;"	k	section:iPhone
 isMobileDevice	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isMobileDevice=true$/;"	k	section:iPod
+isMyTurn	hexanome-14/Assets/Player.cs	/^    private bool isMyTurn;$/;"	f	class:Player	file:
+isOccupied	hexanome-14/Assets/C#/Chat_Server.cs	/^    public static Boolean isOccupied()$/;"	m	class:Chat_Server
 isSyndicationReader	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isSyndicationReader=false$/;"	k	section:*
 isSyndicationReader	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isSyndicationReader=false$/;"	k	section:DefaultProperties
 isSyndicationReader	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^isSyndicationReader=false$/;"	k	section:blogsearchbot-pumpkin-2
@@ -26349,31 +26426,21 @@ libcurl-agent/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/brows
 libcurl-agent/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[libcurl-agent\/*]$/;"	s
 librabot/1.0 (*)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[librabot\/1.0 (*)]$/;"	s
 librabot/1.0 (*)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[librabot\/1.0 (*)]$/;"	s
+lineRenderer	hexanome-14/Assets/BoardPosition.cs	/^    private LineRenderer lineRenderer;$/;"	f	class:BoardPosition	file:
+listener	hexanome-14/Assets/C#/Chat_Server.cs	/^    TcpListener listener;$/;"	f	class:Chat_Server	file:
 livedoor FeedFetcher/0.0* (http://reader.livedoor.com/;*)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[livedoor FeedFetcher\/0.0* (http:\/\/reader.livedoor.com\/;*)]$/;"	s
 livedoor FeedFetcher/0.0* (http://reader.livedoor.com/;*)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[livedoor FeedFetcher\/0.0* (http:\/\/reader.livedoor.com\/;*)]$/;"	s
 llssbot/1.0	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[llssbot\/1.0]$/;"	s
 llssbot/1.0	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[llssbot\/1.0]$/;"	s
 lwp*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[lwp*]$/;"	s
 lwp*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[lwp*]$/;"	s
-m_ExpandedPrefabGameObjectFileIDs	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	a
-m_ExpandedPrefabGameObjectFileIDs	hexanome-14/Library/StateCache/Hierarchy/47a315-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[],"m_ScrollY":0./;"	a
-m_ExpandedPrefabGameObjectFileIDs	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	a
-m_ExpandedSceneGameObjectInstanceIDs	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	a
-m_ExpandedSceneGameObjectInstanceIDs	hexanome-14/Library/StateCache/Hierarchy/47a315-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[],"m_ScrollY":0./;"	a
-m_ExpandedSceneGameObjectInstanceIDs	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	a
-m_LastClickedFileID	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	n
-m_LastClickedFileID	hexanome-14/Library/StateCache/Hierarchy/47a315-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[],"m_ScrollY":0./;"	n
-m_LastClickedFileID	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n
-m_LastClickedInstanceID	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	n
-m_LastClickedInstanceID	hexanome-14/Library/StateCache/Hierarchy/47a315-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[],"m_ScrollY":0./;"	n
-m_LastClickedInstanceID	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n
-m_ScrollY	hexanome-14/Library/StateCache/Hierarchy/262b7f-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-26872,-17400,-8/;"	n
-m_ScrollY	hexanome-14/Library/StateCache/Hierarchy/47a315-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[],"m_ScrollY":0./;"	n
-m_ScrollY	hexanome-14/Library/StateCache/Hierarchy/ed8c7a-mainStage.json	/^{"m_ExpandedPrefabGameObjectFileIDs":[],"m_ExpandedSceneGameObjectInstanceIDs":[-13074,-12200,-1/;"	n
 masidani_bot_v0.6*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[masidani_bot_v0.6*]$/;"	s
 masidani_bot_v0.6*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[masidani_bot_v0.6*]$/;"	s
+masterClass	hexanome-14/Assets/masterClass.cs	/^public class masterClass : MonoBehaviour$/;"	c
+message	hexanome-14/Assets/C#/Chat_Client.cs	/^    private string message = "";$/;"	f	class:Chat_Client	file:
 metatagsdir/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[metatagsdir\/*]$/;"	s
 metatagsdir/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[metatagsdir\/*]$/;"	s
+middle	hexanome-14/Assets/BoardPosition.cs	/^    private Vector3 middle;$/;"	f	class:BoardPosition	file:
 miniRank/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[miniRank\/*]$/;"	s
 miniRank/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[miniRank\/*]$/;"	s
 moget/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[moget\/*]$/;"	s
@@ -26408,16 +26475,11 @@ n4p_bot*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini
 n4p_bot*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[n4p_bot*]$/;"	s
 nabot*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[nabot*]$/;"	s
 nabot*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[nabot*]$/;"	s
-name	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-name	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-name	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-name	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-name	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-name	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
 naoFavicon4IE*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[naoFavicon4IE*]$/;"	s
 naoFavicon4IE*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[naoFavicon4IE*]$/;"	s
 neTVision AG andreas.heidoetting@thomson-webcast.net	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[neTVision AG andreas.heidoetting@thomson-webcast.net]$/;"	s
 neTVision AG andreas.heidoetting@thomson-webcast.net	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[neTVision AG andreas.heidoetting@thomson-webcast.net]$/;"	s
+neighborBoardNumbers	hexanome-14/Assets/BoardPosition.cs	/^    private int[] neighborBoardNumbers;$/;"	f	class:BoardPosition	file:
 netCLR	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^netCLR=false$/;"	k	section:*
 netCLR	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^netCLR=false$/;"	k	section:*
 ng/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ng\/*]$/;"	s
@@ -26426,6 +26488,7 @@ niXXieBot?Foster*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/bro
 niXXieBot?Foster*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[niXXieBot?Foster*]$/;"	s
 nicebot	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[nicebot]$/;"	s
 nicebot	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[nicebot]$/;"	s
+notifyClick	hexanome-14/Assets/masterClass.cs	/^    public void notifyClick()$/;"	m	class:masterClass
 oBot	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[oBot]$/;"	s
 oBot	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[oBot]$/;"	s
 ogeb browser , Version 1.1.0	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[ogeb browser , Version 1.1.0]$/;"	s
@@ -26434,62 +26497,38 @@ onCHECK Linkchecker von www.scientec.de fuer www.onsinn.de	hexanome-14/Testing.a
 onCHECK Linkchecker von www.scientec.de fuer www.onsinn.de	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[onCHECK Linkchecker von www.scientec.de fuer www.onsinn.de]$/;"	s
 online link validator (http://www.dead-links.com/)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[online link validator (http:\/\/www.dead-links.com\/)]$/;"	s
 online link validator (http://www.dead-links.com/)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[online link validator (http:\/\/www.dead-links.com\/)]$/;"	s
-orthographic	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-orthographic	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-orthographic	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-orthographic	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-orthographic	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-orthographic	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
 panscient.com	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[panscient.com]$/;"	s
 panscient.com	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[panscient.com]$/;"	s
 pavuk/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[pavuk\/*]$/;"	s
 pavuk/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[pavuk\/*]$/;"	s
-pivot	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-pivot	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-pivot	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-pivot	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-pivot	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-pivot	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
+perimeter	hexanome-14/Assets/BoardPosition.cs	/^    private Vector2[] perimeter;$/;"	f	class:BoardPosition	file:
 pixfinder/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[pixfinder\/*]$/;"	s
 pixfinder/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[pixfinder\/*]$/;"	s
+playerCount	hexanome-14/Assets/masterClass.cs	/^    private int playerCount;$/;"	f	class:masterClass	file:
+playerID	hexanome-14/Assets/Player.cs	/^    private string playerID;$/;"	f	class:Player	file:
+players	hexanome-14/Assets/masterClass.cs	/^    private GameObject[] players;$/;"	f	class:masterClass	file:
+polyCollider	hexanome-14/Assets/BoardPosition.cs	/^    private PolygonCollider2D polyCollider;$/;"	f	class:BoardPosition	file:
 polybot?*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[polybot?*]$/;"	s
 polybot?*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[polybot?*]$/;"	s
+port	hexanome-14/Assets/C#/Chat_Server.cs	/^    public static int port = 5230;$/;"	f	class:Chat_Server
+readBuffer	hexanome-14/Assets/C#/Chat_Client.cs	/^    readonly byte[] readBuffer = new byte[5000];$/;"	f	class:Chat_Client	file:
+readBuffer	hexanome-14/Assets/C#/Chat_Server.cs	/^        readonly byte[] readBuffer = new byte[5000];$/;"	f	class:Chat_Server.Client_Connection	file:
 renlifangbot/1.0 (?http://search.msn.com/msnbot.htm)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[renlifangbot\/1.0 (?http:\/\/search.msn.com\/msnbot.htm)]$/;"	s
 renlifangbot/1.0 (?http://search.msn.com/msnbot.htm)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[renlifangbot\/1.0 (?http:\/\/search.msn.com\/msnbot.htm)]$/;"	s
-rotation	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-rotation	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-rotation	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-rotation	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-rotation	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-rotation	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
+requestHighlight	hexanome-14/Assets/masterClass.cs	/^    public void requestHighlight(string newlySelected)$/;"	m	class:masterClass
 rssImagesBot/0.1 (*http://herbert.groot.jebbink.nl/?app=rssImages)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[rssImagesBot\/0.1 (*http:\/\/herbert.groot.jebbink.nl\/?app=rssImages)]$/;"	s
 rssImagesBot/0.1 (*http://herbert.groot.jebbink.nl/?app=rssImages)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[rssImagesBot\/0.1 (*http:\/\/herbert.groot.jebbink.nl\/?app=rssImages)]$/;"	s
 sEasyDL/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sEasyDL\/*]$/;"	s
 sEasyDL/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sEasyDL\/*]$/;"	s
-sceneLighting	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-sceneLighting	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-sceneLighting	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-sceneLighting	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-sceneLighting	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-sceneLighting	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b
-sceneViewState	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-sceneViewState	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-sceneViewState	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-sceneViewState	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-sceneViewState	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
-sceneViewState	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	o
 search.ch*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[search.ch*]$/;"	s
 search.ch*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[search.ch*]$/;"	s
 searchbot admin@google.com	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[searchbot admin@google.com]$/;"	s
 searchbot admin@google.com	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[searchbot admin@google.com]$/;"	s
-section	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-section	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-section	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-section	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-section	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
-section	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	s	object:cameraMode
 semanticdiscovery/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[semanticdiscovery\/*]$/;"	s
 semanticdiscovery/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[semanticdiscovery\/*]$/;"	s
+server	hexanome-14/Assets/C#/Chat_Server.cs	/^        Chat_Server server;$/;"	f	class:Chat_Server.Client_Connection	file:
+setNewHeroLocation	hexanome-14/Assets/masterClass.cs	/^    public void setNewHeroLocation(Vector3 newLocation, string boardPositionNumber)$/;"	m	class:masterClass
+setParameters	hexanome-14/Assets/Player.cs	/^    public void setParameters(int num, string ID, bool true_or_false)$/;"	m	class:Player
 shaboyi spider	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[shaboyi spider]$/;"	s
 shaboyi spider	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[shaboyi spider]$/;"	s
 shareaza*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[shareaza*]$/;"	s
@@ -26498,52 +26537,10 @@ shelob v1.*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.
 shelob v1.*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[shelob v1.*]$/;"	s
 sherlock/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sherlock\/*]$/;"	s
 sherlock/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sherlock\/*]$/;"	s
-showFlares	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFlares	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFlares	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFlares	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFlares	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFlares	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFog	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFog	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFog	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFog	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFog	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showFog	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showImageEffects	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showImageEffects	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showImageEffects	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showImageEffects	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showImageEffects	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showImageEffects	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showMaterialUpdate	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showMaterialUpdate	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showMaterialUpdate	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showMaterialUpdate	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showMaterialUpdate	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showMaterialUpdate	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showParticleSystems	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showParticleSystems	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showParticleSystems	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showParticleSystems	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showParticleSystems	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showParticleSystems	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showSkybox	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showSkybox	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showSkybox	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showSkybox	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showSkybox	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
-showSkybox	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	b	object:sceneViewState
 sitecheck.internetseer.com*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sitecheck.internetseer.com*]$/;"	s
 sitecheck.internetseer.com*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sitecheck.internetseer.com*]$/;"	s
 sitemonitor@dnsvr.com/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sitemonitor@dnsvr.com\/*]$/;"	s
 sitemonitor@dnsvr.com/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sitemonitor@dnsvr.com\/*]$/;"	s
-size	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n
-size	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n
-size	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n
-size	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n
-size	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n
-size	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n
 slurp	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[slurp]$/;"	s
 slurp	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[slurp]$/;"	s
 sna-0.0.*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sna-0.0.*]$/;"	s
@@ -26556,10 +26553,17 @@ sogou web spider*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/bro
 sogou web spider*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sogou web spider*]$/;"	s
 sohu*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sohu*]$/;"	s
 sohu*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sohu*]$/;"	s
+sphere	hexanome-14/Assets/Hero.cs	/^    private GameObject sphere;$/;"	f	class:Hero	file:
+sphere	hexanome-14/Assets/initGame.cs	/^    private GameObject sphere;$/;"	f	class:initGame	file:
+sphere	hexanome-14/Assets/masterClass.cs	/^    private GameObject sphere;$/;"	f	class:masterClass	file:
+sphereScale	hexanome-14/Assets/masterClass.cs	/^    private Vector3 sphereScale;$/;"	f	class:masterClass	file:
 spider (tspyyp@tom.com)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[spider (tspyyp@tom.com)]$/;"	s
 spider (tspyyp@tom.com)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[spider (tspyyp@tom.com)]$/;"	s
+spriteRenderer	hexanome-14/Assets/Hero.cs	/^    private SpriteRenderer spriteRenderer;$/;"	f	class:Hero	file:
 sproose/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sproose\/*]$/;"	s
 sproose/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[sproose\/*]$/;"	s
+stream	hexanome-14/Assets/C#/Chat_Client.cs	/^    NetworkStream stream$/;"	p	class:Chat_Client
+stream	hexanome-14/Assets/C#/Chat_Server.cs	/^        NetworkStream stream$/;"	p	class:Chat_Server.Client_Connection
 supportsCSS	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^supportsCSS=false$/;"	k	section:*
 supportsCSS	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^supportsCSS=false$/;"	k	section:DefaultProperties
 supportsCSS	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^supportsCSS=true$/;"	k	section:AOL 9.0/IE 5.5
@@ -26842,20 +26846,18 @@ supportsCSS	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap
 supportsCSS	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^supportsCSS=true$/;"	k	section:iCab/3.0* (Macintosh; ?; PPC*)
 supportsCSS	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^supportsCSS=true$/;"	k	section:iPhone
 supportsCSS	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^supportsCSS=true$/;"	k	section:iSiloX
+timer	hexanome-14/Assets/C#/TimerToGameboard.cs	/^    private float timer = 5f;$/;"	f	class:TimerToGameboard	file:
+turn	hexanome-14/Assets/masterClass.cs	/^    private string turn;$/;"	f	class:masterClass	file:
 updated/*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[updated\/*]$/;"	s
 updated/*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[updated\/*]$/;"	s
+username	hexanome-14/Assets/C#/Chat_Client.cs	/^    private string username;$/;"	f	class:Chat_Client	file:
+username	hexanome-14/Assets/C#/Chat_Server.cs	/^        public string username = "unknown";$/;"	f	class:Chat_Server.Client_Connection
 virus_detector*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[virus_detector*]$/;"	s
 virus_detector*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[virus_detector*]$/;"	s
 vobsub	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[vobsub]$/;"	s
 vobsub	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[vobsub]$/;"	s
 voyager/2.0 (http://www.kosmix.com/html/crawler.html)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[voyager\/2.0 (http:\/\/www.kosmix.com\/html\/crawler.html)]$/;"	s
 voyager/2.0 (http://www.kosmix.com/html/crawler.html)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[voyager\/2.0 (http:\/\/www.kosmix.com\/html\/crawler.html)]$/;"	s
-w	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-w	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-w	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-w	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-w	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-w	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
 w3cdomversion	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^w3cdomversion=1.0$/;"	k	section:AOL 9.0/IE 5.5
 w3cdomversion	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^w3cdomversion=1.0$/;"	k	section:AOL 9.0/IE 6.0
 w3cdomversion	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^w3cdomversion=1.0$/;"	k	section:Firefox
@@ -26926,41 +26928,5 @@ www.zatka.com	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browsca
 www.zatka.com	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[www.zatka.com]$/;"	s
 wwwster/* (Beta, mailto:gue@cis.uni-muenchen.de)	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[wwwster\/* (Beta, mailto:gue@cis.uni-muenchen.de)]$/;"	s
 wwwster/* (Beta, mailto:gue@cis.uni-muenchen.de)	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[wwwster\/* (Beta, mailto:gue@cis.uni-muenchen.de)]$/;"	s
-x	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-x	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-x	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-x	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-x	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-x	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-x	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-x	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-x	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-x	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-x	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-x	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-y	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-y	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-y	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-y	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-y	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-y	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-y	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-y	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-y	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-y	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-y	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-y	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-z	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-z	hexanome-14/Library/StateCache/SceneView/1d8325-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-z	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-z	hexanome-14/Library/StateCache/SceneView/5b76e5-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-z	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-z	hexanome-14/Library/StateCache/SceneView/5b925b-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-z	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-z	hexanome-14/Library/StateCache/SceneView/5bbff8-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-z	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-z	hexanome-14/Library/StateCache/SceneView/8505bd-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
-z	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:pivot
-z	hexanome-14/Library/StateCache/SceneView/fcc556-mainStage.json	/^{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audi/;"	n	object:rotation
 zibber-v*	hexanome-14/Testing.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[zibber-v*]$/;"	s
 zibber-v*	hexanome-14/Testing2.app/Contents/MonoBleedingEdge/etc/mono/browscap.ini	/^[zibber-v*]$/;"	s
