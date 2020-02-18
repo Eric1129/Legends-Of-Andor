@@ -24,42 +24,42 @@
  * *Chelsea Wright*
    * **
    * **
-   * **
+   * *Attend meetings*
    
    
  * *Ailish Mak*
    * **
    * **
-   * **
+   * *Attend meetings*
  
  
  * *Anahita Mohapatra*
    * **
    * **
-   * **
+   * *Attend meetings*
  
  * *Brendon Keirle*
    * **
    * **
-   * **
+   * *Attend meetings*
  
  
  * *Ian Tsai*
-   * **
-   * **
-   * **
+   * *Try to solve memory problem*
+   * *Study for final*
+   * *Attend meetings*
 
 
  * *Max Boksem*
    * **
    * **
-   * **
+   * *Attend meetings*
  
  
  * *Tingyu Shen*
    * **
    * **
-   * **
+   * *Attend meetings*
 
 
 
@@ -69,16 +69,16 @@
 
 ### Top 3 unexpected challenges encountered since last report
 
- * **
- * **
- * **
+ * *Coding Delay*
+ * *Equally distribute tasks*
+ * *Arrange the correct pattern to perform*
  
 
 ### Top 3 lessons learned since last report
 
-   * **
-   * **
-   * **
+   * *Get the correct design class*
+   * *If we had the correct design class, would've saved a lot of time when we code*
+   * *use abstraction in similar stuffs*
 
 ### 3 most critical bugs in current functionality (optional)
 
@@ -96,4 +96,4 @@
 
 ### Team mood
 
- * *Everyone is doing great!*
+ * *Everyone is doing great! Hard Code lets go!*
