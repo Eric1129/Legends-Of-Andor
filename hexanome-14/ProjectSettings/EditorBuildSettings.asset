@@ -23,9 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Select PubicPrivate.unity
     guid: 08c5c1c14bd6a4b969b7132fd2005436
-  - enabled: 1
-    path: Assets/Scenes/Main_Board.unity
-    guid: 1067be06fb91e4fe680e9bafff47bb24
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Play_Game.unity
     guid: ca24634d0b43f4c53beb97a32986f8ce
