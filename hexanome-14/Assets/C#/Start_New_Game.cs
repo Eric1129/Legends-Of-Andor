@@ -15,13 +15,13 @@ public class Start_New_Game : MonoBehaviour
     public void OpenSavedGame()
     {
 
-        SceneManager.LoadScene("Select PubicPrivate");
+        SceneManager.LoadScene("MySavedGame");
 
     }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Game_Lobby");
+        SceneManager.LoadScene("GameLobby");
     }
 
 }

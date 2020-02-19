@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Log_In.unity
     guid: 004b29bb4736d4020aeacaf1cb415184
   - enabled: 1
-    path: Assets/Scenes/Select PubicPrivate.unity
+    path: Assets/Scenes/GameLobby.unity
     guid: 08c5c1c14bd6a4b969b7132fd2005436
   - enabled: 0
     path: 
@@ -29,13 +29,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Play_Game.unity
     guid: ca24634d0b43f4c53beb97a32986f8ce
-  - enabled: 1
-    path: Assets/Scenes/Choose Player.unity
-    guid: 56b6cd943f8b745e29eda9063b7c74c0
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/UnityMadeMeSaveToFile.unity
     guid: 7c6b1dde7e85293689c288a9f9d1d11e
   - enabled: 1
-    path: Assets/Scenes/Game_Lobby.unity
+    path: Assets/Scenes/GameRoom.unity
     guid: 4fc28ba34cb364d129a5422746b7fb19
+  - enabled: 1
+    path: Assets/Scenes/MySavedGame.unity
+    guid: 7bf407ca15b314dd59e0980f18713921
   m_configObjects: {}
