@@ -7,11 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class Play_Game : MonoBehaviour
 {
-	private const string SceneName = "Play_Game";
 
 	public void Waiting()
 	{
-		SceneManager.LoadScene(SceneName);
+		SceneManager.LoadScene("Play_Game");
 
 	}
 

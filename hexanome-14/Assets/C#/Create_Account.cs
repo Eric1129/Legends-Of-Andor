@@ -7,13 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class Create_Account : MonoBehaviour
 {
-    private const string SceneName = "Main_Menu";
-
     public void CreateAccount()
     {
-        SceneManager.LoadScene(SceneName);
+        SceneManager.LoadScene("Main_Menu");
 
     }
-
-
 }
