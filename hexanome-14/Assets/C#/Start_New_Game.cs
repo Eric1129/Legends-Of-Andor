@@ -6,11 +6,9 @@ using UnityEngine.SceneManagement;
 public class Start_New_Game : MonoBehaviour
 {
  
-    private const string SceneName = "GameSetupScreen";
-
     public void StartNewGame()
     {
-        SceneManager.LoadScene(SceneName);
+        SceneManager.LoadScene("CreateNewGame");
 
     }
 
@@ -23,7 +21,7 @@ public class Start_New_Game : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Choose Player");
+        SceneManager.LoadScene("Game_Lobby");
     }
 
 }

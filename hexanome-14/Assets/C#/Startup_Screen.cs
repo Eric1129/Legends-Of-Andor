@@ -5,21 +5,17 @@ using UnityEngine.SceneManagement;
 
 //This script enables redirection from Sign in Button to Login page in Legends of Andor
 
-public class SignInButton : MonoBehaviour
+public class Startup_Screen : MonoBehaviour
 {
-    private const string SceneName = "Log_In";
 
     public void SignIn()
     {
-        SceneManager.LoadScene(SceneName);
-
+        SceneManager.LoadScene("Log_In");
     }
 
     public void Create_Account()
     {
-
         SceneManager.LoadScene("Create_Account");
-
     }
 
 }
