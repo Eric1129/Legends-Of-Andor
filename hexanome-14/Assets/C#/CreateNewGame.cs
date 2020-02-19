@@ -5,6 +5,6 @@ public class CreateNewGame : MonoBehaviour
 {
     public void GameLobby()
     {
-        SceneManager.LoadScene("Game_Lobby");
+        SceneManager.LoadScene("GameRoom");
     }
 }
