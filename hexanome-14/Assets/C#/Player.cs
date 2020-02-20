@@ -5,18 +5,31 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private int heroNumber;
-    private string playerID;
-    private bool isMyTurn;
+    private string userName;
+
+    // ie Player-Male-Dwarf
+    // also encodes the corresponding hero type
+    private string myTag;
+    private string heroType;
+    private Hero myHero;
 
 
-    public void setParameters(int num, string ID, bool true_or_false)
+    public void setTag(string ID)
     {
-        heroNumber = num;
-        playerID = ID;
-        isMyTurn = true_or_false;
+        myTag = ID;
+        setHeroType();
+        myHero = new Archer();
     }
 
+    public string getPlayerTag()
+    {
+        return myTag;
+    }
+
+    public string getHeroType()
+    {
+        return heroType;
+    }
 
     void Update()
     {
@@ -27,5 +40,29 @@ public class Player : MonoBehaviour
             master.notifyClick();
         }
     }
+
+    // extracts the hero tag from our own tag
+    // EX.)   if (myTag == "Player-Male-Dwarf") -> output "Male-Dwarf"
+    private void setHeroType()
+    {
+        // must initialize before adding strings
+        heroType = "";
+        int ct = 0;
+        string[] partsOfTag = myTag.Split('-');
+        if (partsOfTag.Length != 3)
+        {
+            Debug.Log("Found a bad tag in Player.setHeroType: " + myTag);
+        }
+
+        heroType = partsOfTag[1] + "-" + partsOfTag[2];
+        //foreach(string partOfTag in myTag.Split('-'))
+        //{
+        //    // skip first val: "Player"
+        //    if (ct++ == 0) continue;
+
+        //    heroType += partOfTag;
+        //}
+    }
+
 
 }
