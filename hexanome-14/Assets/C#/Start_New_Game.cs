@@ -6,24 +6,22 @@ using UnityEngine.SceneManagement;
 public class Start_New_Game : MonoBehaviour
 {
  
-    private const string SceneName = "GameSetupScreen";
-
     public void StartNewGame()
     {
-        SceneManager.LoadScene(SceneName);
+        SceneManager.LoadScene("CreateNewGame");
 
     }
 
     public void OpenSavedGame()
     {
 
-        SceneManager.LoadScene("Select PubicPrivate");
+        SceneManager.LoadScene("MySavedGame");
 
     }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Choose Player");
+        SceneManager.LoadScene("GameLobby");
     }
 
 }
