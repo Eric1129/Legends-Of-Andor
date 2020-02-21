@@ -92,7 +92,7 @@ public class initGame : MonoBehaviour
 
     void Start()
     {
-        setCameraPosition(new Vector3(-38.0f, 22.0f, -38.0f));
+        setCameraPosition(new Vector3(0f, 0f, -65f));
         // GameObject tagHandler = Instantiate(baseObject, transform.position, Quaternion.identity);
         // tagHandler.AddComponent<CreateTagList>();
         string masterTag = createMasterClass();
