@@ -37,7 +37,6 @@ public class initGame : MonoBehaviour
         {
             GameObject playerObject = Instantiate(baseObject, transform.position, transform.rotation);
             playerObject.AddComponent<Player>();
-            playerObject.AddComponent<Hero>();
             playerObject.tag = playerTag;
 
             Player player = playerObject.GetComponent<Player>();

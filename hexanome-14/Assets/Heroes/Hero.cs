@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour, Movable, Fightable
+public class Hero : Movable, Fightable
 {
     // private GameObject sphere;
     // private SpriteRenderer spriteRenderer;
@@ -32,14 +32,12 @@ public class Hero : MonoBehaviour, Movable, Fightable
     // use List not ArrayList -- see microsoft docs on arraylist
     // private List<Usable> myArticles;
 
-    // Will need to use this to verify things like: 
-    // showTradeRequest() { if player.lookingAt != Battle then showTradeRequest() }
-    // private Screen lookingAt;
+    public Hero(){ }
 
 
     // called AFTER gameObject for this script has been created
     // AND the necessary components have been added.
-    public void init(string mySphereTag, string thisMyTag)
+    public Hero(string mySphereTag, string thisMyTag)
     {
         myTag = thisMyTag;
         heroType = myTag;
@@ -60,6 +58,8 @@ public class Hero : MonoBehaviour, Movable, Fightable
         // the hero object should move the child sphere which shows their location
     }
 
+
+    // thinking the moveStrategy should just be a param here.
     public void move(ref Node path)
     {
         moveStrat.move(ref path, this);

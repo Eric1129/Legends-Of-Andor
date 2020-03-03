@@ -35,7 +35,7 @@ public class Graph : MonoBehaviour
 
     private void readGraphCSV()
     {
-        using(var reader = new StreamReader(@"./Assets/adjacencyList.txt"))
+        using(var reader = new StreamReader(@"./Assets/CSV/adjacencyList.txt"))
         {
             while (!reader.EndOfStream)
             {
