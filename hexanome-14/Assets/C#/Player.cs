@@ -9,16 +9,25 @@ public class Player : MonoBehaviour
 
     // ie Player-Male-Dwarf
     // also encodes the corresponding hero type
+    // and Sphere-Male-Dwarf. sphere object is attached to this script.
     private string myTag;
     private string heroType;
     private Hero myHero;
+
+    // Will need to use this to verify things like: 
+    // showTradeRequest() { if player.lookingAt != Battle then showTradeRequest() }
+    // private Screen lookingAt;
 
 
     public void setTag(string ID)
     {
         myTag = ID;
         setHeroType();
-        myHero = new Archer();
+    }
+
+    public void setHero(Hero hero)
+    {
+        myHero = hero;
     }
 
     public string getPlayerTag()
@@ -33,11 +42,27 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // first check if Input.GetButtonDown("buttonName") -- based on screens (iterate over button in screen)
         // ie left-click
         if (Input.GetMouseButtonDown(0))
         {
-            masterClass master = gameObject.GetComponentInParent<masterClass>();
-            master.notifyClick();
+             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+             RaycastHit hitInfo;
+             if (!Physics.Raycast(ray, out hitInfo))
+             {
+                 return;
+             }
+
+            string colliderTag = hitInfo.collider.gameObject.tag;
+            if (colliderTag == null)
+            {
+                return;
+            }
+            // loop over button tags and then check if player.currSelected == player.selectedBoardPos
+
+            // GameObject gameObj = GameObject.FindWithTag("Master");
+            // masterClass master = GetComponent<masterClass>();
+            // master.notifyClick();
         }
     }
 

@@ -1,9 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour, Movable, Fightable
+public class Hero : Movable, Fightable
 {
+
     // private GameObject sphere;
     // private SpriteRenderer spriteRenderer;
     private string heroType;
@@ -21,7 +22,11 @@ public class Hero : MonoBehaviour, Movable, Fightable
     private bool hasThorald;
 
     private int numHoursLeft;
+<<<<<<< HEAD
     private int goldCoins;
+=======
+    private int overTimeHours = 3; 
+>>>>>>> f52af99283d4f09a037e9f62e13ec39ead9901c6
 
     // all heroes start with 1 strength point
     private int strength = 1;
@@ -29,19 +34,18 @@ public class Hero : MonoBehaviour, Movable, Fightable
     private int willPower = 7;
     // rank differs per hero so initialize this in child classes.
     private int rank;
+    private int NumDice; 
 
 
     // use List not ArrayList -- see microsoft docs on arraylist
     private List<Article> myArticles;
 
-    // Will need to use this to verify things like: 
-    // showTradeRequest() { if player.lookingAt != Battle then showTradeRequest() }
-    // private Screen lookingAt;
+    public Hero(){ }
 
 
     // called AFTER gameObject for this script has been created
     // AND the necessary components have been added.
-    public void init(string mySphereTag, string thisMyTag)
+    public Hero(string mySphereTag, string thisMyTag)
     {
         myTag = thisMyTag;
         heroType = myTag;
@@ -62,6 +66,8 @@ public class Hero : MonoBehaviour, Movable, Fightable
         // the hero object should move the child sphere which shows their location
     }
 
+
+    // thinking the moveStrategy should just be a param here.
     public void move(ref Node path)
     {
         moveStrat.move(ref path, this);
@@ -72,6 +78,7 @@ public class Hero : MonoBehaviour, Movable, Fightable
         diceRollStrat.roll(this);
     }
 
+<<<<<<< HEAD
     public int getWillPower()
     {
         return this.willPower;
@@ -100,4 +107,72 @@ public class Hero : MonoBehaviour, Movable, Fightable
     {
         this.strength = strength;
     }
+=======
+    //getters and setters for all private attributes. 
+
+    public string getHeroType ()
+    {
+
+        return heroType; 
+
+    }
+    public void setHeroType(string heroTypeInput)
+    {
+
+        heroType = heroTypeInput; 
+
+    }
+    public int getStrength()
+    {
+        return strength; 
+    }
+    public void setStrength(int strengthToSet)
+    {
+
+        strength = strengthToSet; 
+
+    }
+    public int getWillpower()
+    {
+        return willPower; 
+    }
+    public void setWillpower(int willpowerTortrn)
+    {
+        willPower = willpowerTortrn; 
+    }
+
+    public int getNumHours()
+    {
+        return numHoursLeft;
+    }
+    public void setNumHours(int numHrs)
+    {
+        numHoursLeft = numHrs; 
+    }
+    public int getRank()
+    {
+        return rank;
+    }
+    public void setRank(int rankSet)
+    {
+        rank = rankSet; 
+    }
+    public int getNumDie() { 
+        return NumDice; 
+    }
+    public void setNumDie(int numDiceSet)
+    {
+        NumDice = numDiceSet; 
+    }
+    public int getOverTimeHours()
+    {
+        return overTimeHours; 
+    }
+
+
+
+
+
+
+>>>>>>> f52af99283d4f09a037e9f62e13ec39ead9901c6
 }

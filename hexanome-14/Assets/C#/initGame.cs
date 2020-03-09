@@ -37,7 +37,6 @@ public class initGame : MonoBehaviour
         {
             GameObject playerObject = Instantiate(baseObject, transform.position, transform.rotation);
             playerObject.AddComponent<Player>();
-            playerObject.AddComponent<Hero>();
             playerObject.tag = playerTag;
 
             Player player = playerObject.GetComponent<Player>();
@@ -92,7 +91,7 @@ public class initGame : MonoBehaviour
 
     void Start()
     {
-        setCameraPosition(new Vector3(-38.0f, 22.0f, -38.0f));
+        setCameraPosition(new Vector3(0f, 0f, -65f));
         // GameObject tagHandler = Instantiate(baseObject, transform.position, Quaternion.identity);
         // tagHandler.AddComponent<CreateTagList>();
         string masterTag = createMasterClass();

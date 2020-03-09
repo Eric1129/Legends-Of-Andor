@@ -59,19 +59,6 @@ public class BoardPosition : MonoBehaviour
     }
 
 
-    // public BoardPosition(int boardNumber)
-    // {
-    //     gameLocation = boardNumber;
-    // }
-
-
-    // public BoardPosition(int boardNumber, Vector2[] boundaryVertices)
-    // {
-    //     gameLocation = boardNumber;
-    //     perimeter = boundaryVertices;
-    // }
-
-
     public Vector3 getMiddle()
     {
         // eventually we will manually record the middle of each
@@ -87,7 +74,8 @@ public class BoardPosition : MonoBehaviour
 
     void OnMouseDown()
     {
-        masterClass master = GetComponentInParent<masterClass>();
+        GameObject gameObj = GameObject.FindWithTag("Master");
+        masterClass master = gameObj.GetComponent<masterClass>();
         if (master.isCurrentlySelected(gameObject.tag))
             return;
 
