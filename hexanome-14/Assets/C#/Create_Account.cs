@@ -12,4 +12,9 @@ public class Create_Account : MonoBehaviour
         SceneManager.LoadScene("Main_Menu");
 
     }
+
+    public void back()
+    {
+        SceneManager.LoadScene("Startup_Screen");
+    }
 }

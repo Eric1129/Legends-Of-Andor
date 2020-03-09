@@ -21,6 +21,7 @@ public class Hero : MonoBehaviour, Movable, Fightable
     private bool hasThorald;
 
     private int numHoursLeft;
+    private int goldCoins;
 
     // all heroes start with 1 strength point
     private int strength = 1;
@@ -29,8 +30,9 @@ public class Hero : MonoBehaviour, Movable, Fightable
     // rank differs per hero so initialize this in child classes.
     private int rank;
 
+
     // use List not ArrayList -- see microsoft docs on arraylist
-    // private List<Usable> myArticles;
+    private List<Article> myArticles;
 
     // Will need to use this to verify things like: 
     // showTradeRequest() { if player.lookingAt != Battle then showTradeRequest() }
@@ -68,5 +70,34 @@ public class Hero : MonoBehaviour, Movable, Fightable
     public void diceRoll()
     {
         diceRollStrat.roll(this);
+    }
+
+    public int getWillPower()
+    {
+        return this.willPower;
+    }
+    public int getStrength()
+    {
+        return this.strength;
+    }
+
+    public int getGold()
+    {
+        return this.goldCoins;
+    }
+
+    public void setGold(int gold)
+    {
+        this.goldCoins = gold;
+    }
+
+    public void addArticle(Article article)
+    {
+        myArticles.Add(article);
+    }
+
+    public void setStrength(int strength)
+    {
+        this.strength = strength;
     }
 }
