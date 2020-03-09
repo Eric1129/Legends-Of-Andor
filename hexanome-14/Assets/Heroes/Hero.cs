@@ -140,7 +140,18 @@ public class Hero : Movable, Fightable
     }
 
 
+    public int getGold()
+    {
+        return this.goldCoins;
+    }
 
+    public void setGold(int gold)
+    {
+        this.goldCoins = gold;
+    }
 
-
+    public void addArticle(Article article)
+    {
+        myArticles.Add(article);
+    }
 }
