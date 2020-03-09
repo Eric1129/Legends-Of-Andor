@@ -1,9 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Hero : Movable, Fightable
 {
+
     // private GameObject sphere;
     // private SpriteRenderer spriteRenderer;
     private string heroType;
@@ -21,6 +22,11 @@ public class Hero : Movable, Fightable
     private bool hasThorald;
 
     private int numHoursLeft;
+<<<<<<< HEAD
+    private int goldCoins;
+=======
+    private int overTimeHours = 3; 
+>>>>>>> f52af99283d4f09a037e9f62e13ec39ead9901c6
 
     // all heroes start with 1 strength point
     private int strength = 1;
@@ -28,9 +34,11 @@ public class Hero : Movable, Fightable
     private int willPower = 7;
     // rank differs per hero so initialize this in child classes.
     private int rank;
+    private int NumDice; 
+
 
     // use List not ArrayList -- see microsoft docs on arraylist
-    // private List<Usable> myArticles;
+    private List<Article> myArticles;
 
     public Hero(){ }
 
@@ -69,4 +77,102 @@ public class Hero : Movable, Fightable
     {
         diceRollStrat.roll(this);
     }
+
+<<<<<<< HEAD
+    public int getWillPower()
+    {
+        return this.willPower;
+    }
+    public int getStrength()
+    {
+        return this.strength;
+    }
+
+    public int getGold()
+    {
+        return this.goldCoins;
+    }
+
+    public void setGold(int gold)
+    {
+        this.goldCoins = gold;
+    }
+
+    public void addArticle(Article article)
+    {
+        myArticles.Add(article);
+    }
+
+    public void setStrength(int strength)
+    {
+        this.strength = strength;
+    }
+=======
+    //getters and setters for all private attributes. 
+
+    public string getHeroType ()
+    {
+
+        return heroType; 
+
+    }
+    public void setHeroType(string heroTypeInput)
+    {
+
+        heroType = heroTypeInput; 
+
+    }
+    public int getStrength()
+    {
+        return strength; 
+    }
+    public void setStrength(int strengthToSet)
+    {
+
+        strength = strengthToSet; 
+
+    }
+    public int getWillpower()
+    {
+        return willPower; 
+    }
+    public void setWillpower(int willpowerTortrn)
+    {
+        willPower = willpowerTortrn; 
+    }
+
+    public int getNumHours()
+    {
+        return numHoursLeft;
+    }
+    public void setNumHours(int numHrs)
+    {
+        numHoursLeft = numHrs; 
+    }
+    public int getRank()
+    {
+        return rank;
+    }
+    public void setRank(int rankSet)
+    {
+        rank = rankSet; 
+    }
+    public int getNumDie() { 
+        return NumDice; 
+    }
+    public void setNumDie(int numDiceSet)
+    {
+        NumDice = numDiceSet; 
+    }
+    public int getOverTimeHours()
+    {
+        return overTimeHours; 
+    }
+
+
+
+
+
+
+>>>>>>> f52af99283d4f09a037e9f62e13ec39ead9901c6
 }
