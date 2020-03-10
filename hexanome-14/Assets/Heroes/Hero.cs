@@ -22,7 +22,11 @@ public class Hero : Movable, Fightable
     private bool hasThorald;
 
     private int numHoursLeft;
+
+    private int goldCoins;
+
     private int overTimeHours = 3; 
+
 
     // all heroes start with 1 strength point
     private int strength = 1;
@@ -32,8 +36,9 @@ public class Hero : Movable, Fightable
     private int rank;
     private int NumDice; 
 
+
     // use List not ArrayList -- see microsoft docs on arraylist
-    // private List<Usable> myArticles;
+    private List<Article> myArticles;
 
     public Hero(){ }
 
@@ -135,8 +140,18 @@ public class Hero : Movable, Fightable
     }
 
 
+    public int getGold()
+    {
+        return this.goldCoins;
+    }
 
+    public void setGold(int gold)
+    {
+        this.goldCoins = gold;
+    }
 
-
-
+    public void addArticle(Article article)
+    {
+        myArticles.Add(article);
+    }
 }
