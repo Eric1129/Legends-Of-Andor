@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class CreateNewGame : MonoBehaviour
 {
-    public void GameLobby()
+    public void CreateGame()
     {
         SceneManager.LoadScene("GameRoom");
+    }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("Main_Menu");
     }
 }
