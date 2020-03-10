@@ -24,4 +24,10 @@ public class Start_New_Game : MonoBehaviour
         SceneManager.LoadScene("GameLobby");
     }
 
+    public void Exit()
+    {
+
+        SceneManager.LoadScene("Startup_Screen");
+
+    }
 }
