@@ -19,4 +19,10 @@ public class For_Log_In : MonoBehaviour
 
     }
 
+    public void Back()
+    {
+        SceneManager.LoadScene("Startup_Screen");
+
+    }
+
 }
