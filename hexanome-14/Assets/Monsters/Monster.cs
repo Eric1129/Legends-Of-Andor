@@ -15,7 +15,7 @@ public class Monster : Fightable, Movable
 
     public void diceRoll()
     {
-        diceRollStrat.roll(this);
+        diceRollStrat.rollDie();
     }
 
 }

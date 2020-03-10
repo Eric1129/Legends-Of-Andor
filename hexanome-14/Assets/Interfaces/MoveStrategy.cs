@@ -22,14 +22,10 @@ class MoveStrategy
 
 
         }
-
-
-
-
+        return false;
     }
 
 
-
-
-    void move(ref Node path, Movable obj);
+    public void move(ref Node path, Movable obj) {
+    }
 }
