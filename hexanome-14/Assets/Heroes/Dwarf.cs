@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Dwarf : Hero
 {
-    // init base class: Hero
-    //public Dwarf() : base()
+   
     //constructor for Dwarf
-    public Dwarf() //what is base here?? I want this to be the constructor 
+    public Dwarf() 
     {
         //getStrength();  //should be initialized to 1
         //getWillpower(); //should be initialized to 7 
@@ -18,6 +17,16 @@ public class Dwarf : Hero
         
 
     }
+
+    public void diceRollStrategy(int NumDieCurrently)
+    {
+
+
+
+    }
+
+
+
 
     public void Canmove()
     {
