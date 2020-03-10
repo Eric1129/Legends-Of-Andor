@@ -75,7 +75,7 @@ public class Hero : Movable, Fightable
 
     public void diceRoll()
     {
-        diceRollStrat.roll(this);
+        diceRollStrat.rollDie();
     }
 
     //getters and setters for all private attributes. 

@@ -8,7 +8,7 @@ public class Rubble : Fightable
 
     public void diceRoll()
     {
-        diceRollStrat.roll(this);
+        diceRollStrat.rollDie();
     }
 
 }

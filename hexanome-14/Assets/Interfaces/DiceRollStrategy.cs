@@ -132,7 +132,7 @@ class DiceRollStrategy
                 }
 
             }
-            }
+        }
 
         int[] dieValues = new int[numDieToRoll]; 
 
@@ -160,5 +160,6 @@ class DiceRollStrategy
 
 
 
-    void fight(Fightable obj);
+    public void fight(Fightable obj) {
+    }
 }

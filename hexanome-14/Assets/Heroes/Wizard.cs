@@ -8,16 +8,13 @@ public class Wizard : Hero
     public Wizard() : base()
     {
 
-        //getStrength();  //should be initialized to 1
-        //getWillpower(); //should be initialized to 7 
+        getStrength();  //should be initialized to 1
+        getWillpower(); //should be initialized to 7 
         setHeroType("Wizard");
         setRank(34);     //day over when this reaches 0 
         setNumDie(1); //Does not change no matter willpower points for wizards 
 
     }
-
-
-
 
 
 }
