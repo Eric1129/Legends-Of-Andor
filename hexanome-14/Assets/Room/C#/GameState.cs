@@ -27,6 +27,10 @@ public class GameState
             Debug.Log("I already have myself/this player");
         }
         displayPlayers();
+        if (!Game.started)
+        {
+            RoomLobbyController.instance.playerListUpdate(getPlayers());
+        }
 
     }
     public void updatePlayer(Player p)

@@ -11,6 +11,7 @@ public static class Game
     public static NetworkHandler nh;
     public static GameObject go;
     public static Photon.Pun.PhotonView PV;
+    public static bool started = false;
 
         
     public static void initGame(Andor.Player player)
