@@ -26,7 +26,9 @@ public class GameState
         {
             Debug.Log("I already have myself/this player");
         }
-	}
+        displayPlayers();
+
+    }
     public void updatePlayer(Player p)
     {
         if (players.ContainsKey(p.getNetworkID()))

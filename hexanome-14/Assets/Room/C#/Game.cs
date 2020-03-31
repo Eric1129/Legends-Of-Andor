@@ -46,7 +46,6 @@ public static class Game
             Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
         }
 
-        //gameState.displayPlayers();
     }
 
     public static void updatePlayer(Andor.Player p)

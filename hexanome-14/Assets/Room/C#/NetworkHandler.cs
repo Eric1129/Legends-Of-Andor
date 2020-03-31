@@ -33,9 +33,9 @@ public class NetworkHandler : MonoBehaviour
     {
         foreach (Andor.Player p in players)
         {
-            if (!Game.gameState.hasPlayer(p))
+            if (!Game.getGame().hasPlayer(p))
             {
-                Game.addPlayer(p);
+                Game.getGame().addPlayer(p);
                 Debug.Log(Game.myPlayer.getNetworkID() + " ~ Added Player: " + p.getNetworkID());
             }
         }
