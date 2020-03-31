@@ -15,13 +15,10 @@ public class RoomController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(NetworkController.roomList != null)
+        {
+            OnRoomListUpdate(NetworkController.roomList);
+        }
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -46,28 +43,32 @@ public class RoomController : MonoBehaviourPunCallbacks
     }
     private void listRoom(RoomInfo roomInfo)
     {
-        if (publicListing)
+        if(roomInfo.IsOpen && roomInfo.MaxPlayers != 0)
         {
-            if (roomInfo.IsOpen && roomInfo.IsVisible)
+            if (publicListing)
             {
-                GameObject temp = Instantiate(roomButtonPrefab, roomListingPanel);
-                RoomButton roomButton = temp.GetComponent<RoomButton>();
+                if (roomInfo.IsVisible)
+                {
+                    GameObject temp = Instantiate(roomButtonPrefab, roomListingPanel);
+                    RoomButton roomButton = temp.GetComponent<RoomButton>();
 
-                roomButton.roomNameText.text = roomInfo.Name;
-                roomButton.roomCapacityText.text = roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers;
+                    roomButton.roomNameText.text = roomInfo.Name;
+                    roomButton.roomCapacityText.text = roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers;
+                }
+            }
+            else
+            {
+                if (!roomInfo.IsVisible)
+                {
+                    GameObject temp = Instantiate(roomButtonPrefab, roomListingPanel);
+                    RoomButton roomButton = temp.GetComponent<RoomButton>();
+
+                    roomButton.roomNameText.text = roomInfo.Name;
+                    roomButton.roomCapacityText.text = roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers;
+                }
             }
         }
-        else
-        {
-            if (roomInfo.IsOpen && !roomInfo.IsVisible)
-            {
-                GameObject temp = Instantiate(roomButtonPrefab, roomListingPanel);
-                RoomButton roomButton = temp.GetComponent<RoomButton>();
-
-                roomButton.roomNameText.text = roomInfo.Name;
-                roomButton.roomCapacityText.text = roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers;
-            }
-        }
+        
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

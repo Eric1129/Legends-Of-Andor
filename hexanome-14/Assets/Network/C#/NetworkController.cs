@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     [SerializeField]
     private int gameVersion;
 
-    public static int count = 0;
+    public static List<RoomInfo> roomList = null;
 
     // Start is called before the first frame update
     void Start()
@@ -107,5 +108,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
             Debug.Log("Not in Lobby");
 
         }
+    }
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        base.OnRoomListUpdate(roomList);
+        NetworkController.roomList = roomList;
     }
 }

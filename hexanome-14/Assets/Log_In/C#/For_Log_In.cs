@@ -6,7 +6,19 @@ using UnityEngine.UI;
 
 public class For_Log_In : MonoBehaviour
 {
+    
     InputField txt_Input;
+
+    void Start()
+    {
+        if (PlayerPrefs.HasKey("NickName"))
+        {
+            txt_Input = GameObject.FindGameObjectWithTag("LogIn_username").GetComponent<InputField>();
+            txt_Input.text = PlayerPrefs.GetString("NickName");
+        }
+    }
+
+
     public void SignIn()
     {
         txt_Input = GameObject.FindGameObjectWithTag("LogIn_username").GetComponent<InputField>();
