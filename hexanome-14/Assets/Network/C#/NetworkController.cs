@@ -78,11 +78,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        //base.OnJoinedRoom();
+        base.OnJoinedRoom();
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("GameRoom");
+            PhotonNetwork.LoadLevel("RoomLobby");
         }
 
         Debug.Log("Joined Room: " + PhotonNetwork.CurrentRoom.Name);
@@ -91,5 +91,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnJoinRoomFailed(returnCode, message);
 
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        Debug.Log("Left room.");
+        if (PhotonNetwork.InLobby)
+        {
+            Debug.Log("Currently in Lobby");
+        }
+        else
+        {
+            Debug.Log("Not in Lobby");
+
+        }
     }
 }
