@@ -105,6 +105,24 @@ TagManager:
   - Player-Male-Warrior
   - based
   - Player-Male-Archer
+  - Male-Dwarf
+  - Sphere-based
+  - Male-Wizard
+  - Male-Warrior
+  - Male-Archer
+  - Sphere-Male-Dwarf
+  - Sphere-Male-Wizard
+  - Sphere-Male-Archer
+  - Sphere-Male-Warrior
+  - LogIn_username
+  - Game_Name_input
+  - Private_Game_button
+  - Public_Game_button
+  - Legend1_button
+  - Legend2_button
+  - CG_Invite_Friends_input
+  - CG_Invite_Friends_label
+  - test11
   layers:
   - Default
   - TransparentFX
