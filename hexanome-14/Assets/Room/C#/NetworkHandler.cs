@@ -68,7 +68,7 @@ public class NetworkHandler : MonoBehaviour
             memStream.Write(arrBytes, 0, arrBytes.Length);
             memStream.Seek(0, SeekOrigin.Begin);
             var obj = binForm.Deserialize(memStream);
-            return (Andor.Player)obj;
+            return obj;
         }
     }
 
