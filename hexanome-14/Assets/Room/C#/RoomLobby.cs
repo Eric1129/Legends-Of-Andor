@@ -16,9 +16,14 @@ public class RoomLobby : MonoBehaviour
     {
         
     }
-
     public void leaveRoomClick()
     {
         PhotonNetwork.LeaveRoom();
     }
+    public void startGameClick()
+    {
+
+    }
+
+
 }

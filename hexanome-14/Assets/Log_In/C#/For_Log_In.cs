@@ -22,9 +22,10 @@ public class For_Log_In : MonoBehaviour
     public void SignIn()
     {
         txt_Input = GameObject.FindGameObjectWithTag("LogIn_username").GetComponent<InputField>();
-        SceneManager.LoadScene("Loading_Screen");
         storeUsername.USERNAME = txt_Input.text;
+        PlayerPrefs.SetString("NickName", txt_Input.text);
 
+        SceneManager.LoadScene("Loading_Screen");
         Debug.Log(txt_Input.text + " Logged in!");
     }
 

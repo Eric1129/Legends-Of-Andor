@@ -34,5 +34,11 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - serverAddPlayer
+  - serverUpdatePlayers
+  - updateClientPlayers
+  - HOSTaddPlayer
+  - updatePlayer
+  - updatePlayerList
   DisableAutoOpenWizard: 1
   ShowSettings: 1
