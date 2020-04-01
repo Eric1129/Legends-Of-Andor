@@ -21,7 +21,7 @@ public class PlayerDetails : MonoBehaviour
         ColorBlock buttonColors = readyButton.colors;
 
         this.ready = r;
-        if (Game.myPlayer.ready)
+        if (r)
         {
             buttonColors.normalColor = new Color32(95, 255, 95, 255);
             buttonColors.highlightedColor = new Color32(142, 253, 142, 255);

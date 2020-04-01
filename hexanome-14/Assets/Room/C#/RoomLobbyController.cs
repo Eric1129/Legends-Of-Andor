@@ -42,20 +42,21 @@ public class RoomLobbyController : MonoBehaviour
         pd.heroLabel.text = player.getHeroType();
         pd.setReady(player.ready);
 
+        Debug.Log(player.getNetworkID() + " - " + player.ready);
+
         if (player.getNetworkID() != Game.myPlayer.getNetworkID())
         {
             Debug.Log("NetworkID: " + player.getNetworkID() + " != myPlayer NetworkID: " + Game.myPlayer.getNetworkID());
-            pd.readyButton.gameObject.SetActive(false);
+            pd.readyButton.interactable = false;
         }
         else
         {
-            pd.readyButton.gameObject.SetActive(true);
+            pd.readyButton.interactable = true;
         }
     }
 
     public void removePlayers()
     {
-        Debug.Log("COUNT: " + playerPanel.childCount);        
 
         for (int i = playerPanel.childCount - 1; i >= 0; i--)
         {
@@ -63,8 +64,6 @@ public class RoomLobbyController : MonoBehaviour
 
         }
         playerPanel.DetachChildren();
-
-        Debug.Log("COUNT: " + playerPanel.childCount);
 
     }
 
