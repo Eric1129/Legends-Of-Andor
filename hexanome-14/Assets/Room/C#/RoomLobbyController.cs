@@ -22,6 +22,7 @@ public class RoomLobbyController : MonoBehaviour
     public void playerListUpdate(List<Andor.Player> players)
     {
         Debug.Log("Listing Players");
+        Debug.Log("Num Players: " + players.Count);
         this.removePlayers();
 
         foreach (Andor.Player player in players)
@@ -54,14 +55,17 @@ public class RoomLobbyController : MonoBehaviour
 
     public void removePlayers()
     {
-        for (int i = 0; i< 10; i++)
+        Debug.Log("COUNT: " + playerPanel.childCount);        
+
+        for (int i = playerPanel.childCount - 1; i >= 0; i--)
         {
-            if(playerPanel.childCount == 0)
-            {
-                break;
-            }
             Destroy(playerPanel.GetChild(0).gameObject);
+
         }
+        playerPanel.DetachChildren();
+
+        Debug.Log("COUNT: " + playerPanel.childCount);
+
     }
 
 }
