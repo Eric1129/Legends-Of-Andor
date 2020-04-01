@@ -27,6 +27,7 @@ public class GameState
             Debug.Log("I already have myself/this player");
         }
         displayPlayers();
+
         if (!Game.started)
         {
             RoomLobbyController.instance.playerListUpdate(getPlayers());
@@ -43,6 +44,11 @@ public class GameState
         else
         {
             Debug.Log("Player is not regestered!");
+        }
+
+        if (!Game.started)
+        {
+            RoomLobbyController.instance.playerListUpdate(getPlayers());
         }
     }
     public bool playerCharacterExists(string tag)

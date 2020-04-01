@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 61884806}
   - component: {fileID: 61884805}
   - component: {fileID: 61884804}
+  - component: {fileID: 61884807}
   m_Layer: 5
   m_Name: Player 5
   m_TagString: Untagged
@@ -284,8 +285,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 61884807}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -331,6 +332,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61884802}
   m_CullTransparentMesh: 0
+--- !u!114 &61884807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61884802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &159606479
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +356,7 @@ GameObject:
   - component: {fileID: 159606483}
   - component: {fileID: 159606482}
   - component: {fileID: 159606481}
+  - component: {fileID: 159606484}
   m_Layer: 5
   m_Name: Player 3
   m_TagString: Untagged
@@ -412,8 +426,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 159606484}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -459,6 +473,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159606479}
   m_CullTransparentMesh: 0
+--- !u!114 &159606484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159606479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &204551098
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,6 +639,7 @@ GameObject:
   - component: {fileID: 537406420}
   - component: {fileID: 537406419}
   - component: {fileID: 537406418}
+  - component: {fileID: 537406421}
   m_Layer: 5
   m_Name: Player 4
   m_TagString: Untagged
@@ -682,8 +709,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 537406421}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -729,6 +756,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537406416}
   m_CullTransparentMesh: 0
+--- !u!114 &537406421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537406416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &544709754
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,7 +956,7 @@ GameObject:
   - component: {fileID: 595302206}
   - component: {fileID: 595302205}
   m_Layer: 5
-  m_Name: War_M (6)
+  m_Name: Female Dwarf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -991,7 +1030,7 @@ GameObject:
   - component: {fileID: 653411026}
   - component: {fileID: 653411025}
   m_Layer: 5
-  m_Name: War_M (4)
+  m_Name: Female Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1065,7 +1104,7 @@ GameObject:
   - component: {fileID: 706752675}
   - component: {fileID: 706752674}
   m_Layer: 5
-  m_Name: Wiz_M
+  m_Name: Female Wizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1139,6 +1178,7 @@ GameObject:
   - component: {fileID: 726042785}
   - component: {fileID: 726042784}
   - component: {fileID: 726042783}
+  - component: {fileID: 726042786}
   m_Layer: 5
   m_Name: Player 1
   m_TagString: Untagged
@@ -1208,8 +1248,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 726042786}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1255,6 +1295,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726042781}
   m_CullTransparentMesh: 0
+--- !u!114 &726042786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726042781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &734362236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,6 +1600,7 @@ GameObject:
   - component: {fileID: 1187260322}
   - component: {fileID: 1187260321}
   - component: {fileID: 1187260320}
+  - component: {fileID: 1187260323}
   m_Layer: 5
   m_Name: 'Player 6 '
   m_TagString: Untagged
@@ -1617,8 +1670,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 1187260323}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1664,6 +1717,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187260318}
   m_CullTransparentMesh: 0
+--- !u!114 &1187260323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187260318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1197299980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,7 +1759,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPanel: {fileID: 544709755}
-  playerListingPrefab: {fileID: 0}
+  playerListingPrefab: {fileID: 6233199679531326061, guid: 829051ab1003d4cfc9e3aed1c6f9f175,
+    type: 3}
 --- !u!4 &1197299982
 Transform:
   m_ObjectHideFlags: 0
@@ -1860,6 +1926,7 @@ GameObject:
   - component: {fileID: 1266680655}
   - component: {fileID: 1266680654}
   - component: {fileID: 1266680653}
+  - component: {fileID: 1266680656}
   m_Layer: 5
   m_Name: Player 2
   m_TagString: Untagged
@@ -1929,8 +1996,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 1266680656}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1976,6 +2043,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266680651}
   m_CullTransparentMesh: 0
+--- !u!114 &1266680656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266680651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1321743014
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,7 +2176,7 @@ GameObject:
   - component: {fileID: 1557245823}
   - component: {fileID: 1557245822}
   m_Layer: 5
-  m_Name: War_M (2)
+  m_Name: Male Dwarf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2171,6 +2250,7 @@ GameObject:
   - component: {fileID: 1639128230}
   - component: {fileID: 1639128229}
   - component: {fileID: 1639128228}
+  - component: {fileID: 1639128231}
   m_Layer: 5
   m_Name: Player 8
   m_TagString: Untagged
@@ -2240,8 +2320,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 1639128231}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2287,6 +2367,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639128226}
   m_CullTransparentMesh: 0
+--- !u!114 &1639128231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639128226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1656620402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,7 +2468,7 @@ GameObject:
   - component: {fileID: 1672790545}
   - component: {fileID: 1672790544}
   m_Layer: 5
-  m_Name: War_M (7)
+  m_Name: Male Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2450,6 +2542,7 @@ GameObject:
   - component: {fileID: 1708567894}
   - component: {fileID: 1708567893}
   - component: {fileID: 1708567892}
+  - component: {fileID: 1708567895}
   m_Layer: 5
   m_Name: Player 7
   m_TagString: Untagged
@@ -2519,8 +2612,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Waiting
+      - m_Target: {fileID: 1708567895}
+        m_MethodName: onCharacterSelectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2566,6 +2659,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708567890}
   m_CullTransparentMesh: 0
+--- !u!114 &1708567895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708567890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9958862a7b44b45ea85d2952127f7169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1763099322
 GameObject:
   m_ObjectHideFlags: 0
@@ -2655,7 +2760,7 @@ GameObject:
   - component: {fileID: 1859373578}
   - component: {fileID: 1859373577}
   m_Layer: 5
-  m_Name: War_M (1)
+  m_Name: Female Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2729,7 +2834,7 @@ GameObject:
   - component: {fileID: 1993349352}
   - component: {fileID: 1993349351}
   m_Layer: 5
-  m_Name: War_M
+  m_Name: Male Wizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2907,7 +3012,7 @@ GameObject:
   - component: {fileID: 2081147279}
   - component: {fileID: 2081147278}
   m_Layer: 5
-  m_Name: War_M (5)
+  m_Name: Male Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

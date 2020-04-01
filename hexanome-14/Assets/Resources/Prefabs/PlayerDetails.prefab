@@ -271,7 +271,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6233199678845883507}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3521712408792939819}
+        m_MethodName: readyClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6233199679184525007
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +371,7 @@ GameObject:
   - component: {fileID: 6233199679531326060}
   - component: {fileID: 6233199679531326058}
   - component: {fileID: 6233199679531326059}
+  - component: {fileID: 3521712408792939819}
   m_Layer: 0
   m_Name: PlayerDetails
   m_TagString: Untagged
@@ -425,3 +437,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3521712408792939819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6233199679531326061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ca2bb029a6e4f8dbcd942c4c30f764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameLabel: {fileID: 6233199678015737602}
+  heroLabel: {fileID: 6233199679184525005}
+  readyButton: {fileID: 6233199678845883508}

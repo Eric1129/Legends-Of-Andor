@@ -15,36 +15,29 @@ public class PlayerDetails : MonoBehaviour
 
     private bool ready = false;
 
-    private void Start()
-    {
-        colorNotReady = new ColorBlock();
-        colorNotReady.normalColor = new Color(255, 95, 95);
-        colorNotReady.highlightedColor = new Color(253, 142, 142);
-        colorNotReady.pressedColor = new Color(255, 182, 182);
-        colorNotReady.selectedColor = new Color(255, 206, 206);
-        colorNotReady.disabledColor = new Color(255, 95, 95);
-
-        colorReady = new ColorBlock();
-        colorReady.normalColor = new Color(95, 255, 95);
-        colorReady.highlightedColor = new Color(142, 253, 142);
-        colorReady.pressedColor = new Color(182, 255, 182);
-        colorReady.selectedColor = new Color(206, 255, 206);
-        colorReady.disabledColor = new Color(95, 255, 95);
-
-
-    }
 
     public void setReady(bool r)
     {
+        ColorBlock buttonColors = readyButton.colors;
+
         this.ready = r;
         if (Game.myPlayer.ready)
         {
-            readyButton.colors = colorReady;
+            buttonColors.normalColor = new Color32(95, 255, 95, 255);
+            buttonColors.highlightedColor = new Color32(142, 253, 142, 255);
+            buttonColors.pressedColor = new Color32(182, 255, 182, 255);
+            buttonColors.selectedColor = new Color32(206, 255, 206, 255);
+            buttonColors.disabledColor = new Color32(95, 255, 95, 255);
         }
         else
         {
-            readyButton.colors = colorNotReady;
+            buttonColors.normalColor = new Color32(255, 95, 95, 255);
+            buttonColors.highlightedColor = new Color32(253, 142, 142, 255);
+            buttonColors.pressedColor = new Color32(255, 182, 182, 255);
+            buttonColors.selectedColor = new Color32(255, 206, 206, 255);
+            buttonColors.disabledColor = new Color32(255, 95, 95, 255);
         }
+        readyButton.colors = buttonColors;
     }
 
 
@@ -54,13 +47,8 @@ public class PlayerDetails : MonoBehaviour
         Game.myPlayer.ready = this.ready;
         Game.updatePlayer(Game.myPlayer);
 
-        if (this.ready)
-        {
-            readyButton.colors = colorReady;
-        }
-        else
-        {
-            readyButton.colors = colorNotReady;
-        }
+        Debug.Log("Ready Pressed! Current state: " + this.ready);
+
+        setReady(this.ready);
     }
 }

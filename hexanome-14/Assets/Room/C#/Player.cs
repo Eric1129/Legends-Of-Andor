@@ -23,7 +23,7 @@ namespace Andor
         private string myTag;
         private string networkID;
         private string heroType;
-        public Color color;
+        public int[] color;
         public bool ready = false;
 
         private HeroS myHero;
