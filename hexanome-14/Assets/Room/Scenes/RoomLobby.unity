@@ -1762,6 +1762,7 @@ MonoBehaviour:
   allPlayerContainer: {fileID: 1339047356}
   playerListingPrefab: {fileID: 6233199679531326061, guid: 829051ab1003d4cfc9e3aed1c6f9f175,
     type: 3}
+  startButton: {fileID: 204551100}
 --- !u!4 &1197299982
 Transform:
   m_ObjectHideFlags: 0
