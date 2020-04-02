@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class RoomLobbyController : MonoBehaviour
     public Transform allPlayerContainer;
 
     public GameObject playerListingPrefab;
+    public Button startButton;
 
     private Dictionary<string, string> prevCharacterSelections = new Dictionary<string, string>();
 
@@ -18,6 +20,14 @@ public class RoomLobbyController : MonoBehaviour
     void Start()
     {
         instance = this;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            startButton.gameObject.SetActive(false);
+        }
 
         Game.initGame(new Andor.Player());
     }
@@ -48,7 +58,7 @@ public class RoomLobbyController : MonoBehaviour
 
                     foreach (Andor.Player p in Game.gameState.getPlayers())
                     {
-                        highlightPlayer(p.getHeroType(), new Color32(player.color[0], player.color[1], player.color[2], 200));
+                        highlightPlayer(p.getHeroType(), new Color32((byte)(p.color[0]-50), (byte)(p.color[1] - 50), (byte)(p.color[2] - 50), 200));
                     }
                         
                 }

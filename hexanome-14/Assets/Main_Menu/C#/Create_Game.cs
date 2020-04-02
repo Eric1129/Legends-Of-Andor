@@ -56,8 +56,8 @@ public class Create_Game : MonoBehaviour
         private_button.interactable = false;
         public_button.interactable = true;
 
-        invite_friends_input.enabled = true;
-        invite_friends_label.enabled = true;
+        invite_friends_input.gameObject.SetActive(true);
+        invite_friends_label.gameObject.SetActive(true);
     }
 
     public void publicGameClick()
@@ -67,8 +67,8 @@ public class Create_Game : MonoBehaviour
         private_button.interactable = true;
         public_button.interactable = false;
 
-        invite_friends_input.enabled = false;
-        invite_friends_label.enabled = false;
+        invite_friends_input.gameObject.SetActive(false);
+        invite_friends_label.gameObject.SetActive(false);
     }
 
     public void legend1Click()
