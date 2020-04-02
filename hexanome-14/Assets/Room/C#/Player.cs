@@ -22,8 +22,8 @@ namespace Andor
         // and Sphere-Male-Dwarf. sphere object is attached to this script.
         private string myTag;
         private string networkID;
-        private string heroType;
-        public int[] color;
+        private string heroType = "";
+        public byte[] color;
         public bool ready = false;
 
         private HeroS myHero;
@@ -34,6 +34,7 @@ namespace Andor
         public Player() {
             myHero = new HeroS();
             networkID = PhotonNetwork.NickName;
+            color = new byte[]{ (byte)Game.RANDOM.Next(150, 235), (byte)Game.RANDOM.Next(150, 235), (byte)Game.RANDOM.Next(150, 235), 130};
         }
 
         public string getNetworkID()

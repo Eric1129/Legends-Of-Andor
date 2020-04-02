@@ -9,6 +9,7 @@ public class PlayerDetails : MonoBehaviour
     public Text nameLabel;
     public Text heroLabel;
     public Button readyButton;
+    public Transform mainContainer;
 
     private ColorBlock colorNotReady;
     private ColorBlock colorReady;

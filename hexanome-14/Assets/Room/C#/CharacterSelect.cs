@@ -28,10 +28,11 @@ public class CharacterSelect : MonoBehaviour
         character = currentChar.name;
         Debug.Log("Player: " + character);
 
+        /*
         if(currentBorder != null)
             currentBorder.color = new Color(255, 255, 255);
         currentBorder = currentChar.GetComponent<Image>();
-        currentBorder.color = new Color(255, 0, 0);
+        currentBorder.color = new Color(255, 0, 0);*/
 
         Game.myPlayer.setHeroType(character);
         Game.updatePlayer(Game.myPlayer);

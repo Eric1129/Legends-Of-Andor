@@ -452,3 +452,4 @@ MonoBehaviour:
   nameLabel: {fileID: 6233199678015737602}
   heroLabel: {fileID: 6233199679184525005}
   readyButton: {fileID: 6233199678845883508}
+  mainContainer: {fileID: 6233199679531326060}

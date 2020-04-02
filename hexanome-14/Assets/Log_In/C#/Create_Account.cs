@@ -9,7 +9,7 @@ public class Create_Account : MonoBehaviour
 {
     public void CreateAccount()
     {
-        SceneManager.LoadScene("Main_Menu");
+        SceneManager.LoadScene("Log_In");
 
     }
 }

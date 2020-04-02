@@ -1759,6 +1759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPanel: {fileID: 544709755}
+  allPlayerContainer: {fileID: 1339047356}
   playerListingPrefab: {fileID: 6233199679531326061, guid: 829051ab1003d4cfc9e3aed1c6f9f175,
     type: 3}
 --- !u!4 &1197299982
