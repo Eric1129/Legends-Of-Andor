@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Game.started = true;
         Game.createPV();
 
         tiles = new Dictionary<int, BoardPosition>();
@@ -73,6 +74,7 @@ public class GameController : MonoBehaviour
         int cellNumber = Int32.Parse(sprite.name.Split('_')[1]);
 
         GameObject cellObject = Instantiate(emptyPrefab, transform.position, transform.rotation, boardSpriteContainer);
+        cellObject.transform.localScale = boardSpriteContainer.transform.localScale;
         cellObject.tag = cellNumber.ToString();
         cellObject.name = "position-" + cellNumber.ToString();
 
