@@ -96,7 +96,6 @@ public class GameController : MonoBehaviour
         {
             GameObject playerObject = Instantiate(playerPrefab, playerContainer);
             playerObjects.Add(player.getNetworkID(), playerObject);
-            playerObject.AddComponent<SpriteRenderer>();
             SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
             
             spriteRenderer.sprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
@@ -111,7 +110,9 @@ public class GameController : MonoBehaviour
 
     public void movePlayer(string player, int tile)
     {
-        playerObjects[player].transform.position = tiles[tile].getMiddle();
+        Debug.Log("Moving Player (" + player + ") to tile " + tile);
+        Vector3 middle = tiles[tile].getMiddle();
+        playerObjects[Game.myPlayer.getNetworkID()].transform.position = new Vector3(middle.x, middle.y, -10);
     }
 
     #region buttonClicks
@@ -120,9 +121,7 @@ public class GameController : MonoBehaviour
     {
         if (moveSelected)
         {
-            Vector3 middle = tile.getMiddle();
-            playerObjects[Game.myPlayer.getNetworkID()].transform.position = new Vector3(middle.x, middle.y, -10);
-
+            Game.sendAction(new Move(Game.myPlayer.getNetworkID(), Game.getGame().playerLocations[Game.myPlayer.getNetworkID()], tile.tileID));
 
             ColorBlock cb = moveButton.colors;
             cb.normalColor = new Color32(229, 175, 81, 255);
