@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Photon.Pun;
 using UnityEngine;
 
-public class NetworkHandler
+public class NetworkHandler : MonoBehaviour
 {
     [PunRPC]
     public void HOSTaddPlayer(Andor.Player p) // Only host should get this called
