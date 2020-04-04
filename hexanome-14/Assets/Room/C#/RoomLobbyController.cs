@@ -15,6 +15,7 @@ public class RoomLobbyController : MonoBehaviour
     public Button startButton;
 
     private Dictionary<string, string> prevCharacterSelections = new Dictionary<string, string>();
+    private bool allReady = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class RoomLobbyController : MonoBehaviour
             startButton.gameObject.SetActive(false);
         }
 
+        Game.createPV();
         Game.initGame(new Andor.Player());
     }
 
@@ -39,8 +41,15 @@ public class RoomLobbyController : MonoBehaviour
         Debug.Log("Num Players: " + players.Count);
         this.removePlayers();
 
+        allReady = true;
+
         foreach (Andor.Player player in players)
         {
+            if (!player.ready)
+            {
+                allReady = false;
+            }
+
             if (!prevCharacterSelections.ContainsKey(player.getNetworkID()))
             {
                 prevCharacterSelections.Add(player.getNetworkID(), player.getHeroType());
@@ -65,6 +74,18 @@ public class RoomLobbyController : MonoBehaviour
             }
             listPlayer(player);
         }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (allReady)
+            {
+                startButton.interactable = true;
+            }
+            else
+            {
+                startButton.interactable = false;
+            }
+        }
+        
 
     }
     public void listPlayer(Andor.Player player)
@@ -127,6 +148,17 @@ public class RoomLobbyController : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void leaveRoomClick()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+    public void startGameClick()
+    {
+        Debug.Log("HERE");
+        Game.destroyPV();
+        PhotonNetwork.LoadLevel("Game");
     }
 
 }
