@@ -112,7 +112,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Moving Player (" + player + ") to tile " + tile);
         Vector3 middle = tiles[tile].getMiddle();
-        playerObjects[Game.myPlayer.getNetworkID()].transform.position = new Vector3(middle.x, middle.y, -10);
+        playerObjects[player].transform.position = new Vector3(middle.x, middle.y, -10);
     }
 
     #region buttonClicks
