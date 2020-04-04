@@ -45,7 +45,7 @@ public class RoomLobbyController : MonoBehaviour
 
         foreach (Andor.Player player in players)
         {
-            if (!player.ready)
+            if (!player.ready || player.getHeroType().Equals(""))
             {
                 allReady = false;
             }
