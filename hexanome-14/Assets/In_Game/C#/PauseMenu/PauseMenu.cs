@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool mouseOverMenu = false;
+    public Transform saveGameContainer;
+
 
     private void Start()
     {
@@ -48,7 +50,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void saveGameClick()
     {
-        SavedGameController.saveGame(Game.gameState, "test");
+        saveGameContainer.gameObject.SetActive(true);
     }
 
     public void exitGameClick()

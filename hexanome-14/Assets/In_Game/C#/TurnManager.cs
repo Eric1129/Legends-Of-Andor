@@ -1,15 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
+[JsonObject(MemberSerialization.Fields)]
 public class TurnManager
 {
 
     private Queue<string> turnQueue;
+    private string[] playerOrder;
 
-    public TurnManager(Queue<string> orderByPlayerName)
+    public TurnManager(string[] orderByPlayerName)
     {
-        turnQueue = orderByPlayerName;
+        turnQueue = new Queue<string>();
+
+        playerOrder = orderByPlayerName;
+        foreach(string player in orderByPlayerName)
+        {
+            turnQueue.Enqueue(player);
+        }
     }
 
     public string currentPlayerTurn()

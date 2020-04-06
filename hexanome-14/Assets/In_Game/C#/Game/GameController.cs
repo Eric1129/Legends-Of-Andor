@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
 
     public Transform gameContainer;
     public Transform pauseMenuContainer;
+    public Transform saveGameContainer;
 
     public Transform boardSpriteContainer;
     public Transform playerContainer;
@@ -241,7 +242,7 @@ public class GameController : MonoBehaviour
     {
         pauseMenuActive = false;
         pauseMenuContainer.gameObject.SetActive(false);
-
+        saveGameContainer.gameObject.SetActive(false);
 
     }
 
