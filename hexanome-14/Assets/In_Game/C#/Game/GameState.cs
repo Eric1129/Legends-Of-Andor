@@ -80,7 +80,7 @@ public class GameState
     {
         foreach(Player p in players.Values.ToList())
         {
-            if (p.getTag().Equals(tag))
+            if (p.getHeroType().Equals(tag))
             {
                 return true;
             }

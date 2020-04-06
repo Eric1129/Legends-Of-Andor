@@ -9,15 +9,15 @@ using UnityEngine.UI;
 public class Create_Game : MonoBehaviour
 {
     // Game Objects
-    private InputField game_name_input;
+    public InputField game_name_input;
 
-    private Button private_button;
-    private Button public_button;
+    public Button private_button;
+    public Button public_button;
 
-    private Button L1_button;
-    private Button L2_button;
+    public Button L1_button;
+    public Button L2_button;
 
-    private GameObject inviteContainer;
+    public GameObject inviteContainer;
 
     private static bool game_private = false;
     public static int LEGEND;
@@ -30,18 +30,6 @@ public class Create_Game : MonoBehaviour
 
     void Start()
     {
-        // Initialize Game Objects
-        game_name_input = GameObject.FindGameObjectWithTag("Game_Name_input").GetComponent<InputField>();
-
-        private_button = GameObject.FindGameObjectWithTag("Private_Game_button").GetComponent<Button>();
-        public_button = GameObject.FindGameObjectWithTag("Public_Game_button").GetComponent<Button>();
-
-        L1_button = GameObject.FindGameObjectWithTag("Legend1_button").GetComponent<Button>();
-        L2_button = GameObject.FindGameObjectWithTag("Legend2_button").GetComponent<Button>();
-
-        inviteContainer = GameObject.FindGameObjectWithTag("inviteContainer");
-
-
         private_button.interactable = true;
         public_button.interactable = false;
         L1_button.interactable = false;

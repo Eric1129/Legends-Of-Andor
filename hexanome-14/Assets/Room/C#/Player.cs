@@ -20,9 +20,7 @@ namespace Andor
         // ie Player-Male-Dwarf
         // also encodes the corresponding hero type
         // and Sphere-Male-Dwarf. sphere object is attached to this script.
-        private string myTag;
         private string networkID;
-        private string heroType = "";
         public byte[] color;
         public bool ready = false;
 
@@ -41,40 +39,29 @@ namespace Andor
         {
             return networkID;
         }
-        public void setTag(string ID)
-        {
-            myTag = ID;
-        }
-        public string getTag()
-        {
-            return myTag;
-        }
 
         public void setHero(HeroS hero)
         {
             myHero = hero;
         }
-
-        public string getPlayerTag()
+        public HeroS getHero()
         {
-            return myTag;
+            return myHero;
         }
-
-
 
         public string getHeroType()
         {
-            return heroType;
+            return myHero.getHeroType();
         }
         public void setHeroType(string hero)
         {
-            heroType = hero;
+            myHero.setHeroType(hero);
         }
 
 
         public override string ToString()
         {
-            return "Username: " + networkID + ", player tag: " + myTag;
+            return "Username: " + networkID + ", player tag: " + getHeroType();
         }
     }
 }
