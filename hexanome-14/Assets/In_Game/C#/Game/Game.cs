@@ -62,6 +62,27 @@ public static class Game
         }
 
     }
+    public static void updateLegend(int legend)
+    {
+        if (PV != null && PV.IsMine)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updating Legend...");
+
+                PV.RPC("updateLegend", RpcTarget.AllBuffered, (byte)legend);
+            }
+            else
+            {
+                Debug.Log(Game.myPlayer.getNetworkID() + " ~ This is a function only the Host can call! You are not master client!");
+            }
+            
+        }
+        else
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
+        }
+    }
 
     public static void updatePlayer(Andor.Player p)
     {

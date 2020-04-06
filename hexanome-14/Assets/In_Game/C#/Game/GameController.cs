@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,16 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        Sprite sprite = Resources.Load<Sprite>("TimeSprites/time-1");
+        
+        GameObject sObject = Instantiate(emptyPrefab, boardSpriteContainer);
+        SpriteRenderer sr = sObject.AddComponent<SpriteRenderer>();
+        sr.sprite = sprite;
+
+        Debug.Log(transform.position);
+        
+
         Game.started = true;
         Game.createPV();
 

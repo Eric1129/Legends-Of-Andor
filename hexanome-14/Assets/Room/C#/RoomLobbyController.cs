@@ -13,6 +13,7 @@ public class RoomLobbyController : MonoBehaviour
 
     public GameObject playerListingPrefab;
     public Button startButton;
+    public Text legendLabel;
 
     private Dictionary<string, string> prevCharacterSelections = new Dictionary<string, string>();
     private bool allReady = false;
@@ -24,6 +25,7 @@ public class RoomLobbyController : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             startButton.gameObject.SetActive(true);
+
         }
         else
         {
@@ -32,6 +34,12 @@ public class RoomLobbyController : MonoBehaviour
 
         Game.createPV();
         Game.initGame(new Andor.Player());
+
+        // Update Legend
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Game.updateLegend(Create_Game.LEGEND);
+        }
     }
 
     public void playerListUpdate(List<Andor.Player> players)

@@ -123,6 +123,7 @@ TagManager:
   - CG_Invite_Friends_input
   - CG_Invite_Friends_label
   - test11
+  - inviteContainer
   layers:
   - Default
   - TransparentFX

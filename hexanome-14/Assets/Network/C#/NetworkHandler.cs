@@ -16,6 +16,16 @@ public class NetworkHandler : MonoBehaviour
     }
 
     [PunRPC]
+    public void updateLegend(byte legend)
+    {
+        Game.gameState.legend = legend;
+        if (!Game.started)
+        {
+            RoomLobbyController.instance.legendLabel.text = "Legend " + (int)legend;
+        }
+    }
+
+    [PunRPC]
     public void updatePlayerList(List<Andor.Player> players)
     {
         foreach (Andor.Player p in players)
@@ -34,12 +44,6 @@ public class NetworkHandler : MonoBehaviour
     {
         Game.getGame().updatePlayer(p);
         Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updated Player");
-    }
-
-    [PunRPC]
-    public void updateLegend(byte legend)
-    {
-        Game.getGame().legend = legend;
     }
 
     [PunRPC]

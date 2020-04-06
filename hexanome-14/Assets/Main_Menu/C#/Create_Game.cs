@@ -17,11 +17,10 @@ public class Create_Game : MonoBehaviour
     private Button L1_button;
     private Button L2_button;
 
-    private Text invite_friends_label;
-    private InputField invite_friends_input;
+    private GameObject inviteContainer;
 
     private static bool game_private = false;
-    private static int legend;
+    public static int LEGEND;
 
     private bool clicked = false;
     public static string ROOMNAME = "";
@@ -40,12 +39,15 @@ public class Create_Game : MonoBehaviour
         L1_button = GameObject.FindGameObjectWithTag("Legend1_button").GetComponent<Button>();
         L2_button = GameObject.FindGameObjectWithTag("Legend2_button").GetComponent<Button>();
 
-        invite_friends_label = GameObject.FindGameObjectWithTag("CG_Invite_Friends_label").GetComponent<Text>();
-        invite_friends_input = GameObject.FindGameObjectWithTag("CG_Invite_Friends_input").GetComponent<InputField>();
+        inviteContainer = GameObject.FindGameObjectWithTag("inviteContainer");
 
 
-        invite_friends_input.enabled = false;
-        invite_friends_label.enabled = false;
+        private_button.interactable = true;
+        public_button.interactable = false;
+        L1_button.interactable = false;
+        L2_button.interactable = true;
+        LEGEND = 1;
+        inviteContainer.SetActive(false);
 
     }
 
@@ -56,8 +58,8 @@ public class Create_Game : MonoBehaviour
         private_button.interactable = false;
         public_button.interactable = true;
 
-        invite_friends_input.gameObject.SetActive(true);
-        invite_friends_label.gameObject.SetActive(true);
+        inviteContainer.SetActive(true);
+
     }
 
     public void publicGameClick()
@@ -67,13 +69,13 @@ public class Create_Game : MonoBehaviour
         private_button.interactable = true;
         public_button.interactable = false;
 
-        invite_friends_input.gameObject.SetActive(false);
-        invite_friends_label.gameObject.SetActive(false);
+        inviteContainer.SetActive(false);
+
     }
 
     public void legend1Click()
     {
-        legend = 1;
+        LEGEND = 1;
 
         L1_button.interactable = false;
         L2_button.interactable = true;
@@ -81,7 +83,7 @@ public class Create_Game : MonoBehaviour
 
     public void legend2Click()
     {
-        legend = 2;
+        LEGEND = 2;
 
         L1_button.interactable = true;
         L2_button.interactable = false;
@@ -91,13 +93,21 @@ public class Create_Game : MonoBehaviour
 
     public void CreateRoomOnClick()
     {
-     
-        Debug.Log("Creating room...");
-        Create_Game.ROOMNAME = game_name_input.text;
-
         // HAVE TO ADD SOME DATA VALIDATION:
         //
         //
+        if (game_name_input.text.Equals(""))
+        {
+            return;
+        }
+
+
+        Debug.Log("Creating room...");
+        Create_Game.ROOMNAME = game_name_input.text;
+
+        
+
+
         if (PhotonNetwork.InLobby)
         {
             RoomOptions roomOps = new RoomOptions() { IsVisible = !game_private, IsOpen = true, MaxPlayers = (byte)4 };
