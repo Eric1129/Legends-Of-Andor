@@ -57,7 +57,7 @@ public class BoardPosition : MonoBehaviour
         setPerimeterLinePositions();
 
         PointF mid = calculateCentroid();
-        middle = new Vector3(mid.X, mid.Y, transform.position.z);
+        middle = new Vector3(mid.X, mid.Y, -1);
 
         tileID = id;
     }
