@@ -10,6 +10,9 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
+    public Transform gameContainer;
+    public Transform pauseMenuContainer;
+
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Button moveButton;
@@ -21,7 +24,7 @@ public class GameController : MonoBehaviour
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
 
-
+    private bool pauseMenuActive = false;
     private bool moveSelected = false;
 
     // Start is called before the first frame update
@@ -50,9 +53,23 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        foreach(Andor.Player player in Game.gameState.getPlayers())
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            moveToNewPos(player);
+            if (pauseMenuActive)
+            {
+                this.removePauseMenu();
+            }
+            else
+            {
+                this.displayPauseMenu();
+            }
+        }
+        if(Game.gameState != null)
+        {
+            foreach (Andor.Player player in Game.gameState.getPlayers())
+            {
+                moveToNewPos(player);
+            }
         }
     }
     public void moveToNewPos(Andor.Player player)
@@ -92,7 +109,10 @@ public class GameController : MonoBehaviour
 
 
         // load players
-        loadPlayers();
+        if(Game.gameState != null)
+        {
+            loadPlayers();
+        }
 
     }
 
@@ -165,6 +185,7 @@ public class GameController : MonoBehaviour
 
     }
 
+
     public void moveClick()
     {
         ColorBlock cb = moveButton.colors;
@@ -185,6 +206,11 @@ public class GameController : MonoBehaviour
         }
         moveButton.colors = cb;
     }
+    public void exitGameClick()
+    {
+        displayPauseMenu();
+    }
+
     public void fightClick()
     {
         Debug.Log("fight");
@@ -202,8 +228,23 @@ public class GameController : MonoBehaviour
         Debug.Log("trade");
     }
 
-
     #endregion
 
+    #region pause_menu
+
+    public void displayPauseMenu()
+    {
+        pauseMenuActive = true;
+        pauseMenuContainer.gameObject.SetActive(true);
+    }
+    public void removePauseMenu()
+    {
+        pauseMenuActive = false;
+        pauseMenuContainer.gameObject.SetActive(false);
+
+
+    }
+
+    #endregion
 
 }
