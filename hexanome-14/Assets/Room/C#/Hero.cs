@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 [System.Serializable]
+[JsonObject(MemberSerialization.Fields)]
 public class HeroS // : MonoBehaviour, Movable, Fightable
 {
     // private GameObject sphere;

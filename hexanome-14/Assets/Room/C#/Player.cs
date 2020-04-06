@@ -4,11 +4,12 @@ using UnityEngine;
 using Photon.Pun;
 using System;
 using UnityEngine.SceneManagement;
-
+using Newtonsoft.Json;
 
 namespace Andor
 {
     [System.Serializable]
+    [JsonObject(MemberSerialization.Fields)]
     public class Player
     {
 

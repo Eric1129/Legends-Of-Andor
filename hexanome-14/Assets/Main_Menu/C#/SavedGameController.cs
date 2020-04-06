@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class SavedGameController : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class SavedGameController : MonoBehaviour
 
 
         Debug.Log(JSONGameState(gs));
+        Debug.Log("next");
+
+        Debug.Log(JsonConvert.SerializeObject(gs, Formatting.Indented));
         /*using (StreamWriter file = File.CreateText(path))
         {
             //JsonSerializer serializer = new JsonSerializer();

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Andor;
 using UnityEngine;
 using System.Linq;
+using Newtonsoft.Json;
 
+[JsonObject(MemberSerialization.Fields)]
 public class GameState
 {
 	private Dictionary<string, Player> players;
