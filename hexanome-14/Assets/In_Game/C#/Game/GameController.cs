@@ -48,6 +48,22 @@ public class GameController : MonoBehaviour
         loadBoard();
     }
 
+    void Update()
+    {
+        foreach(Andor.Player player in Game.gameState.getPlayers())
+        {
+            moveToNewPos(player);
+        }
+    }
+    public void moveToNewPos(Andor.Player player)
+    {
+        Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
+        Vector3 cellPos = tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle();
+        playerObjects[player.getNetworkID()].transform.position =
+            new Vector3(Mathf.MoveTowards(playerPos.x, cellPos.x, 1), Mathf.MoveTowards(playerPos.y, cellPos.y, 1), -1);
+    }
+
+
     private void loadBoard()
     {
 
@@ -121,12 +137,12 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void movePlayer(string player, int tile)
+    /*public void movePlayer(string player, int tile)
     {
         Debug.Log("Moving Player (" + player + ") to tile " + tile);
         Vector3 middle = tiles[tile].getMiddle();
         playerObjects[player].transform.position = new Vector3(middle.x, middle.y, -10);
-    }
+    }*/
 
     #region buttonClicks
     //Logic for game tile clicks

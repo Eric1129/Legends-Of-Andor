@@ -39,6 +39,40 @@ public class SavedGameController : MonoBehaviour
 
     }
 
+    private string JSONGameState(GameState gs, int ind = 0)
+    {
+        string json = "";
+        
+        json += JSONinsertObject(new string[] { "Legend", "Player-Locations" },
+            new string[] { ((int)gs.legend).ToString(), JSONDictionary(gs.playerLocations, ind + 1, true)},
+            ind);
+
+        json += indent(ind) + "Hero: {\n";
+        //json += JSONHero(p.getHero(), ind + 1);
+        json += indent(ind) + "},\n";
+
+        //json += indent(ind) + "NetworkID" + ": " + p.getNetworkID() + ",\n";
+        //json += indent(ind) + "Color" + ": " + p.color + "\n";
+
+
+        return json;
+    }
+
+    private string JSONDictionary<T, R>(Dictionary<T, R> dict, int ind = 0, bool bracket = true)
+    {
+        string json = indent(ind) + "{\n";
+
+
+        foreach (KeyValuePair<T, R> pair in dict)
+        {
+            json += indent(ind + 1) + pair.Key.ToString() + ": " + pair.Value.ToString() + ",\n";
+        }
+
+        json = json.Substring(0, json.Length - 3) + "\n";
+        json += indent(ind) + "}\n";
+
+        return json;
+    }
 
     private string JSONPlayer(Andor.Player p, int ind = 0)
     {
@@ -48,7 +82,8 @@ public class SavedGameController : MonoBehaviour
         json += indent(ind) + "},\n";
 
         json += indent(ind) + "NetworkID" + ": " + p.getNetworkID() + ",\n";
-        json += indent(ind) + "Color" + ": " + p.color + ",\n";
+        json += indent(ind) + "Color" + ": " + p.color + "\n";
+
 
 
         return json;

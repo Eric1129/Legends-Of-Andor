@@ -66,7 +66,7 @@ public class GameState
         {
             case Type.Move:
                 playerLocations[a.playersInvolved()[0]] = ((Move)(a)).to;
-                GameController.instance.movePlayer(a.playersInvolved()[0], ((Move)(a)).to);
+                //GameController.instance.movePlayer(a.playersInvolved()[0], ((Move)(a)).to);
                 break;
 
                 // Need to impliment more actions
