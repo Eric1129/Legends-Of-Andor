@@ -15,6 +15,11 @@ public class PlayerDetailsLoaded : MonoBehaviour
 
     private void Start()
     {
+        
+
+    }
+    public void init(Andor.Player p)
+    {
         List<string> options = new List<string>();
 
         options.Add("Not Selected");
@@ -26,12 +31,23 @@ public class PlayerDetailsLoaded : MonoBehaviour
         playerDropdown.ClearOptions();
         playerDropdown.AddOptions(options);
 
-        playerDropdown.value = RoomLobbyController.instance.playerMatches[Game.myPlayer.getNetworkID()];
+        playerDropdown.value = RoomLobbyController.instance.playerMatches[p.getNetworkID()];
 
-        playerDropdown.onValueChanged.AddListener(delegate
+
+        if (p.getNetworkID().Equals(Game.myPlayer.getNetworkID()))
         {
-            selectvalue();
-        });
+
+            playerDropdown.onValueChanged.AddListener(delegate
+            {
+                selectvalue();
+            });
+        }
+        else
+        {
+            playerDropdown.interactable = false;
+        }
+
+
 
     }
     private void selectvalue()

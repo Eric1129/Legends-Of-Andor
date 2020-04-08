@@ -257,7 +257,7 @@ public class RoomLobbyController : MonoBehaviour
         pdl.mainContainer.GetComponent<Image>().color = new Color32(player.color[0], player.color[1], player.color[2], 130);
         pdl.nameLabel.text = player.getNetworkID();
         pdl.setReady(player.ready);
-        pdl.playerDropdown.value = playerMatches[Game.myPlayer.getNetworkID()];
+        pdl.init(player);
 
 
         Debug.Log(player.getNetworkID() + " - " + player.ready);
