@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using Andor;
 using UnityEngine;
@@ -8,11 +9,15 @@ using Newtonsoft.Json;
 [JsonObject(MemberSerialization.Fields)]
 public class GameState
 {
+    private DateTime dateSaved;
+
 	private Dictionary<string, Player> players;
     private Dictionary<string, Monster> monsters;
     public short legend = 0;
+    
 
     public Dictionary<string, int> playerLocations;
+
 
 
     public TurnManager turnManager;
@@ -23,8 +28,17 @@ public class GameState
         monsters = new Dictionary<string, Monster>();
 
         playerLocations = new Dictionary<string, int>();
-
     }
+    /*public void updateGameState(GameState gs)
+    {
+        dateSaved = gs.getSaveTime();
+        players = gs.getPlayerDict();
+        monsters = gs.getMonsterDict();
+        legend = gs.legend;
+        playerLocations = gs.playerLocations;
+        turnManager = gs.turnManager;
+    }*/
+
     public void addPlayer(Player p)
 	{
         if (!players.ContainsKey(p.getNetworkID()))
@@ -41,7 +55,14 @@ public class GameState
 
         if (!Game.started)
         {
-            RoomLobbyController.instance.playerListUpdate(getPlayers());
+            if(RoomLobbyController.preLoadedGameState == null)
+            {
+                RoomLobbyController.instance.playerListUpdate(Game.gameState.getPlayers());
+            }
+            else
+            {
+                RoomLobbyController.instance.playerListUpdateLOADED(Game.gameState.getPlayers());
+            }
         }
 
     }
@@ -59,8 +80,20 @@ public class GameState
 
         if (!Game.started)
         {
-            RoomLobbyController.instance.playerListUpdate(getPlayers());
+            if (RoomLobbyController.preLoadedGameState == null)
+            {
+                RoomLobbyController.instance.playerListUpdate(Game.gameState.getPlayers());
+            }
+            else
+            {
+                RoomLobbyController.instance.playerListUpdateLOADED(Game.gameState.getPlayers());
+            }
         }
+    }
+    public void removeAllPlayers()
+    {
+        players = new Dictionary<string, Player>();
+        playerLocations = new Dictionary<string, int>();
     }
     public void processAction(Action a)
     {
@@ -108,5 +141,26 @@ public class GameState
     public bool hasPlayer(Player player)
     {
         return players.ContainsKey(player.getNetworkID());
+    }
+
+    public void setSaveTime(DateTime dateTime)
+    {
+        dateSaved = dateTime;
+    }
+    public DateTime getSaveTime()
+    {
+        return dateSaved;
+    }
+    public Dictionary<string, Player> getPlayerDict()
+    {
+        return players;
+    }
+    public Dictionary<string, Monster> getMonsterDict()
+    {
+        return monsters;
+    }
+    public GameState DeepCopy()
+    {
+        return SavedGameController.deserializeGameState(SavedGameController.serializeGameState(this));
     }
 }

@@ -786,7 +786,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2045834862}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1747,7 +1747,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPanel: {fileID: 544709755}
   allPlayerContainer: {fileID: 1339047356}
-  playerListingPrefab: {fileID: 6233199679531326061, guid: 829051ab1003d4cfc9e3aed1c6f9f175,
+  playerListingPrefab: {fileID: 4923139908826989291, guid: ec0a153d6e2df452eaa802372be98d0a,
+    type: 3}
+  playerListingPrefabLoaded: {fileID: 1107154461530377867, guid: 1fda0360dbc62438991210fa62d1d4a5,
     type: 3}
   startButton: {fileID: 204551100}
   legendLabel: {fileID: 1899692827}
@@ -2842,7 +2844,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2045834862}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2998,8 +3000,8 @@ RectTransform:
   - {fileID: 1243566330}
   - {fileID: 1339047356}
   - {fileID: 2113967505}
-  - {fileID: 544709755}
   - {fileID: 1899692826}
+  - {fileID: 544709755}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

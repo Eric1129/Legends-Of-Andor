@@ -15,7 +15,7 @@ public class Start_New_Game : MonoBehaviour
     public void OpenSavedGame()
     {
 
-        SceneManager.LoadScene("MySavedGame");
+        SceneManager.LoadScene("Open_Saved_Game");
 
     }
 

@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/files I dont know what to do with/CustomMatchmakingMenuDemo.unity
-    guid: a97a97316d0bbc746be3e58257775546
   - enabled: 1
     path: Assets/Log_In/Scenes/Startup_Screen.unity
     guid: 2cda990e2423bbf4892e6590ba056729
@@ -35,10 +32,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Room/Scenes/RoomLobby.unity
     guid: 4fc28ba34cb364d129a5422746b7fb19
-  - enabled: 0
-    path: Assets/files I dont know what to do with/MySavedGame.unity
-    guid: 7bf407ca15b314dd59e0980f18713921
   - enabled: 1
     path: Assets/Log_In/Scenes/Loading_Screen.unity
     guid: ca321fdb008734563bd39ea311ed84f2
+  - enabled: 1
+    path: Assets/Main_Menu/Scenes/Open_Saved_Game.unity
+    guid: 6fdac3b0bd1f242f783126810035cdab
   m_configObjects: {}

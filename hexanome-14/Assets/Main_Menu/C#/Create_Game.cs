@@ -37,6 +37,8 @@ public class Create_Game : MonoBehaviour
         LEGEND = 1;
         inviteContainer.SetActive(false);
 
+        Game.loadedFromFile = false;
+
     }
 
     public void privateGameClick()

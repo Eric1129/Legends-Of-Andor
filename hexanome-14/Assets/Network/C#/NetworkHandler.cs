@@ -4,9 +4,52 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Photon.Pun;
 using UnityEngine;
+using Newtonsoft.Json;
+
 
 public class NetworkHandler : MonoBehaviour
 {
+    // Should be called only when initializing the game
+    [PunRPC]
+    public void PREGAMEupdateGameState(string serializedGameStateJSON)
+    {
+        RoomLobbyController.preLoadedGameState = JsonConvert.DeserializeObject<GameState>(serializedGameStateJSON);
+        RoomLobbyController.instance.legendLabel.text = "Legend " + RoomLobbyController.preLoadedGameState.legend;
+        Game.loadedFromFile = true;
+        Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updated GameState");
+    }
+    [PunRPC]
+    public void PREGAMEstartGame()
+    {
+        Game.started = true;
+
+        GameState originalGame = RoomLobbyController.preLoadedGameState.DeepCopy();
+        List<Andor.Player> originalPlayers = originalGame.getPlayers();
+
+        RoomLobbyController.preLoadedGameState.removeAllPlayers();
+
+        Dictionary<string, Andor.Player> originalPlayerDict = originalGame.getPlayerDict();
+        Dictionary<string, int> originalLocations = originalGame.playerLocations;
+
+
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            string playerChoosen = originalPlayers[p.getHero().getGold()-1].getNetworkID();
+
+            originalPlayerDict[playerChoosen].setNetworkID(p.getNetworkID());
+            RoomLobbyController.preLoadedGameState.addPlayer(originalPlayerDict[playerChoosen]);
+            RoomLobbyController.preLoadedGameState.playerLocations.Add(p.getNetworkID(), originalLocations[playerChoosen]);
+
+            if (p.getNetworkID().Equals(Game.myPlayer.getNetworkID())){
+                Game.myPlayer = originalPlayerDict[playerChoosen];
+            }
+        }
+
+        Game.gameState = RoomLobbyController.preLoadedGameState.DeepCopy();
+
+
+    }
+
     [PunRPC]
     public void HOSTaddPlayer(Andor.Player p) // Only host should get this called
     {

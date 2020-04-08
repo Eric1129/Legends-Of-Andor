@@ -57,7 +57,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
-            {
+            { 
                 this.removePauseMenu();
             }
             else
@@ -150,11 +150,18 @@ public class GameController : MonoBehaviour
             
             spriteRenderer.sprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
 
+            if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
+                // Give a random position
+                int startingTile = Game.RANDOM.Next(20, 40);
+                playerObject.transform.position = tiles[startingTile].getMiddle();
 
-            // Give a random position
-            int startingTile = Game.RANDOM.Next(20, 40);
-            playerObject.transform.position = tiles[startingTile].getMiddle();
-            Game.getGame().playerLocations.Add(player.getNetworkID(), startingTile);
+                Game.getGame().playerLocations.Add(player.getNetworkID(), startingTile);
+            }
+            else
+            {
+                playerObject.transform.position = tiles[Game.getGame().playerLocations[player.getNetworkID()]].getMiddle();
+            }
+
         }
     }
 

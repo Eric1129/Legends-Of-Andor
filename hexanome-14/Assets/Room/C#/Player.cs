@@ -40,6 +40,10 @@ namespace Andor
         {
             return networkID;
         }
+        public void setNetworkID(string nid)
+        {
+            networkID = nid;
+        }
 
         public void setHero(HeroS hero)
         {

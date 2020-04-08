@@ -42,5 +42,8 @@ MonoBehaviour:
   - updatePlayerList
   - updateLegend
   - sendAction
+  - updateGameState
+  - PREGAMEupdateGameState
+  - PREGAMEstartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 1

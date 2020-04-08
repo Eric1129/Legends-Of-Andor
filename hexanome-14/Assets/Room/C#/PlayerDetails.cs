@@ -11,9 +11,6 @@ public class PlayerDetails : MonoBehaviour
     public Button readyButton;
     public Transform mainContainer;
 
-    private ColorBlock colorNotReady;
-    private ColorBlock colorReady;
-
     private bool ready = false;
 
 

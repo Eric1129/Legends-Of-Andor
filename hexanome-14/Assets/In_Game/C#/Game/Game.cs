@@ -15,10 +15,11 @@ public static class Game
     private static Photon.Pun.PhotonView PV;
     public static bool started = false;
     public static System.Random RANDOM = new System.Random();
+    public static bool loadedFromFile = false;
 
 
         
-    public static void initGame(Andor.Player player)
+    public static void initGame(Andor.Player player, bool addPlayer = true)
     {
 
         myPlayer = player;
@@ -47,6 +48,34 @@ public static class Game
     }
 
     #region RPC calls
+    // Should be called once before
+    public static void PREGAMEupdateGameState(GameState gs)
+    {
+        if (PV != null && PV.IsMine)
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updating GameState...");
+
+            PV.RPC("PREGAMEupdateGameState", RpcTarget.AllBuffered, SavedGameController.serializeGameState(gs));
+        }
+        else
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
+        }
+    }
+
+    public static void PREGAMEstartGame()
+    {
+        if (PV != null && PV.IsMine)
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updating GameState...");
+
+            PV.RPC("PREGAMEstartGame", RpcTarget.AllBuffered);
+        }
+        else
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
+        }
+    }
     public static void addPlayer(Andor.Player p)
     {
 
@@ -139,10 +168,6 @@ public static class Game
             throw new System.Exception("Did not init gameState");
         }
         return gameState;
-    }
-    public static void updateGameState(GameState gs)
-    {
-        gameState = gs;
     }
 
 }

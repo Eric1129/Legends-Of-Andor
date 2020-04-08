@@ -24,7 +24,7 @@ public class HeroS // : MonoBehaviour, Movable, Fightable
     private bool hasThorald;
 
 
-    private int gold;
+    private int gold = 0;
 
     public HeroS()
     {
