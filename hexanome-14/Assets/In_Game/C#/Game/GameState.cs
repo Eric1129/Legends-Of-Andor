@@ -116,9 +116,13 @@ public class GameState
                     if (turnManager.roundDone())
                     {
                         turnManager.reset();
-                        players[a.playersInvolved()[0]].getHero().setHour(0);
+                        foreach(Player player in this.getPlayers())
+                        {
+                            players[a.playersInvolved()[0]].getHero().setHour(0);
 
-                        GameController.instance.setTime(a.playersInvolved()[0], players[a.playersInvolved()[0]].getHero().getHour());
+                            GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
+                        }
+                        
 
                     }
                     else
