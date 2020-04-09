@@ -69,6 +69,12 @@ public class NetworkHandler : MonoBehaviour
     }
 
     [PunRPC]
+    public void setTurnManager(List<string> order)
+    {
+        Game.gameState.turnManager = new TurnManager(order.ToArray());
+    }
+
+    [PunRPC]
     public void updatePlayerList(List<Andor.Player> players)
     {
         foreach (Andor.Player p in players)

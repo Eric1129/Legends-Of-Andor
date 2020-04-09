@@ -5,7 +5,7 @@ using UnityEngine;
 
 [System.Serializable]
 [JsonObject(MemberSerialization.Fields)]
-public class HeroS // : MonoBehaviour, Movable, Fightable
+public class Hero // : MonoBehaviour, Movable, Fightable
 {
     // private GameObject sphere;
     // private SpriteRenderer spriteRenderer;
@@ -25,8 +25,11 @@ public class HeroS // : MonoBehaviour, Movable, Fightable
 
 
     private int gold = 0;
+    private int strength = 0;
 
-    public HeroS()
+    private int hour = 0;
+
+    public Hero()
     {
 
     }
@@ -38,6 +41,24 @@ public class HeroS // : MonoBehaviour, Movable, Fightable
     public void setGold(int gold)
     {
         this.gold = gold;
+    }
+
+    public int getStrength()
+    {
+        return strength;
+    }
+    public void setStrength(int strength)
+    {
+        this.strength = strength;
+    }
+
+    public int getHour()
+    {
+        return hour;
+    }
+    public void setHour(int hour)
+    {
+        this.hour = hour;
     }
 
     public string getHeroType()

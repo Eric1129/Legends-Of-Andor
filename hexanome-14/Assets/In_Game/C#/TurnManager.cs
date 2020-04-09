@@ -10,12 +10,12 @@ public class TurnManager
     private Queue<string> turnQueue;
     private string[] playerOrder;
 
-    public TurnManager(string[] orderByPlayerName)
+    public TurnManager(string[] order)
     {
         turnQueue = new Queue<string>();
+        playerOrder = order;
 
-        playerOrder = orderByPlayerName;
-        foreach(string player in orderByPlayerName)
+        foreach(string player in order)
         {
             turnQueue.Enqueue(player);
         }
@@ -39,4 +39,20 @@ public class TurnManager
         turnQueue.Dequeue();
     }
 
+    public bool roundDone()
+    {
+        return turnQueue.Count == 0 ? true : false;
+    }
+
+    public void reset()
+    {
+        while(turnQueue.Count > 0)
+        {
+            turnQueue.Dequeue();
+        }
+        foreach (string player in playerOrder)
+        {
+            turnQueue.Enqueue(player);
+        }
+    }
 }

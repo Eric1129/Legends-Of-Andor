@@ -11,11 +11,10 @@ public class BoardPosition : MonoBehaviour
     // like: boardPosComponentHandler
     // this class just deals with lineRenderer, colliders etc
 
-    private LineRenderer lineRenderer;
     private PolygonCollider2D polyCollider;
+    private LineRenderer lineRenderer;
 
     private Vector2[] perimeter;
-    private float alpha = 0.2f;
     private bool selected = false;
 
     public static BoardPosition currentlySelected;
@@ -150,24 +149,24 @@ public class BoardPosition : MonoBehaviour
 // from https://stackoverflow.com/questions/9815699/how-to-calculate-centroid
 // shouldn't use this, looks shitty at times
 // -- need to manually record where we want th middle of each boardPosition to be.
- public PointF calculateCentroid()
-  {
-     float accumulatedArea = 0.0f;
-     float centerX = 0.0f;
-     float centerY = 0.0f;
+     public PointF calculateCentroid()
+      {
+         float accumulatedArea = 0.0f;
+         float centerX = 0.0f;
+         float centerY = 0.0f;
 
-     for (int i = 0, j = perimeter.Length - 1; i < perimeter.Length; j = i++)
-     {
-        float temp = perimeter[i].x * perimeter[j].y - perimeter[j].x * perimeter[i].y;
-        accumulatedArea += temp;
-        centerX += (perimeter[i].x + perimeter[j].x) * temp;
-        centerY += (perimeter[i].y + perimeter[j].y) * temp;
-     }
+         for (int i = 0, j = perimeter.Length - 1; i < perimeter.Length; j = i++)
+         {
+            float temp = perimeter[i].x * perimeter[j].y - perimeter[j].x * perimeter[i].y;
+            accumulatedArea += temp;
+            centerX += (perimeter[i].x + perimeter[j].x) * temp;
+            centerY += (perimeter[i].y + perimeter[j].y) * temp;
+         }
 
-     if (Math.Abs(accumulatedArea) < 1E-7f)
-        return PointF.Empty;  // Avoid division by zero
+         if (Math.Abs(accumulatedArea) < 1E-7f)
+            return PointF.Empty;  // Avoid division by zero
 
-     accumulatedArea *= 3f;
-     return new PointF(centerX / accumulatedArea, centerY / accumulatedArea);
-  }
+         accumulatedArea *= 3f;
+         return new PointF(centerX / accumulatedArea, centerY / accumulatedArea);
+      }
 }

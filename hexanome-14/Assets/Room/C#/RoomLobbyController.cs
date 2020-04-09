@@ -95,7 +95,7 @@ public class RoomLobbyController : MonoBehaviour
 
                     foreach (Andor.Player p in Game.gameState.getPlayers())
                     {
-                        highlightPlayer(p.getHeroType(), new Color32((byte)(p.color[0]-50), (byte)(p.color[1] - 50), (byte)(p.color[2] - 50), 200));
+                        highlightPlayer(p.getHeroType(), new Color32((byte)(p.getColor().r-50), (byte)(p.getColor().g - 50), (byte)(p.getColor().b - 50), 200));
                     }
                         
                 }
@@ -122,7 +122,7 @@ public class RoomLobbyController : MonoBehaviour
         GameObject temp = Instantiate(playerListingPrefab, playerPanel);
         PlayerDetails pd = temp.GetComponent<PlayerDetails>();
 
-        pd.mainContainer.GetComponent<Image>().color = new Color32(player.color[0], player.color[1], player.color[2], 130);
+        pd.mainContainer.GetComponent<Image>().color = player.getColor(130);
         pd.nameLabel.text = player.getNetworkID();
         pd.heroLabel.text = player.getHeroType();
         pd.setReady(player.ready);
@@ -254,26 +254,19 @@ public class RoomLobbyController : MonoBehaviour
         GameObject temp = Instantiate(playerListingPrefabLoaded, playerPanel);
         PlayerDetailsLoaded pdl = temp.GetComponent<PlayerDetailsLoaded>();
 
-        pdl.mainContainer.GetComponent<Image>().color = new Color32(player.color[0], player.color[1], player.color[2], 130);
+        pdl.mainContainer.GetComponent<Image>().color = player.getColor(130);
         pdl.nameLabel.text = player.getNetworkID();
         pdl.setReady(player.ready);
         pdl.init(player);
 
-
-        Debug.Log(player.getNetworkID() + " - " + player.ready);
-
         if (player.getNetworkID() != Game.myPlayer.getNetworkID())
         {
-            Debug.Log("NetworkID: " + player.getNetworkID() + " != myPlayer NetworkID: " + Game.myPlayer.getNetworkID());
             pdl.readyButton.interactable = false;
         }
         else
         {
             pdl.readyButton.interactable = true;
         }
-        Debug.Log("OIOIOI " + pdl.playerDropdown.value);
-        Debug.Log(playerMatches[player.getNetworkID()]);
-        Debug.Log("OIOIOI2 " + pdl.playerDropdown.value);
 
     }
 

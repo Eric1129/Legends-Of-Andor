@@ -14,11 +14,7 @@ public class GameState
 	private Dictionary<string, Player> players;
     private Dictionary<string, Monster> monsters;
     public short legend = 0;
-    
-
     public Dictionary<string, int> playerLocations;
-
-
 
     public TurnManager turnManager;
 
@@ -29,15 +25,6 @@ public class GameState
 
         playerLocations = new Dictionary<string, int>();
     }
-    /*public void updateGameState(GameState gs)
-    {
-        dateSaved = gs.getSaveTime();
-        players = gs.getPlayerDict();
-        monsters = gs.getMonsterDict();
-        legend = gs.legend;
-        playerLocations = gs.playerLocations;
-        turnManager = gs.turnManager;
-    }*/
 
     public void addPlayer(Player p)
 	{
@@ -99,12 +86,51 @@ public class GameState
     {
         switch (a.getType())
         {
+            // Need to impliment more actions
+
             case Type.Move:
                 playerLocations[a.playersInvolved()[0]] = ((Move)(a)).to;
                 //GameController.instance.movePlayer(a.playersInvolved()[0], ((Move)(a)).to);
                 break;
 
-                // Need to impliment more actions
+            case Type.PassTurn:
+                if (a.playersInvolved()[0].Equals(turnManager.currentPlayerTurn()))
+                {
+                    turnManager.passTurn();
+                    players[a.playersInvolved()[0]].getHero().setHour(1 + players[a.playersInvolved()[0]].getHero().getHour());
+
+                    GameController.instance.setTime(a.playersInvolved()[0], players[a.playersInvolved()[0]].getHero().getHour());
+
+                    Debug.Log("Turn Passed... " + turnManager.currentPlayerTurn() + " is now up!");
+                }
+                else
+                {
+                    Debug.Log("ERROR! TURN MIXUP! Current player turn (" + turnManager.currentPlayerTurn() + ") != player sent (" + a.playersInvolved()[0] + ")");
+                }
+                break;
+            case Type.EndTurn:
+                if (a.playersInvolved()[0].Equals(turnManager.currentPlayerTurn()))
+                {
+                    turnManager.endTurn();
+
+                    if (turnManager.roundDone())
+                    {
+                        turnManager.reset();
+                        players[a.playersInvolved()[0]].getHero().setHour(0);
+
+                        GameController.instance.setTime(a.playersInvolved()[0], players[a.playersInvolved()[0]].getHero().getHour());
+
+                    }
+                    else
+                    {
+                        Debug.Log("Turn Ended... " + turnManager.currentPlayerTurn() + " is now up!");
+                    }
+                }
+                else
+                {
+                    Debug.Log("ERROR! TURN MIXUP! Current player turn (" + turnManager.currentPlayerTurn() + ") != player sent (" + a.playersInvolved()[0] + ")");
+                }
+                break;
             default:
                 Debug.Log("DEFAULT CASE");
                 break;
@@ -151,6 +177,7 @@ public class GameState
     {
         return dateSaved;
     }
+
     public Dictionary<string, Player> getPlayerDict()
     {
         return players;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Andor;
 using Photon.Pun;
 using UnityEngine;
@@ -27,7 +28,11 @@ public static class Game
 
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Player), 1, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(List<Player>), 2, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
-        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Move), 3, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(List<string>), 3, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Move), 4, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(PassTurn), 5, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(EndTurn), 6, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+
 
         // MUST HAVE PV
         gameState.addPlayer(myPlayer);
@@ -128,7 +133,6 @@ public static class Game
 
     }
 
-
     public static void sendAction(Action a)
     {
         if (PV != null && PV.IsMine)
@@ -144,9 +148,9 @@ public static class Game
         }
 
     }
-        // ONLY CALLED IF HOST
-        // Tell players that there is a new player/player change
-        public static void updateClients()
+    // ONLY CALLED IF HOST
+    // Tell players that there is a new player/player change
+    public static void updateClients()
     {
         if (PV != null && PV.IsMine)
         {
@@ -155,6 +159,28 @@ public static class Game
 
             List<Player> players = gameState.getPlayers();
             PV.RPC("updatePlayerList", RpcTarget.Others, players);
+        }
+        else
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
+
+        }
+    }
+    // ONLY CALLED IF HOST
+    // Sets the turn manager for all clients
+    public static void setTurnManager(List<Andor.Player> players)
+    {
+        
+        if (PV != null && PV.IsMine)
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " (HOST) ~ Updating TurnManager for clients...");
+
+            PV.RPC("setTurnManager", RpcTarget.All, getPlayerNames(players));
+        }
+        else
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
+
         }
     }
 
@@ -170,4 +196,33 @@ public static class Game
         return gameState;
     }
 
+    public static void Shuffle<T>(this IList<T> list)
+    {
+        int n = list.Count;
+
+        for (int i = list.Count - 1; i > 1; i--)
+        {
+            int rnd = Game.RANDOM.Next(i + 1);
+
+            T value = list[rnd];
+            list[rnd] = list[i];
+            list[i] = value;
+        }
+    }
+
+    public static List<string> getPlayerNames(List<Andor.Player> players)
+    {
+        List<string> playerNames = new List<string>();
+        foreach (Andor.Player player in players)
+        {
+            playerNames.Add(player.getNetworkID());
+        }
+        return playerNames;
+    }
+
+
+    public static IEnumerator sleep(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+    }
 }

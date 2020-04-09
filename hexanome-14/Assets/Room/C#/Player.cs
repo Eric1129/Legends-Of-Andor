@@ -22,18 +22,20 @@ namespace Andor
         // also encodes the corresponding hero type
         // and Sphere-Male-Dwarf. sphere object is attached to this script.
         private string networkID;
-        public byte[] color;
+        private byte[] color;
         public bool ready = false;
 
-        private HeroS myHero;
+
+        private Hero myHero;
         // Will need to use this to verify things like: 
         // showTradeRequest() { if player.lookingAt != Battle then showTradeRequest() }
         // private Screen lookingAt;
 
         public Player() {
-            myHero = new HeroS();
+            myHero = new Hero();
             networkID = PhotonNetwork.NickName;
             color = new byte[]{ (byte)Game.RANDOM.Next(150, 235), (byte)Game.RANDOM.Next(150, 235), (byte)Game.RANDOM.Next(150, 235), 130};
+            Debug.Log(color);
         }
 
         public string getNetworkID()
@@ -45,11 +47,11 @@ namespace Andor
             networkID = nid;
         }
 
-        public void setHero(HeroS hero)
+        public void setHero(Hero hero)
         {
             myHero = hero;
         }
-        public HeroS getHero()
+        public Hero getHero()
         {
             return myHero;
         }
@@ -61,6 +63,15 @@ namespace Andor
         public void setHeroType(string hero)
         {
             myHero.setHeroType(hero);
+        }
+
+        public Color32 getColor(int alpha = 255)
+        {
+            return new Color32(this.color[0], this.color[1], this.color[2], (byte)alpha);
+        }
+        public void setColor(byte[] color)
+        {
+            this.color = color;
         }
 
 

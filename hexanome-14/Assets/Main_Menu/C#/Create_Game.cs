@@ -22,7 +22,6 @@ public class Create_Game : MonoBehaviour
     private static bool game_private = false;
     public static int LEGEND;
 
-    private bool clicked = false;
     public static string ROOMNAME = "";
 
 

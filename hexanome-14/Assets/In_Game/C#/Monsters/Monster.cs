@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Monster : Fightable, Movable
 {
-    private MoveStrategy moveStrat;
-    private DiceRollStrategy diceRollStrat;
+    private MoveStrategy moveStrat = null;
+    private DiceRollStrategy diceRollStrat = null;
 
 
     public void move(ref Node path)

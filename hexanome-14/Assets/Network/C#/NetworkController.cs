@@ -20,7 +20,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     * ******************************************************/
 
     [SerializeField]
-    private int gameVersion;
+    private int gameVersion = 1;
 
     public static List<RoomInfo> roomList = null;
 

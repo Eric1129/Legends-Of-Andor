@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,14 +17,21 @@ public class GameController : MonoBehaviour
 
     public Transform boardSpriteContainer;
     public Transform playerContainer;
+    public Transform playerTimeContainer;
     public Button moveButton;
+    public Text turnLabel;
 
     public GameObject emptyPrefab;
     public GameObject playerPrefab;
     public Sprite fullBoardSprite;
+    public GameObject circlePrefab;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
+    public Dictionary<string, GameObject> timeObjects;
+    public Dictionary<int, Bounds> timeTileBounds;
+    public Bounds timeObjectBounds;
+    public Dictionary<string, Vector3> rndPosInTimeBox;
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
@@ -32,24 +40,51 @@ public class GameController : MonoBehaviour
     void Start()
     {
 
-        Sprite sprite = Resources.Load<Sprite>("TimeSprites/time-1");
-        
-        GameObject sObject = Instantiate(emptyPrefab, boardSpriteContainer);
-        SpriteRenderer sr = sObject.AddComponent<SpriteRenderer>();
-        sr.sprite = sprite;
-
-        Debug.Log(transform.position);
-        
-
         Game.started = true;
         Game.createPV();
 
         tiles = new Dictionary<int, BoardPosition>();
         playerObjects = new Dictionary<string, GameObject>();
+        timeObjects = new Dictionary<string, GameObject>();
+        timeTileBounds = new Dictionary<int, Bounds>();
+        rndPosInTimeBox = new Dictionary<string, Vector3>();
 
         instance = this;
 
+        // For drawing everything
         loadBoard();
+
+        // For setting up resource distribution 
+        GameSetup();
+
+        // Set up Turn Manager
+        if (PhotonNetwork.IsMasterClient)
+        {
+            List<Andor.Player> randomOrder = Game.getGame().getPlayers();
+            Game.Shuffle(randomOrder);
+
+            Game.setTurnManager(randomOrder);
+        }
+        int timeout = 300;
+        while(Game.gameState.turnManager == null)
+        {
+            StartCoroutine(Game.sleep(0.01f));
+            if(timeout <= 0)
+            {
+                throw new Exception("Could not initialize TurnManager!");
+            }
+            timeout--;
+        }
+        Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
+
+        turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+        if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID())){
+            turnLabel.color = Game.myPlayer.getColor();
+        }
+        else
+        {
+            turnLabel.color = UnityEngine.Color.black;
+        }
     }
 
     void Update()
@@ -70,6 +105,19 @@ public class GameController : MonoBehaviour
             foreach (Andor.Player player in Game.gameState.getPlayers())
             {
                 moveToNewPos(player);
+
+                timeObjects[player.getNetworkID()].transform.position =
+                    moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
+            }
+
+            turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+            if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
+            {
+                turnLabel.color = Game.myPlayer.getColor(130);
+            }
+            else
+            {
+                turnLabel.color = UnityEngine.Color.black;
             }
         }
     }
@@ -77,8 +125,7 @@ public class GameController : MonoBehaviour
     {
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
         Vector3 cellPos = tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle();
-        playerObjects[player.getNetworkID()].transform.position =
-            new Vector3(Mathf.MoveTowards(playerPos.x, cellPos.x, 1), Mathf.MoveTowards(playerPos.y, cellPos.y, 1), -1);
+        playerObjects[player.getNetworkID()].transform.position = moveTowards(playerPos, cellPos, 1);
     }
 
 
@@ -101,16 +148,31 @@ public class GameController : MonoBehaviour
         Sprite[] sprites = Resources.LoadAll<Sprite>("BoardSprites");
         // Requirement: have Resources/Sprites folder under Assets
         if (sprites == null)
-            print("Could not load sprites");
+            print("Could not load board tile sprites");
 
         foreach (Sprite sprite in sprites)
         {
             createBoardPosition(sprite);
         }
 
+        sprites = Resources.LoadAll<Sprite>("TimeSprites");
+        // Requirement: have Resources/Sprites folder under Assets
+        if (sprites == null)
+            print("Could not load time tile sprites");
+
+        foreach (Sprite sprite in sprites)
+        {
+            GameObject temp = Instantiate(emptyPrefab);
+            temp.AddComponent<SpriteRenderer>().sprite = sprite;
+            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>());
+            Bounds b = tb.createBounds();
+            Debug.Log(b);
+            timeTileBounds.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
+        }
+
 
         // load players
-        if(Game.gameState != null)
+        if (Game.gameState != null)
         {
             loadPlayers();
         }
@@ -144,6 +206,7 @@ public class GameController : MonoBehaviour
     {
         foreach(Andor.Player player in Game.gameState.getPlayers())
         {
+            // Player Icons
             GameObject playerObject = Instantiate(playerPrefab, playerContainer);
             playerObjects.Add(player.getNetworkID(), playerObject);
             SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
@@ -162,15 +225,32 @@ public class GameController : MonoBehaviour
                 playerObject.transform.position = tiles[Game.getGame().playerLocations[player.getNetworkID()]].getMiddle();
             }
 
+            // Time Icons
+            GameObject timeObject = Instantiate(circlePrefab, playerTimeContainer);
+            timeObjects.Add(player.getNetworkID(), timeObject);
+            SpriteRenderer sr = timeObject.GetComponent<SpriteRenderer>();
+            sr.color = player.getColor();
+
+            if(timeObjectBounds == null)
+            {
+                timeObjectBounds = sr.bounds;
+            }
+
+            Vector3 timePos = getRandomPositionInBounds(timeTileBounds[0], timeObjectBounds, transform.position);
+            timeObject.transform.position = timePos;
+            rndPosInTimeBox[player.getNetworkID()] = timePos;
         }
     }
 
-    /*public void movePlayer(string player, int tile)
+    public void GameSetup()
     {
-        Debug.Log("Moving Player (" + player + ") to tile " + tile);
-        Vector3 middle = tiles[tile].getMiddle();
-        playerObjects[player].transform.position = new Vector3(middle.x, middle.y, -10);
-    }*/
+
+    }
+
+    public void setTime(string PlayerID, int hour)
+    {
+        rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, transform.position);
+    }
 
     #region buttonClicks
     //Logic for game tile clicks
@@ -221,19 +301,22 @@ public class GameController : MonoBehaviour
 
     public void fightClick()
     {
-        Debug.Log("fight");
+        Debug.Log("fight clicked");
     }
     public void passClick()
     {
-        Debug.Log("pass");
+        Debug.Log("pass clicked");
+        Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
+
     }
     public void endDayClick()
     {
-        Debug.Log("end day");
+        Debug.Log("end day clicked");
+        Game.sendAction(new EndTurn(Game.myPlayer.getNetworkID()));
     }
     public void tradeClick()
     {
-        Debug.Log("trade");
+        Debug.Log("trade clicked");
     }
 
     #endregion
@@ -255,4 +338,22 @@ public class GameController : MonoBehaviour
 
     #endregion
 
+    public static Vector3 getRandomPositionInBounds(Bounds mainObject, Bounds objInside, Vector3 translateOffset)
+    {
+        float widthToUse = mainObject.size.x - objInside.size.x;
+        float heightToUse = mainObject.size.y - objInside.size.y;
+
+        float randPosX = (float)Game.RANDOM.NextDouble() * widthToUse + objInside.size.x / 2;
+        float randPosY = (float)Game.RANDOM.NextDouble() * heightToUse + objInside.size.y / 2;
+
+        float translateToCenterX = randPosX - mainObject.size.x / 2;
+        float translateToCenterY = randPosY - mainObject.size.y / 2;
+
+        return new Vector3(mainObject.center.x + translateToCenterX - translateOffset.x, mainObject.center.y + translateToCenterY - translateOffset.y, -1);
+    }
+
+    public static Vector3 moveTowards(Vector3 from, Vector3 to, float delta)
+    {
+        return new Vector3(Mathf.MoveTowards(from.x, to.x, delta), Mathf.MoveTowards(from.y, to.y, delta), -1);
+    }
 }

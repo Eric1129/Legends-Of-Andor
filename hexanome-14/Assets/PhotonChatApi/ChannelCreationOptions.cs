@@ -9,7 +9,9 @@ namespace Photon.Chat
     public class ChannelCreationOptions
     {
         /// <summary>Default values of channel creation options.</summary>
+#pragma warning disable CS0436 // Type conflicts with imported type
         public static ChannelCreationOptions Default = new ChannelCreationOptions();
+#pragma warning restore CS0436 // Type conflicts with imported type
         /// <summary>Whether or not the channel to be created will allow client to keep a list of users.</summary>
         public bool PublishSubscribers { get; set; }
         /// <summary>Limit of the number of users subscribed to the channel to be created.</summary>
