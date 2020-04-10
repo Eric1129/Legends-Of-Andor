@@ -176,13 +176,6 @@ public class GameController : MonoBehaviour
             Destroy(temp);
         }
 
-
-        // load players
-        if (Game.gameState != null)
-        {
-            loadPlayers();
-        }
-
     }
 
     private void createBoardPosition(Sprite sprite)
@@ -207,6 +200,17 @@ public class GameController : MonoBehaviour
         tiles.Add(cellNumber, boardPosition);
     }
 
+    public void GameSetup()
+    {
+        // load players
+        if (Game.gameState != null)
+        {
+            loadPlayers();
+
+            loadMonsters();
+        }
+
+    }
 
     private void loadPlayers()
     {
@@ -248,7 +252,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void GameSetup()
+    private void loadMonsters()
     {
 
     }

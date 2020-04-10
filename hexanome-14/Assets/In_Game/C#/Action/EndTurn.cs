@@ -36,7 +36,7 @@ public class EndTurn : Action
             gs.turnManager.reset();
             foreach (Andor.Player player in gs.getPlayers())
             {
-                gs.getPlayer(players[0]).getHero().setHour(0);
+                player.getHero().setHour(0);
 
                 GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
             }

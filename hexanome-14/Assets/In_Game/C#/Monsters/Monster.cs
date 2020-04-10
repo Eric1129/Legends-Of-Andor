@@ -2,20 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : Fightable, Movable
+public class Monster : Fightable, MoveStrategy
 {
-    private MoveStrategy moveStrat = null;
-    private DiceRollStrategy diceRollStrat = null;
+    private Node location;
+    protected Object prefab;
 
-
-    public void move(ref Node path)
+    public Monster(Node startingPos, Object prefab)
     {
-        moveStrat.move(ref path, this);
+        location = startingPos;
+        this.prefab = prefab;
+    }
+    private Monster() { }
+
+    public void attack(int damage)
+    {
+        throw new System.NotImplementedException();
     }
 
-    public void diceRoll()
+    public void move()
     {
-        diceRollStrat.roll(this);
+        location = location.toCastleNode();
+    }
+    public int getLocation()
+    {
+        return location.getIndex();
+    }
+    private Object getPrefab()
+    {
+        return prefab;
     }
 
 }

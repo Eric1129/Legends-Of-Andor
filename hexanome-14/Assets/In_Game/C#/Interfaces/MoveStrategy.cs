@@ -4,5 +4,5 @@ using UnityEngine;
 
 interface MoveStrategy
 {
-    void move(ref Node path, Movable obj);
+    void move();
 }
