@@ -36,5 +36,9 @@ public class Node
     {
         return graphIndex;
     }
+    public override string ToString()
+    {
+        return "Node: " + graphIndex;
+    }
 
 }

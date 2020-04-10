@@ -16,6 +16,7 @@ public class For_Log_In : MonoBehaviour
             txt_Input = GameObject.FindGameObjectWithTag("LogIn_username").GetComponent<InputField>();
             txt_Input.text = PlayerPrefs.GetString("NickName");
         }
+
     }
 
 

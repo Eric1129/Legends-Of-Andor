@@ -17,6 +17,7 @@ public static class Game
     public static bool started = false;
     public static System.Random RANDOM = new System.Random();
     public static bool loadedFromFile = false;
+    public static Graph positionGraph;
 
 
         
@@ -25,6 +26,7 @@ public static class Game
 
         myPlayer = player;
         gameState = new GameState();
+        positionGraph = new Graph();
 
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Player), 1, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(List<Player>), 2, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);

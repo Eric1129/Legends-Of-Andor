@@ -30,7 +30,7 @@ public class Graph
         int[][] fileContents = new int[85][];
         int maxSize = 0;
 
-        using(var reader = new StreamReader(@"./Assets/CSV/adjacencyList.txt"))
+        using(var reader = new StreamReader(@"./Assets/Data/CSV/adjacencyList.txt"))
         {
             while (!reader.EndOfStream)
             {
@@ -80,16 +80,20 @@ public class Graph
 
     private List<Node> bfs(Node src, Node dest)
     {
+        int i = 0;
         if(src == dest)
         {
             return new List<Node>();
         }
+        HashSet<int> visited = new HashSet<int>();
+
         Queue<List<Node>> queue = new Queue<List<Node>>();
         List<Node> firstNode = new List<Node>();
         firstNode.Add(src);
-        queue.Enqueue(firstNode);        
+        queue.Enqueue(firstNode);
+        visited.Add(src.getIndex());
 
-        while (queue.Count != 0)
+        while (queue.Count > 0)
         {
             List<Node> path = queue.Dequeue();
             Node lastNode = path[path.Count-1];
@@ -103,20 +107,42 @@ public class Graph
 
             foreach(Node adjNode in lastNode.getAdjacentNodes())
             {
-                if (path.Contains(adjNode)) { continue; }
+                if (visited.Contains(adjNode.getIndex())) { continue; }
+
+                visited.Add(adjNode.getIndex());
 
                 // Copy the list
-                List<Node> listCopy = new List<Node>(path.ToArray());
+                List<Node> listCopy = deepCopy(path);
 
                 listCopy.Add(adjNode);
                 queue.Enqueue(listCopy);
             }
+            i++;
         }
         // No valid path
         return null;
         // return ref new Node(0, new int[] {-1, -1, -1});
     }
+    public List<Node> getPath(int src, int dst)
+    {
+        return bfs(nodes[src], nodes[dst]);
+    }
 
+    public Node getNode(int index)
+    {
+        return nodes[index];
+    }
+
+    
+    private List<Node> deepCopy(List<Node> list)
+    {
+        List<Node> copyList = new List<Node>();
+        foreach(Node n in list)
+        {
+            copyList.Add(n);
+        }
+        return copyList;
+    }
 
 
 // ------ some helper functions -----

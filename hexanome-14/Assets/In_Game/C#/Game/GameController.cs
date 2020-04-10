@@ -36,6 +36,9 @@ public class GameController : MonoBehaviour
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
 
+    private Transform initTransform;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +51,8 @@ public class GameController : MonoBehaviour
         timeObjects = new Dictionary<string, GameObject>();
         timeTileBounds = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
+
+        initTransform = transform;
 
         instance = this;
 
@@ -125,7 +130,7 @@ public class GameController : MonoBehaviour
     {
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
         Vector3 cellPos = tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle();
-        playerObjects[player.getNetworkID()].transform.position = moveTowards(playerPos, cellPos, 1);
+        playerObjects[player.getNetworkID()].transform.position = moveTowards(playerPos, cellPos, 0.5f);
     }
 
 
@@ -250,7 +255,7 @@ public class GameController : MonoBehaviour
 
     public void setTime(string PlayerID, int hour)
     {
-        rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, transform.position);
+        rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, new Vector3());
     }
 
     #region buttonClicks
@@ -356,5 +361,9 @@ public class GameController : MonoBehaviour
     public static Vector3 moveTowards(Vector3 from, Vector3 to, float delta)
     {
         return new Vector3(Mathf.MoveTowards(from.x, to.x, delta), Mathf.MoveTowards(from.y, to.y, delta), -1);
+    }
+    public void SLEEP(float sec)
+    {
+        StartCoroutine(Game.sleep(sec));
     }
 }
