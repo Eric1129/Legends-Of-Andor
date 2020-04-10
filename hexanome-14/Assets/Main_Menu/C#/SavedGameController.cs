@@ -49,11 +49,8 @@ public class SavedGameController : MonoBehaviour
     public void getGames()
     {
         Debug.Log("Looking for Games...");
-        Debug.Log(Directory.GetFiles(Application.persistentDataPath).Length);
         foreach(string path in Directory.GetFiles(Application.persistentDataPath, "*.andor"))
         {
-            Debug.Log(path);
-
             listGame(new FileInfo(path));
         }
     }
@@ -102,9 +99,9 @@ public class SavedGameController : MonoBehaviour
     public static GameState loadGame(string path)
     {
         Debug.Log("Loading Game...");
-        Debug.Log("Under path: " + path);
+        //Debug.Log("Under path: " + path);
         string data = File.ReadAllText(path);
-        Debug.Log(data);
+        //Debug.Log(data);
         return JsonConvert.DeserializeObject<GameState>(data);
     }
 

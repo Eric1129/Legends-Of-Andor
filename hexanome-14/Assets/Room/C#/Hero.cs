@@ -26,6 +26,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
 
     private int gold = 0;
     private int strength = 0;
+    private int willpower = 0;
 
     private int hour = 0;
 
@@ -50,6 +51,15 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void setStrength(int strength)
     {
         this.strength = strength;
+    }
+
+    public int getWillpower()
+    {
+        return willpower;
+    }
+    public void setWillpower(int willpower)
+    {
+        this.willpower = willpower;
     }
 
     public int getHour()

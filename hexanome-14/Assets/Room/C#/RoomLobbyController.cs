@@ -44,12 +44,10 @@ public class RoomLobbyController : MonoBehaviour
         Game.initGame(new Andor.Player());
         if (preLoadedGameState == null)
         {
-            Debug.Log("NOT LOADED GAME");
             allPlayerContainer.gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("LOADED GAME");
             Game.PREGAMEupdateGameState(preLoadedGameState);
             allPlayerContainer.gameObject.SetActive(false);
 

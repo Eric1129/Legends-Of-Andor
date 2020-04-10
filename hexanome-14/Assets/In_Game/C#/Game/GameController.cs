@@ -168,6 +168,7 @@ public class GameController : MonoBehaviour
             Bounds b = tb.createBounds();
             Debug.Log(b);
             timeTileBounds.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
+            Destroy(temp);
         }
 
 

@@ -17,6 +17,9 @@ public interface Action
     Type getType();
     string[] playersInvolved();
 
+    bool isLegal(GameState gs);
+    void execute(GameState gs);
+
 }
 
 

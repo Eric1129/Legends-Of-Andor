@@ -84,61 +84,10 @@ public class GameState
     }
     public void processAction(Action a)
     {
-        switch (a.getType())
-        {
-            // Need to impliment more actions
-
-            case Type.Move:
-                playerLocations[a.playersInvolved()[0]] = ((Move)(a)).to;
-                //GameController.instance.movePlayer(a.playersInvolved()[0], ((Move)(a)).to);
-                break;
-
-            case Type.PassTurn:
-                if (a.playersInvolved()[0].Equals(turnManager.currentPlayerTurn()))
-                {
-                    turnManager.passTurn();
-                    players[a.playersInvolved()[0]].getHero().setHour(1 + players[a.playersInvolved()[0]].getHero().getHour());
-
-                    GameController.instance.setTime(a.playersInvolved()[0], players[a.playersInvolved()[0]].getHero().getHour());
-
-                    Debug.Log("Turn Passed... " + turnManager.currentPlayerTurn() + " is now up!");
-                }
-                else
-                {
-                    Debug.Log("ERROR! TURN MIXUP! Current player turn (" + turnManager.currentPlayerTurn() + ") != player sent (" + a.playersInvolved()[0] + ")");
-                }
-                break;
-            case Type.EndTurn:
-                if (a.playersInvolved()[0].Equals(turnManager.currentPlayerTurn()))
-                {
-                    turnManager.endTurn();
-
-                    if (turnManager.roundDone())
-                    {
-                        turnManager.reset();
-                        foreach(Player player in this.getPlayers())
-                        {
-                            players[a.playersInvolved()[0]].getHero().setHour(0);
-
-                            GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
-                        }
-                        
-
-                    }
-                    else
-                    {
-                        Debug.Log("Turn Ended... " + turnManager.currentPlayerTurn() + " is now up!");
-                    }
-                }
-                else
-                {
-                    Debug.Log("ERROR! TURN MIXUP! Current player turn (" + turnManager.currentPlayerTurn() + ") != player sent (" + a.playersInvolved()[0] + ")");
-                }
-                break;
-            default:
-                Debug.Log("DEFAULT CASE");
-                break;
+        if (a.isLegal(this)){
+            a.execute(this);
         }
+        
     }
 
     public bool playerCharacterExists(string tag)
@@ -167,6 +116,10 @@ public class GameState
     public List<Player> getPlayers()
     {
         return players.Values.ToList();
+    }
+    public Player getPlayer(string playerID)
+    {
+        return players[playerID];
     }
     public bool hasPlayer(Player player)
     {

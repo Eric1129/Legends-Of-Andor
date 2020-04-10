@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 [System.Serializable]
 public class EndTurn : Action
 {
@@ -19,5 +20,30 @@ public class EndTurn : Action
     public string[] playersInvolved()
     {
         return players;
+    }
+
+
+    public bool isLegal(GameState gs)
+    {
+        return players[0].Equals(gs.turnManager.currentPlayerTurn());
+    }
+    public void execute(GameState gs)
+    {
+        gs.turnManager.endTurn();
+
+        if (gs.turnManager.roundDone())
+        {
+            gs.turnManager.reset();
+            foreach (Andor.Player player in gs.getPlayers())
+            {
+                gs.getPlayer(players[0]).getHero().setHour(0);
+
+                GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
+            }
+        }
+        else
+        {
+            Debug.Log("Turn Ended... " + gs.turnManager.currentPlayerTurn() + " is now up!");
+        }
     }
 }
