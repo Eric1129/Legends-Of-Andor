@@ -188,7 +188,7 @@ public class GameController : MonoBehaviour
         {
             GameObject temp = Instantiate(emptyPrefab);
             temp.AddComponent<SpriteRenderer>().sprite = sprite;
-            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>());
+            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>(), boardSpriteContainer.transform.lossyScale);
             Bounds b = tb.createBounds();
             Debug.Log(b);
             timeTileBounds.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
@@ -202,7 +202,7 @@ public class GameController : MonoBehaviour
         int cellNumber = Int32.Parse(sprite.name.Split('_')[1]);
 
         GameObject cellObject = Instantiate(emptyPrefab, transform.position, transform.rotation, boardSpriteContainer);
-        cellObject.transform.localScale = boardSpriteContainer.transform.localScale;
+        //cellObject.transform.localScale = boardSpriteContainer.transform.localScale;
         cellObject.tag = cellNumber.ToString();
         cellObject.name = "position-" + cellNumber.ToString();
 

@@ -37,7 +37,15 @@ public class BoardPosition : MonoBehaviour
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         perimeter = polyCollider.points;
 
+
+
         lineRenderer.positionCount = perimeter.Length;
+        // scale the perimeter
+        for (int i = 0; i < perimeter.Length; i++)
+        {
+            perimeter[i] = new Vector2(this.transform.position.x + (perimeter[i].x - this.transform.position.x) * this.transform.lossyScale.x, this.transform.position.y + (perimeter[i].y - this.transform.position.y) * this.transform.lossyScale.y);
+        }
+
 
         // worked before I imported System.Drawing, but need that import
         // for calcCentroid fxn
@@ -135,6 +143,7 @@ public class BoardPosition : MonoBehaviour
 
     void setPerimeterLinePositions()
     {
+        Debug.Log(this.transform.localScale);
         for (int i = 0; i < perimeter.Length; i++)
         {
             lineRenderer.SetPosition(i, new Vector3(perimeter[i].x, perimeter[i].y, -0.03f));

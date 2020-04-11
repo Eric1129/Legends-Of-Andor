@@ -5,9 +5,15 @@ using System;
 public class TileBounds
 {
     private Vector2[] perimeter;
-    public TileBounds(PolygonCollider2D polyCollider)
+    public TileBounds(PolygonCollider2D polyCollider, Vector3 scale)
     {
         perimeter = polyCollider.points;
+
+        // scale the perimeter
+        for (int i = 0; i < perimeter.Length; i++)
+        {
+            perimeter[i] = new Vector2(perimeter[i].x * scale.x, perimeter[i].y * scale.y);
+        }
     }
     public Vector3 getSize()
     {
