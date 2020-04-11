@@ -1,0 +1,128 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Photon.Pun;
+using UnityEngine;
+using Newtonsoft.Json;
+
+
+public class NetworkHandler : MonoBehaviour
+{
+    // Should be called only when initializing the game
+    [PunRPC]
+    public void PREGAMEupdateGameState(string serializedGameStateJSON)
+    {
+        RoomLobbyController.preLoadedGameState = JsonConvert.DeserializeObject<GameState>(serializedGameStateJSON);
+        RoomLobbyController.instance.legendLabel.text = "Legend " + RoomLobbyController.preLoadedGameState.legend;
+        Game.loadedFromFile = true;
+        Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updated GameState");
+    }
+    [PunRPC]
+    public void PREGAMEstartGame()
+    {
+        Game.started = true;
+
+        GameState originalGame = RoomLobbyController.preLoadedGameState.DeepCopy();
+        List<Andor.Player> originalPlayers = originalGame.getPlayers();
+
+        RoomLobbyController.preLoadedGameState.removeAllPlayers();
+
+        Dictionary<string, Andor.Player> originalPlayerDict = originalGame.getPlayerDict();
+        Dictionary<string, int> originalLocations = originalGame.playerLocations;
+
+
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            string playerChoosen = originalPlayers[p.getHero().getGold()-1].getNetworkID();
+
+            originalPlayerDict[playerChoosen].setNetworkID(p.getNetworkID());
+            RoomLobbyController.preLoadedGameState.addPlayer(originalPlayerDict[playerChoosen]);
+            RoomLobbyController.preLoadedGameState.playerLocations.Add(p.getNetworkID(), originalLocations[playerChoosen]);
+
+            if (p.getNetworkID().Equals(Game.myPlayer.getNetworkID())){
+                Game.myPlayer = originalPlayerDict[playerChoosen];
+            }
+        }
+
+        Game.gameState = RoomLobbyController.preLoadedGameState.DeepCopy();
+
+
+    }
+
+    [PunRPC]
+    public void HOSTaddPlayer(Andor.Player p) // Only host should get this called
+    {
+        Game.getGame().addPlayer(p);
+        Game.updateClients();
+        Debug.Log(Game.myPlayer.getNetworkID() + " ~ Added Player");
+    }
+
+    [PunRPC]
+    public void updateLegend(byte legend)
+    {
+        Game.gameState.legend = legend;
+        if (!Game.started)
+        {
+            RoomLobbyController.instance.legendLabel.text = "Legend " + (int)legend;
+        }
+    }
+
+    [PunRPC]
+    public void setTurnManager(List<string> order)
+    {
+        Game.gameState.turnManager = new TurnManager(order.ToArray());
+    }
+
+    [PunRPC]
+    public void updatePlayerList(List<Andor.Player> players)
+    {
+        foreach (Andor.Player p in players)
+        {
+            if (!Game.getGame().hasPlayer(p))
+            {
+                Game.getGame().addPlayer(p);
+                Debug.Log(Game.myPlayer.getNetworkID() + " ~ Added Player: " + p.getNetworkID());
+            }
+        }
+    }
+
+    //Clients get this method called to update a specific player
+    [PunRPC]
+    public void updatePlayer(Andor.Player p)
+    {
+        Game.getGame().updatePlayer(p);
+        Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updated Player");
+    }
+
+    [PunRPC]
+    public void sendAction(Action a)
+    {
+        Game.getGame().processAction(a);
+    }
+
+
+    public static byte[] SerializeThis(object obj)
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        using (var ms = new MemoryStream())
+        {
+            bf.Serialize(ms, obj);
+            return ms.ToArray();
+        }
+    }
+
+    // Convert a byte array to an Object
+    public static object Deserialize(byte[] arrBytes)
+    {
+        using (var memStream = new MemoryStream())
+        {
+            var binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            var obj = binForm.Deserialize(memStream);
+            return obj;
+        }
+    }
+
+}
