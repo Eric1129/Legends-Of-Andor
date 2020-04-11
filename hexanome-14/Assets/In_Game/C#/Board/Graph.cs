@@ -30,22 +30,20 @@ public class Graph
         int[][] fileContents = new int[85][];
         int maxSize = 0;
 
-        using(var reader = new StreamReader(@"./Assets/Data/CSV/adjacencyList.txt"))
+        TextAsset text = Resources.Load("CSV/adjacencyList") as TextAsset;
+        foreach (string line in text.text.Substring(0, text.text.Length-1).Split('\n'))
         {
-            while (!reader.EndOfStream)
+            string[] indices = line.Split(',');
+
+            if (maxSize < indices.Length)
             {
-                string line = reader.ReadLine().ToString().TrimEnd( Environment.NewLine.ToCharArray());
-                string[] indices = line.Split(',');
-
-                if (maxSize < indices.Length)
-                {
-                    maxSize = indices.Length;
-                }
-
-                int index = Int32.Parse(indices[0]);
-
-                fileContents[index] = toIntArray(indices);
+                maxSize = indices.Length;
             }
+
+            int index = Int32.Parse(indices[0]);
+
+            fileContents[index] = toIntArray(indices);
+            
         }
 
         for(int index = 0; index < fileContents.Length; index++)

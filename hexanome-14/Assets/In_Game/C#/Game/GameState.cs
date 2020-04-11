@@ -12,7 +12,7 @@ public class GameState
     private DateTime dateSaved;
 
 	private Dictionary<string, Player> players;
-    private Dictionary<string, Monster> monsters;
+    private List<Monster> monsters;
     public short legend = 0;
     public Dictionary<string, int> playerLocations;
 
@@ -21,7 +21,7 @@ public class GameState
     public GameState()
 	{
 		players = new Dictionary<string, Player>();
-        monsters = new Dictionary<string, Monster>();
+        monsters = new List<Monster>();
 
         playerLocations = new Dictionary<string, int>();
     }
@@ -82,6 +82,16 @@ public class GameState
         players = new Dictionary<string, Player>();
         playerLocations = new Dictionary<string, int>();
     }
+
+    public List<Monster> getMonsters()
+    {
+        return monsters;
+    }
+    public void addMonster(Monster m)
+    {
+        monsters.Add(m);
+    }
+
     public void processAction(Action a)
     {
         if (a.isLegal(this)){
@@ -138,10 +148,6 @@ public class GameState
     public Dictionary<string, Player> getPlayerDict()
     {
         return players;
-    }
-    public Dictionary<string, Monster> getMonsterDict()
-    {
-        return monsters;
     }
     public GameState DeepCopy()
     {

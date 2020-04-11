@@ -105,7 +105,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("Not in Lobby");
+            Debug.Log("Not in Lobby2");
 
         }
     }

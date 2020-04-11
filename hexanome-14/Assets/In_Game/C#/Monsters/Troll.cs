@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Troll : Monster
 {
-    public Troll(Node startingLocation) : base(startingLocation, Resources.Load("Monster/Troll"))
+    public Troll(Node startingLocation) : base(startingLocation, Resources.Load<GameObject>("Monster/Troll"))
     {
     }
 }

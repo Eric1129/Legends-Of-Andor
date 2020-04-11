@@ -111,7 +111,7 @@ public class Create_Game : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not in Lobby?");
+            Debug.Log("Not in Lobby1?");
         }
     }
 

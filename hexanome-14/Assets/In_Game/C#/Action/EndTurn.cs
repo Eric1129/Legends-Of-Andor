@@ -40,6 +40,13 @@ public class EndTurn : Action
 
                 GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
             }
+
+
+            // Move monsters
+            foreach(Monster monster in gs.getMonsters())
+            {
+                monster.move();
+            }
         }
         else
         {

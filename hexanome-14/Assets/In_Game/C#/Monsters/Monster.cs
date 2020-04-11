@@ -5,9 +5,9 @@ using UnityEngine;
 public class Monster : Fightable, MoveStrategy
 {
     private Node location;
-    protected Object prefab;
+    protected GameObject prefab;
 
-    public Monster(Node startingPos, Object prefab)
+    public Monster(Node startingPos, GameObject prefab)
     {
         location = startingPos;
         this.prefab = prefab;
@@ -27,7 +27,7 @@ public class Monster : Fightable, MoveStrategy
     {
         return location.getIndex();
     }
-    private Object getPrefab()
+    public GameObject getPrefab()
     {
         return prefab;
     }

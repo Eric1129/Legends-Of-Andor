@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Transform playerTimeContainer;
+    public Transform monsterContainer;
+
     public Button moveButton;
     public Text turnLabel;
 
@@ -32,6 +34,7 @@ public class GameController : MonoBehaviour
     public Dictionary<int, Bounds> timeTileBounds;
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
+    public Dictionary<Monster, GameObject> monsterObjects;
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
@@ -51,6 +54,7 @@ public class GameController : MonoBehaviour
         timeObjects = new Dictionary<string, GameObject>();
         timeTileBounds = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
+        monsterObjects = new Dictionary<Monster, GameObject>();
 
         initTransform = transform;
 
@@ -71,25 +75,30 @@ public class GameController : MonoBehaviour
             Game.setTurnManager(randomOrder);
         }
         int timeout = 300;
-        while(Game.gameState.turnManager == null)
+        if (Game.gameState != null)
         {
-            StartCoroutine(Game.sleep(0.01f));
-            if(timeout <= 0)
+            while (Game.gameState.turnManager == null)
             {
-                throw new Exception("Could not initialize TurnManager!");
+                StartCoroutine(Game.sleep(0.01f));
+                if (timeout <= 0)
+                {
+                    throw new Exception("Could not initialize TurnManager!");
+                }
+                timeout--;
             }
-            timeout--;
-        }
-        Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
+            Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
 
-        turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-        if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID())){
-            turnLabel.color = Game.myPlayer.getColor();
+            turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+            if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
+            {
+                turnLabel.color = Game.myPlayer.getColor();
+            }
+            else
+            {
+                turnLabel.color = UnityEngine.Color.black;
+            }
         }
-        else
-        {
-            turnLabel.color = UnityEngine.Color.black;
-        }
+        
     }
 
     void Update()
@@ -107,14 +116,24 @@ public class GameController : MonoBehaviour
         }
         if(Game.gameState != null)
         {
+            // Update Player position
             foreach (Andor.Player player in Game.gameState.getPlayers())
             {
-                moveToNewPos(player);
+                playerObjects[player.getNetworkID()].transform.position =
+                    moveTowards(playerObjects[player.getNetworkID()].transform.position, tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle(), 0.5f);
 
                 timeObjects[player.getNetworkID()].transform.position =
                     moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
             }
 
+            // Update Player position
+            foreach (Monster monster in Game.gameState.getMonsters())
+            {
+                monsterObjects[monster].transform.position =
+                    moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
+            }
+
+            // Update player turn
             turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
             {
@@ -254,6 +273,19 @@ public class GameController : MonoBehaviour
 
     private void loadMonsters()
     {
+        // Lets make 4 sample monsters
+        Game.gameState.addMonster(new Troll(Game.positionGraph.getNode(65)));
+        Game.gameState.addMonster(new Gor(Game.positionGraph.getNode(68)));
+        Game.gameState.addMonster(new Skral(Game.positionGraph.getNode(43)));
+        //Game.gameState.addMonster(new Wardrak(Game.positionGraph.getNode(55)));
+
+        foreach (Monster monster in Game.gameState.getMonsters())
+        {
+            Debug.Log(monster.getPrefab());
+            GameObject tempObj = Instantiate(monster.getPrefab(), -transform.position, transform.rotation, monsterContainer); ;
+            monsterObjects.Add(monster, tempObj);
+            tempObj.transform.position = tiles[monster.getLocation()].getMiddle();
+        }
 
     }
 

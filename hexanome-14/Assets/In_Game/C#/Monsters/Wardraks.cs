@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wardrak : Monster
 {
-    public Wardrak(Node startingLocation) : base(startingLocation, Resources.Load("Monster/Wardrak"))
+    public Wardrak(Node startingLocation) : base(startingLocation, Resources.Load<GameObject>("Monster/Wardraks"))
     {
         
     }
