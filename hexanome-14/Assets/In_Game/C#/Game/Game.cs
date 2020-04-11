@@ -98,7 +98,7 @@ public static class Game
         }
 
     }
-    public static void updateLegend(int legend)
+    public static void updateDifficulty(string difficulty)
     {
         if (PV != null && PV.IsMine)
         {
@@ -106,7 +106,7 @@ public static class Game
             {
                 Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updating Legend...");
 
-                PV.RPC("updateLegend", RpcTarget.AllBuffered, (byte)legend);
+                PV.RPC("updateDifficulty", RpcTarget.AllBuffered, difficulty);
             }
             else
             {

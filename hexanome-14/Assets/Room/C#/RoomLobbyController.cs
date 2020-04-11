@@ -56,7 +56,7 @@ public class RoomLobbyController : MonoBehaviour
         // Update Legend
         if (PhotonNetwork.IsMasterClient)
         {
-            Game.updateLegend(Create_Game.LEGEND);
+            Game.updateDifficulty(Create_Game.DIFFICULTY);
         }
     }
 

@@ -13,7 +13,7 @@ public class GameState
 
 	private Dictionary<string, Player> players;
     private List<Monster> monsters;
-    public short legend = 0;
+    public string difficulty = "-1";
     public Dictionary<string, int> playerLocations;
 
     public TurnManager turnManager;

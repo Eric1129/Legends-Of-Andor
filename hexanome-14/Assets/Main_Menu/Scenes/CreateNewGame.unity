@@ -1090,7 +1090,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Legend 1
+  m_Text: Easy
 --- !u!222 &659731811
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1537,7 +1537,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Legend 2
+  m_Text: Hard
 --- !u!222 &852298763
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1900,7 +1900,7 @@ GameObject:
   - component: {fileID: 1009651186}
   - component: {fileID: 1009651185}
   m_Layer: 5
-  m_Name: Legend 2 Button
+  m_Name: HardButton
   m_TagString: Legend2_button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1970,7 +1970,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2008431384}
-        m_MethodName: legend2Click
+        m_MethodName: HardClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2344,7 +2344,7 @@ GameObject:
   - component: {fileID: 1711650205}
   - component: {fileID: 1711650204}
   m_Layer: 5
-  m_Name: Legend 1 Button
+  m_Name: EasyButton
   m_TagString: Legend1_button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2414,7 +2414,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2008431384}
-        m_MethodName: legend1Click
+        m_MethodName: EasyClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2803,8 +2803,8 @@ MonoBehaviour:
   game_name_input: {fileID: 324041249}
   private_button: {fileID: 1551529978}
   public_button: {fileID: 982960620}
-  L1_button: {fileID: 1711650204}
-  L2_button: {fileID: 1009651185}
+  Easy_button: {fileID: 1711650204}
+  Hard_button: {fileID: 1009651185}
   inviteContainer: {fileID: 604424608}
 --- !u!4 &2008431385
 Transform:
