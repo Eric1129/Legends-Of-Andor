@@ -11,7 +11,7 @@ public class GameState
 {
     private DateTime dateSaved;
 
-	private Dictionary<string, Player> players;
+    private Dictionary<string, Player> players;
     private Dictionary<string, Monster> monsters;
     public short legend = 0;
     public Dictionary<string, int> playerLocations;
@@ -19,15 +19,15 @@ public class GameState
     public TurnManager turnManager;
 
     public GameState()
-	{
-		players = new Dictionary<string, Player>();
+    {
+        players = new Dictionary<string, Player>();
         monsters = new Dictionary<string, Monster>();
 
         playerLocations = new Dictionary<string, int>();
     }
 
     public void addPlayer(Player p)
-	{
+    {
         if (!players.ContainsKey(p.getNetworkID()))
         {
             players.Add(p.getNetworkID(), p);
@@ -42,7 +42,7 @@ public class GameState
 
         if (!Game.started)
         {
-            if(RoomLobbyController.preLoadedGameState == null)
+            if (RoomLobbyController.preLoadedGameState == null)
             {
                 RoomLobbyController.instance.playerListUpdate(Game.gameState.getPlayers());
             }
@@ -56,7 +56,7 @@ public class GameState
     public void updatePlayer(Player p)
     {
         if (players.ContainsKey(p.getNetworkID()))
-        {   
+        {
             players[p.getNetworkID()] = p;
             Debug.Log("Player is updated!");
         }
@@ -84,62 +84,16 @@ public class GameState
     }
     public void processAction(Action a)
     {
-        switch (a.getType())
+        if (a.isLegal(this))
         {
-            // Need to impliment more actions
-
-            case Type.Move:
-                playerLocations[a.playersInvolved()[0]] = ((Move)(a)).to;
-                //GameController.instance.movePlayer(a.playersInvolved()[0], ((Move)(a)).to);
-                break;
-
-            case Type.PassTurn:
-                if (a.playersInvolved()[0].Equals(turnManager.currentPlayerTurn()))
-                {
-                    turnManager.passTurn();
-                    players[a.playersInvolved()[0]].getHero().setHour(1 + players[a.playersInvolved()[0]].getHero().getHour());
-
-                    GameController.instance.setTime(a.playersInvolved()[0], players[a.playersInvolved()[0]].getHero().getHour());
-
-                    Debug.Log("Turn Passed... " + turnManager.currentPlayerTurn() + " is now up!");
-                }
-                else
-                {
-                    Debug.Log("ERROR! TURN MIXUP! Current player turn (" + turnManager.currentPlayerTurn() + ") != player sent (" + a.playersInvolved()[0] + ")");
-                }
-                break;
-            case Type.EndTurn:
-                if (a.playersInvolved()[0].Equals(turnManager.currentPlayerTurn()))
-                {
-                    turnManager.endTurn();
-
-                    if (turnManager.roundDone())
-                    {
-                        turnManager.reset();
-                        players[a.playersInvolved()[0]].getHero().setHour(0);
-
-                        GameController.instance.setTime(a.playersInvolved()[0], players[a.playersInvolved()[0]].getHero().getHour());
-
-                    }
-                    else
-                    {
-                        Debug.Log("Turn Ended... " + turnManager.currentPlayerTurn() + " is now up!");
-                    }
-                }
-                else
-                {
-                    Debug.Log("ERROR! TURN MIXUP! Current player turn (" + turnManager.currentPlayerTurn() + ") != player sent (" + a.playersInvolved()[0] + ")");
-                }
-                break;
-            default:
-                Debug.Log("DEFAULT CASE");
-                break;
+            a.execute(this);
         }
+
     }
 
     public bool playerCharacterExists(string tag)
     {
-        foreach(Player p in players.Values.ToList())
+        foreach (Player p in players.Values.ToList())
         {
             if (p.getHeroType().Equals(tag))
             {
@@ -163,6 +117,10 @@ public class GameState
     public List<Player> getPlayers()
     {
         return players.Values.ToList();
+    }
+    public Player getPlayer(string playerID)
+    {
+        return players[playerID];
     }
     public bool hasPlayer(Player player)
     {

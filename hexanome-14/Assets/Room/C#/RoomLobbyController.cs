@@ -186,7 +186,12 @@ public class RoomLobbyController : MonoBehaviour
     }
     public void startGameClick()
     {
-        Game.PREGAMEstartGame();
+
+        if (preLoadedGameState != null)
+        {
+            Game.PREGAMEstartGame();
+        }
+        
         Debug.Log("HERE");
         Game.destroyPV();
         PhotonNetwork.LoadLevel("Game");

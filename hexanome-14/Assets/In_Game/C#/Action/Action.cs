@@ -9,13 +9,18 @@ public enum Type
 {
     Move,
     PassTurn,
-    EndTurn
+    EndTurn,
+    InitiateTrade,
+    RespondTrade
 }
 
 public interface Action
 {
     Type getType();
     string[] playersInvolved();
+
+    bool isLegal(GameState gs);
+    void execute(GameState gs);
 
 }
 

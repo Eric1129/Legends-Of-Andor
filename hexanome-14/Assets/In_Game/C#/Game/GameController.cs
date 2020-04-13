@@ -14,7 +14,11 @@ public class GameController : MonoBehaviour
     public Transform gameContainer;
     public Transform pauseMenuContainer;
     public Transform saveGameContainer;
-
+    public Transform selectTradeType;
+    public Transform selectHeroTrade;
+    public Transform selectHeroGive;
+    public Transform tradeRequest;
+    
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Transform playerTimeContainer;
@@ -36,9 +40,19 @@ public class GameController : MonoBehaviour
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
 
+    private bool tradeRequestSent = false;
+    private string playerTradeTo;
+    private string playerTradeFrom;
+    private string tradeMsg;
+    
+
+    //private int tradeTypeIndex = -1;
+    public TradeScreen ts;
+
     // Start is called before the first frame update
     void Start()
     {
+        ts = new TradeScreen();
 
         Game.started = true;
         Game.createPV();
@@ -118,6 +132,23 @@ public class GameController : MonoBehaviour
             else
             {
                 turnLabel.color = UnityEngine.Color.black;
+            }
+        }
+
+        if (tradeRequestSent)
+        {
+            //foreach(Andor.Player p in Game.gameState.getPlayers())
+            //{
+            //    if (p.getNetworkID().Equals(playerTradeTo))
+            //    {
+            //        processTradeRequest();
+            //    }
+            //}
+
+            //Debug.Log("MY PLAYER " + Game.myPlayer.getHeroType());
+            if (Game.myPlayer.getNetworkID().Equals(playerTradeTo))
+            {
+                processTradeRequest();
             }
         }
     }
@@ -252,6 +283,56 @@ public class GameController : MonoBehaviour
         rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, transform.position);
     }
 
+    
+
+    public void sendTradeRequest(string[] tradeType, string playerFrom, string playerTo)
+    {
+        tradeRequestSent = true;
+        playerTradeTo = playerTo;
+        playerTradeFrom = playerFrom;
+        string msg = "";
+        if (tradeType[0].Equals("Gold"))
+        {
+            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give gold";
+            selectHeroGive.gameObject.SetActive(false);
+        }
+        else if (tradeType[0].Equals("Gemstones"))
+        {
+            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give a gemstone";
+            selectHeroGive.gameObject.SetActive(false);
+        }
+        else
+        {
+            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
+                + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
+            selectHeroTrade.gameObject.SetActive(false);
+        }
+
+        tradeMsg = msg;
+        selectHeroTrade.gameObject.SetActive(false);
+    }
+
+    public void processTradeRequest()
+    {
+        Debug.Log("processing trade request!");
+
+        tradeRequest.gameObject.SetActive(true);
+        Transform[] trs = tradeRequest.gameObject.GetComponentsInChildren<Transform>(true);
+        foreach(Transform t in trs)
+        {
+            if (t.name == "Title") {
+                Text title = t.gameObject.GetComponent<Text>();
+                title.text = Game.gameState.getPlayer(playerTradeFrom).getHeroType() + " would like to trade!";
+
+            }
+            if(t.name == "Body")
+            {
+                Text body = t.gameObject.GetComponent<Text>();
+                body.text = tradeMsg;
+            }
+        }
+    }
+
     #region buttonClicks
     //Logic for game tile clicks
     public void tileClick(BoardPosition tile)
@@ -314,11 +395,138 @@ public class GameController : MonoBehaviour
         Debug.Log("end day clicked");
         Game.sendAction(new EndTurn(Game.myPlayer.getNetworkID()));
     }
+
     public void tradeClick()
     {
-        Debug.Log("trade clicked");
+        ts.displayTradeType();
+        
+        //List<Dropdown.OptionData> menuOptions = dropdown.GetComponent<Dropdown>().options;
+        //string value = menuOptions[menuIndex].text;
+
     }
 
+    //public void setTradeType(int menuIndex)
+    //{
+    //    Debug.Log("setting trade type");
+    //    tradeTypeIndex = menuIndex;
+
+    //}
+
+    //public void nextClick()
+    //{
+    //    Debug.Log("next clicked");
+
+    //    if(tradeTypeIndex == 0)
+    //    {
+    //        tradeActive = true;
+    //        selectHeroTrade.gameObject.SetActive(true);
+    //        //get all players on the same location
+    //        //get the player that clicked on trade button
+    //        int myLocation = 0;
+    //        string[] playersInvolved = new string[4];
+    //        int i = 1;
+    //        playersInvolved[0] = Game.myPlayer.getNetworkID();
+    //        if (Game.gameState.playerLocations.TryGetValue(Game.myPlayer.getNetworkID(), out myLocation))
+    //        {
+    //            foreach (Andor.Player p in Game.gameState.getPlayers())
+    //            {
+    //                int playerLocation = 0;
+    //                if (Game.gameState.playerLocations.TryGetValue(p.getNetworkID(), out playerLocation))
+    //                {
+    //                    if (playerLocation == myLocation && !Game.myPlayer.Equals(p))
+    //                    {
+    //                        playersInvolved[i] = p.getNetworkID();
+    //                        displayPlayerInfo(p, i);
+    //                        i++;
+
+    //                    }
+
+    //                }
+    //            }
+    //        }
+    //        Game.sendAction(new InitiateTrade(playersInvolved));
+
+    //    }
+
+    //}
+
+    //public void displayPlayerInfo(Andor.Player player, int i)
+    //{
+
+    //    GameObject selectHero = GameObject.Find("SelectHero");
+    //    GameObject herogameobj;
+    //    Transform[] trs = selectHero.GetComponentsInChildren<Transform>(true);
+    //    //Transform[] heroattr = new Transform[3];
+    //    foreach (Transform t in trs)
+    //    {
+
+    //        if (t.name == ("Hero" + i))
+    //        {
+    //            herogameobj = t.gameObject;
+    //            t.gameObject.SetActive(true);
+    //            Transform[] heroattr = herogameobj.GetComponentsInChildren<Transform>(true);
+    //            foreach (Transform attr in heroattr)
+    //            {
+    //                attr.gameObject.SetActive(true);
+    //                if (attr.name == "Name")
+    //                {
+
+    //                    Text heroname = attr.GetComponent<Text>();
+    //                    heroname.text = player.getHeroType();
+    //                }
+    //                if (attr.name == "Image")
+    //                {
+    //                    Debug.Log("Image");
+    //                    Sprite herosprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
+    //                    attr.GetComponent<Image>().sprite = herosprite;
+    //                }
+    //                if (attr.name == "HeroItems")
+    //                {
+    //                    Debug.Log("Hero items");
+    //                    Text heroitems = attr.GetComponent<Text>();
+    //                    heroitems.text = "Gold: " + player.getHero().getGold() + "\n";
+    //                    heroitems.text += "\nGemstones: " + player.getHero().getGemstone() + "\n";
+    //                    heroitems.text += "\nArticles: ";
+    //                    List<string> heroAr = new List<string>();
+    //                    foreach (string ar in heroAr)
+    //                    {
+    //                        heroitems.text += (ar + " ");
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+
+
+
+
+    //}
+
+    public void closeTradeMenu()
+    {
+        
+        selectTradeType.gameObject.SetActive(false);
+        
+    }
+
+    //public void onHeroClick()
+    //{
+    //    Debug.Log("On hero click");
+    //    string tradeWith = this.gameObject.transform.name;
+    //    Debug.Log("tradeWith " + tradeWith);
+    //    //int index = -1;
+    //    if (char.IsDigit(tradeWith[4]))
+    //    {
+    //        int index = tradeWith[4];
+    //        if(tradeTypeIndex == 0)
+    //        {
+
+    //        }
+    //        //setToTradeHero(players[index]);
+    //    }
+    //    //Game.sendAction(new InitiateTrade(playersInvolved));
+
+    //}
     #endregion
 
     #region pause_menu

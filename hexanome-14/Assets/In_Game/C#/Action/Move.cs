@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 [System.Serializable]
 public class Move : Action
 {
@@ -24,5 +25,14 @@ public class Move : Action
     public string[] playersInvolved()
     {
         return players;
+    }
+
+    public bool isLegal(GameState gs)
+    {
+        return players[0].Equals(gs.turnManager.currentPlayerTurn());
+    }
+    public void execute(GameState gs)
+    {
+        gs.playerLocations[players[0]] = to;
     }
 }

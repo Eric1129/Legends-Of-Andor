@@ -10,7 +10,7 @@ public static class Game
 {
 
     public static GameState gameState;
-    public static Andor.Player myPlayer;
+    public static Andor.Player myPlayer;//applies to my player only
     private static NetworkHandler nh;
     private static GameObject go;
     private static Photon.Pun.PhotonView PV;
@@ -32,7 +32,8 @@ public static class Game
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Move), 4, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(PassTurn), 5, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(EndTurn), 6, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
-
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(InitiateTrade), 7, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        //If you want to send something through the network, you need to execute this command and create the corresponding class
 
         // MUST HAVE PV
         gameState.addPlayer(myPlayer);
@@ -135,6 +136,7 @@ public static class Game
 
     public static void sendAction(Action a)
     {
+        //action is pass, move, end day
         if (PV != null && PV.IsMine)
         {
             Debug.Log(Game.myPlayer.getNetworkID() + " ~ Sending Action...");
