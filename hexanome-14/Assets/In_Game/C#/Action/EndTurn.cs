@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
+using System.Collections;
 
 [System.Serializable]
 public class EndTurn : Action
@@ -45,6 +46,8 @@ public class EndTurn : Action
             }
 
             moveMonstersAtSunrise(gs);
+            //moveGors(gs);
+            //moveSkrals(gs);
             //// Move monsters
             //foreach(Monster monster in gs.getMonsters())
             //{
@@ -56,7 +59,33 @@ public class EndTurn : Action
             Debug.Log("Turn Ended... " + gs.turnManager.currentPlayerTurn() + " is now up!");
         }
     }
+    //public void moveGors(GameState gs)
+    //{
+    //    var gorList = gs.getGors().ToList();
+    //    foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
+    //    {
+    //        //if the monster is not in the castle, we move it towards the castle
+    //        if (g.Key.getLocation() != 0)
+    //        {
+    //            moveMonster(g.Key, gs);
+    //            //Thread.Sleep(500);
+    //        }
+    //    }
+    //}
 
+    //public void moveSkrals(GameState gs)
+    //{
+    //    var skralList = gs.getSkrals().ToList();
+    //    foreach (KeyValuePair<Skral, int> s in skralList.OrderBy(key => key.Value))
+    //    {
+    //        //if the monster is not in the castle, we move it towards the castle
+    //        if (s.Key.getLocation() != 0)
+    //        {
+    //            moveMonster(s.Key, gs);
+    //            //Thread.Sleep(500);
+    //        }
+    //    }
+    //}
     public void moveMonstersAtSunrise(GameState gs)
     {
         var gorList = gs.getGors().ToList();
@@ -69,8 +98,7 @@ public class EndTurn : Action
                 //Thread.Sleep(500);
             }
         }
-        //Thread.Sleep(1000);
-
+        // StartCoroutine(waitInBetweenMonsterMove());
         var skralList = gs.getSkrals().ToList();
         foreach (KeyValuePair<Skral, int> s in skralList.OrderBy(key => key.Value))
         {
@@ -84,6 +112,14 @@ public class EndTurn : Action
 
     }
 
+    //IEnumerator waitInBetweenMonsterMove()
+    //{
+    //    //TextUI.text = "Welcome to Number Wizard!";
+    //    yield return new WaitForSeconds(5f);
+    //    //TextUI.text = ("The highest number you can pick is " + max);
+    //    //yield return new WaitForSeconds(3f);
+    //    //TextUI.text = ("The lowest number you can pick is " + min);
+    //}
 
     public void moveMonster(Monster m, GameState gs)
     {
