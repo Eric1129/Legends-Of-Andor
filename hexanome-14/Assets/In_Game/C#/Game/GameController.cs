@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
     public Sprite fullBoardSprite;
     public GameObject circlePrefab;
     public GameObject heroInfoPrefab;
+    public GameObject well_front;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -39,6 +40,7 @@ public class GameController : MonoBehaviour
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
     public Dictionary<Monster, GameObject> monsterObjects;
+
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
@@ -267,6 +269,8 @@ public class GameController : MonoBehaviour
             loadPlayers();
 
             loadMonsters();
+
+            loadWells();
         }
 
     }
@@ -335,6 +339,7 @@ public class GameController : MonoBehaviour
         foreach (int gorTile in new int[]{8, 20, 21, 26, 48})
         {
             Gor g = new Gor(Game.positionGraph.getNode(gorTile));
+            //Debug.Log("Gor" + g);
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
         }
@@ -357,6 +362,23 @@ public class GameController : MonoBehaviour
 
     }
 
+    private void loadWells()
+    {
+        foreach (int pos in new int[] {5, 35, 45, 55})
+        {
+            Debug.Log("Added well at position: " + pos);
+            Well w = new Well(Game.positionGraph.getNode(pos));
+            Debug.Log(w);
+            Debug.Log(w.getLocation());
+            Game.gameState.addWell(w);
+            //Debug.Log("Added well at position: " + pos);
+        }
+
+        foreach(Well well in Game.gameState.getWells().Keys)
+        {
+            GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
+        }
+    }
 
     public void setTime(string PlayerID, int hour)
     {

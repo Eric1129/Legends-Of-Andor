@@ -1316,6 +1316,8 @@ MonoBehaviour:
     type: 3}
   heroInfoPrefab: {fileID: 6297611739890822942, guid: 38ca26a856d9a4a589419c29fddd27d9,
     type: 3}
+  well_front: {fileID: 1025462693179533495, guid: a2aff63c1501145cf9b027a539245e18,
+    type: 3}
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
