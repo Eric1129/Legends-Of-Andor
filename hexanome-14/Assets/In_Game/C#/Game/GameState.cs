@@ -21,6 +21,7 @@ public class GameState
     public string outcome;
     public int maxMonstersAllowedInCastle;
     public int monstersInCastle;
+    private Dictionary<Well, int> wells;
 
 
     public GameState()
@@ -33,6 +34,7 @@ public class GameState
         outcome = "undetermined";
         monstersInCastle = 0;
         maxMonstersAllowedInCastle = 0;
+        wells = new Dictionary<Well, int>();
     }
 
     public void addPlayer(Player p)
@@ -117,6 +119,17 @@ public class GameState
     public void addGor(Gor g)
     {
         gors.Add(g, g.getLocation());
+    }
+
+    //////////////////////////////////wells//////////////////////////////////
+
+    public Dictionary<Well, int> getWells()
+    {
+        return wells;
+    }
+    public void addWell(Well w)
+    {
+        wells.Add(w, w.getLocation());
     }
 
     public void updateGorLocations()

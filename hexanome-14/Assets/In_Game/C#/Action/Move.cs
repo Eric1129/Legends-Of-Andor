@@ -60,5 +60,13 @@ public class Move : Action
             Thread.Sleep(500);
         }
         //gs.playerLocations[players[0]] = to;
+
+        int finalDest = gs.playerLocations[players[0]];
+        if (gs.getWells().ContainsValue(finalDest))
+        {
+            //trigger Well Scenario
+            Debug.Log("YOU HAVE LANDED ON A WELL!");
+        }
+        
     }
 }
