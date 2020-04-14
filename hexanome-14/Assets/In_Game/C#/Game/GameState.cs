@@ -121,9 +121,25 @@ public class GameState
 
     public void updateGorLocations()
     {
+        Dictionary<Gor,int> updatedGors = new Dictionary<Gor, int>();
+        var gorList = gors.Keys;
+        foreach (Gor g in gorList)
+        {
+            int x = g.getLocation();
+            updatedGors.Add(g, x);
+        }
+        gors = updatedGors;
     }
     public void updateSkralLocations()
     {
+        Dictionary<Skral, int> updatedSkrals = new Dictionary<Skral, int>();
+        var skralList = skrals.Keys;
+        foreach (Skral s in skralList)
+        {
+            int x = s.getLocation();
+            updatedSkrals.Add(s, x);
+        }
+        skrals = updatedSkrals;
 
     }
 

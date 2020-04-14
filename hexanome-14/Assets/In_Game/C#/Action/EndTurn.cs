@@ -89,7 +89,13 @@ public class EndTurn : Action
     public void moveMonstersAtSunrise(GameState gs)
     {
         var gorList = gs.getGors().ToList();
-        foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
+        
+        //foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
+        //{
+        //    Debug.Log(g.Value);
+        //}
+     
+            foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
         {
             if (gs.outcome == "lost")
             {
@@ -99,8 +105,19 @@ public class EndTurn : Action
             if (g.Key.getLocation() != 0 && gs.outcome != "lost")
             {
                 moveMonster(g.Key, gs);
+                gs.updateGorLocations();
+
             }
         }
+        //gs.updateGorLocations();
+        //var gorList2 = gs.getGors().ToList();
+        //foreach (KeyValuePair<Gor, int> g in gorList2.OrderBy(key => key.Value))
+        //{
+        //    Debug.Log("Updated Value: " + g.Value);
+        //}
+        //Debug.Log(gorList2);
+
+
         var skralList = gs.getSkrals().ToList();
         foreach (KeyValuePair<Skral, int> s in skralList.OrderBy(key => key.Value))
         {
@@ -112,6 +129,7 @@ public class EndTurn : Action
             if (s.Key.getLocation() != 0)
             {
                 moveMonster(s.Key, gs);
+                gs.updateSkralLocations();
                 //Thread.Sleep(500);
             }
         }
