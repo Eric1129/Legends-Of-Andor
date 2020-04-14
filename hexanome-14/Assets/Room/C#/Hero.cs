@@ -9,7 +9,8 @@ public class Hero // : MonoBehaviour, Movable, Fightable
 {
     // private GameObject sphere;
     // private SpriteRenderer spriteRenderer;
-    private string heroType = "";
+    private string
+        heroType = "";
     private string myTag;
 
     // this is the tag of the sphere gameObject which we show
@@ -22,6 +23,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     // don't care which farmers, just that this number exists on our space.
     private int numFarmers;
     private bool hasThorald;
+    private int heroRank;
 
 
     private int gold = 0;
@@ -78,6 +80,15 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void setHeroType(string hero)
     {
         this.heroType = hero;
+    }
+
+    public int getHeroRank()
+    {
+        return heroRank;
+    }
+    public void setHeroRank(int rank)
+    {
+        this.heroRank = rank;
     }
 
 
