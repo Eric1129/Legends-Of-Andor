@@ -22,6 +22,11 @@ public class Monster : Fightable, MoveStrategy
     public void move()
     {
         location = location.toCastleNode();
+
+        if (location.getIndex() == 0)
+        {
+            GameController.instance.monsterAtCastle(this);
+        }
     }
     public int getLocation()
     {

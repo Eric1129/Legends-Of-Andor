@@ -5,14 +5,14 @@ using System;
 public class TileBounds
 {
     private Vector2[] perimeter;
-    public TileBounds(PolygonCollider2D polyCollider, Vector3 scale)
+    public TileBounds(PolygonCollider2D polyCollider, Transform transform)
     {
         perimeter = polyCollider.points;
 
         // scale the perimeter
         for (int i = 0; i < perimeter.Length; i++)
         {
-            perimeter[i] = new Vector2(perimeter[i].x * scale.x, perimeter[i].y * scale.y);
+            perimeter[i] = new Vector2(transform.position.x + perimeter[i].x * transform.localScale.x, transform.position.y + perimeter[i].y * transform.localScale.y);
         }
     }
     public Vector3 getSize()
@@ -47,6 +47,7 @@ public class TileBounds
     }
     public Bounds createBounds()
     {
+        Debug.Log("TIME: " + new Bounds(calculateCentroid(), getSize()));
         return new Bounds(calculateCentroid(), getSize());
     }
 

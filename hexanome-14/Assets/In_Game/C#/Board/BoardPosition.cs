@@ -43,7 +43,7 @@ public class BoardPosition : MonoBehaviour
         // scale the perimeter
         for (int i = 0; i < perimeter.Length; i++)
         {
-            perimeter[i] = new Vector2(this.transform.position.x + (perimeter[i].x - this.transform.position.x) * this.transform.lossyScale.x, this.transform.position.y + (perimeter[i].y - this.transform.position.y) * this.transform.lossyScale.y);
+            perimeter[i] = new Vector2(this.transform.position.x + perimeter[i].x * this.transform.lossyScale.x, this.transform.position.y + perimeter[i].y * this.transform.lossyScale.y);
         }
 
 
@@ -76,8 +76,6 @@ public class BoardPosition : MonoBehaviour
         // boardPosition so that it looks nice
         // -- calculating centroid or other returning polyCollider.bounds.center;
         // doesn't work too well sometimes
-        if (gameObject.tag.Equals("9"))
-            return new Vector3(-34.0f, 29.4f, 0.0f);
         return middle;
         // return polyCollider.bounds.center;
     }
@@ -143,7 +141,6 @@ public class BoardPosition : MonoBehaviour
 
     void setPerimeterLinePositions()
     {
-        Debug.Log(this.transform.localScale);
         for (int i = 0; i < perimeter.Length; i++)
         {
             lineRenderer.SetPosition(i, new Vector3(perimeter[i].x, perimeter[i].y, -0.03f));
@@ -158,24 +155,29 @@ public class BoardPosition : MonoBehaviour
 // from https://stackoverflow.com/questions/9815699/how-to-calculate-centroid
 // shouldn't use this, looks shitty at times
 // -- need to manually record where we want th middle of each boardPosition to be.
-     public PointF calculateCentroid()
-      {
-         float accumulatedArea = 0.0f;
-         float centerX = 0.0f;
-         float centerY = 0.0f;
+    public PointF calculateCentroid()
+    {
+        float accumulatedArea = 0.0f;
+        float centerX = 0.0f;
+        float centerY = 0.0f;
 
-         for (int i = 0, j = perimeter.Length - 1; i < perimeter.Length; j = i++)
-         {
+        for (int i = 0, j = perimeter.Length - 1; i < perimeter.Length; j = i++)
+        {
             float temp = perimeter[i].x * perimeter[j].y - perimeter[j].x * perimeter[i].y;
             accumulatedArea += temp;
             centerX += (perimeter[i].x + perimeter[j].x) * temp;
             centerY += (perimeter[i].y + perimeter[j].y) * temp;
-         }
+        }
 
-         if (Math.Abs(accumulatedArea) < 1E-7f)
+        if (Math.Abs(accumulatedArea) < 1E-7f)
+        {
+            Debug.Log("HEHEHEHEHEHEY!");
             return PointF.Empty;  // Avoid division by zero
+        }
 
-         accumulatedArea *= 3f;
-         return new PointF(centerX / accumulatedArea, centerY / accumulatedArea);
-      }
+        accumulatedArea *= 3f;
+        Debug.Log(new PointF(centerX / accumulatedArea, centerY / accumulatedArea));
+
+        return new PointF(centerX / accumulatedArea, centerY / accumulatedArea);
+    }
 }
