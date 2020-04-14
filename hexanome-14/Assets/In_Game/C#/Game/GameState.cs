@@ -17,16 +17,22 @@ public class GameState
     public Dictionary<string, int> playerLocations;
     private Dictionary<Skral, int> skrals;
     private Dictionary<Gor, int> gors;
-
     public TurnManager turnManager;
+    public string outcome;
+    public int maxMonstersAllowedInCastle;
+    public int monstersInCastle;
+
 
     public GameState()
 	{
-		players = new Dictionary<string, Player>();
+        players = new Dictionary<string, Player>();
         monsters = new List<Monster>();
+        playerLocations = new Dictionary<string, int>();
         gors = new Dictionary<Gor, int>();
         skrals = new Dictionary<Skral, int>();
-        playerLocations = new Dictionary<string, int>();
+        outcome = "undetermined";
+        monstersInCastle = 0;
+        maxMonstersAllowedInCastle = 0;
     }
 
     public void addPlayer(Player p)
@@ -94,7 +100,6 @@ public class GameState
     {
         monsters.Add(m);
     }
-
     ////////////////////////////////////////////////////////////////////////////
     public Dictionary<Skral, int> getSkrals()
     {
@@ -112,6 +117,30 @@ public class GameState
     public void addGor(Gor g)
     {
         gors.Add(g, g.getLocation());
+    }
+
+    public void updateGorLocations()
+    {
+        Dictionary<Gor,int> updatedGors = new Dictionary<Gor, int>();
+        var gorList = gors.Keys;
+        foreach (Gor g in gorList)
+        {
+            int x = g.getLocation();
+            updatedGors.Add(g, x);
+        }
+        gors = updatedGors;
+    }
+    public void updateSkralLocations()
+    {
+        Dictionary<Skral, int> updatedSkrals = new Dictionary<Skral, int>();
+        var skralList = skrals.Keys;
+        foreach (Skral s in skralList)
+        {
+            int x = s.getLocation();
+            updatedSkrals.Add(s, x);
+        }
+        skrals = updatedSkrals;
+
     }
 
     public void processAction(Action a)

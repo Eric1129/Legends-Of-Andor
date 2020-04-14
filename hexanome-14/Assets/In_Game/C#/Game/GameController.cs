@@ -14,11 +14,14 @@ public class GameController : MonoBehaviour
     public Transform gameContainer;
     public Transform pauseMenuContainer;
     public Transform saveGameContainer;
+    public Transform heroInfoScreen;
 
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Transform playerTimeContainer;
     public Transform monsterContainer;
+    public Transform heroInfoContainer;
+
 
     public Button moveButton;
     public Text turnLabel;
@@ -27,6 +30,7 @@ public class GameController : MonoBehaviour
     public GameObject playerPrefab;
     public Sprite fullBoardSprite;
     public GameObject circlePrefab;
+    public GameObject heroInfoPrefab;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -156,18 +160,30 @@ public class GameController : MonoBehaviour
     private void loadBoard()
     {
 
-        // load background board
-        Debug.Log(transform.position);
-        Debug.Log(boardSpriteContainer.position);
 
-        GameObject fullBoard = Instantiate(emptyPrefab, boardSpriteContainer.transform.position - boardSpriteContainer.transform.parent.position, transform.rotation, boardSpriteContainer);
+        boardSpriteContainer.gameObject.GetComponent<Image>().color = new UnityEngine.Color(0, 0, 0, 0);
+        // load background board
+        Vector3 boardContainerPos = new Vector3(boardSpriteContainer.position.x - boardSpriteContainer.parent.position.x,
+            boardSpriteContainer.position.y - boardSpriteContainer.parent.position.y, 35- boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+
+        GameObject fullBoard = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, boardSpriteContainer);
         fullBoard.name = "full-Board";
 
         fullBoard.AddComponent<SpriteRenderer>();
         SpriteRenderer spriteRenderer = fullBoard.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = fullBoardSprite;
 
-        
+        fullBoard.transform.localScale = boardContainerScaling;
+        //fullBoard.transform.position = Vector3.Scale(fullBoard.transform.position, new Vector3(1,1,0));
+
+        Debug.Log(boardSpriteContainer.position);
+        Debug.Log(boardSpriteContainer.parent.position);
+        Debug.Log(boardContainerPos);
+
+
+
+
         // load sprites
         Sprite[] sprites = Resources.LoadAll<Sprite>("BoardSprites");
         // Requirement: have Resources/Sprites folder under Assets
@@ -176,7 +192,7 @@ public class GameController : MonoBehaviour
 
         foreach (Sprite sprite in sprites)
         {
-            createBoardPosition(sprite);
+            createBoardPosition(sprite, boardContainerPos, boardContainerScaling);
         }
 
         sprites = Resources.LoadAll<Sprite>("TimeSprites");
@@ -186,29 +202,34 @@ public class GameController : MonoBehaviour
 
         foreach (Sprite sprite in sprites)
         {
-            GameObject temp = Instantiate(emptyPrefab);
+            GameObject temp = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, playerTimeContainer);
             temp.AddComponent<SpriteRenderer>().sprite = sprite;
-            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>(), boardSpriteContainer.transform.lossyScale);
+
+            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>(), boardSpriteContainer);
             Bounds b = tb.createBounds();
-            Debug.Log(b);
+
             timeTileBounds.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
             Destroy(temp);
         }
 
     }
 
-    private void createBoardPosition(Sprite sprite)
+    private void createBoardPosition(Sprite sprite, Vector3 pos, Vector3 scaling)
     {
         int cellNumber = Int32.Parse(sprite.name.Split('_')[1]);
 
-        GameObject cellObject = Instantiate(emptyPrefab, transform.position, transform.rotation, boardSpriteContainer);
+        GameObject cellObject = Instantiate(emptyPrefab, pos, transform.rotation, boardSpriteContainer);
         //cellObject.transform.localScale = boardSpriteContainer.transform.localScale;
         cellObject.tag = cellNumber.ToString();
         cellObject.name = "position-" + cellNumber.ToString();
 
+        cellObject.transform.localScale = scaling;
+
+
         cellObject.AddComponent<SpriteRenderer>();
         SpriteRenderer spriteRenderer = cellObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite;
+
 
         cellObject.AddComponent<LineRenderer>();
         cellObject.AddComponent<PolygonCollider2D>();
@@ -217,10 +238,29 @@ public class GameController : MonoBehaviour
         BoardPosition boardPosition = cellObject.GetComponent<BoardPosition>();
         boardPosition.init(cellNumber);
         tiles.Add(cellNumber, boardPosition);
+        
     }
 
     public void GameSetup()
     {
+        int playerCount = Game.gameState.getPlayers().Count;
+
+        if (playerCount == 1 || playerCount == 2)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 3;
+        }
+        else if (playerCount == 3)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 2;
+
+        }
+        else if (playerCount == 4)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 1;
+
+        }
+        /////////////////////////////////////////////////////////////////////
+
         // load players
         if (Game.gameState != null)
         {
@@ -231,9 +271,17 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void monsterAtCastle(Monster monster)
+    {
+        // Do something now that this monster has made it to the castle
+        Debug.Log("Monster in Castle!");
+    }
+
     private void loadPlayers()
     {
-        foreach(Andor.Player player in Game.gameState.getPlayers())
+        Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+
+        foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             // Player Icons
             GameObject playerObject = Instantiate(playerPrefab, playerContainer);
@@ -241,10 +289,13 @@ public class GameController : MonoBehaviour
             SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
             
             spriteRenderer.sprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
+            playerObject.transform.localScale = boardContainerScaling;
 
             if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
                 // Give a random position
-                int startingTile = Game.RANDOM.Next(20, 40);
+                Debug.Log(player.getHeroType());
+                //int startingTile = Game.RANDOM.Next(20, 40);
+                int startingTile = player.getHeroRank();
                 playerObject.transform.position = tiles[startingTile].getMiddle();
 
                 Game.getGame().playerLocations.Add(player.getNetworkID(), startingTile);
@@ -264,23 +315,30 @@ public class GameController : MonoBehaviour
             {
                 timeObjectBounds = sr.bounds;
             }
+            timeObject.transform.localScale = boardContainerScaling;
 
             Vector3 timePos = getRandomPositionInBounds(timeTileBounds[0], timeObjectBounds, transform.position);
             timeObject.transform.position = timePos;
             rndPosInTimeBox[player.getNetworkID()] = timePos;
+
+
+            //GameObject heroInfo = Instantiate(heroInfoPrefab, heroInfoContainer);
+            //heroInfo.GetComponent<HeroInfoButton>().init(player);
         }
     }
 
     private void loadMonsters()
     {
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+
         //created all the monsters for Legend 2
-        foreach (int gorTile in gorLocations())
+        foreach (int gorTile in new int[]{8, 20, 21, 26, 48})
         {
             Gor g = new Gor(Game.positionGraph.getNode(gorTile));
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
         }
-        foreach (int skralTile in skralLocations())
+        foreach (int skralTile in new int[]{9})
         {
             Skral s = new Skral(Game.positionGraph.getNode(skralTile));
             Game.gameState.addMonster(s);
@@ -293,26 +351,10 @@ public class GameController : MonoBehaviour
             GameObject tempObj = Instantiate(monster.getPrefab(), -transform.position, transform.rotation, monsterContainer); ;
             monsterObjects.Add(monster, tempObj);
             tempObj.transform.position = tiles[monster.getLocation()].getMiddle();
+            tempObj.transform.localScale = boardScaling;
+
         }
 
-    }
-
-    private int[] gorLocations()
-    {
-        return new int[]{
-            8,
-            20,
-            21,
-            26,
-            48
-        };
-    }
-
-    private int[] skralLocations()
-    {
-        return new int[]{
-            9,
-        };
     }
 
 
