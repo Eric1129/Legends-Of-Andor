@@ -31,7 +31,7 @@ public class LegendCard : MonoBehaviour
                     "A hero cannot perform them, however, if he has already ended his day. " +
                     "Now continue to Legend card A2.";
 
-                string textA2 = 
+                string textA2 = "";
 
                 break;
             case 'C':
