@@ -14,11 +14,14 @@ public class GameController : MonoBehaviour
     public Transform gameContainer;
     public Transform pauseMenuContainer;
     public Transform saveGameContainer;
+    public Transform heroInfoScreen;
 
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Transform playerTimeContainer;
     public Transform monsterContainer;
+    public Transform heroInfoContainer;
+
 
     public Button moveButton;
     public Text turnLabel;
@@ -27,6 +30,7 @@ public class GameController : MonoBehaviour
     public GameObject playerPrefab;
     public Sprite fullBoardSprite;
     public GameObject circlePrefab;
+    public GameObject heroInfoPrefab;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -298,6 +302,10 @@ public class GameController : MonoBehaviour
             Vector3 timePos = getRandomPositionInBounds(timeTileBounds[0], timeObjectBounds, transform.position);
             timeObject.transform.position = timePos;
             rndPosInTimeBox[player.getNetworkID()] = timePos;
+
+
+            //GameObject heroInfo = Instantiate(heroInfoPrefab, heroInfoContainer);
+            //heroInfo.GetComponent<HeroInfoButton>().init(player);
         }
     }
 
