@@ -154,6 +154,7 @@ public class EndTurn : Action
             Debug.Log("Monster has entered the castle!" + " " + gs.maxMonstersAllowedInCastle);
             Debug.Log(gs.monstersInCastle);
             gs.monstersInCastle += 1;
+            moveMonsterToShield(m, gs);
             if (gs.monstersInCastle == gs.maxMonstersAllowedInCastle)
             {
                 Debug.Log("YOU LOST THE GAME");
@@ -184,5 +185,45 @@ public class EndTurn : Action
 
         return false;
     }
+    
 
+    public void moveMonsterToShield(Monster m, GameState gs)
+    {
+        int playerCount = gs.getPlayers().Count;
+        int monstersAllowed = gs.maxMonstersAllowedInCastle;
+        int monstersInside = gs.monstersInCastle;
+
+      
+            if (monstersInside == 1)
+            {
+                //check if farmer is on shield
+                //move monster to shield 1
+            }
+            else if (monstersInside == 2)
+            {
+                //check if farmer is on shield
+                //move monster to shield 2
+            }
+            else if (monstersInside == 3)
+            {
+                //check if farmer is on shield
+                //move monster to shield 3
+            }
+            else if (monstersInside == 4)
+            {
+            //check if farmer is on shield
+            //move monster to shield 4
+            }
+             else if (monstersInside == 5)
+            {
+            //check if farmer is on shield
+            //move monster to shield 5
+            }
+            else if (monstersInside == 6)
+            {
+            //check if farmer is on shield
+            //move monster to shield 6
+            }
+
+        }
 }
