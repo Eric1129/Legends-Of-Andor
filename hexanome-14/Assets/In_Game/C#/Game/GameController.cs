@@ -364,19 +364,29 @@ public class GameController : MonoBehaviour
 
     private void loadWells()
     {
-        foreach (int pos in new int[] {5, 35, 45, 55})
+        //foreach (int pos in new int[] {5, 35, 45, 55})
+        //{
+        //    Debug.Log("Added well at position: " + pos);
+        //    Well w = new Well(Game.positionGraph.getNode(pos));
+        //    Debug.Log(w);
+        //    Debug.Log(w.getLocation());
+        //    Game.gameState.addWell(w);
+        //    //Debug.Log("Added well at position: " + pos);
+        //}
+
+        //foreach(Well well in Game.gameState.getWells().Keys)
+        //{
+        //    GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
+        //}
+        foreach (int pos in new int[] { 5, 35, 45, 55 })
         {
             Debug.Log("Added well at position: " + pos);
-            Well w = new Well(Game.positionGraph.getNode(pos));
+            GameObject wellObject = Instantiate(well_front, tiles[pos].getMiddle(), transform.rotation);
+            Well w = new Well(Game.positionGraph.getNode(pos),wellObject);
             Debug.Log(w);
             Debug.Log(w.getLocation());
             Game.gameState.addWell(w);
             //Debug.Log("Added well at position: " + pos);
-        }
-
-        foreach(Well well in Game.gameState.getWells().Keys)
-        {
-            GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
         }
     }
 

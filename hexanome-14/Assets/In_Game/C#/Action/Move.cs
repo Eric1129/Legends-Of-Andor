@@ -66,6 +66,14 @@ public class Move : Action
         {
             //trigger Well Scenario
             Debug.Log("YOU HAVE LANDED ON A WELL!");
+            foreach(Well w in gs.getWells().Keys)
+            {
+                if(w.getLocation() == finalDest && !w.used)
+                {
+                    Debug.Log("emptying a well");
+                    w.emptyWell();
+                }
+            }
         }
         
     }
