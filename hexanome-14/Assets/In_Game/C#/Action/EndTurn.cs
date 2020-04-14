@@ -34,17 +34,13 @@ public class EndTurn : Action
     public void execute(GameState gs)
     {
         gs.turnManager.endTurn();
+        gs.getPlayer(players[0]).getHero().setHour(0);
+        GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
 
         if (gs.turnManager.roundDone())
         {
             gs.turnManager.reset();
-            foreach (Andor.Player player in gs.getPlayers())
-            {
-                player.getHero().setHour(0);
-
-                GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
-            }
-
+            
             moveMonstersAtSunrise(gs);
             //moveGors(gs);
             //moveSkrals(gs);

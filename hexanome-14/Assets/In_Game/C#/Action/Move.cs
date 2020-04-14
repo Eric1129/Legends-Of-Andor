@@ -42,7 +42,7 @@ public class Move : Action
     private void threadExecute(GameState gs)
     {
         List<Node> path = Game.positionGraph.getPath(from, to);
-        for (int i = 1; i<path.Count; i++)
+        for (int i = 1; i<2; i++)
         {
             // Move
             gs.playerLocations[players[0]] = path[i].getIndex();
@@ -59,7 +59,9 @@ public class Move : Action
 
             Thread.Sleep(500);
         }
-        //gs.playerLocations[players[0]] = to;
+
+        gs.turnManager.passTurn();
+
 
         int finalDest = gs.playerLocations[players[0]];
         if (gs.getWells().ContainsValue(finalDest))
