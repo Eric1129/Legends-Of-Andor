@@ -244,7 +244,9 @@ public class GameController : MonoBehaviour
 
             if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
                 // Give a random position
-                int startingTile = Game.RANDOM.Next(20, 40);
+                Debug.Log(player.getHeroType());
+                //int startingTile = Game.RANDOM.Next(20, 40);
+                int startingTile = player.getHeroRank();
                 playerObject.transform.position = tiles[startingTile].getMiddle();
 
                 Game.getGame().playerLocations.Add(player.getNetworkID(), startingTile);

@@ -65,6 +65,16 @@ namespace Andor
             myHero.setHeroType(hero);
         }
 
+        public int getHeroRank()
+        {
+            return myHero.getHeroRank();
+        }
+        public void setHeroRank(int rank)
+        {
+            myHero.setHeroRank(rank);
+        }
+
+
         public Color32 getColor(int alpha = 255)
         {
             return new Color32(this.color[0], this.color[1], this.color[2], (byte)alpha);
