@@ -273,11 +273,19 @@ public class GameController : MonoBehaviour
 
     private void loadMonsters()
     {
-        // Lets make 4 sample monsters
-        Game.gameState.addMonster(new Troll(Game.positionGraph.getNode(65)));
-        Game.gameState.addMonster(new Gor(Game.positionGraph.getNode(68)));
-        Game.gameState.addMonster(new Skral(Game.positionGraph.getNode(43)));
-        //Game.gameState.addMonster(new Wardrak(Game.positionGraph.getNode(55)));
+        //created all the monsters for Legend 2
+        foreach (int gorTile in gorLocations())
+        {
+            Gor g = new Gor(Game.positionGraph.getNode(gorTile));
+            Game.gameState.addMonster(g);
+            Game.gameState.addGor(g);
+        }
+        foreach (int skralTile in skralLocations())
+        {
+            Skral s = new Skral(Game.positionGraph.getNode(skralTile));
+            Game.gameState.addMonster(s);
+            Game.gameState.addSkral(s);
+        }
 
         foreach (Monster monster in Game.gameState.getMonsters())
         {
@@ -288,6 +296,25 @@ public class GameController : MonoBehaviour
         }
 
     }
+
+    private int[] gorLocations()
+    {
+        return new int[]{
+            8,
+            20,
+            21,
+            26,
+            48
+        };
+    }
+
+    private int[] skralLocations()
+    {
+        return new int[]{
+            9,
+        };
+    }
+
 
     public void setTime(string PlayerID, int hour)
     {

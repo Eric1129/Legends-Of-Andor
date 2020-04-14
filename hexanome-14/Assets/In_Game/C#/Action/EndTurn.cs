@@ -1,4 +1,8 @@
 ﻿using UnityEngine;
+using System.Linq;
+using System.Threading;
+using System.Collections.Generic;
+using System.Collections;
 
 [System.Serializable]
 public class EndTurn : Action
@@ -41,16 +45,117 @@ public class EndTurn : Action
                 GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
             }
 
-
-            // Move monsters
-            foreach(Monster monster in gs.getMonsters())
-            {
-                monster.move();
-            }
+            moveMonstersAtSunrise(gs);
+            //moveGors(gs);
+            //moveSkrals(gs);
+            //// Move monsters
+            //foreach(Monster monster in gs.getMonsters())
+            //{
+            //    monster.move();
+            //}
         }
         else
         {
             Debug.Log("Turn Ended... " + gs.turnManager.currentPlayerTurn() + " is now up!");
         }
     }
+    //public void moveGors(GameState gs)
+    //{
+    //    var gorList = gs.getGors().ToList();
+    //    foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
+    //    {
+    //        //if the monster is not in the castle, we move it towards the castle
+    //        if (g.Key.getLocation() != 0)
+    //        {
+    //            moveMonster(g.Key, gs);
+    //            //Thread.Sleep(500);
+    //        }
+    //    }
+    //}
+
+    //public void moveSkrals(GameState gs)
+    //{
+    //    var skralList = gs.getSkrals().ToList();
+    //    foreach (KeyValuePair<Skral, int> s in skralList.OrderBy(key => key.Value))
+    //    {
+    //        //if the monster is not in the castle, we move it towards the castle
+    //        if (s.Key.getLocation() != 0)
+    //        {
+    //            moveMonster(s.Key, gs);
+    //            //Thread.Sleep(500);
+    //        }
+    //    }
+    //}
+    public void moveMonstersAtSunrise(GameState gs)
+    {
+        var gorList = gs.getGors().ToList();
+        foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
+        {
+            //if the monster is not in the castle, we move it towards the castle
+            if (g.Key.getLocation() != 0)
+            {
+                moveMonster(g.Key, gs);
+                //Thread.Sleep(500);
+            }
+        }
+        // StartCoroutine(waitInBetweenMonsterMove());
+        var skralList = gs.getSkrals().ToList();
+        foreach (KeyValuePair<Skral, int> s in skralList.OrderBy(key => key.Value))
+        {
+            //if the monster is not in the castle, we move it towards the castle
+            if (s.Key.getLocation() != 0)
+            {
+                moveMonster(s.Key, gs);
+                //Thread.Sleep(500);
+            }
+        }
+
+    }
+
+    //IEnumerator waitInBetweenMonsterMove()
+    //{
+    //    //TextUI.text = "Welcome to Number Wizard!";
+    //    yield return new WaitForSeconds(5f);
+    //    //TextUI.text = ("The highest number you can pick is " + max);
+    //    //yield return new WaitForSeconds(3f);
+    //    //TextUI.text = ("The lowest number you can pick is " + min);
+    //}
+
+    public void moveMonster(Monster m, GameState gs)
+    {
+        int currloc = m.getLocation();
+        int nextloc = m.getLocationNode().toCastleNode().getIndex();
+
+        if (nextloc == 0)
+        {
+            m.move();
+            //monstersInCastle += 1;
+            //if (monstersInCastle == GameState.maxMonstersToLose)
+            //{
+            //    Debug.Log("YOU LOST THE GAME!");
+            //}
+        }
+        else
+        {
+            //check if there is already a monster on that spot
+            foreach (Monster checkMonster in gs.getMonsters())
+            {
+                if (checkMonster.getLocation() == nextloc)
+                {
+                    Node nextNode = m.getLocationNode().toCastleNode();
+                    m.setLocationNode(nextNode);
+                    moveMonster(m, gs);
+                    break;
+                }
+                else
+                //if there is no monster on the next spot, we move the monster there
+                {
+                    m.move();
+                    break;
+                }
+            }
+        }
+
+    }
+
 }
