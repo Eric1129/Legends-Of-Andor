@@ -14,11 +14,14 @@ public class GameController : MonoBehaviour
     public Transform gameContainer;
     public Transform pauseMenuContainer;
     public Transform saveGameContainer;
+    public Transform heroInfoScreen;
 
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Transform playerTimeContainer;
     public Transform monsterContainer;
+    public Transform heroInfoContainer;
+
 
     public Button moveButton;
     public Text turnLabel;
@@ -27,6 +30,7 @@ public class GameController : MonoBehaviour
     public GameObject playerPrefab;
     public Sprite fullBoardSprite;
     public GameObject circlePrefab;
+    public GameObject heroInfoPrefab;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -200,15 +204,12 @@ public class GameController : MonoBehaviour
         {
             GameObject temp = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, playerTimeContainer);
             temp.AddComponent<SpriteRenderer>().sprite = sprite;
-            temp.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1,0,0,1);
 
             TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>(), boardSpriteContainer);
             Bounds b = tb.createBounds();
 
-
-
             timeTileBounds.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
-            //Destroy(temp);
+            Destroy(temp);
         }
 
     }
@@ -301,6 +302,10 @@ public class GameController : MonoBehaviour
             Vector3 timePos = getRandomPositionInBounds(timeTileBounds[0], timeObjectBounds, transform.position);
             timeObject.transform.position = timePos;
             rndPosInTimeBox[player.getNetworkID()] = timePos;
+
+
+            //GameObject heroInfo = Instantiate(heroInfoPrefab, heroInfoContainer);
+            //heroInfo.GetComponent<HeroInfoButton>().init(player);
         }
     }
 
