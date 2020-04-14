@@ -243,6 +243,24 @@ public class GameController : MonoBehaviour
 
     public void GameSetup()
     {
+        int playerCount = Game.gameState.getPlayers().Count;
+
+        if (playerCount == 1 || playerCount == 2)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 3;
+        }
+        else if (playerCount == 3)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 2;
+
+        }
+        else if (playerCount == 4)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 1;
+
+        }
+        /////////////////////////////////////////////////////////////////////
+
         // load players
         if (Game.gameState != null)
         {

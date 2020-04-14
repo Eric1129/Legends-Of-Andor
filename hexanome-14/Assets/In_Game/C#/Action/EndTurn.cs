@@ -46,7 +46,13 @@ public class EndTurn : Action
             }
 
             moveMonstersAtSunrise(gs);
-
+            //moveGors(gs);
+            //moveSkrals(gs);
+            //// Move monsters
+            //foreach(Monster monster in gs.getMonsters())
+            //{
+            //    monster.move();
+            //}
         }
         else
         {
@@ -82,40 +88,44 @@ public class EndTurn : Action
     //}
     public void moveMonstersAtSunrise(GameState gs)
     {
-        List<Gor> gorList = gs.getGors();
-        foreach (Gor g in gorList)
+        var gorList = gs.getGors().ToList();
+        foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
         {
-            //if the monster is not in the castle, we move it towards the castle
-            if (g.getLocation() != 0)
+            if (gs.outcome == "lost")
             {
-                moveMonster(g, gs);
+                break;
+            }
+            //if the monster is not in the castle, we move it towards the castle
+            if (g.Key.getLocation() != 0 && gs.outcome != "lost")
+            {
+                moveMonster(g.Key, gs);
+            }
+        }
+        var skralList = gs.getSkrals().ToList();
+        foreach (KeyValuePair<Skral, int> s in skralList.OrderBy(key => key.Value))
+        {
+            if (gs.outcome == "lost")
+            {
+                break;
+            }
+            //if the monster is not in the castle, we move it towards the castle
+            if (s.Key.getLocation() != 0)
+            {
+                moveMonster(s.Key, gs);
                 //Thread.Sleep(500);
             }
         }
-        // StartCoroutine(waitInBetweenMonsterMove());
-        List<Skral> skralList = gs.getSkrals();
-        foreach (Skral s in skralList)
+
+        if (gs.outcome == "lost")
         {
-            //if the monster is not in the castle, we move it towards the castle
-            if (s.getLocation() != 0)
-            {
-                moveMonster(s, gs);
-                //Thread.Sleep(500);
-            }
+            Debug.Log("YOU LOST THE GAME!");
+            //Trigger Loss Scenario but need to add in shield check with farmers
         }
 
     }
 
-    //IEnumerator waitInBetweenMonsterMove()
-    //{
-    //    //TextUI.text = "Welcome to Number Wizard!";
-    //    yield return new WaitForSeconds(5f);
-    //    //TextUI.text = ("The highest number you can pick is " + max);
-    //    //yield return new WaitForSeconds(3f);
-    //    //TextUI.text = ("The lowest number you can pick is " + min);
-    //}
 
-    public void moveMonster(Monster m, GameState gs)
+    public bool moveMonster(Monster m, GameState gs)
     {
         int currloc = m.getLocation();
         int nextloc = m.getLocationNode().toCastleNode().getIndex();
@@ -123,11 +133,15 @@ public class EndTurn : Action
         if (nextloc == 0)
         {
             m.move();
-            //monstersInCastle += 1;
-            //if (monstersInCastle == GameState.maxMonstersToLose)
-            //{
-            //    Debug.Log("YOU LOST THE GAME!");
-            //}
+            Debug.Log("Monster has entered the castle!" + " " + gs.maxMonstersAllowedInCastle);
+            Debug.Log(gs.monstersInCastle);
+            gs.monstersInCastle += 1;
+            if (gs.monstersInCastle == gs.maxMonstersAllowedInCastle)
+            {
+                Debug.Log("YOU LOST THE GAME");
+                gs.outcome = "lost";
+                return true;
+            }
         }
         else
         {
@@ -150,6 +164,7 @@ public class EndTurn : Action
             }
         }
 
+        return false;
     }
 
 }
