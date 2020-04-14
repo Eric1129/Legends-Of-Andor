@@ -15,18 +15,18 @@ public class GameState
     private List<Monster> monsters;
     public string difficulty = "-1";
     public Dictionary<string, int> playerLocations;
-    private Dictionary<Skral, int> skrals;
-    private Dictionary<Gor, int> gors;
+    private List<Gor> gors;
+    private List<Skral> skrals;
 
     public TurnManager turnManager;
 
     public GameState()
 	{
-		players = new Dictionary<string, Player>();
+        players = new Dictionary<string, Player>();
         monsters = new List<Monster>();
-        gors = new Dictionary<Gor, int>();
-        skrals = new Dictionary<Skral, int>();
         playerLocations = new Dictionary<string, int>();
+        gors = new List<Gor>();
+        skrals = new List<Skral>();
     }
 
     public void addPlayer(Player p)
@@ -94,24 +94,21 @@ public class GameState
     {
         monsters.Add(m);
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    public Dictionary<Skral, int> getSkrals()
+    public List<Gor> getGors()
+    {
+        return gors;
+    }
+    public void addGor(Gor m)
+    {
+        gors.Add(m);
+    }
+    public List<Skral> getSkrals()
     {
         return skrals;
     }
     public void addSkral(Skral s)
     {
-        skrals.Add(s, s.getLocation());
-    }
-    //////////////////////////////////gors//////////////////////////////////
-    public Dictionary<Gor, int> getGors()
-    {
-        return gors;
-    }
-    public void addGor(Gor g)
-    {
-        gors.Add(g, g.getLocation());
+        skrals.Add(s);
     }
 
     public void processAction(Action a)

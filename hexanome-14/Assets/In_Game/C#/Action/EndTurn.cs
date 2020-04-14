@@ -46,13 +46,7 @@ public class EndTurn : Action
             }
 
             moveMonstersAtSunrise(gs);
-            //moveGors(gs);
-            //moveSkrals(gs);
-            //// Move monsters
-            //foreach(Monster monster in gs.getMonsters())
-            //{
-            //    monster.move();
-            //}
+
         }
         else
         {
@@ -88,24 +82,24 @@ public class EndTurn : Action
     //}
     public void moveMonstersAtSunrise(GameState gs)
     {
-        var gorList = gs.getGors().ToList();
-        foreach (KeyValuePair<Gor, int> g in gorList.OrderBy(key => key.Value))
+        List<Gor> gorList = gs.getGors();
+        foreach (Gor g in gorList)
         {
             //if the monster is not in the castle, we move it towards the castle
-            if (g.Key.getLocation() != 0)
+            if (g.getLocation() != 0)
             {
-                moveMonster(g.Key, gs);
+                moveMonster(g, gs);
                 //Thread.Sleep(500);
             }
         }
         // StartCoroutine(waitInBetweenMonsterMove());
-        var skralList = gs.getSkrals().ToList();
-        foreach (KeyValuePair<Skral, int> s in skralList.OrderBy(key => key.Value))
+        List<Skral> skralList = gs.getSkrals();
+        foreach (Skral s in skralList)
         {
             //if the monster is not in the castle, we move it towards the castle
-            if (s.Key.getLocation() != 0)
+            if (s.getLocation() != 0)
             {
-                moveMonster(s.Key, gs);
+                moveMonster(s, gs);
                 //Thread.Sleep(500);
             }
         }
