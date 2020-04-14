@@ -200,15 +200,12 @@ public class GameController : MonoBehaviour
         {
             GameObject temp = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, playerTimeContainer);
             temp.AddComponent<SpriteRenderer>().sprite = sprite;
-            temp.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1,0,0,1);
 
             TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>(), boardSpriteContainer);
             Bounds b = tb.createBounds();
 
-
-
             timeTileBounds.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
-            //Destroy(temp);
+            Destroy(temp);
         }
 
     }
