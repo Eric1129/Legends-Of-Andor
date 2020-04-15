@@ -45,19 +45,27 @@ public class EndTurn :Action
                 GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
             }
 
-            moveMonstersAtSunrise(gs);
-            //moveGors(gs);
-            //moveSkrals(gs);
-            //// Move monsters
-            //foreach(Monster monster in gs.getMonsters())
-            //{
-            //    monster.move();
-            //}
+            sunriseBoxSequence(gs);
         }
         else
         {
             Debug.Log("Turn Ended... " + gs.turnManager.currentPlayerTurn() + " is now up!");
         }
+    }
+
+    public void sunriseBoxSequence(GameState gs)
+    {
+        //moving all monsters at sunrise
+        moveMonstersAtSunrise(gs);
+
+        //refreshing all wells
+        foreach (Well w in gs.getWells().Keys)
+        {
+            //check if there is a Hero on the same spot first
+            w.refreshWell();
+        }
+
+        //advance narrator 
     }
     //public void moveGors(GameState gs)
     //{

@@ -288,6 +288,13 @@ public class GameController : MonoBehaviour
         scrollText.text = "You Fuckin LOST YOU LOSER!";
         scroll.SetActive(true);
     }
+
+    public void emptyWell(GameObject well)
+    {
+        //well.SetActive(false);
+        well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
+
+    }
     private void loadPlayers()
     {
         Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);

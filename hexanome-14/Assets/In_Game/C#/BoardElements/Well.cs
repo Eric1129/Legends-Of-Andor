@@ -22,6 +22,7 @@ public class Well
         //this.prefab =
         
         this.used = true;
+        //this.prefab.SetActive(false);
         //this.prefab.GetComponent<Material>().color = Color.gray;
         //this.prefab.GetComponent<Renderer>().enabled = false ;
     }
