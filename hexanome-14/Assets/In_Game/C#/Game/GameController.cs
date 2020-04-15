@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     public GameObject circlePrefab;
     public GameObject heroInfoPrefab;
     public GameObject well_front;
+    public GameObject fog;
     //public GameObject scroll;
     public GameObject scroll;
 
@@ -282,6 +283,8 @@ public class GameController : MonoBehaviour
             loadMonsters();
 
             loadWells();
+
+            loadFogTokens();
         }
 
     }
@@ -405,6 +408,24 @@ public class GameController : MonoBehaviour
             Debug.Log(w);
             Debug.Log(w.getLocation());
             Game.gameState.addWell(w);
+            //Debug.Log("Added well at position: " + pos);
+        }
+    }
+
+
+    public void loadFogTokens()
+    {
+        string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+            "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
+
+        int i = 0;
+        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63 })
+        {
+            Debug.Log("Added fog at position: " + pos);
+            GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
+            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, fogTokens[i]);
+            Game.gameState.addFogToken(f);
+            i++;
             //Debug.Log("Added well at position: " + pos);
         }
     }

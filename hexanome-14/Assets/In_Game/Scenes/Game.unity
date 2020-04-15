@@ -1571,6 +1571,7 @@ MonoBehaviour:
     type: 3}
   well_front: {fileID: 1025462693179533495, guid: a2aff63c1501145cf9b027a539245e18,
     type: 3}
+  fog: {fileID: 8876040549708978515, guid: e947aad3a8a3245a7b25e4116d1148c7, type: 3}
   scroll: {fileID: 1884497148}
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
