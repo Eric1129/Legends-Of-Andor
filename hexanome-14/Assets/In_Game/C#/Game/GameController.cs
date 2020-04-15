@@ -412,6 +412,12 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void instantiateEventGor(Gor g, int location)
+    {
+        GameObject tempObj = Instantiate(g.getPrefab(), tiles[location].getMiddle(), transform.rotation);
+        Debug.Log("Added event gor");
+
+    }
 
     public void loadFogTokens()
     {
