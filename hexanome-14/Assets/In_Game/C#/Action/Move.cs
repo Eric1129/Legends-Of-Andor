@@ -37,6 +37,11 @@ public class Move : Action
     {
         Thread thread = new Thread(() => threadExecute(gs));
         thread.Start();
+        while(thread.IsAlive)
+        {
+            Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
+        }
+        GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
         checkMove(gs);
         gs.turnManager.passTurn();
 
@@ -62,7 +67,6 @@ public class Move : Action
 
             Thread.Sleep(500);
         }
-        
     }
 
     public void checkMove(GameState gs)
@@ -72,6 +76,7 @@ public class Move : Action
         {
             //trigger Well Scenario
             Debug.Log("YOU HAVE LANDED ON A WELL!");
+            GameController.instance.updateGameConsoleText("You have landed on a well!");
             foreach (Well w in gs.getWells().Keys)
             {
                 if (w.getLocation() == finalDest && !w.used)
@@ -88,7 +93,6 @@ public class Move : Action
                     int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
                     gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
 
-
                 }
             }
         }
@@ -96,6 +100,7 @@ public class Move : Action
         if (gs.getFogTokens().ContainsValue(finalDest))
         {
             Debug.Log("YOU HAVE LANDED ON A FOG TOKEN!");
+            GameController.instance.updateGameConsoleText("You have landed on a fog token!");
             foreach (FogToken f in gs.getFogTokens().Keys)
             {
                 if (f.getLocation() == finalDest && !f.used)
