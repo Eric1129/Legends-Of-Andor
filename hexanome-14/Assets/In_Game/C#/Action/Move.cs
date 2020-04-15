@@ -42,7 +42,7 @@ public class Move : Action
     private void threadExecute(GameState gs)
     {
         List<Node> path = Game.positionGraph.getPath(from, to);
-        for (int i = 1; i<2; i++)
+        for (int i = 1; i<path.Count; i++)
         {
             // Move
             gs.playerLocations[players[0]] = path[i].getIndex();
@@ -74,7 +74,7 @@ public class Move : Action
                 {
                     Debug.Log("emptying a well");
                     w.emptyWell();
-                    GameController.instance.emptyWell(w.getPrefab());
+                    //GameController.instance.emptyWell(w.getPrefab());
                     //string player =  gs.turnManager.currentPlayerTurn();
 
                     //add 3 willpower points to the hero who emptied the well
