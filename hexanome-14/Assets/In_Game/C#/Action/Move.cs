@@ -82,7 +82,6 @@ public class Move : Action
                     gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
 
 
-
                 }
             }
         }
