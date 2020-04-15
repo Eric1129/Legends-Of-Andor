@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour
     public Text turnLabel;
     //public Text scrollText;
     public Text scrollTxt;
+    public Text gameConsoleText;
     
 
     public GameObject emptyPrefab;
@@ -254,6 +255,11 @@ public class GameController : MonoBehaviour
     {
         scrollTxt.text = "YOU LOST!";
         scroll.SetActive(true);
+    }
+
+    public void updateGameConsoleText(string message)
+    {
+        gameConsoleText.text = message;
     }
     public void GameSetup()
     {
