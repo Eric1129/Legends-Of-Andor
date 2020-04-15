@@ -22,6 +22,7 @@ public class GameState
     public int maxMonstersAllowedInCastle;
     public int monstersInCastle;
     private Dictionary<Well, int> wells;
+    private Dictionary<FogToken, int> fogTokens;
 
 
     public GameState()
@@ -35,6 +36,7 @@ public class GameState
         monstersInCastle = 0;
         maxMonstersAllowedInCastle = 0;
         wells = new Dictionary<Well, int>();
+        fogTokens = new Dictionary<FogToken, int>();
     }
 
     public void addPlayer(Player p)
@@ -94,6 +96,11 @@ public class GameState
         playerLocations = new Dictionary<string, int>();
     }
 
+    public Dictionary<string, int> getPlayerLocations()
+    {
+        return playerLocations;
+    }
+
     public List<Monster> getMonsters()
     {
         return monsters;
@@ -131,6 +138,17 @@ public class GameState
     {
         wells.Add(w, w.getLocation());
     }
+
+    //////////////////////////////////fog//////////////////////////////////
+    public Dictionary<FogToken, int> getFogTokens()
+    {
+        return fogTokens;
+    }
+    public void addFogToken(FogToken f)
+    {
+        fogTokens.Add(f, f.getLocation());
+    }
+
 
     public void updateGorLocations()
     {
@@ -195,6 +213,7 @@ public class GameState
     {
         return players[playerID];
     }
+
     public bool hasPlayer(Player player)
     {
         return players.ContainsKey(player.getNetworkID());

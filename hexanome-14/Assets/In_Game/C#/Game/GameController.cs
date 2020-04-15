@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour
 
     public Button moveButton;
     public Text turnLabel;
+    //public Text scrollText;
+    public Text scrollTxt;
+    
 
     public GameObject emptyPrefab;
     public GameObject playerPrefab;
@@ -32,6 +35,9 @@ public class GameController : MonoBehaviour
     public GameObject circlePrefab;
     public GameObject heroInfoPrefab;
     public GameObject well_front;
+    public GameObject fog;
+    //public GameObject scroll;
+    public GameObject scroll;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -243,6 +249,12 @@ public class GameController : MonoBehaviour
         
     }
 
+
+    public void loseScenario()
+    {
+        scrollTxt.text = "YOU LOST!";
+        scroll.SetActive(true);
+    }
     public void GameSetup()
     {
         int playerCount = Game.gameState.getPlayers().Count;
@@ -271,6 +283,8 @@ public class GameController : MonoBehaviour
             loadMonsters();
 
             loadWells();
+
+            loadFogTokens();
         }
 
     }
@@ -279,6 +293,14 @@ public class GameController : MonoBehaviour
     {
         // Do something now that this monster has made it to the castle
         Debug.Log("Monster in Castle!");
+    }
+
+
+    public void emptyWell(GameObject well)
+    {
+        //well.SetActive(false);
+        well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
+
     }
 
     private void loadPlayers()
@@ -364,19 +386,53 @@ public class GameController : MonoBehaviour
 
     private void loadWells()
     {
-        foreach (int pos in new int[] {5, 35, 45, 55})
+        //foreach (int pos in new int[] {5, 35, 45, 55})
+        //{
+        //    Debug.Log("Added well at position: " + pos);
+        //    Well w = new Well(Game.positionGraph.getNode(pos));
+        //    Debug.Log(w);
+        //    Debug.Log(w.getLocation());
+        //    Game.gameState.addWell(w);
+        //    //Debug.Log("Added well at position: " + pos);
+        //}
+
+        //foreach(Well well in Game.gameState.getWells().Keys)
+        //{
+        //    GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
+        //}
+        foreach (int pos in new int[] { 5, 35, 45, 55 })
         {
             Debug.Log("Added well at position: " + pos);
-            Well w = new Well(Game.positionGraph.getNode(pos));
+            GameObject wellObject = Instantiate(well_front, tiles[pos].getMiddle(), transform.rotation);
+            Well w = new Well(Game.positionGraph.getNode(pos),wellObject);
             Debug.Log(w);
             Debug.Log(w.getLocation());
             Game.gameState.addWell(w);
             //Debug.Log("Added well at position: " + pos);
         }
+    }
 
-        foreach(Well well in Game.gameState.getWells().Keys)
+    public void instantiateEventGor(Gor g, int location)
+    {
+        GameObject tempObj = Instantiate(g.getPrefab(), tiles[location].getMiddle(), transform.rotation);
+        Debug.Log("Added event gor");
+
+    }
+
+    public void loadFogTokens()
+    {
+        string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+            "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
+
+        int i = 0;
+        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63 })
         {
-            GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
+            Debug.Log("Added fog at position: " + pos);
+            GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
+            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, fogTokens[i]);
+            Game.gameState.addFogToken(f);
+            i++;
+            //Debug.Log("Added well at position: " + pos);
         }
     }
 

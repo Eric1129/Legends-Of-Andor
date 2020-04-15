@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 88add11f75e3b4062b64a25e2801a26a
+guid: a15310c7ce23141a8b1991414fdd11fd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -86,19 +86,32 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline:
-    - - {x: -60, y: -100}
-      - {x: -59, y: 56}
-      - {x: -52, y: 69}
-      - {x: -45, y: 80}
-      - {x: -33, y: 90}
-      - {x: -18, y: 98}
-      - {x: 2, y: 102}
-      - {x: 19, y: 98}
-      - {x: 32, y: 91}
-      - {x: 43, y: 83}
-      - {x: 53, y: 72}
-      - {x: 60, y: 58}
-      - {x: 60, y: -102}
+    - - {x: 49, y: -59}
+      - {x: 32, y: -67}
+      - {x: 9, y: -68}
+      - {x: -10, y: -65}
+      - {x: -26, y: -59}
+      - {x: -38, y: -50}
+      - {x: -50, y: -37}
+      - {x: -58, y: -19}
+      - {x: -60, y: -1}
+      - {x: -59, y: 17}
+      - {x: -54, y: 32}
+      - {x: -47, y: 46}
+      - {x: -35, y: 56}
+      - {x: -23, y: 64}
+      - {x: -7, y: 71}
+      - {x: 12, y: 73}
+      - {x: 28, y: 70}
+      - {x: 43, y: 65}
+      - {x: 56, y: 57}
+      - {x: 68, y: 44}
+      - {x: 77, y: 25}
+      - {x: 81, y: 5}
+      - {x: 78, y: -11}
+      - {x: 75, y: -24}
+      - {x: 67, y: -39}
+      - {x: 59, y: -50}
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000

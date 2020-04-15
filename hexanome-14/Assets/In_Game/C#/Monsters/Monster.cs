@@ -5,6 +5,8 @@ using UnityEngine;
 public class Monster : Fightable, MoveStrategy
 {
     private Node location;
+    private int willpower;
+    private int strength;
     protected GameObject prefab;
 
     public Monster(Node startingPos, GameObject prefab)
@@ -47,5 +49,21 @@ public class Monster : Fightable, MoveStrategy
     {
         return prefab;
     }
+    public int getWillpower()
+    {
+        return willpower;
+    }
+    public void setWillpower(int willpower)
+    {
+        this.willpower = willpower;
+    }
 
+    public int getStrength()
+    {
+        return strength;
+    }
+    public void setStrength(int strength)
+    {
+        this.strength = strength;
+    }
 }

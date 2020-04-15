@@ -124,6 +124,7 @@ TagManager:
   - CG_Invite_Friends_label
   - test11
   - inviteContainer
+  - outcomeContainer
   layers:
   - Default
   - TransparentFX

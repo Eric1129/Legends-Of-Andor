@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 [System.Serializable]
-public class EndTurn : Action
+public class EndTurn :Action
 {
     private Type type;
     private string[] players;
@@ -34,6 +34,8 @@ public class EndTurn : Action
     public void execute(GameState gs)
     {
         gs.turnManager.endTurn();
+        gs.getPlayer(players[0]).getHero().setHour(0);
+        GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
 
         if (gs.turnManager.roundDone())
         {
@@ -45,7 +47,9 @@ public class EndTurn : Action
                 GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
             }
 
-            moveMonstersAtSunrise(gs);
+            sunriseBoxSequence(gs);
+            
+           // moveMonstersAtSunrise(gs);
             //moveGors(gs);
             //moveSkrals(gs);
             //// Move monsters
@@ -58,6 +62,21 @@ public class EndTurn : Action
         {
             Debug.Log("Turn Ended... " + gs.turnManager.currentPlayerTurn() + " is now up!");
         }
+    }
+
+    public void sunriseBoxSequence(GameState gs)
+    {
+        //moving all monsters at sunrise
+        moveMonstersAtSunrise(gs);
+
+        //refreshing all wells
+        foreach (Well w in gs.getWells().Keys)
+        {
+            //check if there is a Hero on the same spot first
+            w.refreshWell();
+        }
+
+        //advance narrator 
     }
     //public void moveGors(GameState gs)
     //{
@@ -137,6 +156,10 @@ public class EndTurn : Action
         if (gs.outcome == "lost")
         {
             Debug.Log("YOU LOST THE GAME!");
+            // OutcomeScroll.instance.UpdateFeedback("You Fuckin LOST you LOSER!");
+            //call the lose outcome scroll
+            GameController.instance.loseScenario();
+            //scroll.GetComponent<Renderer>().enabled = true;
             //Trigger Loss Scenario but need to add in shield check with farmers
         }
 

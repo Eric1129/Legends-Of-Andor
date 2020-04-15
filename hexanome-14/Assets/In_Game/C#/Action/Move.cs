@@ -59,14 +59,86 @@ public class Move : Action
 
             Thread.Sleep(500);
         }
-        //gs.playerLocations[players[0]] = to;
 
+        checkMove(gs);
+        gs.turnManager.passTurn();
+
+        
+    }
+
+    public void checkMove(GameState gs)
+    {
         int finalDest = gs.playerLocations[players[0]];
         if (gs.getWells().ContainsValue(finalDest))
         {
             //trigger Well Scenario
             Debug.Log("YOU HAVE LANDED ON A WELL!");
+            foreach (Well w in gs.getWells().Keys)
+            {
+                if (w.getLocation() == finalDest && !w.used)
+                {
+                    Debug.Log("emptying a well");
+                    w.emptyWell();
+                    //GameController.instance.emptyWell(w.getPrefab());
+                    //string player =  gs.turnManager.currentPlayerTurn();
+
+                    //add 3 willpower points to the hero who emptied the well
+                    int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                    gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+
+
+                }
+            }
         }
-        
+
+        if (gs.getFogTokens().ContainsValue(finalDest))
+        {
+            Debug.Log("YOU HAVE LANDED ON A FOG TOKEN!");
+            foreach (FogToken f in gs.getFogTokens().Keys)
+            {
+                if (f.getLocation() == finalDest && !f.used)
+                {
+                    Debug.Log("using fog token");
+                    f.useFogToken();
+                    string token_type = f.getType();
+                    if (token_type == "gold1")
+                    {
+                        gs.getPlayer(players[0]).getHero().increaseGold(1);
+                    }
+                    else if (token_type == "event")
+                    {
+
+                    }
+                    else if (token_type == "wineskin")
+                    {
+
+                    }
+                    else if (token_type == "willpower2")
+                    {
+                            gs.getPlayer(players[0]).getHero().increaseWillpower(2);
+                           
+                    }
+                    else if (token_type == "willpower3")
+                    {
+                       gs.getPlayer(players[0]).getHero().increaseWillpower(3);
+
+                    }
+                    else if (token_type == "brew")
+                    {
+
+                    }
+                    else if (token_type == "gor")
+                    {
+                        Gor g = new Gor(Game.positionGraph.getNode(finalDest));
+                        Game.gameState.addMonster(g);
+                        Game.gameState.addGor(g);
+                        GameController.instance.instantiateEventGor(g,finalDest);
+
+                    }
+                    //Object.Destroy(f.getPrefab());
+                }
+            }
+        }
+
     }
 }

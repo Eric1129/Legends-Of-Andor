@@ -5,13 +5,13 @@ using UnityEngine;
 public class Well
 {
     private Node location;
-    private bool used;
+    public bool used;
     protected GameObject prefab;
 
-    public Well(Node startingPos)
+    public Well(Node startingPos, GameObject prefab)
     {
         location = startingPos;
-        //this.prefab = prefab;
+        this.prefab = prefab;
         used = false;
     }
 
@@ -19,8 +19,12 @@ public class Well
 
     public void emptyWell()
     {
-        //this.prefab = 
+        //this.prefab =
+        
         this.used = true;
+        //this.prefab.SetActive(false);
+        //this.prefab.GetComponent<Material>().color = Color.gray;
+        //this.prefab.GetComponent<Renderer>().enabled = false ;
     }
 
     public void refreshWell()
