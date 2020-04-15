@@ -1559,7 +1559,7 @@ MonoBehaviour:
   heroInfoContainer: {fileID: 1450666353}
   moveButton: {fileID: 1467345021}
   turnLabel: {fileID: 331014883}
-  scrollText: {fileID: 115835025}
+  scrollTxt: {fileID: 115835025}
   emptyPrefab: {fileID: 1911394042882782457, guid: 4fd0be85c45f844d79e3daabe220e5cf,
     type: 3}
   playerPrefab: {fileID: 402140951301285706, guid: 1d33a3dd4af9643f1abd77ae0a42f7da,

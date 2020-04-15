@@ -25,7 +25,9 @@ public class GameController : MonoBehaviour
 
     public Button moveButton;
     public Text turnLabel;
-    public Text scrollText;
+    //public Text scrollText;
+    public Text scrollTxt;
+    
 
     public GameObject emptyPrefab;
     public GameObject playerPrefab;
@@ -33,6 +35,7 @@ public class GameController : MonoBehaviour
     public GameObject circlePrefab;
     public GameObject heroInfoPrefab;
     public GameObject well_front;
+    //public GameObject scroll;
     public GameObject scroll;
 
     public Dictionary<int, BoardPosition> tiles;
@@ -245,6 +248,12 @@ public class GameController : MonoBehaviour
         
     }
 
+
+    public void loseScenario()
+    {
+        scrollTxt.text = "YOU LOST!";
+        scroll.SetActive(true);
+    }
     public void GameSetup()
     {
         int playerCount = Game.gameState.getPlayers().Count;
@@ -295,6 +304,7 @@ public class GameController : MonoBehaviour
         well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
 
     }
+
     private void loadPlayers()
     {
         Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);

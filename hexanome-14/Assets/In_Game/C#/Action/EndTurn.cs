@@ -34,6 +34,8 @@ public class EndTurn :Action
     public void execute(GameState gs)
     {
         gs.turnManager.endTurn();
+        gs.getPlayer(players[0]).getHero().setHour(0);
+        GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
 
         if (gs.turnManager.roundDone())
         {
@@ -46,6 +48,15 @@ public class EndTurn :Action
             }
 
             sunriseBoxSequence(gs);
+            
+           // moveMonstersAtSunrise(gs);
+            //moveGors(gs);
+            //moveSkrals(gs);
+            //// Move monsters
+            //foreach(Monster monster in gs.getMonsters())
+            //{
+            //    monster.move();
+            //}
         }
         else
         {
