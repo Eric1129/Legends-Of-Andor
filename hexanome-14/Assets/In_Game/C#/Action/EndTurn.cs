@@ -138,6 +138,7 @@ public class EndTurn :Action
         {
             Debug.Log("YOU LOST THE GAME!");
             // OutcomeScroll.instance.UpdateFeedback("You Fuckin LOST you LOSER!");
+            //call the lose outcome scroll
             GameController.instance.loseScenario();
             //scroll.GetComponent<Renderer>().enabled = true;
             //Trigger Loss Scenario but need to add in shield check with farmers
