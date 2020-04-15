@@ -37,7 +37,10 @@ public class Move : Action
     {
         Thread thread = new Thread(() => threadExecute(gs));
         thread.Start();
-        
+        checkMove(gs);
+        gs.turnManager.passTurn();
+
+
     }
     private void threadExecute(GameState gs)
     {
@@ -59,10 +62,6 @@ public class Move : Action
 
             Thread.Sleep(500);
         }
-
-        checkMove(gs);
-        gs.turnManager.passTurn();
-
         
     }
 
@@ -79,6 +78,9 @@ public class Move : Action
                 {
                     Debug.Log("emptying a well");
                     w.emptyWell();
+                    //Object.Destroy(w.getPrefab());
+                    //w.getPrefab().GetComponent<Renderer>().enabled = false;
+                    w.getPrefab().GetComponent<Renderer>().material.color = Color.gray;
                     //GameController.instance.emptyWell(w.getPrefab());
                     //string player =  gs.turnManager.currentPlayerTurn();
 
@@ -135,7 +137,7 @@ public class Move : Action
                         GameController.instance.instantiateEventGor(g,finalDest);
 
                     }
-                    //Object.Destroy(f.getPrefab());
+                    Object.Destroy(f.getPrefab());
                 }
             }
         }
