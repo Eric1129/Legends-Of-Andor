@@ -94,6 +94,11 @@ public class GameState
         playerLocations = new Dictionary<string, int>();
     }
 
+    public Dictionary<string, int> getPlayerLocations()
+    {
+        return playerLocations;
+    }
+
     public List<Monster> getMonsters()
     {
         return monsters;
@@ -195,6 +200,7 @@ public class GameState
     {
         return players[playerID];
     }
+
     public bool hasPlayer(Player player)
     {
         return players.ContainsKey(player.getNetworkID());
