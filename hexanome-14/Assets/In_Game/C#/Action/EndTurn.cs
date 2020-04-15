@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 [System.Serializable]
-public class EndTurn : Action
+public class EndTurn :Action
 {
     private Type type;
     private string[] players;
@@ -137,6 +137,9 @@ public class EndTurn : Action
         if (gs.outcome == "lost")
         {
             Debug.Log("YOU LOST THE GAME!");
+            // OutcomeScroll.instance.UpdateFeedback("You Fuckin LOST you LOSER!");
+            GameController.instance.loseScenario();
+            //scroll.GetComponent<Renderer>().enabled = true;
             //Trigger Loss Scenario but need to add in shield check with farmers
         }
 
