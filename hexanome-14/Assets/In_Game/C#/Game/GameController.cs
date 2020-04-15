@@ -292,11 +292,6 @@ public class GameController : MonoBehaviour
         Debug.Log("Monster in Castle!");
     }
 
-    public void loseScenario()
-    {
-        scrollText.text = "You Fuckin LOST YOU LOSER!";
-        scroll.SetActive(true);
-    }
 
     public void emptyWell(GameObject well)
     {
