@@ -40,8 +40,16 @@ public class EndTurn :Action
         if (gs.turnManager.roundDone())
         {
             gs.turnManager.reset();
+            foreach (Andor.Player player in gs.getPlayers())
+            {
+                player.getHero().setHour(0);
+
+                GameController.instance.setTime(player.getNetworkID(), player.getHero().getHour());
+            }
+
+            sunriseBoxSequence(gs);
             
-            moveMonstersAtSunrise(gs);
+           // moveMonstersAtSunrise(gs);
             //moveGors(gs);
             //moveSkrals(gs);
             //// Move monsters
@@ -54,6 +62,21 @@ public class EndTurn :Action
         {
             Debug.Log("Turn Ended... " + gs.turnManager.currentPlayerTurn() + " is now up!");
         }
+    }
+
+    public void sunriseBoxSequence(GameState gs)
+    {
+        //moving all monsters at sunrise
+        moveMonstersAtSunrise(gs);
+
+        //refreshing all wells
+        foreach (Well w in gs.getWells().Keys)
+        {
+            //check if there is a Hero on the same spot first
+            w.refreshWell();
+        }
+
+        //advance narrator 
     }
     //public void moveGors(GameState gs)
     //{

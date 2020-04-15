@@ -74,6 +74,15 @@ public class Move : Action
                 {
                     Debug.Log("emptying a well");
                     w.emptyWell();
+                    GameController.instance.emptyWell(w.getPrefab());
+                    //string player =  gs.turnManager.currentPlayerTurn();
+
+                    //add 3 willpower points to the hero who emptied the well
+                    int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                    gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+
+
+
                 }
             }
         }
