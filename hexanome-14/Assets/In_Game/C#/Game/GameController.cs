@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
 
     public Button moveButton;
     public Text turnLabel;
+    public Text scrollText;
 
     public GameObject emptyPrefab;
     public GameObject playerPrefab;
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
     public GameObject circlePrefab;
     public GameObject heroInfoPrefab;
     public GameObject well_front;
+    public GameObject scroll;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -281,6 +283,11 @@ public class GameController : MonoBehaviour
         Debug.Log("Monster in Castle!");
     }
 
+    public void loseScenario()
+    {
+        scrollText.text = "You Fuckin LOST YOU LOSER!";
+        scroll.SetActive(true);
+    }
     private void loadPlayers()
     {
         Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
@@ -364,19 +371,29 @@ public class GameController : MonoBehaviour
 
     private void loadWells()
     {
-        foreach (int pos in new int[] {5, 35, 45, 55})
+        //foreach (int pos in new int[] {5, 35, 45, 55})
+        //{
+        //    Debug.Log("Added well at position: " + pos);
+        //    Well w = new Well(Game.positionGraph.getNode(pos));
+        //    Debug.Log(w);
+        //    Debug.Log(w.getLocation());
+        //    Game.gameState.addWell(w);
+        //    //Debug.Log("Added well at position: " + pos);
+        //}
+
+        //foreach(Well well in Game.gameState.getWells().Keys)
+        //{
+        //    GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
+        //}
+        foreach (int pos in new int[] { 5, 35, 45, 55 })
         {
             Debug.Log("Added well at position: " + pos);
-            Well w = new Well(Game.positionGraph.getNode(pos));
+            GameObject wellObject = Instantiate(well_front, tiles[pos].getMiddle(), transform.rotation);
+            Well w = new Well(Game.positionGraph.getNode(pos),wellObject);
             Debug.Log(w);
             Debug.Log(w.getLocation());
             Game.gameState.addWell(w);
             //Debug.Log("Added well at position: " + pos);
-        }
-
-        foreach(Well well in Game.gameState.getWells().Keys)
-        {
-            GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
         }
     }
 
