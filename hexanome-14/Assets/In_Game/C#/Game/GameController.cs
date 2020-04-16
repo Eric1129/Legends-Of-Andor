@@ -361,9 +361,17 @@ public class GameController : MonoBehaviour
             {
                 playerObject.transform.localScale = boardContainerScaling1;
             }
+            if (player.getHeroType() == "Female Wizard")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
+            }
             if (player.getHeroType() == "Male Dwarf")
             {
                 playerObject.transform.localScale = boardContainerScaling1;
+            }
+            if (player.getHeroType() == "Female Dwarf")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
             }
 
             if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
