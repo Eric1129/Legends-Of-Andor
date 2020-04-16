@@ -160,6 +160,7 @@ public class Move : Action
 
                     }
                     Object.Destroy(f.getPrefab());
+                   //remove fog token from dictionary
                 }
             }
         }

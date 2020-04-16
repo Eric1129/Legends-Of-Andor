@@ -23,6 +23,9 @@ public class GameState
     public int monstersInCastle;
     private Dictionary<Well, int> wells;
     private Dictionary<FogToken, int> fogTokens;
+    // private Dictionary<PrinceThorald, int> princeThor;
+    private List<PrinceThorald> princeThor;
+
 
 
     public GameState()
@@ -37,6 +40,7 @@ public class GameState
         maxMonstersAllowedInCastle = 0;
         wells = new Dictionary<Well, int>();
         fogTokens = new Dictionary<FogToken, int>();
+        princeThor = new List<PrinceThorald>();
     }
 
     public void addPlayer(Player p)
@@ -147,6 +151,15 @@ public class GameState
     public void addFogToken(FogToken f)
     {
         fogTokens.Add(f, f.getLocation());
+    }
+
+    public List<PrinceThorald> getPrinceThorald()
+    {
+        return princeThor;
+    }
+    public void addPrince(PrinceThorald prince)
+    {
+        princeThor.Add(prince);
     }
 
 
