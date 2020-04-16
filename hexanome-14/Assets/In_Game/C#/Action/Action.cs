@@ -9,7 +9,8 @@ public enum Type
 {
     Move,
     PassTurn,
-    EndTurn
+    EndTurn,
+    MovePrinceThoald
 }
 
 public interface Action

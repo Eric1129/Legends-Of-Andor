@@ -23,8 +23,8 @@ public class GameController : MonoBehaviour
     public Transform monsterContainer;
     public Transform heroInfoContainer;
 
-
     public Button moveButton;
+    public Button movePrinceButton;
     public Text turnLabel;
     //public Text scrollText;
     public Text scrollTxt;
@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour
     public GameObject fog;
     //public GameObject scroll;
     public GameObject scroll;
+    public GameObject prince;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -48,6 +49,8 @@ public class GameController : MonoBehaviour
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
     public Dictionary<Monster, GameObject> monsterObjects;
+    public PrinceThorald princeThor;
+    public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
 
     public int[] event_cards = {2, 11, 13, 14, 17, 24, 28, 31, 32, 1};
     public string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
@@ -56,6 +59,7 @@ public class GameController : MonoBehaviour
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
+    private bool movePrinceSelected = false;
 
     private Transform initTransform;
 
@@ -73,6 +77,7 @@ public class GameController : MonoBehaviour
         timeTileBounds = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
+        princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
         event_cards.Shuffle();
         fogTokens.Shuffle();
         initTransform = transform;
@@ -151,7 +156,11 @@ public class GameController : MonoBehaviour
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
             }
+            foreach(PrinceThorald princeT in Game.gameState.getPrinceThorald())
+            {
+                princeThoraldObject[princeT].transform.position = moveTowards(princeThoraldObject[princeT].transform.position, tiles[princeT.getLocation()].getMiddle(), 0.5f);
 
+            }
             // Update player turn
             turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
@@ -297,6 +306,8 @@ public class GameController : MonoBehaviour
             loadWells();
 
             loadFogTokens();
+
+            loadPrinceThorald();
         }
 
     }
@@ -334,6 +345,7 @@ public class GameController : MonoBehaviour
                 Debug.Log(player.getHeroType());
                 //int startingTile = Game.RANDOM.Next(20, 40);
                 int startingTile = player.getHeroRank();
+                Debug.Log(startingTile);
                 playerObject.transform.position = tiles[startingTile].getMiddle();
 
                 Game.getGame().playerLocations.Add(player.getNetworkID(), startingTile);
@@ -424,6 +436,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+
+    private void loadPrinceThorald()
+    {
+        GameObject princeThorald = Instantiate(prince, tiles[72].getMiddle(), transform.rotation);
+        PrinceThorald princeT = new PrinceThorald(Game.positionGraph.getNode(72), princeThorald);
+        Game.gameState.addPrince(princeT);
+        princeThoraldObject.Add(princeT, princeThorald);
+        Debug.Log("Added prince at position: " + princeT.getLocation());
+    }
+
     public void instantiateEventGor(Gor g, int location)
     {
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
@@ -485,6 +507,19 @@ public class GameController : MonoBehaviour
 
         }
 
+        if (movePrinceSelected)
+        {
+            Game.sendAction(new MovePrinceThorald(Game.myPlayer.getNetworkID(), Game.getGame().getPrinceThorald()[0].getLocation(), tile.tileID));
+
+            ColorBlock cb = movePrinceButton.colors;
+            cb.normalColor = new Color32(229, 175, 81, 255);
+            cb.selectedColor = new Color32(229, 175, 81, 255);
+
+            movePrinceSelected = false;
+
+            movePrinceButton.colors = cb;
+        }
+
 
     }
 
@@ -508,6 +543,29 @@ public class GameController : MonoBehaviour
             moveSelected = false;
         }
         moveButton.colors = cb;
+    }
+
+
+
+    public void movePrinceClick()
+    {
+        ColorBlock cb = moveButton.colors;
+
+        if (!movePrinceSelected)
+        {
+            movePrinceSelected = true;
+            cb.normalColor = new Color32(255, 240, 150, 255);
+            cb.selectedColor = new Color32(255, 240, 150, 255);
+
+        }
+        else
+        {
+            cb.normalColor = new Color32(229, 175, 81, 255);
+            cb.selectedColor = new Color32(229, 175, 81, 255);
+
+            movePrinceSelected = false;
+        }
+        movePrinceButton.colors = cb;
     }
     public void exitGameClick()
     {
