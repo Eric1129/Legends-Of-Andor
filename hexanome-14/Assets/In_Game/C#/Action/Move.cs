@@ -83,20 +83,20 @@ public class Move : Action
         if (gs.getWells().ContainsValue(location))
         {
             //trigger Well Scenario
-            Debug.Log("YOU HAVE LANDED ON A WELL!");
-            GameController.instance.updateGameConsoleText("You have landed on a well!");
+            Debug.Log("YOU HAVE LANDED ON A WELL!"); 
+            //GameController.instance.updateGameConsoleText("You have landed on a well!");
+
             foreach (Well w in gs.getWells().Keys)
             {
                 if (w.getLocation() == location && !w.used)
                 {
+                    GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
                     Debug.Log("emptying a well");
                     w.emptyWell();
                     //Object.Destroy(w.getPrefab());
                     //w.getPrefab().GetComponent<Renderer>().enabled = false;
-                    w.getPrefab().GetComponent<Renderer>().material.color = Color.gray;
                     //GameController.instance.emptyWell(w.getPrefab());
-                    //string player =  gs.turnManager.currentPlayerTurn();
-
+                    //string player =  gs.turnManager.currentPlayerTurn()
                     //add 3 willpower points to the hero who emptied the well
                     int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
                     gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);

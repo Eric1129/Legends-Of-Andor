@@ -20,7 +20,7 @@ public class Well
     public void emptyWell()
     {
         //this.prefab =
-        
+        this.prefab.GetComponent<Renderer>().enabled = false;
         this.used = true;
         //this.prefab.SetActive(false);
         //this.prefab.GetComponent<Material>().color = Color.gray;
@@ -29,7 +29,9 @@ public class Well
 
     public void refreshWell()
     {
+        //Material m = this.prefab.GetComponent<Renderer>().material;
         this.used = false;
+        this.prefab.GetComponent<Renderer>().enabled = true;
     }
 
     public int getLocation()
