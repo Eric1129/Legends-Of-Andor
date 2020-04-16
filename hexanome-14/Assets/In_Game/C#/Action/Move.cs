@@ -39,7 +39,7 @@ public class Move : Action
         thread.Start();
         while(thread.IsAlive)
         {
-            Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
+            //Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
         }
         GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
         checkMove(gs);
@@ -65,7 +65,7 @@ public class Move : Action
                 break;
             }
 
-            Thread.Sleep(500);
+            //Thread.Sleep(500);
         }
     }
 
