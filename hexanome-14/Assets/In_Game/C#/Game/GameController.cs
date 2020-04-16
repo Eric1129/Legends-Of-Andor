@@ -420,7 +420,13 @@ public class GameController : MonoBehaviour
 
     public void instantiateEventGor(Gor g, int location)
     {
-        GameObject tempObj = Instantiate(g.getPrefab(), tiles[location].getMiddle(), transform.rotation);
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        GameObject tempObj = Instantiate(g.getPrefab(), -transform.position, transform.rotation, monsterContainer);
+        tempObj.transform.position = tiles[g.getLocation()].getMiddle();
+        tempObj.transform.localScale = boardScaling;
+        monsterObjects.Add(g, tempObj);
+        Game.gameState.addGor(g);
+        Game.gameState.addMonster(g);
         Debug.Log("Added event gor");
 
     }
