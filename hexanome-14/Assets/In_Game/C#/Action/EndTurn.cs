@@ -76,6 +76,7 @@ public class EndTurn :Action
             w.refreshWell();
         }
 
+        GameController.instance.uncoverEventCard();
         //advance narrator 
     }
     //public void moveGors(GameState gs)
