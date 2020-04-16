@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using System.Threading;
 
 [System.Serializable]
 public class Move : Action
@@ -29,10 +31,60 @@ public class Move : Action
 
     public bool isLegal(GameState gs)
     {
-        return players[0].Equals(gs.turnManager.currentPlayerTurn());
+        return players[0].Equals(gs.turnManager.currentPlayerTurn()) && gs.getPlayer(players[0]).getHero().getHour() < 10;
     }
     public void execute(GameState gs)
     {
-        gs.playerLocations[players[0]] = to;
+        Thread thread = new Thread(() => threadExecute(gs));
+        thread.Start();
+        
+    }
+    private void threadExecute(GameState gs)
+    {
+        List<Node> path = Game.positionGraph.getPath(from, to);
+        for (int i = 1; i<path.Count; i++)
+        {
+            // Move
+            gs.playerLocations[players[0]] = path[i].getIndex();
+            Debug.Log(path[i].getIndex());
+
+            // Take an hour
+            gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
+            GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
+
+            if(gs.getPlayer(players[0]).getHero().getHour() == 10)
+            {
+                break;
+            }
+
+            Thread.Sleep(500);
+        }
+
+        gs.turnManager.passTurn();
+
+
+        int finalDest = gs.playerLocations[players[0]];
+        if (gs.getWells().ContainsValue(finalDest))
+        {
+            //trigger Well Scenario
+            Debug.Log("YOU HAVE LANDED ON A WELL!");
+            foreach(Well w in gs.getWells().Keys)
+            {
+                if(w.getLocation() == finalDest && !w.used)
+                {
+                    Debug.Log("emptying a well");
+                    w.emptyWell();
+                    //GameController.instance.emptyWell(w.getPrefab());
+                    //string player =  gs.turnManager.currentPlayerTurn();
+
+                    //add 3 willpower points to the hero who emptied the well
+                    int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                    gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+
+
+                }
+            }
+        }
+        
     }
 }

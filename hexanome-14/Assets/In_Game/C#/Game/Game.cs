@@ -17,6 +17,7 @@ public static class Game
     public static bool started = false;
     public static System.Random RANDOM = new System.Random();
     public static bool loadedFromFile = false;
+    public static Graph positionGraph;
 
 
         
@@ -25,6 +26,7 @@ public static class Game
 
         myPlayer = player;
         gameState = new GameState();
+        positionGraph = new Graph();
 
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Player), 1, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(List<Player>), 2, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
@@ -33,6 +35,7 @@ public static class Game
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(PassTurn), 5, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(EndTurn), 6, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(InitiateTrade), 7, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(RespondTrade), 8, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         //If you want to send something through the network, you need to execute this command and create the corresponding class
 
         // MUST HAVE PV
@@ -97,7 +100,7 @@ public static class Game
         }
 
     }
-    public static void updateLegend(int legend)
+    public static void updateDifficulty(string difficulty)
     {
         if (PV != null && PV.IsMine)
         {
@@ -105,7 +108,7 @@ public static class Game
             {
                 Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updating Legend...");
 
-                PV.RPC("updateLegend", RpcTarget.AllBuffered, (byte)legend);
+                PV.RPC("updateDifficulty", RpcTarget.AllBuffered, difficulty);
             }
             else
             {

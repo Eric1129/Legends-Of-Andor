@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Gor : Monster
 {
-    public Gor() : base()
+    public Gor(Node startingLocation) : base(startingLocation, Resources.Load<GameObject>("Monster/Gor"))
     {
+
     }
 }

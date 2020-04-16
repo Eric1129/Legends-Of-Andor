@@ -5,29 +5,21 @@ using System.IO;
 using System;
 using System.Linq;
 
-public class Graph : MonoBehaviour
+public class Graph
 {
-    //TODO: --make a getAllPaths(distance d) function so we can show all possible
-    // moves from the current position upon turn change
-    // -- test the bfs shit, maybe change to int[]
 
-    // if a monster is on pos: nodes[i][0].
-    // then it moves to   pos: nodes[i][1].
-    // private Node[] nodes;
-    // private Dictionary<int, int[]> nodes;
-    private Node[] nodes;
+    private Dictionary<int, Node> nodes;
 
 
     // protected constructor since this class is a singleton.
     // ie only children can call the constructor
-    protected Graph()
+    public Graph()
     {
-        // nodes = new Dictionary<int, int[]>();
-        nodes = new Node[85];
-        loadNeighbours();
+        nodes = new Dictionary<int, Node>();
+        loadData();
     }
 
-    private void loadNeighbours()
+    private void loadData()
     {
         readGraphCSV();
     }
@@ -35,142 +27,129 @@ public class Graph : MonoBehaviour
 
     private void readGraphCSV()
     {
-        using(var reader = new StreamReader(@"./Assets/CSV/adjacencyList.txt"))
+        int[][] fileContents = new int[85][];
+        int maxSize = 0;
+
+        TextAsset text = Resources.Load("CSV/adjacencyList") as TextAsset;
+        foreach (string line in text.text.Substring(0, text.text.Length-1).Split('\n'))
         {
-            while (!reader.EndOfStream)
+            string[] indices = line.Split(',');
+
+            if (maxSize < indices.Length)
             {
-                string line = reader.ReadLine().ToString().TrimEnd( Environment.NewLine.ToCharArray());
-                string[] neighbourIndices = line.Split(',');
+                maxSize = indices.Length;
+            }
 
-                // int[] neighbourIndices = toIntArray(tmp);
+            int index = Int32.Parse(indices[0]);
 
-                int currentPos = convertToInt(neighbourIndices[0]);
+            fileContents[index] = toIntArray(indices);
+            
+        }
 
-                // have only added up to here in the csv
-                if (currentPos > 62)
+        for(int index = 0; index < fileContents.Length; index++)
+        {
+            if (fileContents[index] != null)
+            {
+                nodes.Add(index, new Node(index));
+            }
+        }
+
+        for (int index = 0; index < fileContents.Length; index++)
+        {
+            if (fileContents[index] != null)
+            {
+                for(int x = 1; x < fileContents[index].Length; x++)
                 {
-                    break;
+                    nodes[fileContents[index][0]].addAdjacentNode(nodes[fileContents[index][x]]);
                 }
-                // skip fstElem: currentPos so we don't add it as a neighbour of itself
-                addNeighboursOf(currentPos, neighbourIndices.Skip(1).ToArray());
             }
         }
     }
 
-
-    private void addNeighboursOf(int currentPos, string[] neighbours)
+    public int getDistance(int src, int dest)
     {
-        List<int> foundNeighbours = new List<int>();
-
-        foreach (string neighbour in neighbours)
-        {
-            foundNeighbours.Add(convertToInt(neighbour));
-        }
-        // this sets nodes[currentPos].neighbours to below value
-        nodes[currentPos] = new Node(currentPos, foundNeighbours.ToArray());
-
-
-        // for testing
-        Console.WriteLine("neighbours of node: " + currentPos.ToString());
-        Debug.Log("neighbours of node: " + currentPos.ToString());
-        string neighbourString = "";
-        foreach(int idk in nodes[currentPos])
-        {
-            neighbourString += idk.ToString() + ", ";
-        }
-        Debug.Log(neighbourString);
-    }
-
-
-
-    public int getDistance(string src, string dest)
-    {
-        int srcIndex = convertToInt(src);
-        int destIndex = convertToInt(dest);
+        Node srcNode = nodes[src];
+        Node destNode = nodes[dest];
 
         // destNode has its attribute: prev set correctly now
         // Node destNode = ref bfs(nodes[srcIndex], nodes[destIndex]);
-        Node destNode = new Node(destIndex, new int[] {0,1,2});
-        bfs(nodes[srcIndex], nodes[destIndex], ref destNode);
-
-        return calculateDistance(ref destNode, destIndex);
+        return bfs(srcNode, destNode).Count;
     }
 
-    private int calculateDistance(ref Node current, int destIndex)
+    private List<Node> bfs(Node src, Node dest)
     {
-        int dist = 0;
-        while (current.getIndex() != destIndex)
+        int i = 0;
+        if(src == dest)
         {
-            current = ref current.getPrev();
-            dist++;
+            return new List<Node>();
         }
-
-        return dist;
-    }
-
-
-    // maybe should change the bfs to store a list of int[]'s indicating the path
-    // instead of relying on ref variables.
-    // void since we use pathNode
-    private void bfs(Node src, Node dest, ref Node pathNode)
-    {
-        Queue queue = new Queue();
-        // src.setPrev(null);
-        queue.Enqueue(src);
-
         HashSet<int> visited = new HashSet<int>();
-        while(queue.Count != 0)
-        {
-            Node node = (Node) queue.Dequeue();
-            int nodeIndex = node.getIndex();
 
-            if (visited.Contains(nodeIndex)) { continue; }
+        Queue<List<Node>> queue = new Queue<List<Node>>();
+        List<Node> firstNode = new List<Node>();
+        firstNode.Add(src);
+        queue.Enqueue(firstNode);
+        visited.Add(src.getIndex());
+
+        while (queue.Count > 0)
+        {
+            List<Node> path = queue.Dequeue();
+            Node lastNode = path[path.Count-1];
 
             // if notLooking for castle zero then don't consider as neighbour??
             // can we go thru the castle space if convenient?
-            if (nodeIndex == dest.getIndex())
+            if (lastNode.getIndex() == dest.getIndex())
             {
-                pathNode.setPrev(ref node);
-                return;
+                return path;
             }
-            visited.Add(nodeIndex);
 
-            foreach(int neighbour in node.getNeighbours())
+            foreach(Node adjNode in lastNode.getAdjacentNodes())
             {
-                if (visited.Contains(neighbour)) { continue; }
+                if (visited.Contains(adjNode.getIndex())) { continue; }
 
-                nodes[neighbour].setPrev(ref node);
-                queue.Enqueue(neighbour);
+                visited.Add(adjNode.getIndex());
+
+                // Copy the list
+                List<Node> listCopy = deepCopy(path);
+
+                listCopy.Add(adjNode);
+                queue.Enqueue(listCopy);
             }
+            i++;
         }
-        return;
+        // No valid path
+        return null;
         // return ref new Node(0, new int[] {-1, -1, -1});
     }
-
-
-
-// ------ some helper functions -------
-
-    private int convertToInt(string prev)
+    public List<Node> getPath(int src, int dst)
     {
-        int newInt;
-        bool success = Int32.TryParse(prev, out newInt);
-        // will this ever get executed or is error thrown right away?
-        if(!success)
-        {
-            Console.WriteLine("StackTrace: '{0}'", Environment.StackTrace);
-            print("\n --- Error converting int to string, check stackTrace.\n --- Called from convertToInt in 'masterClass.cs' script.");
-            return -12345;
-        }
-        return newInt;
+        return bfs(nodes[src], nodes[dst]);
     }
 
+    public Node getNode(int index)
+    {
+        return nodes[index];
+    }
+
+    
+    private List<Node> deepCopy(List<Node> list)
+    {
+        List<Node> copyList = new List<Node>();
+        foreach(Node n in list)
+        {
+            copyList.Add(n);
+        }
+        return copyList;
+    }
+
+
+// ------ some helper functions -----
     private int[] toIntArray(string[] stringArr)
     {
         int[] intArr = new int[stringArr.Length];
         for (int i = 0; i < stringArr.Length; i++)
         {
-            intArr[i] = convertToInt(stringArr[i]);
+            intArr[i] = Int32.Parse(stringArr[i]);
         }
         return intArr;
     }

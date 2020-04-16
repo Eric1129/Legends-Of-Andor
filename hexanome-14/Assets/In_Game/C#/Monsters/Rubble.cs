@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Rubble : Fightable
 {
-    private DiceRollStrategy diceRollStrat = null;
-
-    public void diceRoll()
+    public void attack(int damage)
     {
-        diceRollStrat.roll(this);
+
     }
     
 }

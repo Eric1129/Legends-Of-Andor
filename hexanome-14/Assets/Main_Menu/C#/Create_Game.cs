@@ -14,13 +14,13 @@ public class Create_Game : MonoBehaviour
     public Button private_button;
     public Button public_button;
 
-    public Button L1_button;
-    public Button L2_button;
+    public Button Easy_button;
+    public Button Hard_button;
 
     public GameObject inviteContainer;
 
     private static bool game_private = false;
-    public static int LEGEND;
+    public static string DIFFICULTY;
 
     public static string ROOMNAME = "";
 
@@ -31,9 +31,9 @@ public class Create_Game : MonoBehaviour
     {
         private_button.interactable = true;
         public_button.interactable = false;
-        L1_button.interactable = false;
-        L2_button.interactable = true;
-        LEGEND = 1;
+        Easy_button.interactable = false;
+        Hard_button.interactable = true;
+        DIFFICULTY = "Easy";
         inviteContainer.SetActive(false);
 
         Game.loadedFromFile = false;
@@ -62,20 +62,20 @@ public class Create_Game : MonoBehaviour
 
     }
 
-    public void legend1Click()
+    public void EasyClick()
     {
-        LEGEND = 1;
+        DIFFICULTY = "Easy";
 
-        L1_button.interactable = false;
-        L2_button.interactable = true;
+        Easy_button.interactable = false;
+        Hard_button.interactable = true;
     }
 
-    public void legend2Click()
+    public void HardClick()
     {
-        LEGEND = 2;
+        DIFFICULTY = "Hard";
 
-        L1_button.interactable = true;
-        L2_button.interactable = false;
+        Easy_button.interactable = true;
+        Hard_button.interactable = false;
     }
 
 
@@ -111,7 +111,7 @@ public class Create_Game : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not in Lobby?");
+            Debug.Log("Not in Lobby1?");
         }
     }
 

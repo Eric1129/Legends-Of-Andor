@@ -14,7 +14,7 @@ public class NetworkHandler : MonoBehaviour
     public void PREGAMEupdateGameState(string serializedGameStateJSON)
     {
         RoomLobbyController.preLoadedGameState = JsonConvert.DeserializeObject<GameState>(serializedGameStateJSON);
-        RoomLobbyController.instance.legendLabel.text = "Legend " + RoomLobbyController.preLoadedGameState.legend;
+        RoomLobbyController.instance.legendLabel.text = "Difficulty " + RoomLobbyController.preLoadedGameState.difficulty;
         Game.loadedFromFile = true;
         Debug.Log(Game.myPlayer.getNetworkID() + " ~ Updated GameState");
     }
@@ -59,12 +59,12 @@ public class NetworkHandler : MonoBehaviour
     }
 
     [PunRPC]
-    public void updateLegend(byte legend)
+    public void updateDifficulty(string difficulty)
     {
-        Game.gameState.legend = legend;
+        Game.gameState.difficulty = difficulty;
         if (!Game.started)
         {
-            RoomLobbyController.instance.legendLabel.text = "Legend " + (int)legend;
+            RoomLobbyController.instance.legendLabel.text = "Difficulty " + difficulty;
         }
     }
 

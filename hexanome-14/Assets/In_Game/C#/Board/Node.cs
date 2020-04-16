@@ -2,57 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node :  IEnumerable<int>
+public class Node
 {
 
     // this is the same as the tag: ie 1||2, is the position on board.
     private int graphIndex;
-
-    private int[] neighbours;
-    private Node prev;
+    private List<Node> adjacentNodes;
 
 
-    // these allow IEnum fxns allow us to iterate over a list of nodes using
-    // a foreach loop
-    public IEnumerator<int> GetEnumerator()
-    {
-        for(int i = 0; i < neighbours.Length; i++)
-            yield return neighbours[i];
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-
-    public Node(int index, int[] neighbz)
+    public Node(int index)
     {
         graphIndex = index;
-        neighbours = neighbz;
-        // prev is set to a diff value each Graph.bfs call
+        this.adjacentNodes = new List<Node>();
     }
-
-    public ref Node getPrev()
+    public void addAdjacentNode(Node adjacentNode)
     {
-        return ref prev;
-    }
-
-    public void setPrev(ref Node previous)
-    {
-        prev = previous;
+        adjacentNodes.Add(adjacentNode);
     }
 
 
-    public int[] getNeighbours()
+    public Node toCastleNode()
     {
-        return neighbours;
+        return adjacentNodes[0];
+    }
+
+    public List<Node> getAdjacentNodes()
+    {
+        return adjacentNodes;
     }
 
 
     public int getIndex()
     {
         return graphIndex;
+    }
+    public override string ToString()
+    {
+        return "Node: " + graphIndex;
     }
 
 }

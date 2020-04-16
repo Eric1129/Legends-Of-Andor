@@ -46,5 +46,6 @@ MonoBehaviour:
   - PREGAMEupdateGameState
   - PREGAMEstartGame
   - setTurnManager
+  - updateDifficulty
   DisableAutoOpenWizard: 1
   ShowSettings: 1

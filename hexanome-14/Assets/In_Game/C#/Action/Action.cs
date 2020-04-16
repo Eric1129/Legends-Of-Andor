@@ -11,7 +11,8 @@ public enum Type
     PassTurn,
     EndTurn,
     InitiateTrade,
-    RespondTrade
+    RespondTrade,
+    BuyFromMerchant
 }
 
 public interface Action

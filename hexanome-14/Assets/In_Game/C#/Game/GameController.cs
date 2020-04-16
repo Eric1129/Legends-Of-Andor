@@ -14,21 +14,35 @@ public class GameController : MonoBehaviour
     public Transform gameContainer;
     public Transform pauseMenuContainer;
     public Transform saveGameContainer;
-    public Transform selectTradeType;
-    public Transform selectHeroTrade;
-    public Transform selectHeroGive;
+
     public Transform tradeRequest;
-    
+    public Transform tradeScreenController;
+    public Transform notification;
+    public Transform merchantScreenController;
+
+    public Transform heroInfoScreen;
+
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Transform playerTimeContainer;
+    public Transform monsterContainer;
+    public Transform heroInfoContainer;
+
+
     public Button moveButton;
     public Text turnLabel;
+    //public Text scrollText;
+    public Text scrollTxt;
+    
 
     public GameObject emptyPrefab;
     public GameObject playerPrefab;
     public Sprite fullBoardSprite;
     public GameObject circlePrefab;
+    public GameObject heroInfoPrefab;
+    public GameObject well_front;
+    //public GameObject scroll;
+    public GameObject scroll;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -36,24 +50,40 @@ public class GameController : MonoBehaviour
     public Dictionary<int, Bounds> timeTileBounds;
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
+    public Dictionary<Monster, GameObject> monsterObjects;
+
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
 
+
     private bool tradeRequestSent = false;
-    private string playerTradeTo;
+    private string playerTradeTo; //these could belong to
     private string playerTradeFrom;
     private string tradeMsg;
-    
+
+    private string notifMsg;
+    private float notifTime;
+    private string notifUser;
 
     //private int tradeTypeIndex = -1;
-    public TradeScreen ts;
+    public static TradeScreen ts;
+    private bool notificationOn = false;
+    public static MerchantScreen ms;
+
+    private Transform initTransform;
+    //private string[] tradeType;
+    //private string[] players;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        ts = new TradeScreen();
-
+        ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
+        ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
+        //ts = new TradeScreen();
+        //this.tradeType = new string[3];
+        //this.players = new string[2];
         Game.started = true;
         Game.createPV();
 
@@ -62,6 +92,9 @@ public class GameController : MonoBehaviour
         timeObjects = new Dictionary<string, GameObject>();
         timeTileBounds = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
+        monsterObjects = new Dictionary<Monster, GameObject>();
+
+        initTransform = transform;
 
         instance = this;
 
@@ -80,25 +113,30 @@ public class GameController : MonoBehaviour
             Game.setTurnManager(randomOrder);
         }
         int timeout = 300;
-        while(Game.gameState.turnManager == null)
+        if (Game.gameState != null)
         {
-            StartCoroutine(Game.sleep(0.01f));
-            if(timeout <= 0)
+            while (Game.gameState.turnManager == null)
             {
-                throw new Exception("Could not initialize TurnManager!");
+                StartCoroutine(Game.sleep(0.01f));
+                if (timeout <= 0)
+                {
+                    throw new Exception("Could not initialize TurnManager!");
+                }
+                timeout--;
             }
-            timeout--;
-        }
-        Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
+            Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
 
-        turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-        if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID())){
-            turnLabel.color = Game.myPlayer.getColor();
+            turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+            if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
+            {
+                turnLabel.color = Game.myPlayer.getColor();
+            }
+            else
+            {
+                turnLabel.color = UnityEngine.Color.black;
+            }
         }
-        else
-        {
-            turnLabel.color = UnityEngine.Color.black;
-        }
+        
     }
 
     void Update()
@@ -116,14 +154,24 @@ public class GameController : MonoBehaviour
         }
         if(Game.gameState != null)
         {
+            // Update Player position
             foreach (Andor.Player player in Game.gameState.getPlayers())
             {
-                moveToNewPos(player);
+                playerObjects[player.getNetworkID()].transform.position =
+                    moveTowards(playerObjects[player.getNetworkID()].transform.position, tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle(), 0.5f);
 
                 timeObjects[player.getNetworkID()].transform.position =
                     moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
             }
 
+            // Update Player position
+            foreach (Monster monster in Game.gameState.getMonsters())
+            {
+                monsterObjects[monster].transform.position =
+                    moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
+            }
+
+            // Update player turn
             turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
             {
@@ -137,44 +185,60 @@ public class GameController : MonoBehaviour
 
         if (tradeRequestSent)
         {
-            //foreach(Andor.Player p in Game.gameState.getPlayers())
-            //{
-            //    if (p.getNetworkID().Equals(playerTradeTo))
-            //    {
-            //        processTradeRequest();
-            //    }
-            //}
-
-            //Debug.Log("MY PLAYER " + Game.myPlayer.getHeroType());
+            
             if (Game.myPlayer.getNetworkID().Equals(playerTradeTo))
             {
                 processTradeRequest();
             }
         }
+
+        //if (ts.tradeType[0] != "")
+        //{
+        //    Debug.Log("trade type " + ts.tradeType[0]);
+        //}
+
+        if (notificationOn)
+        {
+            notify();
+            notifTime -= Time.deltaTime;
+        }
+        
     }
     public void moveToNewPos(Andor.Player player)
     {
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
         Vector3 cellPos = tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle();
-        playerObjects[player.getNetworkID()].transform.position = moveTowards(playerPos, cellPos, 1);
+        playerObjects[player.getNetworkID()].transform.position = moveTowards(playerPos, cellPos, 0.5f);
     }
 
 
     private void loadBoard()
     {
 
-        // load background board
-        Debug.Log(transform.position);
-        Debug.Log(boardSpriteContainer.position);
 
-        GameObject fullBoard = Instantiate(emptyPrefab, boardSpriteContainer.transform.position - boardSpriteContainer.transform.parent.position, transform.rotation, boardSpriteContainer);
+        boardSpriteContainer.gameObject.GetComponent<Image>().color = new UnityEngine.Color(0, 0, 0, 0);
+        // load background board
+        Vector3 boardContainerPos = new Vector3(boardSpriteContainer.position.x - boardSpriteContainer.parent.position.x,
+            boardSpriteContainer.position.y - boardSpriteContainer.parent.position.y, 35- boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+
+        GameObject fullBoard = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, boardSpriteContainer);
         fullBoard.name = "full-Board";
 
         fullBoard.AddComponent<SpriteRenderer>();
         SpriteRenderer spriteRenderer = fullBoard.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = fullBoardSprite;
 
-        
+        fullBoard.transform.localScale = boardContainerScaling;
+        //fullBoard.transform.position = Vector3.Scale(fullBoard.transform.position, new Vector3(1,1,0));
+
+        Debug.Log(boardSpriteContainer.position);
+        Debug.Log(boardSpriteContainer.parent.position);
+        Debug.Log(boardContainerPos);
+
+
+
+
         // load sprites
         Sprite[] sprites = Resources.LoadAll<Sprite>("BoardSprites");
         // Requirement: have Resources/Sprites folder under Assets
@@ -183,7 +247,7 @@ public class GameController : MonoBehaviour
 
         foreach (Sprite sprite in sprites)
         {
-            createBoardPosition(sprite);
+            createBoardPosition(sprite, boardContainerPos, boardContainerScaling);
         }
 
         sprites = Resources.LoadAll<Sprite>("TimeSprites");
@@ -193,35 +257,34 @@ public class GameController : MonoBehaviour
 
         foreach (Sprite sprite in sprites)
         {
-            GameObject temp = Instantiate(emptyPrefab);
+            GameObject temp = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, playerTimeContainer);
             temp.AddComponent<SpriteRenderer>().sprite = sprite;
-            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>());
+
+            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>(), boardSpriteContainer);
             Bounds b = tb.createBounds();
-            Debug.Log(b);
+
             timeTileBounds.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
-        }
-
-
-        // load players
-        if (Game.gameState != null)
-        {
-            loadPlayers();
+            Destroy(temp);
         }
 
     }
 
-    private void createBoardPosition(Sprite sprite)
+    private void createBoardPosition(Sprite sprite, Vector3 pos, Vector3 scaling)
     {
         int cellNumber = Int32.Parse(sprite.name.Split('_')[1]);
 
-        GameObject cellObject = Instantiate(emptyPrefab, transform.position, transform.rotation, boardSpriteContainer);
-        cellObject.transform.localScale = boardSpriteContainer.transform.localScale;
+        GameObject cellObject = Instantiate(emptyPrefab, pos, transform.rotation, boardSpriteContainer);
+        //cellObject.transform.localScale = boardSpriteContainer.transform.localScale;
         cellObject.tag = cellNumber.ToString();
         cellObject.name = "position-" + cellNumber.ToString();
+
+        cellObject.transform.localScale = scaling;
+
 
         cellObject.AddComponent<SpriteRenderer>();
         SpriteRenderer spriteRenderer = cellObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite;
+
 
         cellObject.AddComponent<LineRenderer>();
         cellObject.AddComponent<PolygonCollider2D>();
@@ -230,12 +293,66 @@ public class GameController : MonoBehaviour
         BoardPosition boardPosition = cellObject.GetComponent<BoardPosition>();
         boardPosition.init(cellNumber);
         tiles.Add(cellNumber, boardPosition);
+        
     }
 
 
+    public void loseScenario()
+    {
+        scrollTxt.text = "YOU LOST!";
+        scroll.SetActive(true);
+    }
+    public void GameSetup()
+    {
+        int playerCount = Game.gameState.getPlayers().Count;
+
+        if (playerCount == 1 || playerCount == 2)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 3;
+        }
+        else if (playerCount == 3)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 2;
+
+        }
+        else if (playerCount == 4)
+        {
+            Game.gameState.maxMonstersAllowedInCastle = 1;
+
+        }
+        /////////////////////////////////////////////////////////////////////
+
+        // load players
+        if (Game.gameState != null)
+        {
+            loadPlayers();
+
+            loadMonsters();
+
+            loadWells();
+        }
+
+    }
+
+    public void monsterAtCastle(Monster monster)
+    {
+        // Do something now that this monster has made it to the castle
+        Debug.Log("Monster in Castle!");
+    }
+
+
+    public void emptyWell(GameObject well)
+    {
+        //well.SetActive(false);
+        well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
+
+    }
+
     private void loadPlayers()
     {
-        foreach(Andor.Player player in Game.gameState.getPlayers())
+        Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+
+        foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             // Player Icons
             GameObject playerObject = Instantiate(playerPrefab, playerContainer);
@@ -243,10 +360,13 @@ public class GameController : MonoBehaviour
             SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
             
             spriteRenderer.sprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
+            playerObject.transform.localScale = boardContainerScaling;
 
             if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
                 // Give a random position
-                int startingTile = Game.RANDOM.Next(20, 40);
+                Debug.Log(player.getHeroType());
+                //int startingTile = Game.RANDOM.Next(20, 40);
+                int startingTile = player.getHeroRank();
                 playerObject.transform.position = tiles[startingTile].getMiddle();
 
                 Game.getGame().playerLocations.Add(player.getNetworkID(), startingTile);
@@ -266,27 +386,144 @@ public class GameController : MonoBehaviour
             {
                 timeObjectBounds = sr.bounds;
             }
+            timeObject.transform.localScale = boardContainerScaling;
 
             Vector3 timePos = getRandomPositionInBounds(timeTileBounds[0], timeObjectBounds, transform.position);
             timeObject.transform.position = timePos;
             rndPosInTimeBox[player.getNetworkID()] = timePos;
+
+
+            //GameObject heroInfo = Instantiate(heroInfoPrefab, heroInfoContainer);
+            //heroInfo.GetComponent<HeroInfoButton>().init(player);
         }
     }
 
-    public void GameSetup()
+    private void loadMonsters()
     {
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
 
+        //created all the monsters for Legend 2
+        foreach (int gorTile in new int[]{8, 20, 21, 26, 48})
+        {
+            Gor g = new Gor(Game.positionGraph.getNode(gorTile));
+            //Debug.Log("Gor" + g);
+            Game.gameState.addMonster(g);
+            Game.gameState.addGor(g);
+        }
+        foreach (int skralTile in new int[]{9})
+        {
+            Skral s = new Skral(Game.positionGraph.getNode(skralTile));
+            Game.gameState.addMonster(s);
+            Game.gameState.addSkral(s);
+        }
+
+        foreach (Monster monster in Game.gameState.getMonsters())
+        {
+            Debug.Log(monster.getPrefab());
+            GameObject tempObj = Instantiate(monster.getPrefab(), -transform.position, transform.rotation, monsterContainer); ;
+            monsterObjects.Add(monster, tempObj);
+            tempObj.transform.position = tiles[monster.getLocation()].getMiddle();
+            tempObj.transform.localScale = boardScaling;
+
+        }
+
+    }
+
+    private void loadWells()
+    {
+        //foreach (int pos in new int[] {5, 35, 45, 55})
+        //{
+        //    Debug.Log("Added well at position: " + pos);
+        //    Well w = new Well(Game.positionGraph.getNode(pos));
+        //    Debug.Log(w);
+        //    Debug.Log(w.getLocation());
+        //    Game.gameState.addWell(w);
+        //    //Debug.Log("Added well at position: " + pos);
+        //}
+
+        //foreach(Well well in Game.gameState.getWells().Keys)
+        //{
+        //    GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
+        //}
+        foreach (int pos in new int[] { 5, 35, 45, 55 })
+        {
+            Debug.Log("Added well at position: " + pos);
+            GameObject wellObject = Instantiate(well_front, tiles[pos].getMiddle(), transform.rotation);
+            Well w = new Well(Game.positionGraph.getNode(pos),wellObject);
+            Debug.Log(w);
+            Debug.Log(w.getLocation());
+            Game.gameState.addWell(w);
+            //Debug.Log("Added well at position: " + pos);
+        }
     }
 
     public void setTime(string PlayerID, int hour)
     {
-        rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, transform.position);
+        rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, new Vector3());
     }
 
     
+    public void setTradeRequest(bool tradeReq)
+    {
+        tradeRequestSent = tradeReq;
+    }
+
+    public void sendNotif(string msg, float time, string notifyUser)
+    {
+        notifTime = time;
+        notificationOn = true;
+        notifMsg = msg;
+        notifUser = notifyUser;
+        
+    }
+
+    public void notify()
+    {
+        if(notifUser == Game.myPlayer.getNetworkID())
+        {
+            if (notifTime > 0)
+            {
+                notification.gameObject.SetActive(true);
+                Transform[] trs = notification.gameObject.GetComponentsInChildren<Transform>();
+                foreach (Transform t in trs)
+                {
+                    if (t.name == "Message")
+                    {
+                        Text msg = t.gameObject.GetComponent<Text>();
+                        msg.text = notifMsg;
+                    }
+                }
+            }
+            else
+            {
+                closeNotif();
+            }
+        }
+        
+        
+
+    }
+
+    public void closeNotif()
+    {
+        notificationOn = false;
+        notification.gameObject.SetActive(false);
+    }
 
     public void sendTradeRequest(string[] tradeType, string playerFrom, string playerTo)
     {
+        //foreach(string t in ts.tradeType)
+        //{
+        //    Debug.Log("gc sendTradeRequest(): " + t);
+        //}
+
+        ts.setTradeType(tradeType);
+        string[] pl = new string[2];
+
+        pl[0] = playerFrom;
+        pl[1] = playerTo;
+        ts.setPlayers(pl);
+
         tradeRequestSent = true;
         playerTradeTo = playerTo;
         playerTradeFrom = playerFrom;
@@ -294,27 +531,27 @@ public class GameController : MonoBehaviour
         if (tradeType[0].Equals("Gold"))
         {
             msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give gold";
-            selectHeroGive.gameObject.SetActive(false);
+            
         }
         else if (tradeType[0].Equals("Gemstones"))
         {
             msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give a gemstone";
-            selectHeroGive.gameObject.SetActive(false);
+            
         }
         else
         {
             msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
                 + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
-            selectHeroTrade.gameObject.SetActive(false);
+            
         }
 
         tradeMsg = msg;
-        selectHeroTrade.gameObject.SetActive(false);
+        
     }
 
     public void processTradeRequest()
     {
-        Debug.Log("processing trade request!");
+        tradeRequestSent = false;
 
         tradeRequest.gameObject.SetActive(true);
         Transform[] trs = tradeRequest.gameObject.GetComponentsInChildren<Transform>(true);
@@ -331,6 +568,24 @@ public class GameController : MonoBehaviour
                 body.text = tradeMsg;
             }
         }
+    }
+
+    public void accept(bool acc)
+    {
+        //foreach (string t in tradeType)
+        //{
+        //    Debug.Log("from accept(): " + t);
+        //}
+        tradeRequestSent = false;
+        tradeRequest.gameObject.SetActive(false);
+        ts.accept(acc);
+        //Game.sendAction(new RespondTrade(players, tradeType, acc));
+
+    }
+
+    public void merchantClick()
+    {
+
     }
 
     #region buttonClicks
@@ -405,128 +660,7 @@ public class GameController : MonoBehaviour
 
     }
 
-    //public void setTradeType(int menuIndex)
-    //{
-    //    Debug.Log("setting trade type");
-    //    tradeTypeIndex = menuIndex;
 
-    //}
-
-    //public void nextClick()
-    //{
-    //    Debug.Log("next clicked");
-
-    //    if(tradeTypeIndex == 0)
-    //    {
-    //        tradeActive = true;
-    //        selectHeroTrade.gameObject.SetActive(true);
-    //        //get all players on the same location
-    //        //get the player that clicked on trade button
-    //        int myLocation = 0;
-    //        string[] playersInvolved = new string[4];
-    //        int i = 1;
-    //        playersInvolved[0] = Game.myPlayer.getNetworkID();
-    //        if (Game.gameState.playerLocations.TryGetValue(Game.myPlayer.getNetworkID(), out myLocation))
-    //        {
-    //            foreach (Andor.Player p in Game.gameState.getPlayers())
-    //            {
-    //                int playerLocation = 0;
-    //                if (Game.gameState.playerLocations.TryGetValue(p.getNetworkID(), out playerLocation))
-    //                {
-    //                    if (playerLocation == myLocation && !Game.myPlayer.Equals(p))
-    //                    {
-    //                        playersInvolved[i] = p.getNetworkID();
-    //                        displayPlayerInfo(p, i);
-    //                        i++;
-
-    //                    }
-
-    //                }
-    //            }
-    //        }
-    //        Game.sendAction(new InitiateTrade(playersInvolved));
-
-    //    }
-
-    //}
-
-    //public void displayPlayerInfo(Andor.Player player, int i)
-    //{
-
-    //    GameObject selectHero = GameObject.Find("SelectHero");
-    //    GameObject herogameobj;
-    //    Transform[] trs = selectHero.GetComponentsInChildren<Transform>(true);
-    //    //Transform[] heroattr = new Transform[3];
-    //    foreach (Transform t in trs)
-    //    {
-
-    //        if (t.name == ("Hero" + i))
-    //        {
-    //            herogameobj = t.gameObject;
-    //            t.gameObject.SetActive(true);
-    //            Transform[] heroattr = herogameobj.GetComponentsInChildren<Transform>(true);
-    //            foreach (Transform attr in heroattr)
-    //            {
-    //                attr.gameObject.SetActive(true);
-    //                if (attr.name == "Name")
-    //                {
-
-    //                    Text heroname = attr.GetComponent<Text>();
-    //                    heroname.text = player.getHeroType();
-    //                }
-    //                if (attr.name == "Image")
-    //                {
-    //                    Debug.Log("Image");
-    //                    Sprite herosprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
-    //                    attr.GetComponent<Image>().sprite = herosprite;
-    //                }
-    //                if (attr.name == "HeroItems")
-    //                {
-    //                    Debug.Log("Hero items");
-    //                    Text heroitems = attr.GetComponent<Text>();
-    //                    heroitems.text = "Gold: " + player.getHero().getGold() + "\n";
-    //                    heroitems.text += "\nGemstones: " + player.getHero().getGemstone() + "\n";
-    //                    heroitems.text += "\nArticles: ";
-    //                    List<string> heroAr = new List<string>();
-    //                    foreach (string ar in heroAr)
-    //                    {
-    //                        heroitems.text += (ar + " ");
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-
-
-
-
-    //}
-
-    public void closeTradeMenu()
-    {
-        
-        selectTradeType.gameObject.SetActive(false);
-        
-    }
-
-    //public void onHeroClick()
-    //{
-    //    Debug.Log("On hero click");
-    //    string tradeWith = this.gameObject.transform.name;
-    //    Debug.Log("tradeWith " + tradeWith);
-    //    //int index = -1;
-    //    if (char.IsDigit(tradeWith[4]))
-    //    {
-    //        int index = tradeWith[4];
-    //        if(tradeTypeIndex == 0)
-    //        {
-
-    //        }
-    //        //setToTradeHero(players[index]);
-    //    }
-    //    //Game.sendAction(new InitiateTrade(playersInvolved));
-
-    //}
     #endregion
 
     #region pause_menu
@@ -563,5 +697,9 @@ public class GameController : MonoBehaviour
     public static Vector3 moveTowards(Vector3 from, Vector3 to, float delta)
     {
         return new Vector3(Mathf.MoveTowards(from.x, to.x, delta), Mathf.MoveTowards(from.y, to.y, delta), -1);
+    }
+    public void SLEEP(float sec)
+    {
+        StartCoroutine(Game.sleep(sec));
     }
 }

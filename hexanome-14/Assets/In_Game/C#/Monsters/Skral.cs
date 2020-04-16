@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Skral : Monster
 {
-    public Skral() : base()
+    public Skral(Node startingLocation) : base(startingLocation, Resources.Load<GameObject>("Monster/Skral"))
     {
+        
     }
 }

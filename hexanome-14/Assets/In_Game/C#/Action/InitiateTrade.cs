@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+
 [System.Serializable]
 public class InitiateTrade: Action
 {
@@ -10,8 +12,22 @@ public class InitiateTrade: Action
     public InitiateTrade(string[] players, string[] tradeType)
     {
         type = Type.InitiateTrade;
+        this.players = new string[2];
+        this.tradeType = new string[3];
+        
+        
         this.players = players;
         this.tradeType = tradeType;
+        for(int i = 0; i<3; i++)
+        {
+            
+            this.tradeType[i] = tradeType[i];
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            this.players[i] = players[i];
+           
+        }
 
 
     }
@@ -30,9 +46,10 @@ public class InitiateTrade: Action
     public bool isLegal(GameState gs)
     {
         int location0 = 0;
-        Game.gameState.playerLocations.TryGetValue(players[0], out location0);
+        //Game.gameState.playerLocations.TryGetValue(players[0], out location0);
+        gs.playerLocations.TryGetValue(players[0], out location0);
         int location1 = -1;
-        Game.gameState.playerLocations.TryGetValue(players[1], out location1);
+        gs.playerLocations.TryGetValue(players[1], out location1);
         return location0 == location1;
     }
 

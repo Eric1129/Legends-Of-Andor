@@ -31,8 +31,8 @@ public class PassTurn : Action
     public void execute(GameState gs)
     {
         gs.turnManager.passTurn();
-        gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
 
+        gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
         GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
 
         Debug.Log("Turn Passed... " + gs.turnManager.currentPlayerTurn() + " is now up!");

@@ -9,7 +9,8 @@ public class Hero // : MonoBehaviour, Movable, Fightable
 {
     // private GameObject sphere;
     // private SpriteRenderer spriteRenderer;
-    private string heroType = "";
+    private string
+        heroType = "";
     private string myTag;
     private string[] pronouns;
 
@@ -23,10 +24,12 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     // don't care which farmers, just that this number exists on our space.
     private int numFarmers;
     private bool hasThorald;
+    private int heroRank;
 
 
     private int gold = 2;
     private int strength = 0;
+    private int willpower = 0;
 
     private int hour = 0;
     private List<string> articles = new List<string>();
@@ -57,6 +60,15 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         this.strength = strength;
     }
 
+    public int getWillpower()
+    {
+        return willpower;
+    }
+    public void setWillpower(int willpower)
+    {
+        this.willpower = willpower;
+    }
+
     public int getHour()
     {
         return hour;
@@ -73,6 +85,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void setHeroType(string hero)
     {
         this.heroType = hero;
+
         if (hero.StartsWith("Male"))
         {
             pronouns[0] = "he";
@@ -86,6 +99,17 @@ public class Hero // : MonoBehaviour, Movable, Fightable
             pronouns[1] = "hers";
             pronouns[2] = "her";
         }
+
+    }
+
+    public int getHeroRank()
+    {
+        return heroRank;
+    }
+    public void setHeroRank(int rank)
+    {
+        this.heroRank = rank;
+
     }
 
     public string[] getPronouns()
@@ -101,5 +125,35 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public int getGemstone()
     {
         return this.gemstones;
+    }
+
+    public void addArticle(string article)
+    {
+        this.articles.Add(article);
+    }
+
+    public void removeArticle(string article)
+    {
+        this.articles.Remove(article);
+    }
+
+    public string allArticles()
+    {
+        string s_articles = "";
+        foreach(string ar in this.articles)
+        {
+            s_articles += (ar + " ");
+        }
+        return s_articles;
+    }
+
+    public void incGold()
+    {
+        this.gold++;
+    }
+
+    public void decGold()
+    {
+        this.gold--;
     }
 }

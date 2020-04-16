@@ -13,17 +13,29 @@ public class TradeScreen : MonoBehaviour
     public Transform selectHeroTrade;
     public Transform selectHeroGive;
     public Transform unavailable;
+    
 
     private bool selectHeroTradeActive;
     private bool selectHeroGiveActive;
     int tradeTypeIndex;
     string[] playersInvolved;
     string selectedHero;
-    string giveItem;
-    string receiveItem;
+    int giveItemIndex;
+    int receiveItemIndex;
+
+    private static List<string> myArticles;
+    private static List<string> heroArticles;
+
+    public  string[] players;
+    public  string[] tradeType;
 
     public TradeScreen()
     {
+        
+        giveItemIndex = 0;
+        receiveItemIndex = 0;
+        tradeType = new string[3];
+        players = new string[2];
         //GameObject tradeContainer = GameObject.Find("TradeContainer");
         //Transform[] screens = tradeContainer.GetComponentsInChildren<Transform>(true);
         //foreach (Transform screen in screens)
@@ -46,7 +58,7 @@ public class TradeScreen : MonoBehaviour
 
     public void displayTradeType()
     {
-        GameController.instance.selectTradeType.gameObject.SetActive(true);
+        selectTradeType.gameObject.SetActive(true);
     }
     public void nextClick()
     {
@@ -58,14 +70,16 @@ public class TradeScreen : MonoBehaviour
     public void displayHeroTrade()
     {
 
+
         if (tradeTypeIndex == 0)
         {
-            GameController.instance.selectHeroTrade.gameObject.SetActive(true);
+            selectHeroTrade.gameObject.SetActive(true);
             selectHeroTradeActive = true;
         }
         else
         {
-            GameController.instance.selectHeroGive.gameObject.SetActive(true);
+            
+            selectHeroGive.gameObject.SetActive(true);
             selectHeroGiveActive = true;
             GameObject parentObj = GameObject.Find("SelectHero");
             Transform[] trs = parentObj.GetComponentsInChildren<Transform>();
@@ -88,9 +102,27 @@ public class TradeScreen : MonoBehaviour
                 }
             }
         }
-        
+
         //get all players on the same location
         //get the player that clicked on trade button
+        if (!displayPlayers())
+        {
+            displayUnavailablePlayers("No available players", "There are no players available to trade wtih. You may trade if you are on the same tile as another player.");
+        }
+
+        if(tradeTypeIndex == 1 && Game.myPlayer.getHero().getGold() < 1)
+        {
+            displayUnavailablePlayers("No Gold", "You do not have any gold to give.");
+        }
+
+        if (tradeTypeIndex == 2 && Game.myPlayer.getHero().getGemstone() < 1)
+        {
+            displayUnavailablePlayers("No gemstones", "You do not have any gemstones to give.");
+        }
+    }
+
+    public bool displayPlayers()
+    {
         int myLocation = 0;
         playersInvolved = new string[4];
         int i = 1;
@@ -109,18 +141,19 @@ public class TradeScreen : MonoBehaviour
                         displayPlayerInfo(p, i);
                         i++;
                         playersAvail = true;
+                        
 
                     }
 
                 }
             }
 
-            if (!playersAvail)
-            {
-                displayUnavailablePlayers();
-            }
+            
         }
+        
+        return playersAvail;
     }
+
     public void displayPlayerInfo(Andor.Player player, int i)
     {
 
@@ -196,10 +229,14 @@ public class TradeScreen : MonoBehaviour
     }
 
 
-    public void displayUnavailablePlayers()
+    public void displayUnavailablePlayers(string title, string msg)
     {
-        Debug.Log("unavailable");
+       
         unavailable.gameObject.SetActive(true);
+        Text title_text = unavailable.Find("Title").GetComponent<Text>();
+        title_text.text = title;
+        Text body_text = unavailable.Find("Body").GetComponent<Text>();
+        body_text.text = msg;
         selectTradeType.gameObject.SetActive(false);
         selectHeroTrade.gameObject.SetActive(false);
         selectHeroGive.gameObject.SetActive(false);
@@ -208,15 +245,26 @@ public class TradeScreen : MonoBehaviour
     }
 
     //add to each Hero[i]
-    public void onHeroClick(int i)
+    public void onHeroClick(int index)
     {
-        int index = i;
+        
         selectedHero = playersInvolved[index];
-        if (tradeTypeIndex == 0)
+        Button sendRequestButton = GameObject.Find("SendRequest").GetComponent<Button>();
+        sendRequestButton.interactable = true;
+
+        Text selHerotxt = GameObject.Find("SelectedHero").GetComponent<Text>();
+        selHerotxt.text = Game.gameState.getPlayer(playersInvolved[index]).getHeroType();
+        switch (tradeTypeIndex)
         {
-            //update the dropdowns
-            updateDropdowns();
+            case 0: updateDropdowns();
+                
+                break;
+            default:
+                
+                break; ;
         }
+
+
 
         //Game.sendAction(new InitiateTrade(playersInvolved));
 
@@ -225,9 +273,9 @@ public class TradeScreen : MonoBehaviour
     public void updateDropdowns()
     {
 
-        List<string> myArticles = Game.myPlayer.getHero().getArticles();
+        myArticles = Game.myPlayer.getHero().getArticles();
         Andor.Player selectedPlayer = Game.gameState.getPlayer(selectedHero);
-        List<string> heroArticles = selectedPlayer.getHero().getArticles();
+        heroArticles = selectedPlayer.getHero().getArticles();
 
         
         GameObject parentObj = GameObject.Find("SelectHero");
@@ -267,17 +315,9 @@ public class TradeScreen : MonoBehaviour
     public void setGiveItem(int val)
     {
         GameObject parentObj = GameObject.Find("SelectHero");
-        Transform[] trs = parentObj.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in trs)
-        {
-            if (t.name == "myArticles")
-            {
-                Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
-                List<Dropdown.OptionData> menuOptions = myArticlesMenu.GetComponent<Dropdown>().options;
-                giveItem = menuOptions[val].text;
-            }
-
-        }
+        giveItemIndex = val;
+        
+     
 
     }
 
@@ -286,33 +326,25 @@ public class TradeScreen : MonoBehaviour
     public void setReceiveItem(int val)
     {
         GameObject parentObj = GameObject.Find("SelectHero");
-        Transform[] trs = parentObj.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in trs)
-        {
-            if (t.name == "heroArticles")
-            {
-                Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
-                List<Dropdown.OptionData> menuOptions = myArticlesMenu.GetComponent<Dropdown>().options;
-                receiveItem = menuOptions[val].text;
-            }
-
-        }
+        receiveItemIndex = val;
+       
     }
    
     public void sendRequest()
     {
         Debug.Log("sending request!");
-        string[] players = new string[2];
+        
         players[0] = Game.myPlayer.getNetworkID();
         players[1] = selectedHero;
-        string[] tradeType = new string[3];
+        
 
         switch (tradeTypeIndex)
         {
             case 0:
                 tradeType[0] = "trade";
-                tradeType[1] = giveItem;
-                tradeType[2]= receiveItem;
+                tradeType[1] = myArticles[giveItemIndex];
+                tradeType[2]= heroArticles[receiveItemIndex];
+                
                 break;
             case 1: tradeType[0] = "Gold";
                 break;
@@ -321,8 +353,32 @@ public class TradeScreen : MonoBehaviour
             default: tradeType[0] = "";
                 break;
         }
-       
+        selectTradeType.gameObject.SetActive(false);
+        selectHeroGive.gameObject.SetActive(false);
+        selectHeroTrade.gameObject.SetActive(false);
+        unavailable.gameObject.SetActive(false);
         Game.sendAction(new InitiateTrade(players, tradeType));
+
+    }
+
+    public void accept(bool accept)
+    {
+        
+        GameController.instance.setTradeRequest(false);
+        Game.sendAction(new RespondTrade(players, tradeType, accept));
+
+        
+        //GameController.instance.sendNotif()
+    }
+
+    public void setTradeType(string[] tradeType)
+    {
+        this.tradeType = tradeType;
+    }
+
+    public void setPlayers(string[] players)
+    {
+        this.players = players;
     }
 
     public void closeTradeMenu()

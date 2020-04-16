@@ -4,5 +4,5 @@ using UnityEngine;
 
 interface Fightable
 {
-    void diceRoll();
+    void attack(int damage);
 }
