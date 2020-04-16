@@ -72,14 +72,22 @@ public class Move : Action
     public void checkMove(GameState gs)
     {
         int finalDest = gs.playerLocations[players[0]];
-        if (gs.getWells().ContainsValue(finalDest))
+
+        checkWells(gs, finalDest);
+        checkFogTokens(gs, finalDest);
+
+    }
+
+    public void checkWells(GameState gs, int location)
+    {
+        if (gs.getWells().ContainsValue(location))
         {
             //trigger Well Scenario
             Debug.Log("YOU HAVE LANDED ON A WELL!");
             GameController.instance.updateGameConsoleText("You have landed on a well!");
             foreach (Well w in gs.getWells().Keys)
             {
-                if (w.getLocation() == finalDest && !w.used)
+                if (w.getLocation() == location && !w.used)
                 {
                     Debug.Log("emptying a well");
                     w.emptyWell();
@@ -96,56 +104,63 @@ public class Move : Action
                 }
             }
         }
+    }
 
-        if (gs.getFogTokens().ContainsValue(finalDest))
+    public void checkFogTokens(GameState gs, int location)
+    {
+        if (gs.getFogTokens().ContainsValue(location))
         {
-            Debug.Log("YOU HAVE LANDED ON A FOG TOKEN!");
-            GameController.instance.updateGameConsoleText("You have landed on a fog token!");
             foreach (FogToken f in gs.getFogTokens().Keys)
             {
-                if (f.getLocation() == finalDest && !f.used)
+                if (f.getLocation() == location && !f.used)
                 {
                     Debug.Log("using fog token");
                     f.useFogToken();
                     string token_type = f.getType();
                     if (token_type == "gold1")
                     {
+                        GameController.instance.updateGameConsoleText("You have uncovered a Gold Fog Token. You will now be granted 1 gold!");
                         gs.getPlayer(players[0]).getHero().increaseGold(1);
                     }
                     else if (token_type == "event")
                     {
+                        GameController.instance.updateGameConsoleText("You have uncovered an Event Fog Token.");
 
                     }
                     else if (token_type == "wineskin")
                     {
+                        GameController.instance.updateGameConsoleText("You have uncovered a wineskin Fog Token.");
 
                     }
                     else if (token_type == "willpower2")
                     {
-                            gs.getPlayer(players[0]).getHero().increaseWillpower(2);
-                           
+                        GameController.instance.updateGameConsoleText("You have uncovered a willpower fog token. You will now be granted 2 willpower points!");
+                        gs.getPlayer(players[0]).getHero().increaseWillpower(2);
+
                     }
                     else if (token_type == "willpower3")
                     {
-                       gs.getPlayer(players[0]).getHero().increaseWillpower(3);
+                        GameController.instance.updateGameConsoleText("You have uncovered a willpower fog token. You will now be granted 3 willpower points!");
+                        gs.getPlayer(players[0]).getHero().increaseWillpower(3);
 
                     }
                     else if (token_type == "brew")
                     {
+                        GameController.instance.updateGameConsoleText("You have uncovered a brew Fog Token");
 
                     }
                     else if (token_type == "gor")
                     {
-                        Gor g = new Gor(Game.positionGraph.getNode(finalDest));
-                        Game.gameState.addMonster(g);
-                        Game.gameState.addGor(g);
-                        GameController.instance.instantiateEventGor(g,finalDest);
+                        GameController.instance.updateGameConsoleText("You have uncovered a Gor Fog Token. A gor will now be placed on position " + location);
+                        Gor g = new Gor(Game.positionGraph.getNode(location));
+                        //Game.gameState.addMonster(g);
+                       // Game.gameState.addGor(g);
+                        GameController.instance.instantiateEventGor(g, location);
 
                     }
                     Object.Destroy(f.getPrefab());
                 }
             }
         }
-
     }
 }
