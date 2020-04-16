@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ArticleType
+{
+    Shield, Bow, Falcon, Wineskin, Telescope, WitchBrew, Helm
+}//add more if needed
 public interface Article 
 {
-    public enum ArticleType
-    {
-        Shield, Bow, Falcon, Wineskin, Telescope, WitchBrew, Helm
-    }//add more if needed
+    
     
     void useArticle();
-    ArticleType getItem();
+    ArticleType getArticle();
     string articleToString(); //return item.toString()
   
 
