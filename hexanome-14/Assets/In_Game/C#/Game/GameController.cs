@@ -5,6 +5,7 @@ using System.Drawing;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
 
 public class GameController : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class GameController : MonoBehaviour
     //public Text scrollText;
     public Text scrollTxt;
     public Text gameConsoleText;
-    
+
 
     public GameObject emptyPrefab;
     public GameObject playerPrefab;
@@ -48,6 +49,10 @@ public class GameController : MonoBehaviour
     public Dictionary<string, Vector3> rndPosInTimeBox;
     public Dictionary<Monster, GameObject> monsterObjects;
 
+    public int[] event_cards = {2, 11, 13, 14, 17, 24, 28, 31, 32, 1};
+    public string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+            "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
+    public int eventCardNum = 0;
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
@@ -68,7 +73,8 @@ public class GameController : MonoBehaviour
         timeTileBounds = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
-
+        event_cards.Shuffle();
+        fogTokens.Shuffle();
         initTransform = transform;
 
         instance = this;
@@ -431,10 +437,18 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void uncoverEventCard()
+    {
+        int num = event_cards[0];
+        eventCards.execute(num);
+        //event_cards = RemoveAt(event_cards,0);
+        int[] e = new int[event_cards.Length - 1];
+        Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
+        event_cards = e;
+    }
+
     public void loadFogTokens()
     {
-        string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
-            "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
 
         int i = 0;
         foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63 })
