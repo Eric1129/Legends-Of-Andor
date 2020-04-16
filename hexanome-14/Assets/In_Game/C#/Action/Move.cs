@@ -125,6 +125,7 @@ public class Move : Action
                     else if (token_type == "event")
                     {
                         GameController.instance.updateGameConsoleText("You have uncovered an Event Fog Token.");
+                        GameController.instance.uncoverEventCard();
 
                     }
                     else if (token_type == "wineskin")
@@ -159,6 +160,7 @@ public class Move : Action
 
                     }
                     Object.Destroy(f.getPrefab());
+                   //remove fog token from dictionary
                 }
             }
         }

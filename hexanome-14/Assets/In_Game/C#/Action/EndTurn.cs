@@ -76,6 +76,7 @@ public class EndTurn :Action
             w.refreshWell();
         }
 
+        GameController.instance.uncoverEventCard();
         //advance narrator 
     }
     //public void moveGors(GameState gs)
@@ -178,7 +179,7 @@ public class EndTurn :Action
             Debug.Log(gs.monstersInCastle);
             gs.monstersInCastle += 1;
             moveMonsterToShield(m, gs);
-            if (gs.monstersInCastle == gs.maxMonstersAllowedInCastle)
+            if (gs.monstersInCastle > gs.maxMonstersAllowedInCastle)
             {
                 Debug.Log("YOU LOST THE GAME");
                 gs.outcome = "lost";

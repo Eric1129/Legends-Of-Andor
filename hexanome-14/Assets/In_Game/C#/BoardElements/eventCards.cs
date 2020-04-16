@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Reflection;
 
 public class eventCards : MonoBehaviour
 {
@@ -49,12 +50,58 @@ public class eventCards : MonoBehaviour
         setPlayers();
     }
 
+    public static void execute(int num)
+    {
+        if (num == 1)
+        {
+            eventCard1();
+        }
+        if (num == 2)
+        {
+            eventCard2();
+        }
+        if (num == 11)
+        {
+            eventCard11();
+        }
+        if (num == 13)
+        {
+            eventCard13();
+        }
+        if (num == 14)
+        {
+            eventCard14();
+        }
+        if (num == 17)
+        {
+            eventCard17();
+        }
+        if (num == 24)
+        {
+            eventCard24();
+        }
+        if (num == 28)
+        {
+            eventCard28();
+        }
+        if (num == 31)
+        {
+            eventCard31();
+        }
+        if (num == 32)
+        {
+            eventCard32();
+        }
+        //string meth = "eventCard" + num.ToString();
+        //MethodInfo method = eventCards.instance.GetType().GetMethod("eventCard" + num.ToString());
+        //method.Invoke(eventCards.instance, null);
+    }
     //     //EVENT CARD - 1
 
     //     //EVENT CARD - 2
     public static void eventCard2()
     {
-      //GameConsole.displayMessage("2-  Each hero standing on a space with a number between 0 and 20 now loses 3 willpower points.");
+        GameController.instance.updateGameConsoleText("2-  Each hero standing on a space with a number between 0 and 20 now loses 3 willpower points.");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             player.getNetworkID();
@@ -102,7 +149,7 @@ public class eventCards : MonoBehaviour
     //EVENT CARD - 11
     public static void eventCard11()
     {
-        //GameConsole.displayMessage("11- Each creature has 1 extra strength point.");
+        GameController.instance.updateGameConsoleText("11- Each creature has 1 extra strength point.");
         List<Monster> monsters = new List<Monster>();
         monsters = Game.gameState.getMonsters();
         foreach (Monster m in monsters)
@@ -120,7 +167,7 @@ public class eventCards : MonoBehaviour
 //EVENT CARD - 13
 public static void eventCard13()
     {
-     //   GameConsole.instance.displayMessage("13-  Each Hero who has fewer than 10 willpower points can immediately raise his total to 10.");
+        GameController.instance.updateGameConsoleText("13-  Each Hero who has fewer than 10 willpower points can immediately raise his total to 10.");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             if (player.getHero().getWillpower() < 10)
@@ -133,7 +180,7 @@ public static void eventCard13()
     //EVENT CARD - 14
     public static void eventCard14()
     {
-        //GameConsole.displayMessage("14 - The Dwarf and Warrior immediately get 3 willpower points each.");
+        GameController.instance.updateGameConsoleText("14 - The Dwarf and Warrior immediately get 3 willpower points each.");
         if (instance.hasDwarf)
         {
             int currWillpower = instance.dwarf.getHero().getWillpower();
@@ -160,7 +207,7 @@ public static void eventCard13()
     //EVENT CARD - 24
     public static void eventCard17()
     {
-        //GameConsole.displayMessage("17-  Each hero with more than 12 willpower points immediately reduced his point total to 12");
+        GameController.instance.updateGameConsoleText("17-  Each hero with more than 12 willpower points immediately reduced his point total to 12");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
            if(player.getHero().getStrength() > 12)
@@ -203,7 +250,7 @@ public static void eventCard13()
     //EVENT CARD - 24
     public static void eventCard24()
     {
-        //     GameConsole.displayMessage("24-  Any hero not on a forest space loses 2 wllpower points.");
+        GameController.instance.updateGameConsoleText("24-  Any hero not on a forest space loses 2 wllpower points.");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             player.getNetworkID();
@@ -222,7 +269,7 @@ public static void eventCard13()
     //EVENT CARD - 28
     public static void eventCard28()
     {
-      //  GameConsole.displayMessage("28 - Every Hero whose time marker is presently in the sunrise box gets 2 willpower points");
+        GameController.instance.updateGameConsoleText("28 - Every Hero whose time marker is presently in the sunrise box gets 2 willpower points");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             if(player.getHero().getHour() == 0)
@@ -237,7 +284,7 @@ public static void eventCard13()
     //EVENT CARD - 31
     public static void eventCard31()
     {
-        //     GameConsole.displayMessage("31-  Any hero not on a forest space loses 2 wllpower points.");
+        GameController.instance.updateGameConsoleText("31-  Any hero not on a forest space loses 2 wllpower points.");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             player.getNetworkID();
@@ -257,7 +304,7 @@ public static void eventCard13()
     //EVENT CARD - 32
     public static void eventCard32()
     {
-        //         GameConsole.displayMessage("32: Each Hero whose time marker is presently in the sunrise box loses 2 willpower points");
+        GameController.instance.updateGameConsoleText("32: Each Hero whose time marker is presently in the sunrise box loses 2 willpower points");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             if (player.getHero().getHour() == 0)
@@ -270,9 +317,9 @@ public static void eventCard13()
 
 
     //EVENT CARD - RANDOM
-    public static void eventCardRandom1()
+    public static void eventCard1()
     {
-        // GameConsole.displayMessage("Not Sure 3 -  Each hero standing on a space with a number between 37 and 70 now loses 3 willpower points.");
+        GameController.instance.updateGameConsoleText("Not Sure 3 -  Each hero standing on a space with a number between 37 and 70 now loses 3 willpower points.");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             player.getNetworkID();
@@ -289,9 +336,9 @@ public static void eventCard13()
     }
 
     //EVENT CARD - Random2
-    public static void eventCardRandom2()
+    public static void eventCard3()
     {
-        //    GameConsole.displayMessage("idk - The wizard and the archer each immediately get 3 willpower points.");
+        GameController.instance.updateGameConsoleText("idk - The wizard and the archer each immediately get 3 willpower points.");
         if (instance.hasWizard)
         {
             int willpower = instance.wizard.getHero().getWillpower();
