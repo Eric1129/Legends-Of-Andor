@@ -21,22 +21,22 @@ public class eventCards : MonoBehaviour
     {
         foreach(Andor.Player player in Game.gameState.getPlayers())
         {
-            if(player.getHeroType() == "archer")
+            if(player.getHeroType() == "Male Archer" || player.getHeroType() == "Female Archer")
             {
                 archer = player;
                 hasArcher = true;
             }
-            if (player.getHeroType() == "warrior")
+            if (player.getHeroType() == "Male Warrior" || player.getHeroType() == "Female Warrior")
             {
                 warrior = player;
                 hasWarrior = true;
             }
-            if(player.getHeroType() == "dwarf")
+            if(player.getHeroType() == "Male Dwarf" || player.getHeroType() == "Female Dwarf")
             {
                 dwarf = player;
                 hasDwarf = true;
             }
-            if(player.getHeroType() == "wizard")
+            if(player.getHeroType() == "Male Wizard" || player.getHeroType() == "Female Wizard")
             {
                 wizard = player;
                 hasWizard = true;

@@ -328,7 +328,10 @@ public class GameController : MonoBehaviour
 
     private void loadPlayers()
     {
-        Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling1 = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1/ boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling2 = new Vector3(2 / boardSpriteContainer.parent.lossyScale.x, 2 / boardSpriteContainer.parent.lossyScale.y, 2 / boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling3 = new Vector3(3 / boardSpriteContainer.parent.lossyScale.x, 3 / boardSpriteContainer.parent.lossyScale.y, 3 / boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling4 = new Vector3(1.5f / boardSpriteContainer.parent.lossyScale.x, 1.5f / boardSpriteContainer.parent.lossyScale.y, 1.5f / boardSpriteContainer.parent.lossyScale.z);
 
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
@@ -338,7 +341,38 @@ public class GameController : MonoBehaviour
             SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
             
             spriteRenderer.sprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
-            playerObject.transform.localScale = boardContainerScaling;
+            if(player.getHeroType() ==  "Male Archer")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
+            }
+            if (player.getHeroType() == "Female Archer")
+            {
+                playerObject.transform.localScale = boardContainerScaling4;
+            }
+            if (player.getHeroType() == "Male Warrior")
+            {
+                playerObject.transform.localScale = boardContainerScaling3;
+            }
+            if (player.getHeroType() == "Female Warrior")
+            {
+                playerObject.transform.localScale = boardContainerScaling4;
+            }
+            if (player.getHeroType() == "Male Wizard")
+            {
+                playerObject.transform.localScale = boardContainerScaling1;
+            }
+            if (player.getHeroType() == "Female Wizard")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
+            }
+            if (player.getHeroType() == "Male Dwarf")
+            {
+                playerObject.transform.localScale = boardContainerScaling1;
+            }
+            if (player.getHeroType() == "Female Dwarf")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
+            }
 
             if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
                 // Give a random position
@@ -365,7 +399,7 @@ public class GameController : MonoBehaviour
             {
                 timeObjectBounds = sr.bounds;
             }
-            timeObject.transform.localScale = boardContainerScaling;
+            timeObject.transform.localScale = boardContainerScaling1;
 
             Vector3 timePos = getRandomPositionInBounds(timeTileBounds[0], timeObjectBounds, transform.position);
             timeObject.transform.position = timePos;
