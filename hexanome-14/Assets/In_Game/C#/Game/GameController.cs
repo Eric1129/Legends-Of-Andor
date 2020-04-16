@@ -330,6 +330,8 @@ public class GameController : MonoBehaviour
             loadMonsters();
 
             loadWells();
+
+            loadMerchants();
         }
 
     }
@@ -428,6 +430,17 @@ public class GameController : MonoBehaviour
         }
 
     }
+
+    private void loadMerchants()
+    {
+        int[] locations = { 18, 57, 71 };
+        foreach(int loc in locations)
+        {
+            Merchant m = new Merchant(loc);
+            Game.gameState.addMerchant(loc, m);
+        }
+    }
+
 
     private void loadWells()
     {
