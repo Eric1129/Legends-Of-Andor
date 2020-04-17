@@ -18,6 +18,10 @@ public static class Game
     public static System.Random RANDOM = new System.Random();
     public static bool loadedFromFile = false;
     public static Graph positionGraph;
+    public static int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
+    private static string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+            "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
+
 
 
     public static void initGame(Andor.Player player, bool addPlayer = true)
@@ -34,13 +38,28 @@ public static class Game
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(PassTurn), 5, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(EndTurn), 6, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(MovePrinceThorald), 7, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
-
-
         // MUST HAVE PV
         gameState.addPlayer(myPlayer);
         Game.addPlayer(myPlayer);
 
-    Debug.Log("Initialized Game!");
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        int[] randomEventOrder = event_cards;
+        randomEventOrder.Shuffle();
+        //event_cards2 = randomEventOrder;
+        Debug.Log("STARTING TO SET EVENT CARD ORDER");
+        Game.setEventCardOrder(randomEventOrder);
+        Debug.Log("FINISHING TO SET EVENT CARD ORDER");
+        string[] randomFogTokenOrder = fogTokens;
+        randomFogTokenOrder.Shuffle();
+        //fogTokens2 = randomFogTokenOrder;
+        Debug.Log("STARTING TO SET FOG ORDER");
+        Game.setFogTokenOrder(randomFogTokenOrder);
+        Debug.Log("FINISHING TO SET FOG ORDER");
+
+        //}
+
+        Debug.Log("Initialized Game!");
     }
 
     public static void createPV()

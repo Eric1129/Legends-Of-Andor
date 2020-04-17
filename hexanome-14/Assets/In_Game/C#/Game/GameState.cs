@@ -42,6 +42,7 @@ public GameState()
         wells = new Dictionary<Well, int>();
         fogTokens = new Dictionary<FogToken, int>();
         princeThor = new List<PrinceThorald>();
+
     }
 
     public void addPlayer(Player p)
@@ -241,14 +242,14 @@ public GameState()
     {
         return dateSaved;
     }
-    public void setEventCardOrder(int[] event_card)
-    {
-        event_cards = event_card;
-    }
-    public void setFogTokenOrder(string[] fog)
-    {
-        fogtoken_order = fog;
-    }
+    //public void setEventCardOrder(int[] event_card)
+    //{
+    //    event_cards = event_card;
+    //}
+    //public void setFogTokenOrder(string[] fog)
+    //{
+    //    fogtoken_order = fog;
+    //}
 
     //public void set(int[] eventCards)
     //{

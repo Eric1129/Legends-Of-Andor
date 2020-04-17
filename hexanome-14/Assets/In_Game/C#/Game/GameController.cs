@@ -52,9 +52,11 @@ public class GameController : MonoBehaviour
     //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
 
-    private int[] event_cards = {2, 11, 13, 14, 17, 24, 28, 31, 32, 1};
-    private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
-            "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
+    private int tok = 1;
+
+    //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
+    //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+    //        "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event"};
 
     private int eventCardNum = 0;
 
@@ -64,6 +66,8 @@ public class GameController : MonoBehaviour
 
     private Transform initTransform;
 
+    private int[] event_cards2;
+    private string[] fogTokens2;
 
     // Start is called before the first frame update
     void Start()
@@ -87,36 +91,61 @@ public class GameController : MonoBehaviour
         loadBoard();
 
         // For setting up resource distribution 
-        GameSetup();
 
         // Set up Turn Manager
         if (PhotonNetwork.IsMasterClient)
         {
             List<Andor.Player> randomOrder = Game.getGame().getPlayers();
             Game.Shuffle(randomOrder);
-
             Game.setTurnManager(randomOrder);
+            Debug.Log("SET TURN");
+            //int[] randomEventOrder = event_cards;
+            //randomEventOrder.Shuffle();
+            ////event_cards2 = randomEventOrder;
+            //Debug.Log("STARTING TO SET EVENT CARD ORDER");
+            //Game.setEventCardOrder(randomEventOrder);
+            //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
 
-            int[] randomEventOrder = event_cards;
-            randomEventOrder.Shuffle();
-            Game.setEventCardOrder(randomEventOrder);
 
-            string[] randomFogTokenOrder = fogTokens;
-            randomFogTokenOrder.Shuffle();
-            Game.setFogTokenOrder(randomFogTokenOrder);      
+            //string[] randomFogTokenOrder = fogTokens;
+            //randomFogTokenOrder.Shuffle();
+            ////fogTokens2 = randomFogTokenOrder;
+            //Debug.Log("STARTING TO SET FOG ORDER");
+            //Game.setFogTokenOrder(randomFogTokenOrder);
+            //Debug.Log("FINISHING TO SET FOG ORDER");
+
         }
 
-        int timeout = 300;
+        //int[] randomEventOrder = event_cards;
+        //randomEventOrder.Shuffle();
+        ////event_cards2 = randomEventOrder;
+        //Debug.Log("STARTING TO SET EVENT CARD ORDER");
+        //Game.setEventCardOrder(randomEventOrder);
+        //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
+
+
+        //string[] randomFogTokenOrder = fogTokens;
+        //randomFogTokenOrder.Shuffle();
+        ////fogTokens2 = randomFogTokenOrder;
+        //Debug.Log("STARTING TO SET FOG ORDER");
+        //Game.setFogTokenOrder(randomFogTokenOrder);
+        //Debug.Log("FINISHING TO SET FOG ORDER");
+
+
+        GameSetup();
+        int timeout1 = 300;
+        int timeout2 = 1000;
+        int timeout3 = 1000;
         if (Game.gameState != null)
         {
             while (Game.gameState.turnManager == null)
             {
                 StartCoroutine(Game.sleep(0.01f));
-                if (timeout <= 0)
+                if (timeout1 <= 0)
                 {
                     throw new Exception("Could not initialize TurnManager!");
                 }
-                timeout--;
+                timeout1--;
             }
             Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
 
@@ -129,12 +158,25 @@ public class GameController : MonoBehaviour
             {
                 turnLabel.color = UnityEngine.Color.black;
             }
+            while (Game.gameState.fogtoken_order == null)
+            {
+                StartCoroutine(Game.sleep(0.01f));
+                if (timeout3 <= 0)
+                {
+                    throw new Exception("Could not initialize fog token!");
+                }
+                timeout3--;
+            }
         }
-        
     }
 
     void Update()
     {
+        //if(Game.gameState.fogtoken_order == null && tok != 1)
+        //{
+        //    tok = 1;
+        //    loadFogTokens();
+        //}
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
@@ -169,8 +211,8 @@ public class GameController : MonoBehaviour
                 princeThoraldObject[princeT].transform.position = moveTowards(princeThoraldObject[princeT].transform.position, tiles[princeT.getLocation()].getMiddle(), 0.5f);
 
             }
-            // Update player turn
-            turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+           // Update player turn
+            //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
             {
                 turnLabel.color = Game.myPlayer.getColor(130);
@@ -314,6 +356,7 @@ public class GameController : MonoBehaviour
             loadWells();
 
             loadFogTokens();
+            //Debug.Log("Finished loading fog tokens");
 
             loadPrinceThorald();
         }
@@ -506,11 +549,12 @@ public class GameController : MonoBehaviour
     {
 
         int i = 0;
-        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63 })
+        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63})
         {
             Debug.Log("Added fog at position: " + pos);
             GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
-            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[pos]);
+            //Game.gameState.fogtoken_order[i]
+            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[i]);
             Game.gameState.addFogToken(f);
             i++;
             //Debug.Log("Added well at position: " + pos);

@@ -104,13 +104,15 @@ public class NetworkHandler : MonoBehaviour
     [PunRPC]
     public void setEventCardOrder(int[] event_cards)
     {
-        Game.getGame().setEventCardOrder(event_cards);
+        Game.getGame().event_cards = event_cards;
+        Debug.Log("got event cards");
     }
 
     [PunRPC]
     public void setFogTokenOrder(string[] fog_tokens)
     {
-        Game.getGame().setFogTokenOrder(fog_tokens);
+        Game.getGame().fogtoken_order = fog_tokens;
+        Debug.Log("got fog tokens");
     }
 
 
