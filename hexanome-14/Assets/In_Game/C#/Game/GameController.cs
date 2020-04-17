@@ -52,13 +52,9 @@ public class GameController : MonoBehaviour
     //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
 
-    private int tok = 1;
-
     //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
     //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
     //        "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event"};
-
-    private int eventCardNum = 0;
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;

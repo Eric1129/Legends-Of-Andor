@@ -42,8 +42,6 @@ public static class Game
         gameState.addPlayer(myPlayer);
         Game.addPlayer(myPlayer);
 
-        //if (PhotonNetwork.IsMasterClient)
-        //{
         int[] randomEventOrder = event_cards;
         randomEventOrder.Shuffle();
         //event_cards2 = randomEventOrder;
@@ -57,7 +55,6 @@ public static class Game
         Game.setFogTokenOrder(randomFogTokenOrder);
         Debug.Log("FINISHING TO SET FOG ORDER");
 
-        //}
 
         Debug.Log("Initialized Game!");
     }
@@ -215,6 +212,7 @@ public static class Game
 
             PV.RPC("setEventCardOrder", RpcTarget.All, event_cards);
         }
+
         else
         {
             Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
