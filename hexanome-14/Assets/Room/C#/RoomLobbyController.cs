@@ -96,7 +96,7 @@ public class RoomLobbyController : MonoBehaviour
                         highlightPlayer(p.getHeroType(), new Color32((byte)(p.getColor().r-50), (byte)(p.getColor().g - 50), (byte)(p.getColor().b - 50), 200));
                     }
                     // Enables/Disables player selection
-                    characterControl();
+                    //characterControl();
 
                 }
             }
