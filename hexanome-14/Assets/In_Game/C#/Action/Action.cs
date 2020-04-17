@@ -10,6 +10,9 @@ public enum Type
     Move,
     PassTurn,
     EndTurn,
+    InitiateTrade,
+    RespondTrade,
+    BuyFromMerchant,
     MovePrinceThoald
 }
 
