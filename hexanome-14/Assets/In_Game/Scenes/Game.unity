@@ -4353,7 +4353,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -1.5724945, y: 0}
-  m_SizeDelta: {x: 3.145, y: 0}
+  m_SizeDelta: {x: 3.14, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &481848055
 MonoBehaviour:
@@ -4381,7 +4381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.8941177, g: 0.8000001, b: 0.69803923, a: 0.392}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4438,8 +4438,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -21.2, y: -833.7753}
-  m_SizeDelta: {x: 404.9, y: 2325.5}
+  m_AnchoredPosition: {x: -24.76, y: -323.00058}
+  m_SizeDelta: {x: 412.03, y: 1303.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &482310443
 MonoBehaviour:
@@ -4460,11 +4460,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 35
+    m_Font: {fileID: 12800000, guid: b4ecdea3a19b748edabd9d6033a8e360, type: 3}
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -4472,17 +4472,17 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "A1:  \nHere\u2019s a reminder before continuing to Legend 2:\nA hero always
-    chooses between two options:Move or fight.\nBoth cost time on the time track.
-    Fighting costs 1 hour per battle round. Moving costs 1 hour per game board space.\nIf
-    the hero does not want to move or fight, he can \u201Cpass:\u2019 That will also
-    cost him 1 hour.\nThe free actions:\n\u2022 Activate a fog token\n\u2022 Empty
-    a well\n\u2022 Pick up or deposit gold/gemstones or articles from or onto a space\n\u2022
-    Trade or give gold/gemstones or articles with or to another hero on the same space\n\u2022
-    Use articles\nBuy articles or strength points from a merchant\nNone of these actions
-    cost any hours on the time track. They can also be carried out when it isn\u2019t
-    the hero\u2019s turn. A hero cannot perform them, however, if he has already ended
-    his day.\nNow continue to Legend card A2."
+  m_Text: "\nA1:  \nHere\u2019s a reminder before continuing to Legend 2:\nA hero
+    always chooses between two options:Move or fight.\nBoth cost time on the time
+    track. Fighting costs 1 hour per battle round. Moving costs 1 hour per game board
+    space.\nIf the hero does not want to move or fight, he can \u201Cpass:\u2019 That
+    will also cost him 1 hour.\nThe free actions:\n\u2022 Activate a fog token\n\u2022
+    Empty a well\n\u2022 Pick up or deposit gold/gemstones or articles from or onto
+    a space\n\u2022 Trade or give gold/gemstones or articles with or to another hero
+    on the same space\n\u2022 Use articles\nBuy articles or strength points from a
+    merchant\nNone of these actions cost any hours on the time track. They can also
+    be carried out when it isn\u2019t the hero\u2019s turn. A hero cannot perform
+    them, however, if he has already ended his day.\nNow continue to Legend card A2."
 --- !u!222 &482310444
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4962,8 +4962,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.2}
-  m_SizeDelta: {x: 20, y: 162.7}
+  m_AnchoredPosition: {x: 0, y: 52.5}
+  m_SizeDelta: {x: 20, y: 197.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &528461491
 MonoBehaviour:
@@ -8253,8 +8253,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 210.59, y: 0.25}
-  m_SizeDelta: {x: 58.78, y: 657.49}
+  m_AnchoredPosition: {x: 210.59, y: 2.51}
+  m_SizeDelta: {x: 58.8, y: 662.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &997718318
 MonoBehaviour:
@@ -8276,10 +8276,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.82745105, g: 0.70980394, b: 0.5568628, a: 1}
+    m_HighlightedColor: {r: 0.83921576, g: 0.7058824, b: 0.5568628, a: 1}
+    m_PressedColor: {r: 0.7803922, g: 0.6431373, b: 0.4784314, a: 1}
+    m_SelectedColor: {r: 0.83921576, g: 0.6901961, b: 0.5529412, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8298,8 +8298,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 528461491}
   m_HandleRect: {fileID: 528461490}
   m_Direction: 2
-  m_Value: 0.87464625
-  m_Size: 0.043001506
+  m_Value: 0.768284
+  m_Size: 0.07669006
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8317,7 +8317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.909804, g: 0.80392164, b: 0.6745098, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -10388,7 +10388,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000005629392}
+  m_AnchoredPosition: {x: 0, y: 0.00032532847}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1294734280
@@ -13344,7 +13344,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7235615}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999154
+  m_Size: 0.98813486
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
