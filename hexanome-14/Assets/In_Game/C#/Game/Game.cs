@@ -20,7 +20,6 @@ public static class Game
     public static Graph positionGraph;
 
 
-        
     public static void initGame(Andor.Player player, bool addPlayer = true)
     {
 
@@ -41,7 +40,7 @@ public static class Game
         gameState.addPlayer(myPlayer);
         Game.addPlayer(myPlayer);
 
-        Debug.Log("Initialized Game!");
+    Debug.Log("Initialized Game!");
     }
 
     public static void createPV()
@@ -187,6 +186,41 @@ public static class Game
         }
     }
 
+    //eventCardStuff
+    public static void setEventCardOrder(int[] event_cards)
+    {
+
+        if (PV != null && PV.IsMine)
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " (HOST) ~ Updating EventCards for clients...");
+
+            PV.RPC("setEventCardOrder", RpcTarget.All, event_cards);
+        }
+        else
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
+
+        }
+
+    }
+
+    //eventCardStuff
+    public static void setFogTokenOrder(string[] fog_cards)
+    {
+
+        if (PV != null && PV.IsMine)
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " (HOST) ~ Updating EventCards for clients...");
+
+            PV.RPC("setFogTokenOrder", RpcTarget.All, fog_cards);
+        }
+        else
+        {
+            Debug.Log(Game.myPlayer.getNetworkID() + " ~ Could not access PhotoView");
+
+        }
+
+    }
 
     #endregion
 

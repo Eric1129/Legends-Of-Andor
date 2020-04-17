@@ -101,6 +101,18 @@ public class NetworkHandler : MonoBehaviour
         Game.getGame().processAction(a);
     }
 
+    [PunRPC]
+    public void setEventCardOrder(int[] event_cards)
+    {
+        Game.getGame().setEventCardOrder(event_cards);
+    }
+
+    [PunRPC]
+    public void setFogTokenOrder(string[] fog_tokens)
+    {
+        Game.getGame().setFogTokenOrder(fog_tokens);
+    }
+
 
     public static byte[] SerializeThis(object obj)
     {

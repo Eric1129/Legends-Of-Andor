@@ -49,13 +49,14 @@ public class GameController : MonoBehaviour
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
     public Dictionary<Monster, GameObject> monsterObjects;
-    public PrinceThorald princeThor;
+    //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
 
-    public int[] event_cards = {2, 11, 13, 14, 17, 24, 28, 31, 32, 1};
-    public string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+    private int[] event_cards = {2, 11, 13, 14, 17, 24, 28, 31, 32, 1};
+    private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
             "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
-    public int eventCardNum = 0;
+
+    private int eventCardNum = 0;
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
@@ -78,8 +79,6 @@ public class GameController : MonoBehaviour
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
         princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
-        event_cards.Shuffle();
-        fogTokens.Shuffle();
         initTransform = transform;
 
         instance = this;
@@ -97,7 +96,16 @@ public class GameController : MonoBehaviour
             Game.Shuffle(randomOrder);
 
             Game.setTurnManager(randomOrder);
+
+            int[] randomEventOrder = event_cards;
+            randomEventOrder.Shuffle();
+            Game.setEventCardOrder(randomEventOrder);
+
+            string[] randomFogTokenOrder = fogTokens;
+            randomFogTokenOrder.Shuffle();
+            Game.setFogTokenOrder(randomFogTokenOrder);      
         }
+
         int timeout = 300;
         if (Game.gameState != null)
         {
@@ -493,15 +501,6 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void uncoverEventCard()
-    {
-        int num = event_cards[0];
-        eventCards.execute(num);
-        //event_cards = RemoveAt(event_cards,0);
-        int[] e = new int[event_cards.Length - 1];
-        Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
-        event_cards = e;
-    }
 
     public void loadFogTokens()
     {
@@ -511,7 +510,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Added fog at position: " + pos);
             GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
-            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, fogTokens[i]);
+            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[pos]);
             Game.gameState.addFogToken(f);
             i++;
             //Debug.Log("Added well at position: " + pos);
