@@ -25,10 +25,11 @@ public class GameState
     private Dictionary<FogToken, int> fogTokens;
     // private Dictionary<PrinceThorald, int> princeThor;
     private List<PrinceThorald> princeThor;
+    public int[] event_cards;
+    public string[] fogtoken_order;
 
 
-
-    public GameState()
+public GameState()
 	{
         players = new Dictionary<string, Player>();
         monsters = new List<Monster>();
@@ -41,6 +42,7 @@ public class GameState
         wells = new Dictionary<Well, int>();
         fogTokens = new Dictionary<FogToken, int>();
         princeThor = new List<PrinceThorald>();
+
     }
 
     public void addPlayer(Player p)
@@ -240,6 +242,19 @@ public class GameState
     {
         return dateSaved;
     }
+    //public void setEventCardOrder(int[] event_card)
+    //{
+    //    event_cards = event_card;
+    //}
+    //public void setFogTokenOrder(string[] fog)
+    //{
+    //    fogtoken_order = fog;
+    //}
+
+    //public void set(int[] eventCards)
+    //{
+    //    event_cards = eventCards;
+    //}
 
     public Dictionary<string, Player> getPlayerDict()
     {
@@ -249,4 +264,15 @@ public class GameState
     {
         return SavedGameController.deserializeGameState(SavedGameController.serializeGameState(this));
     }
+
+    public void uncoverEventCard()
+    {
+        int num = event_cards[0];
+        eventCards.execute(num);
+        //event_cards = RemoveAt(event_cards,0);
+        int[] e = new int[event_cards.Length - 1];
+        Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
+        event_cards = e;
+    }
+
 }
