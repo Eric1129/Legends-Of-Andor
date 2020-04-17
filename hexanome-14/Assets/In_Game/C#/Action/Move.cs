@@ -75,6 +75,7 @@ public class Move : Action
 
         checkWells(gs, finalDest);
         checkFogTokens(gs, finalDest);
+        checkFarmers(gs, finalDest);
 
     }
 
@@ -100,6 +101,34 @@ public class Move : Action
                     //add 3 willpower points to the hero who emptied the well
                     int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
                     gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+
+                }
+            }
+        }
+    }
+
+    public void checkFarmers(GameState gs, int location)
+    {
+        if (gs.getFarmers().ContainsValue(location))
+        {
+            //trigger Well Scenario
+            Debug.Log("YOU HAVE LANDED ON A FARMER!");
+            //GameController.instance.updateGameConsoleText("You have landed on a well!");
+
+            foreach (Farmer f in gs.getFarmers().Keys)
+            {
+                if (f.getLocation() == location)
+                {
+                    GameController.instance.updateGameConsoleText("You have landed on a space with a farmer!");
+                    Debug.Log("emptying a well");
+                    //w.emptyWell();
+                    //Object.Destroy(w.getPrefab());
+                    //w.getPrefab().GetComponent<Renderer>().enabled = false;
+                    //GameController.instance.emptyWell(w.getPrefab());
+                    //string player =  gs.turnManager.currentPlayerTurn()
+                    //add 3 willpower points to the hero who emptied the well
+                    //int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                    //gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
 
                 }
             }

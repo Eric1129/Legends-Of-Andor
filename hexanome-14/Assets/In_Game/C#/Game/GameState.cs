@@ -27,6 +27,8 @@ public class GameState
     private List<PrinceThorald> princeThor;
     public int[] event_cards;
     public string[] fogtoken_order;
+    public int day;
+    private Dictionary<Farmer, int> farmers;
 
 
 public GameState()
@@ -42,6 +44,8 @@ public GameState()
         wells = new Dictionary<Well, int>();
         fogTokens = new Dictionary<FogToken, int>();
         princeThor = new List<PrinceThorald>();
+        day = 1;
+        farmers = new Dictionary<Farmer, int>();
 
     }
 
@@ -154,6 +158,18 @@ public GameState()
     {
         fogTokens.Add(f, f.getLocation());
     }
+
+
+    public Dictionary<Farmer, int> getFarmers()
+    {
+        return farmers;
+    }
+    public void addFarmer(Farmer f)
+    {
+        farmers.Add(f, f.getLocation());
+    }
+
+
 
     public List<PrinceThorald> getPrinceThorald()
     {

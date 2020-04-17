@@ -29,6 +29,9 @@ public class GameController : MonoBehaviour
     //public Text scrollText;
     public Text scrollTxt;
     public Text gameConsoleText;
+    public Text shieldCountText;
+    public Text dayCountText;
+    public Text witchText;
 
 
     public GameObject emptyPrefab;
@@ -41,6 +44,7 @@ public class GameController : MonoBehaviour
     //public GameObject scroll;
     public GameObject scroll;
     public GameObject prince;
+    public GameObject farmer;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -322,6 +326,17 @@ public class GameController : MonoBehaviour
     {
         gameConsoleText.text = message;
     }
+
+    public void updateShieldCount(int shieldLeft)
+    {
+        shieldCountText.text = "Shields Left: " + shieldLeft.ToString();
+    }
+
+    public void updateDayCount(int day)
+    {
+        dayCountText.text = "Day: " + day;
+    }
+
     public void GameSetup()
     {
         int playerCount = Game.gameState.getPlayers().Count;
@@ -340,6 +355,8 @@ public class GameController : MonoBehaviour
             Game.gameState.maxMonstersAllowedInCastle = 1;
 
         }
+        GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
+        GameController.instance.updateDayCount(Game.gameState.day);
         /////////////////////////////////////////////////////////////////////
 
         // load players
@@ -355,6 +372,8 @@ public class GameController : MonoBehaviour
             //Debug.Log("Finished loading fog tokens");
 
             loadPrinceThorald();
+
+            loadFarmers();
         }
 
     }
@@ -556,6 +575,24 @@ public class GameController : MonoBehaviour
             //Debug.Log("Added well at position: " + pos);
         }
     }
+
+
+    public void loadFarmers()
+    {
+
+        int i = 0;
+        foreach (int pos in new int[] { 24,36 })
+        {
+            Debug.Log("Added farmer at position: " + pos);
+            GameObject Farmer = Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation);
+            //Game.gameState.fogtoken_order[i]
+            Farmer f = new Farmer(Game.positionGraph.getNode(pos), Farmer);
+            Game.gameState.addFarmer(f);
+            i++;
+            //Debug.Log("Added well at position: " + pos);
+        }
+    }
+
 
     public void setTime(string PlayerID, int hour)
     {

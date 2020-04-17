@@ -40,6 +40,8 @@ public class EndTurn :Action
         if (gs.turnManager.roundDone())
         {
             gs.turnManager.reset();
+            gs.day += 1;
+            GameController.instance.updateDayCount(Game.gameState.day);
             foreach (Andor.Player player in gs.getPlayers())
             {
                 player.getHero().setHour(0);
@@ -178,6 +180,7 @@ public class EndTurn :Action
             Debug.Log("Monster has entered the castle!" + " " + gs.maxMonstersAllowedInCastle);
             Debug.Log(gs.monstersInCastle);
             gs.monstersInCastle += 1;
+            GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
             moveMonsterToShield(m, gs);
             if (gs.monstersInCastle > gs.maxMonstersAllowedInCastle)
             {
