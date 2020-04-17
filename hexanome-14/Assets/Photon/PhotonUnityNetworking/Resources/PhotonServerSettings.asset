@@ -47,5 +47,7 @@ MonoBehaviour:
   - PREGAMEstartGame
   - setTurnManager
   - updateDifficulty
+  - setEventCardOrder
+  - setFogTokenOrder
   DisableAutoOpenWizard: 1
   ShowSettings: 1

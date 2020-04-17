@@ -95,11 +95,20 @@ public class RoomLobbyController : MonoBehaviour
                     {
                         highlightPlayer(p.getHeroType(), new Color32((byte)(p.getColor().r-50), (byte)(p.getColor().g - 50), (byte)(p.getColor().b - 50), 200));
                     }
-                        
+                    // Enables/Disables player selection
+                    //characterControl();
+
                 }
             }
             listPlayer(player);
         }
+        // Make sure there are more than 2 players in the game
+        if(Game.gameState.getPlayers().Count < 2)
+        {
+            // NOTE: UNCOMMENT FOR REAL GAME
+            //allReady = false;
+        }
+
         if (PhotonNetwork.IsMasterClient)
         {
             if (allReady)
@@ -177,6 +186,31 @@ public class RoomLobbyController : MonoBehaviour
         }
     }
 
+
+    // Disables heros that are already chosen 
+    private void characterControl()
+    {
+        // Set every button to interactable
+        for (int i = 0; i < allPlayerContainer.childCount; i++)
+        {
+            allPlayerContainer.GetChild(i).GetChild(0).GetComponent<Button>().interactable = true;
+        }
+
+        // Disable interactions based on the players picked
+        foreach (Andor.Player player in Game.gameState.getPlayers())
+        {
+            for (int i = 0; i < allPlayerContainer.childCount; i++)
+            {
+                Transform child = allPlayerContainer.GetChild(i);
+
+                if (child.name.Split(' ')[1].Equals(player.getHeroType().Split(' ')[1]))
+                {
+                    child.GetChild(0).GetComponent<Button>().interactable = false;
+                }
+            }
+        }
+    }
+
     public void leaveRoomClick()
     {
         RoomLobbyController.preLoadedGameState = null;
@@ -245,9 +279,6 @@ public class RoomLobbyController : MonoBehaviour
 
 
     }
-
-
-
 
     public void listPlayerLOADED(Andor.Player player)
     {

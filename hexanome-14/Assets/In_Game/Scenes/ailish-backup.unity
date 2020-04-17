@@ -6575,7 +6575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &786372971
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10077,7 +10077,6 @@ MonoBehaviour:
   tradeRequest: {fileID: 786372971}
   tradeScreenController: {fileID: 1469414985}
   notification: {fileID: 1933820920}
-  merchantScreenController: {fileID: 0}
   heroInfoScreen: {fileID: 1199205664}
   boardSpriteContainer: {fileID: 965004307}
   playerContainer: {fileID: 1555826174}
@@ -10085,8 +10084,13 @@ MonoBehaviour:
   monsterContainer: {fileID: 1150645492}
   heroInfoContainer: {fileID: 1176014019}
   moveButton: {fileID: 342711692}
+  movePrinceButton: {fileID: 0}
   turnLabel: {fileID: 651339306}
   scrollTxt: {fileID: 1262119103}
+  gameConsoleText: {fileID: 0}
+  shieldCountText: {fileID: 0}
+  dayCountText: {fileID: 0}
+  witchText: {fileID: 0}
   emptyPrefab: {fileID: 1911394042882782457, guid: 4fd0be85c45f844d79e3daabe220e5cf,
     type: 3}
   playerPrefab: {fileID: 402140951301285706, guid: 1d33a3dd4af9643f1abd77ae0a42f7da,
@@ -10098,7 +10102,10 @@ MonoBehaviour:
     type: 3}
   well_front: {fileID: 1025462693179533495, guid: a2aff63c1501145cf9b027a539245e18,
     type: 3}
+  fog: {fileID: 0}
   scroll: {fileID: 2119861118}
+  prince: {fileID: 0}
+  farmer: {fileID: 0}
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -13772,7 +13779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1933820920
 RectTransform:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using System.Drawing;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
 
 public class GameController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class GameController : MonoBehaviour
     public Transform tradeRequest;
     public Transform tradeScreenController;
     public Transform notification;
-    public Transform merchantScreenController;
+    //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
 
@@ -28,12 +29,16 @@ public class GameController : MonoBehaviour
     public Transform monsterContainer;
     public Transform heroInfoContainer;
 
-
     public Button moveButton;
+    public Button movePrinceButton;
     public Text turnLabel;
     //public Text scrollText;
     public Text scrollTxt;
-    
+    public Text gameConsoleText;
+    public Text shieldCountText;
+    public Text dayCountText;
+    public Text witchText;
+
 
     public GameObject emptyPrefab;
     public GameObject playerPrefab;
@@ -41,8 +46,11 @@ public class GameController : MonoBehaviour
     public GameObject circlePrefab;
     public GameObject heroInfoPrefab;
     public GameObject well_front;
+    public GameObject fog;
     //public GameObject scroll;
     public GameObject scroll;
+    public GameObject prince;
+    public GameObject farmer;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -51,10 +59,16 @@ public class GameController : MonoBehaviour
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
     public Dictionary<Monster, GameObject> monsterObjects;
+    //public PrinceThorald princeThor;
+    public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
 
+    //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
+    //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+    //        "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event"};
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
+    private bool movePrinceSelected = false;
 
 
     private bool tradeRequestSent = false;
@@ -75,12 +89,16 @@ public class GameController : MonoBehaviour
     //private string[] tradeType;
     //private string[] players;
 
+    private int[] event_cards2;
+    private string[] fogTokens2;
+    private string[] playersToNotify;
 
     // Start is called before the first frame update
     void Start()
     {
         ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
-        ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
+        //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
+        playersToNotify = new string[4];
         //ts = new TradeScreen();
         //this.tradeType = new string[3];
         //this.players = new string[2];
@@ -93,7 +111,7 @@ public class GameController : MonoBehaviour
         timeTileBounds = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
-
+        princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
         initTransform = transform;
 
         instance = this;
@@ -102,27 +120,61 @@ public class GameController : MonoBehaviour
         loadBoard();
 
         // For setting up resource distribution 
-        GameSetup();
 
         // Set up Turn Manager
         if (PhotonNetwork.IsMasterClient)
         {
             List<Andor.Player> randomOrder = Game.getGame().getPlayers();
             Game.Shuffle(randomOrder);
-
             Game.setTurnManager(randomOrder);
+            Debug.Log("SET TURN");
+            //int[] randomEventOrder = event_cards;
+            //randomEventOrder.Shuffle();
+            ////event_cards2 = randomEventOrder;
+            //Debug.Log("STARTING TO SET EVENT CARD ORDER");
+            //Game.setEventCardOrder(randomEventOrder);
+            //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
+
+
+            //string[] randomFogTokenOrder = fogTokens;
+            //randomFogTokenOrder.Shuffle();
+            ////fogTokens2 = randomFogTokenOrder;
+            //Debug.Log("STARTING TO SET FOG ORDER");
+            //Game.setFogTokenOrder(randomFogTokenOrder);
+            //Debug.Log("FINISHING TO SET FOG ORDER");
+
         }
-        int timeout = 300;
+
+        //int[] randomEventOrder = event_cards;
+        //randomEventOrder.Shuffle();
+        ////event_cards2 = randomEventOrder;
+        //Debug.Log("STARTING TO SET EVENT CARD ORDER");
+        //Game.setEventCardOrder(randomEventOrder);
+        //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
+
+
+        //string[] randomFogTokenOrder = fogTokens;
+        //randomFogTokenOrder.Shuffle();
+        ////fogTokens2 = randomFogTokenOrder;
+        //Debug.Log("STARTING TO SET FOG ORDER");
+        //Game.setFogTokenOrder(randomFogTokenOrder);
+        //Debug.Log("FINISHING TO SET FOG ORDER");
+
+
+        GameSetup();
+        int timeout1 = 300;
+        int timeout2 = 1000;
+        int timeout3 = 1000;
         if (Game.gameState != null)
         {
             while (Game.gameState.turnManager == null)
             {
                 StartCoroutine(Game.sleep(0.01f));
-                if (timeout <= 0)
+                if (timeout1 <= 0)
                 {
                     throw new Exception("Could not initialize TurnManager!");
                 }
-                timeout--;
+                timeout1--;
             }
             Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
 
@@ -135,12 +187,25 @@ public class GameController : MonoBehaviour
             {
                 turnLabel.color = UnityEngine.Color.black;
             }
+            while (Game.gameState.fogtoken_order == null)
+            {
+                StartCoroutine(Game.sleep(0.01f));
+                if (timeout3 <= 0)
+                {
+                    throw new Exception("Could not initialize fog token!");
+                }
+                timeout3--;
+            }
         }
-        
     }
 
     void Update()
     {
+        //if(Game.gameState.fogtoken_order == null && tok != 1)
+        //{
+        //    tok = 1;
+        //    loadFogTokens();
+        //}
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
@@ -170,9 +235,13 @@ public class GameController : MonoBehaviour
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
             }
+            foreach(PrinceThorald princeT in Game.gameState.getPrinceThorald())
+            {
+                princeThoraldObject[princeT].transform.position = moveTowards(princeThoraldObject[princeT].transform.position, tiles[princeT.getLocation()].getMiddle(), 0.5f);
 
-            // Update player turn
-            turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+            }
+           // Update player turn
+            //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
             {
                 turnLabel.color = Game.myPlayer.getColor(130);
@@ -302,6 +371,28 @@ public class GameController : MonoBehaviour
         scrollTxt.text = "YOU LOST!";
         scroll.SetActive(true);
     }
+
+    public void updateGameConsoleText(string message)
+    {
+        gameConsoleText.text = message;
+    }
+
+    //public void updateGameConsoleText(string message, string[] players)
+    //{
+    //    gameConsoleText.text = message;
+    //    playersToNotify = players;
+    //}
+
+    public void updateShieldCount(int shieldLeft)
+    {
+        shieldCountText.text = "Shields Left: " + shieldLeft.ToString();
+    }
+
+    public void updateDayCount(int day)
+    {
+        dayCountText.text = "Day: " + day;
+    }
+
     public void GameSetup()
     {
         int playerCount = Game.gameState.getPlayers().Count;
@@ -320,6 +411,8 @@ public class GameController : MonoBehaviour
             Game.gameState.maxMonstersAllowedInCastle = 1;
 
         }
+        GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
+        GameController.instance.updateDayCount(Game.gameState.day);
         /////////////////////////////////////////////////////////////////////
 
         // load players
@@ -331,7 +424,16 @@ public class GameController : MonoBehaviour
 
             loadWells();
 
+
             loadMerchants();
+
+            loadFogTokens();
+            //Debug.Log("Finished loading fog tokens");
+
+            loadPrinceThorald();
+
+            loadFarmers();
+
         }
 
     }
@@ -352,7 +454,10 @@ public class GameController : MonoBehaviour
 
     private void loadPlayers()
     {
-        Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling1 = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1/ boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling2 = new Vector3(2 / boardSpriteContainer.parent.lossyScale.x, 2 / boardSpriteContainer.parent.lossyScale.y, 2 / boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling3 = new Vector3(3 / boardSpriteContainer.parent.lossyScale.x, 3 / boardSpriteContainer.parent.lossyScale.y, 3 / boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling4 = new Vector3(1.5f / boardSpriteContainer.parent.lossyScale.x, 1.5f / boardSpriteContainer.parent.lossyScale.y, 1.5f / boardSpriteContainer.parent.lossyScale.z);
 
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
@@ -362,13 +467,45 @@ public class GameController : MonoBehaviour
             SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
             
             spriteRenderer.sprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
-            playerObject.transform.localScale = boardContainerScaling;
+            if(player.getHeroType() ==  "Male Archer")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
+            }
+            if (player.getHeroType() == "Female Archer")
+            {
+                playerObject.transform.localScale = boardContainerScaling4;
+            }
+            if (player.getHeroType() == "Male Warrior")
+            {
+                playerObject.transform.localScale = boardContainerScaling3;
+            }
+            if (player.getHeroType() == "Female Warrior")
+            {
+                playerObject.transform.localScale = boardContainerScaling4;
+            }
+            if (player.getHeroType() == "Male Wizard")
+            {
+                playerObject.transform.localScale = boardContainerScaling1;
+            }
+            if (player.getHeroType() == "Female Wizard")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
+            }
+            if (player.getHeroType() == "Male Dwarf")
+            {
+                playerObject.transform.localScale = boardContainerScaling1;
+            }
+            if (player.getHeroType() == "Female Dwarf")
+            {
+                playerObject.transform.localScale = boardContainerScaling2;
+            }
 
             if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
                 // Give a random position
                 Debug.Log(player.getHeroType());
                 //int startingTile = Game.RANDOM.Next(20, 40);
                 int startingTile = player.getHeroRank();
+                Debug.Log(startingTile);
                 playerObject.transform.position = tiles[startingTile].getMiddle();
 
                 Game.getGame().playerLocations.Add(player.getNetworkID(), startingTile);
@@ -388,7 +525,7 @@ public class GameController : MonoBehaviour
             {
                 timeObjectBounds = sr.bounds;
             }
-            timeObject.transform.localScale = boardContainerScaling;
+            timeObject.transform.localScale = boardContainerScaling1;
 
             Vector3 timePos = getRandomPositionInBounds(timeTileBounds[0], timeObjectBounds, transform.position);
             timeObject.transform.position = timePos;
@@ -469,6 +606,80 @@ public class GameController : MonoBehaviour
             //Debug.Log("Added well at position: " + pos);
         }
     }
+
+
+    private void loadPrinceThorald()
+    {
+        GameObject princeThorald = Instantiate(prince, tiles[72].getMiddle(), transform.rotation);
+        PrinceThorald princeT = new PrinceThorald(Game.positionGraph.getNode(72), princeThorald);
+        Game.gameState.addPrince(princeT);
+        princeThoraldObject.Add(princeT, princeThorald);
+        Debug.Log("Added prince at position: " + princeT.getLocation());
+    }
+
+    public void instantiateEventGor(int location)
+    {
+        Gor g = new Gor(Game.positionGraph.getNode(location));
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        GameObject tempObj = Instantiate(g.getPrefab(), -transform.position, transform.rotation, monsterContainer);
+        tempObj.transform.position = tiles[g.getLocation()].getMiddle();
+        tempObj.transform.localScale = boardScaling;
+        monsterObjects.Add(g, tempObj);
+        Game.gameState.addGor(g);
+        Game.gameState.addMonster(g);
+        Debug.Log("Added event gor");
+        
+    }
+
+    public void instantiateEventSkral(int location)
+    {
+        Skral s = new Skral(Game.positionGraph.getNode(location));
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        GameObject tempObj = Instantiate(s.getPrefab(), -transform.position, transform.rotation, monsterContainer);
+        tempObj.transform.position = tiles[s.getLocation()].getMiddle();
+        tempObj.transform.localScale = boardScaling;
+        monsterObjects.Add(s, tempObj);
+        Game.gameState.addSkral(s);
+        Game.gameState.addMonster(s);
+        Debug.Log("Added skral");
+
+    }
+
+
+
+    public void loadFogTokens()
+    {
+
+        int i = 0;
+        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63})
+        {
+            Debug.Log("Added fog at position: " + pos);
+            GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
+            //Game.gameState.fogtoken_order[i]
+            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[i]);
+            Game.gameState.addFogToken(f);
+            i++;
+            //Debug.Log("Added well at position: " + pos);
+        }
+    }
+
+
+    public void loadFarmers()
+    {
+
+        int i = 0;
+        foreach (int pos in new int[] { 24,36 })
+        {
+            Debug.Log("Added farmer at position: " + pos);
+            GameObject Farmer = Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation);
+            //Game.gameState.fogtoken_order[i]
+            Farmer f = new Farmer(Game.positionGraph.getNode(pos), Farmer);
+            Game.gameState.addFarmer(f);
+            i++;
+            //Debug.Log("Added well at position: " + pos);
+        }
+    }
+
 
     public void setTime(string PlayerID, int hour)
     {
@@ -619,6 +830,19 @@ public class GameController : MonoBehaviour
 
         }
 
+        if (movePrinceSelected)
+        {
+            Game.sendAction(new MovePrinceThorald(Game.myPlayer.getNetworkID(), Game.getGame().getPrinceThorald()[0].getLocation(), tile.tileID));
+
+            ColorBlock cb = movePrinceButton.colors;
+            cb.normalColor = new Color32(229, 175, 81, 255);
+            cb.selectedColor = new Color32(229, 175, 81, 255);
+
+            movePrinceSelected = false;
+
+            movePrinceButton.colors = cb;
+        }
+
 
     }
 
@@ -642,6 +866,29 @@ public class GameController : MonoBehaviour
             moveSelected = false;
         }
         moveButton.colors = cb;
+    }
+
+
+
+    public void movePrinceClick()
+    {
+        ColorBlock cb = moveButton.colors;
+
+        if (!movePrinceSelected)
+        {
+            movePrinceSelected = true;
+            cb.normalColor = new Color32(255, 240, 150, 255);
+            cb.selectedColor = new Color32(255, 240, 150, 255);
+
+        }
+        else
+        {
+            cb.normalColor = new Color32(229, 175, 81, 255);
+            cb.selectedColor = new Color32(229, 175, 81, 255);
+
+            movePrinceSelected = false;
+        }
+        movePrinceButton.colors = cb;
     }
     public void exitGameClick()
     {

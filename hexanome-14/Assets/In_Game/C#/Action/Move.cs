@@ -37,7 +37,15 @@ public class Move : Action
     {
         Thread thread = new Thread(() => threadExecute(gs));
         thread.Start();
-        
+        while(thread.IsAlive)
+        {
+            //Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
+        }
+        GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
+        checkMove(gs);
+        gs.turnManager.passTurn();
+
+
     }
     private void threadExecute(GameState gs)
     {
@@ -57,34 +65,133 @@ public class Move : Action
                 break;
             }
 
-            Thread.Sleep(500);
+            //Thread.Sleep(500);
         }
+    }
 
-        gs.turnManager.passTurn();
-
-
+    public void checkMove(GameState gs)
+    {
         int finalDest = gs.playerLocations[players[0]];
-        if (gs.getWells().ContainsValue(finalDest))
+
+        checkWells(gs, finalDest);
+        checkFogTokens(gs, finalDest);
+        checkFarmers(gs, finalDest);
+
+    }
+
+    public void checkWells(GameState gs, int location)
+    {
+        if (gs.getWells().ContainsValue(location))
         {
             //trigger Well Scenario
-            Debug.Log("YOU HAVE LANDED ON A WELL!");
-            foreach(Well w in gs.getWells().Keys)
+            Debug.Log("YOU HAVE LANDED ON A WELL!"); 
+            //GameController.instance.updateGameConsoleText("You have landed on a well!");
+
+            foreach (Well w in gs.getWells().Keys)
             {
-                if(w.getLocation() == finalDest && !w.used)
+                if (w.getLocation() == location && !w.used)
                 {
+                    GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
                     Debug.Log("emptying a well");
                     w.emptyWell();
+                    //Object.Destroy(w.getPrefab());
+                    //w.getPrefab().GetComponent<Renderer>().enabled = false;
                     //GameController.instance.emptyWell(w.getPrefab());
-                    //string player =  gs.turnManager.currentPlayerTurn();
-
+                    //string player =  gs.turnManager.currentPlayerTurn()
                     //add 3 willpower points to the hero who emptied the well
                     int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
                     gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
 
+                }
+            }
+        }
+    }
+
+    public void checkFarmers(GameState gs, int location)
+    {
+        if (gs.getFarmers().ContainsValue(location))
+        {
+            //trigger Well Scenario
+            Debug.Log("YOU HAVE LANDED ON A FARMER!");
+            //GameController.instance.updateGameConsoleText("You have landed on a well!");
+
+            foreach (Farmer f in gs.getFarmers().Keys)
+            {
+                if (f.getLocation() == location)
+                {
+                    GameController.instance.updateGameConsoleText("You have landed on a space with a farmer!");
+                    Debug.Log("emptying a well");
+                    //w.emptyWell();
+                    //Object.Destroy(w.getPrefab());
+                    //w.getPrefab().GetComponent<Renderer>().enabled = false;
+                    //GameController.instance.emptyWell(w.getPrefab());
+                    //string player =  gs.turnManager.currentPlayerTurn()
+                    //add 3 willpower points to the hero who emptied the well
+                    //int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                    //gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
 
                 }
             }
         }
-        
+    }
+
+    public void checkFogTokens(GameState gs, int location)
+    {
+        if (gs.getFogTokens().ContainsValue(location))
+        {
+            foreach (FogToken f in gs.getFogTokens().Keys)
+            {
+                if (f.getLocation() == location && !f.used)
+                {
+                    Debug.Log("using fog token");
+                    f.useFogToken();
+                    string token_type = f.getType();
+                    if (token_type == "gold1")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered a Gold Fog Token. You will now be granted 1 gold!");
+                        gs.getPlayer(players[0]).getHero().increaseGold(1);
+                    }
+                    else if (token_type == "event")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered an Event Fog Token.");
+                        gs.uncoverEventCard();
+
+                    }
+                    else if (token_type == "wineskin")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered a wineskin Fog Token.");
+
+                    }
+                    else if (token_type == "willpower2")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered a willpower fog token. You will now be granted 2 willpower points!");
+                        gs.getPlayer(players[0]).getHero().increaseWillpower(2);
+
+                    }
+                    else if (token_type == "willpower3")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered a willpower fog token. You will now be granted 3 willpower points!");
+                        gs.getPlayer(players[0]).getHero().increaseWillpower(3);
+
+                    }
+                    else if (token_type == "brew")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered a brew Fog Token");
+
+                    }
+                    else if (token_type == "gor")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered a Gor Fog Token. A gor will now be placed on position " + location);
+                        GameController.instance.instantiateEventGor(location);
+                        //Game.gameState.addMonster(g);
+                       // Game.gameState.addGor(g);
+                        GameController.instance.instantiateEventGor(location);
+
+                    }
+                    Object.Destroy(f.getPrefab());
+                   //remove fog token from dictionary
+                }
+            }
+        }
     }
 }

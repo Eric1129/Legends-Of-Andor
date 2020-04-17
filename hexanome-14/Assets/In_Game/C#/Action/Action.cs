@@ -12,7 +12,8 @@ public enum Type
     EndTurn,
     InitiateTrade,
     RespondTrade,
-    BuyFromMerchant
+    BuyFromMerchant,
+    MovePrinceThoald
 }
 
 public interface Action

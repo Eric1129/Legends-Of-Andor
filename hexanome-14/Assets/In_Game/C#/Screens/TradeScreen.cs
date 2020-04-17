@@ -150,7 +150,7 @@ public class TradeScreen : MonoBehaviour
 
             
         }
-        
+       
         return playersAvail;
     }
 
