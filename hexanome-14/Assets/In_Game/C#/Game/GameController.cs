@@ -29,6 +29,9 @@ public class GameController : MonoBehaviour
     //public Text scrollText;
     public Text scrollTxt;
     public Text gameConsoleText;
+    public Text shieldCountText;
+    public Text dayCountText;
+    public Text witchText;
 
 
     public GameObject emptyPrefab;
@@ -41,6 +44,7 @@ public class GameController : MonoBehaviour
     //public GameObject scroll;
     public GameObject scroll;
     public GameObject prince;
+    public GameObject farmer;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -49,13 +53,12 @@ public class GameController : MonoBehaviour
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
     public Dictionary<Monster, GameObject> monsterObjects;
-    public PrinceThorald princeThor;
+    //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
 
-    public int[] event_cards = {2, 11, 13, 14, 17, 24, 28, 31, 32, 1};
-    public string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
-            "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
-    public int eventCardNum = 0;
+    //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
+    //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
+    //        "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event"};
 
     private bool pauseMenuActive = false;
     private bool moveSelected = false;
@@ -63,6 +66,8 @@ public class GameController : MonoBehaviour
 
     private Transform initTransform;
 
+    private int[] event_cards2;
+    private string[] fogTokens2;
 
     // Start is called before the first frame update
     void Start()
@@ -78,8 +83,6 @@ public class GameController : MonoBehaviour
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
         princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
-        event_cards.Shuffle();
-        fogTokens.Shuffle();
         initTransform = transform;
 
         instance = this;
@@ -88,27 +91,61 @@ public class GameController : MonoBehaviour
         loadBoard();
 
         // For setting up resource distribution 
-        GameSetup();
 
         // Set up Turn Manager
         if (PhotonNetwork.IsMasterClient)
         {
             List<Andor.Player> randomOrder = Game.getGame().getPlayers();
             Game.Shuffle(randomOrder);
-
             Game.setTurnManager(randomOrder);
+            Debug.Log("SET TURN");
+            //int[] randomEventOrder = event_cards;
+            //randomEventOrder.Shuffle();
+            ////event_cards2 = randomEventOrder;
+            //Debug.Log("STARTING TO SET EVENT CARD ORDER");
+            //Game.setEventCardOrder(randomEventOrder);
+            //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
+
+
+            //string[] randomFogTokenOrder = fogTokens;
+            //randomFogTokenOrder.Shuffle();
+            ////fogTokens2 = randomFogTokenOrder;
+            //Debug.Log("STARTING TO SET FOG ORDER");
+            //Game.setFogTokenOrder(randomFogTokenOrder);
+            //Debug.Log("FINISHING TO SET FOG ORDER");
+
         }
-        int timeout = 300;
+
+        //int[] randomEventOrder = event_cards;
+        //randomEventOrder.Shuffle();
+        ////event_cards2 = randomEventOrder;
+        //Debug.Log("STARTING TO SET EVENT CARD ORDER");
+        //Game.setEventCardOrder(randomEventOrder);
+        //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
+
+
+        //string[] randomFogTokenOrder = fogTokens;
+        //randomFogTokenOrder.Shuffle();
+        ////fogTokens2 = randomFogTokenOrder;
+        //Debug.Log("STARTING TO SET FOG ORDER");
+        //Game.setFogTokenOrder(randomFogTokenOrder);
+        //Debug.Log("FINISHING TO SET FOG ORDER");
+
+
+        GameSetup();
+        int timeout1 = 300;
+        int timeout2 = 1000;
+        int timeout3 = 1000;
         if (Game.gameState != null)
         {
             while (Game.gameState.turnManager == null)
             {
                 StartCoroutine(Game.sleep(0.01f));
-                if (timeout <= 0)
+                if (timeout1 <= 0)
                 {
                     throw new Exception("Could not initialize TurnManager!");
                 }
-                timeout--;
+                timeout1--;
             }
             Debug.Log(Game.gameState.turnManager.currentPlayerTurn());
 
@@ -121,12 +158,25 @@ public class GameController : MonoBehaviour
             {
                 turnLabel.color = UnityEngine.Color.black;
             }
+            while (Game.gameState.fogtoken_order == null)
+            {
+                StartCoroutine(Game.sleep(0.01f));
+                if (timeout3 <= 0)
+                {
+                    throw new Exception("Could not initialize fog token!");
+                }
+                timeout3--;
+            }
         }
-        
     }
 
     void Update()
     {
+        //if(Game.gameState.fogtoken_order == null && tok != 1)
+        //{
+        //    tok = 1;
+        //    loadFogTokens();
+        //}
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
@@ -161,8 +211,8 @@ public class GameController : MonoBehaviour
                 princeThoraldObject[princeT].transform.position = moveTowards(princeThoraldObject[princeT].transform.position, tiles[princeT.getLocation()].getMiddle(), 0.5f);
 
             }
-            // Update player turn
-            turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+           // Update player turn
+            //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
             {
                 turnLabel.color = Game.myPlayer.getColor(130);
@@ -276,6 +326,17 @@ public class GameController : MonoBehaviour
     {
         gameConsoleText.text = message;
     }
+
+    public void updateShieldCount(int shieldLeft)
+    {
+        shieldCountText.text = "Shields Left: " + shieldLeft.ToString();
+    }
+
+    public void updateDayCount(int day)
+    {
+        dayCountText.text = "Day: " + day;
+    }
+
     public void GameSetup()
     {
         int playerCount = Game.gameState.getPlayers().Count;
@@ -294,6 +355,8 @@ public class GameController : MonoBehaviour
             Game.gameState.maxMonstersAllowedInCastle = 1;
 
         }
+        GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
+        GameController.instance.updateDayCount(Game.gameState.day);
         /////////////////////////////////////////////////////////////////////
 
         // load players
@@ -306,8 +369,11 @@ public class GameController : MonoBehaviour
             loadWells();
 
             loadFogTokens();
+            //Debug.Log("Finished loading fog tokens");
 
             loadPrinceThorald();
+
+            loadFarmers();
         }
 
     }
@@ -493,30 +559,40 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void uncoverEventCard()
-    {
-        int num = event_cards[0];
-        eventCards.execute(num);
-        //event_cards = RemoveAt(event_cards,0);
-        int[] e = new int[event_cards.Length - 1];
-        Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
-        event_cards = e;
-    }
 
     public void loadFogTokens()
     {
 
         int i = 0;
-        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63 })
+        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63})
         {
             Debug.Log("Added fog at position: " + pos);
             GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
-            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, fogTokens[i]);
+            //Game.gameState.fogtoken_order[i]
+            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[i]);
             Game.gameState.addFogToken(f);
             i++;
             //Debug.Log("Added well at position: " + pos);
         }
     }
+
+
+    public void loadFarmers()
+    {
+
+        int i = 0;
+        foreach (int pos in new int[] { 24,36 })
+        {
+            Debug.Log("Added farmer at position: " + pos);
+            GameObject Farmer = Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation);
+            //Game.gameState.fogtoken_order[i]
+            Farmer f = new Farmer(Game.positionGraph.getNode(pos), Farmer);
+            Game.gameState.addFarmer(f);
+            i++;
+            //Debug.Log("Added well at position: " + pos);
+        }
+    }
+
 
     public void setTime(string PlayerID, int hour)
     {
