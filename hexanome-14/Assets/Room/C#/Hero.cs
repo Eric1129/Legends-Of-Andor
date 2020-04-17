@@ -12,6 +12,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private string
         heroType = "";
     private string myTag;
+    private string[] pronouns;
 
     // this is the tag of the sphere gameObject which we show
     // as a hero's position! (currently the gray squished sphere)
@@ -26,15 +27,19 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int heroRank;
 
 
-    private int gold = 0;
+    private int gold = 2;
     private int strength = 0;
     private int willpower = 0;
 
     private int hour = 0;
+    private List<string> articles = new List<string>();
+    private int gemstones = 0;
 
     public Hero()
     {
-
+        articles.Add("test1");
+        articles.Add("test2");
+        pronouns = new string[3];
     }
 
     public int getGold()
@@ -90,6 +95,21 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void setHeroType(string hero)
     {
         this.heroType = hero;
+
+        if (hero.StartsWith("Male"))
+        {
+            pronouns[0] = "he";
+            pronouns[1] = "him";
+            pronouns[2] = "his";
+        }
+
+        if (hero.StartsWith("Female"))
+        {
+            pronouns[0] = "she";
+            pronouns[1] = "hers";
+            pronouns[2] = "her";
+        }
+
     }
 
     public int getHeroRank()
@@ -99,9 +119,51 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void setHeroRank(int rank)
     {
         this.heroRank = rank;
+
     }
 
+    public string[] getPronouns()
+    {
+        return this.pronouns;
+    }
 
+    public List<string> getArticles()
+    {
+        return this.articles;
+    }
 
+    public int getGemstone()
+    {
+        return this.gemstones;
+    }
 
+    public void addArticle(string article)
+    {
+        this.articles.Add(article);
+    }
+
+    public void removeArticle(string article)
+    {
+        this.articles.Remove(article);
+    }
+
+    public string allArticles()
+    {
+        string s_articles = "";
+        foreach(string ar in this.articles)
+        {
+            s_articles += (ar + " ");
+        }
+        return s_articles;
+    }
+
+    public void incGold()
+    {
+        this.gold++;
+    }
+
+    public void decGold()
+    {
+        this.gold--;
+    }
 }

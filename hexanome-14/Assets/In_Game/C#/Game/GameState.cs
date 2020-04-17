@@ -22,6 +22,7 @@ public class GameState
     public int maxMonstersAllowedInCastle;
     public int monstersInCastle;
     private Dictionary<Well, int> wells;
+    private Dictionary<int, Merchant> merchants;
     private Dictionary<FogToken, int> fogTokens;
     // private Dictionary<PrinceThorald, int> princeThor;
     private List<PrinceThorald> princeThor;
@@ -139,6 +140,16 @@ public GameState()
     }
 
     //////////////////////////////////wells//////////////////////////////////
+
+    public void addMerchant(int location, Merchant m)
+    {
+        merchants.Add(location, m);
+    }
+
+    public Merchant getMerchant(int location)
+    {
+        return merchants[location];
+    }
 
     public Dictionary<Well, int> getWells()
     {

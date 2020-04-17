@@ -15,6 +15,12 @@ public class GameController : MonoBehaviour
     public Transform gameContainer;
     public Transform pauseMenuContainer;
     public Transform saveGameContainer;
+
+    public Transform tradeRequest;
+    public Transform tradeScreenController;
+    public Transform notification;
+    //public Transform merchantScreenController;
+
     public Transform heroInfoScreen;
 
     public Transform boardSpriteContainer;
@@ -64,15 +70,38 @@ public class GameController : MonoBehaviour
     private bool moveSelected = false;
     private bool movePrinceSelected = false;
 
+
+    private bool tradeRequestSent = false;
+    private string playerTradeTo; //these could belong to
+    private string playerTradeFrom;
+    private string tradeMsg;
+
+    private string notifMsg;
+    private float notifTime;
+    private string notifUser;
+
+    //private int tradeTypeIndex = -1;
+    public static TradeScreen ts;
+    private bool notificationOn = false;
+    public static MerchantScreen ms;
+
     private Transform initTransform;
+    //private string[] tradeType;
+    //private string[] players;
 
     private int[] event_cards2;
     private string[] fogTokens2;
+    private string[] playersToNotify;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
+        //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
+        playersToNotify = new string[4];
+        //ts = new TradeScreen();
+        //this.tradeType = new string[3];
+        //this.players = new string[2];
         Game.started = true;
         Game.createPV();
 
@@ -222,6 +251,27 @@ public class GameController : MonoBehaviour
                 turnLabel.color = UnityEngine.Color.black;
             }
         }
+
+        if (tradeRequestSent)
+        {
+            
+            if (Game.myPlayer.getNetworkID().Equals(playerTradeTo))
+            {
+                processTradeRequest();
+            }
+        }
+
+        //if (ts.tradeType[0] != "")
+        //{
+        //    Debug.Log("trade type " + ts.tradeType[0]);
+        //}
+
+        if (notificationOn)
+        {
+            notify();
+            notifTime -= Time.deltaTime;
+        }
+        
     }
     public void moveToNewPos(Andor.Player player)
     {
@@ -327,6 +377,12 @@ public class GameController : MonoBehaviour
         gameConsoleText.text = message;
     }
 
+    //public void updateGameConsoleText(string message, string[] players)
+    //{
+    //    gameConsoleText.text = message;
+    //    playersToNotify = players;
+    //}
+
     public void updateShieldCount(int shieldLeft)
     {
         shieldCountText.text = "Shields Left: " + shieldLeft.ToString();
@@ -368,12 +424,16 @@ public class GameController : MonoBehaviour
 
             loadWells();
 
+
+            loadMerchants();
+
             loadFogTokens();
             //Debug.Log("Finished loading fog tokens");
 
             loadPrinceThorald();
 
             loadFarmers();
+
         }
 
     }
@@ -508,6 +568,17 @@ public class GameController : MonoBehaviour
 
     }
 
+    private void loadMerchants()
+    {
+        int[] locations = { 18, 57, 71 };
+        foreach(int loc in locations)
+        {
+            Merchant m = new Merchant(loc);
+            Game.gameState.addMerchant(loc, m);
+        }
+    }
+
+
     private void loadWells()
     {
         //foreach (int pos in new int[] {5, 35, 45, 55})
@@ -615,6 +686,132 @@ public class GameController : MonoBehaviour
         rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, new Vector3());
     }
 
+    
+    public void setTradeRequest(bool tradeReq)
+    {
+        tradeRequestSent = tradeReq;
+    }
+
+    public void sendNotif(string msg, float time, string notifyUser)
+    {
+        notifTime = time;
+        notificationOn = true;
+        notifMsg = msg;
+        notifUser = notifyUser;
+        
+    }
+
+    public void notify()
+    {
+        if(notifUser == Game.myPlayer.getNetworkID())
+        {
+            if (notifTime > 0)
+            {
+                notification.gameObject.SetActive(true);
+                Transform[] trs = notification.gameObject.GetComponentsInChildren<Transform>();
+                foreach (Transform t in trs)
+                {
+                    if (t.name == "Message")
+                    {
+                        Text msg = t.gameObject.GetComponent<Text>();
+                        msg.text = notifMsg;
+                    }
+                }
+            }
+            else
+            {
+                closeNotif();
+            }
+        }
+        
+        
+
+    }
+
+    public void closeNotif()
+    {
+        notificationOn = false;
+        notification.gameObject.SetActive(false);
+    }
+
+    public void sendTradeRequest(string[] tradeType, string playerFrom, string playerTo)
+    {
+        //foreach(string t in ts.tradeType)
+        //{
+        //    Debug.Log("gc sendTradeRequest(): " + t);
+        //}
+
+        ts.setTradeType(tradeType);
+        string[] pl = new string[2];
+
+        pl[0] = playerFrom;
+        pl[1] = playerTo;
+        ts.setPlayers(pl);
+
+        tradeRequestSent = true;
+        playerTradeTo = playerTo;
+        playerTradeFrom = playerFrom;
+        string msg = "";
+        if (tradeType[0].Equals("Gold"))
+        {
+            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give gold";
+            
+        }
+        else if (tradeType[0].Equals("Gemstones"))
+        {
+            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give a gemstone";
+            
+        }
+        else
+        {
+            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
+                + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
+            
+        }
+
+        tradeMsg = msg;
+        
+    }
+
+    public void processTradeRequest()
+    {
+        tradeRequestSent = false;
+
+        tradeRequest.gameObject.SetActive(true);
+        Transform[] trs = tradeRequest.gameObject.GetComponentsInChildren<Transform>(true);
+        foreach(Transform t in trs)
+        {
+            if (t.name == "Title") {
+                Text title = t.gameObject.GetComponent<Text>();
+                title.text = Game.gameState.getPlayer(playerTradeFrom).getHeroType() + " would like to trade!";
+
+            }
+            if(t.name == "Body")
+            {
+                Text body = t.gameObject.GetComponent<Text>();
+                body.text = tradeMsg;
+            }
+        }
+    }
+
+    public void accept(bool acc)
+    {
+        //foreach (string t in tradeType)
+        //{
+        //    Debug.Log("from accept(): " + t);
+        //}
+        tradeRequestSent = false;
+        tradeRequest.gameObject.SetActive(false);
+        ts.accept(acc);
+        //Game.sendAction(new RespondTrade(players, tradeType, acc));
+
+    }
+
+    public void merchantClick()
+    {
+
+    }
+
     #region buttonClicks
     //Logic for game tile clicks
     public void tileClick(BoardPosition tile)
@@ -713,10 +910,16 @@ public class GameController : MonoBehaviour
         Debug.Log("end day clicked");
         Game.sendAction(new EndTurn(Game.myPlayer.getNetworkID()));
     }
+
     public void tradeClick()
     {
-        Debug.Log("trade clicked");
+        ts.displayTradeType();
+        
+        //List<Dropdown.OptionData> menuOptions = dropdown.GetComponent<Dropdown>().options;
+        //string value = menuOptions[menuIndex].text;
+
     }
+
 
     #endregion
 
