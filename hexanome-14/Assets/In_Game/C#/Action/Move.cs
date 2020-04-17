@@ -182,10 +182,10 @@ public class Move : Action
                     else if (token_type == "gor")
                     {
                         GameController.instance.updateGameConsoleText("You have uncovered a Gor Fog Token. A gor will now be placed on position " + location);
-                        Gor g = new Gor(Game.positionGraph.getNode(location));
+                        GameController.instance.instantiateEventGor(location);
                         //Game.gameState.addMonster(g);
                        // Game.gameState.addGor(g);
-                        GameController.instance.instantiateEventGor(g, location);
+                        GameController.instance.instantiateEventGor(location);
 
                     }
                     Object.Destroy(f.getPrefab());

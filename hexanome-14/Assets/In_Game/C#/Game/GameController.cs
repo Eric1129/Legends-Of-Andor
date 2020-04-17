@@ -546,8 +546,9 @@ public class GameController : MonoBehaviour
         Debug.Log("Added prince at position: " + princeT.getLocation());
     }
 
-    public void instantiateEventGor(Gor g, int location)
+    public void instantiateEventGor(int location)
     {
+        Gor g = new Gor(Game.positionGraph.getNode(location));
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         GameObject tempObj = Instantiate(g.getPrefab(), -transform.position, transform.rotation, monsterContainer);
         tempObj.transform.position = tiles[g.getLocation()].getMiddle();
@@ -556,8 +557,23 @@ public class GameController : MonoBehaviour
         Game.gameState.addGor(g);
         Game.gameState.addMonster(g);
         Debug.Log("Added event gor");
+        
+    }
+
+    public void instantiateEventSkral(int location)
+    {
+        Skral s = new Skral(Game.positionGraph.getNode(location));
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        GameObject tempObj = Instantiate(s.getPrefab(), -transform.position, transform.rotation, monsterContainer);
+        tempObj.transform.position = tiles[s.getLocation()].getMiddle();
+        tempObj.transform.localScale = boardScaling;
+        monsterObjects.Add(s, tempObj);
+        Game.gameState.addSkral(s);
+        Game.gameState.addMonster(s);
+        Debug.Log("Added skral");
 
     }
+
 
 
     public void loadFogTokens()
