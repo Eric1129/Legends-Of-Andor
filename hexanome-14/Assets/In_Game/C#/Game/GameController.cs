@@ -19,9 +19,10 @@ public class GameController : MonoBehaviour
     public Transform tradeRequest;
     public Transform tradeScreenController;
     public Transform notification;
-    //public Transform merchantScreenController;
+    public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
+    public Transform merchantButton;
 
     public Transform boardSpriteContainer;
     public Transform playerContainer;
@@ -97,7 +98,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
-        //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
+        
         playersToNotify = new string[4];
         //ts = new TradeScreen();
         //this.tradeType = new string[3];
@@ -271,7 +272,22 @@ public class GameController : MonoBehaviour
             notify();
             notifTime -= Time.deltaTime;
         }
-        
+
+        bool onMerchant = false;
+
+        foreach(int merchantLoc in Game.gameState.getMerchants().Keys)
+        {
+            if(Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()] == merchantLoc)
+            {
+                onMerchant = true;
+                updateGameConsoleText("You've landed on the same space as a merchant. Click the merchatn button to buy articles");
+                
+            }
+        }
+        merchantButton.gameObject.SetActive(onMerchant);
+
+        //if(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()])
+
     }
     public void moveToNewPos(Andor.Player player)
     {
@@ -414,7 +430,7 @@ public class GameController : MonoBehaviour
         GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
         GameController.instance.updateDayCount(Game.gameState.day);
         /////////////////////////////////////////////////////////////////////
-
+        ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         // load players
         if (Game.gameState != null)
         {
@@ -434,6 +450,64 @@ public class GameController : MonoBehaviour
 
             loadFarmers();
 
+            setupEquipmentBoard();
+
+        }
+
+        
+
+    }
+
+    public void setupEquipmentBoard()
+    {
+        
+        //4 shields
+        List<Article> shields = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Shield", shields);
+        for (int i = 0; i < 4; i++)
+        {
+            Game.gameState.equipmentBoard["Shield"].Add(new Shield());
+        }
+
+        //3 bows
+        List<Article> bows = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Bow", bows);
+        for (int i = 0; i < 3; i++)
+        {
+            Game.gameState.equipmentBoard["Bow"].Add(new Bow());
+        }
+
+        //2 falcon
+        List<Article> falcons = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Falcon", falcons);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Falcon"].Add(new Falcon());
+        }
+
+        //2 wineskin
+        List<Article> wineskins = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Wineskin", wineskins);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Wineskin"].Add(new Wineskin());
+        }
+
+        //2 telescope
+        List<Article> telescopes = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Telescope", telescopes);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Telescope"].Add(new Telescope());
+        }
+
+        
+        //3 helm
+        List<Article> helms = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Helm", helms);
+        for (int i = 0; i < 3; i++)
+        {
+            Game.gameState.equipmentBoard["Helm"].Add(new Helm());
         }
 
     }
@@ -809,7 +883,7 @@ public class GameController : MonoBehaviour
 
     public void merchantClick()
     {
-
+        ms.displayAvailableItems();
     }
 
     #region buttonClicks

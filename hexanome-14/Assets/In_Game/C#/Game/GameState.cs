@@ -30,7 +30,7 @@ public class GameState
     public string[] fogtoken_order;
     public int day;
     private Dictionary<Farmer, int> farmers;
-
+    public Dictionary<string, List<Article>> equipmentBoard;
 
 public GameState()
 	{
@@ -47,6 +47,8 @@ public GameState()
         princeThor = new List<PrinceThorald>();
         day = 1;
         farmers = new Dictionary<Farmer, int>();
+        merchants = new Dictionary<int, Merchant>();
+        equipmentBoard = new Dictionary<string, List<Article>>();
 
     }
 
@@ -149,6 +151,42 @@ public GameState()
     public Merchant getMerchant(int location)
     {
         return merchants[location];
+    }
+
+    public Dictionary<int, Merchant> getMerchants()
+    {
+        return this.merchants;
+    }
+
+    //public List<Merchant> getMerchants()
+    //{
+        
+    //}
+
+    
+
+    public Article removeFromEquimentBoard(string articleName)
+    {
+        Debug.Log("removign article");
+        //remove the last item in the list
+        int numArticles = equipmentBoard[articleName].Count;
+        Article removedArticle = equipmentBoard[articleName][numArticles - 1];
+        equipmentBoard[articleName].Remove(equipmentBoard[articleName][numArticles-1]);
+        return removedArticle;
+    }
+
+    public Dictionary<string,List<Article>> getEquipmentBoard(){
+        return equipmentBoard;
+    }
+
+    public void addToEquipmentBoard(Article article)
+    {
+        equipmentBoard[article.ToString()].Add(article);
+    }
+
+    public List<Article> getArticlesOfType(string key)
+    {
+        return equipmentBoard[key];
     }
 
     public Dictionary<Well, int> getWells()

@@ -191,7 +191,7 @@ public class TradeScreen : MonoBehaviour
                         heroitems.text = "Gold: " + player.getHero().getGold() + "\n";
                         heroitems.text += "\nGemstones: " + player.getHero().getGemstone() + "\n";
                         heroitems.text += "\nArticles: ";
-                        List<string> heroAr = player.getHero().getArticles();
+                        List<string> heroAr = player.getHero().getArticlesAsStringList();
                         foreach (string ar in heroAr)
                         {
                             heroitems.text += (ar + " ");
@@ -273,9 +273,9 @@ public class TradeScreen : MonoBehaviour
     public void updateDropdowns()
     {
 
-        myArticles = Game.myPlayer.getHero().getArticles();
+        myArticles = Game.myPlayer.getHero().getArticlesAsStringList();
         Andor.Player selectedPlayer = Game.gameState.getPlayer(selectedHero);
-        heroArticles = selectedPlayer.getHero().getArticles();
+        heroArticles = selectedPlayer.getHero().getArticlesAsStringList();
 
         
         GameObject parentObj = GameObject.Find("SelectHero");

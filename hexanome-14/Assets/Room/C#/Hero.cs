@@ -33,13 +33,13 @@ public class Hero // : MonoBehaviour, Movable, Fightable
 
     private int hour = 0;
     private List<string> articles = new List<string>();
+    private Dictionary<string, List<Article>> heroArticles;
     private int gemstones = 0;
 
     public Hero()
     {
-        articles.Add("test1");
-        articles.Add("test2");
         pronouns = new string[3];
+        heroArticles = new Dictionary<string, List<Article>>();
     }
 
     public int getGold()
@@ -127,9 +127,14 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return this.pronouns;
     }
 
-    public List<string> getArticles()
+    public List<string> getArticlesAsStringList()
     {
-        return this.articles;
+        List<string> articles = new List<string>();
+        foreach(string key in this.heroArticles.Keys)
+        {
+            articles.Add(key);
+        }
+        return articles;
     }
 
     public int getGemstone()
@@ -137,33 +142,60 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return this.gemstones;
     }
 
-    public void addArticle(string article)
+    public void addArticle(Article article)
     {
-        this.articles.Add(article);
+        if (heroArticles.ContainsKey(article.ToString()))
+        {
+            heroArticles[article.ToString()].Add(article);
+        }
+        else
+        {
+            List<Article> articles = new List<Article>();
+            articles.Add(article);
+            heroArticles.Add(article.ToString(), articles);
+        }
+        
     }
 
-    public void removeArticle(string article)
+    public Article removeArticle(string articleName)
     {
-        this.articles.Remove(article);
+        int numArticles = heroArticles[articleName].Count;
+        Article removedArticle = heroArticles[articleName][numArticles - 1];
+        if(numArticles > 1)
+        {
+            heroArticles[articleName].Remove(heroArticles[articleName][numArticles - 1]);
+        }
+        else
+        {
+            heroArticles.Remove(articleName);
+        }
+
+        
+        return removedArticle;
     }
 
     public string allArticles()
     {
         string s_articles = "";
-        foreach(string ar in this.articles)
+        foreach(string ar in getArticlesAsStringList())
         {
             s_articles += (ar + " ");
         }
         return s_articles;
     }
 
-    public void incGold()
+    public void incGold(int amount)
     {
-        this.gold++;
+        this.gold+= amount;
     }
 
-    public void decGold()
+    public void decGold(int amount)
     {
-        this.gold--;
+        this.gold-=amount;
+    }
+
+    public void updateStrength(int numPoints)
+    {
+        this.strength += numPoints;
     }
 }
