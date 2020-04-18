@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
     public Text shieldCountText;
     public Text dayCountText;
     public Text witchText;
+    public Text heroStatsText;
 
 
     public GameObject emptyPrefab;
@@ -199,6 +200,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void updateHeroStats()
+    {
+        string update = Game.myPlayer.getHeroType()
+            + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
+            + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+            + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString();
+        heroStatsText.text = update;
+    }
+
     void Update()
     {
         //if(Game.gameState.fogtoken_order == null && tok != 1)
@@ -250,6 +261,8 @@ public class GameController : MonoBehaviour
             {
                 turnLabel.color = UnityEngine.Color.black;
             }
+
+            updateHeroStats(); 
         }
 
         if (tradeRequestSent)
