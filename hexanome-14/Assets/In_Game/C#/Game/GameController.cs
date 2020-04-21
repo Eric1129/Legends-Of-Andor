@@ -701,9 +701,6 @@ public void updateGameConsoleText(string message)
     }
 
 
-
-
-
     private void instantiateMedicinalHerb(int roll)
     {
         int loc = 0;

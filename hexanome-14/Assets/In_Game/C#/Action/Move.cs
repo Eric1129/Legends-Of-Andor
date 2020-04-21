@@ -91,7 +91,7 @@ public class Move : Action
             gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
             GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
 
-            if(gs.getPlayer(players[0]).getHero().getHour() == 10)
+            if(gs.getPlayer(players[0]).getHero().getHour() == gs.endtime)
             {
                 break;
             }
