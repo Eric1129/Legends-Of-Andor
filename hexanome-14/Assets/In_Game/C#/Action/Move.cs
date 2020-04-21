@@ -50,8 +50,28 @@ public class Move : Action
     private void threadExecute(GameState gs)
     {
         List<Node> path = Game.positionGraph.getPath(from, to);
+        int pass = 1;
         for (int i = 1; i<path.Count; i++)
         {
+            if(gs.overtime >= gs.getPlayer(players[0]).getHero().getHour() + 1)
+            {
+                //going into overtime
+                if(pass == 1)
+                {
+                    //each additional hour costs 2 do u agree
+                    GameController.instance.updateGameConsoleText("You will lose 2 willpower points per additional hour");
+                }
+
+                if(gs.getPlayer(players[0]).getHero().getWillpower() - 2 !> 0)
+                {
+                    GameController.instance.updateGameConsoleText("You do not enough willpower points to complete your move!");
+                    break;
+                }
+
+                //subtract 2 willpower points
+                gs.getPlayer(players[0]).getHero().setWillpower(gs.getPlayer(players[0]).getHero().getWillpower() - 2); 
+
+            }
             // Move
             gs.playerLocations[players[0]] = path[i].getIndex();
             Debug.Log(path[i].getIndex());
