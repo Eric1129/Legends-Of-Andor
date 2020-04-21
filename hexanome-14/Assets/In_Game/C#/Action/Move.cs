@@ -35,37 +35,48 @@ public class Move : Action
     }
     public void execute(GameState gs)
     {
-        Thread thread = new Thread(() => threadExecute(gs));
-        thread.Start();
-        while(thread.IsAlive)
+        //Thread thread = new Thread(() => threadExecute(gs));
+        //thread.Start();
+        //while(thread.IsAlive)
+        //{
+        //    //Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
+        //}
+        if (threadExecute(gs))
         {
-            //Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
-        }
-        GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
+            GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
+        };
         checkMove(gs);
         gs.turnManager.passTurn();
 
 
     }
-    private void threadExecute(GameState gs)
+    private bool threadExecute(GameState gs)
     {
         List<Node> path = Game.positionGraph.getPath(from, to);
         int pass = 1;
         for (int i = 1; i<path.Count; i++)
         {
-            if(gs.overtime >= gs.getPlayer(players[0]).getHero().getHour() + 1)
+            int overtime = gs.overtime;
+            int setHour = gs.getPlayer(players[0]).getHero().getHour() + 1;
+            if (overtime <= setHour)
             {
                 //going into overtime
-                if(pass == 1)
+                if(overtime == setHour)
                 {
                     //each additional hour costs 2 do u agree
                     GameController.instance.updateGameConsoleText("You will lose 2 willpower points per additional hour");
+                    GameController.instance.overtime();
+                    Debug.Log("You will lose 2 willpower points per additional hour");
                 }
 
-                if(gs.getPlayer(players[0]).getHero().getWillpower() - 2 !> 0)
+                int newPower = gs.getPlayer(players[0]).getHero().getWillpower() - 2;
+
+                if ( newPower <= 0)
                 {
-                    GameController.instance.updateGameConsoleText("You do not enough willpower points to complete your move!");
-                    break;
+                    GameController.instance.cannotFinishMove();
+                   // GameController.instance.updateGameConsoleText("You do not enough willpower points to complete your move!");
+                    return false;
+                   // break;
                 }
 
                 //subtract 2 willpower points
@@ -84,9 +95,10 @@ public class Move : Action
             {
                 break;
             }
-
+          
             //Thread.Sleep(500);
         }
+        return true;
     }
 
     public void checkMove(GameState gs)

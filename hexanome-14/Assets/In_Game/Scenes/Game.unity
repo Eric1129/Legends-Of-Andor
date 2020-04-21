@@ -4730,7 +4730,7 @@ MonoBehaviour:
   tradeRequest: {fileID: 47427741}
   tradeScreenController: {fileID: 338503482}
   notification: {fileID: 2128502219}
-  heroInfoScreen: {fileID: 0}
+  heroInfoScreen: {fileID: 887215165}
   boardSpriteContainer: {fileID: 618814503}
   playerContainer: {fileID: 1512963889}
   playerTimeContainer: {fileID: 1426874172}
@@ -4760,6 +4760,8 @@ MonoBehaviour:
   scroll: {fileID: 1884497148}
   prince: {fileID: 2117744765780500821, guid: 68b95c66f40c947a68e15c74c44753d9, type: 3}
   farmer: {fileID: 1820249372567332425, guid: 65a7c86113b594c64b96662e66af169b, type: 3}
+  medicinalHerb3: {fileID: 1347761391192978578, guid: 14ee528a4a80c480bafa1c889d87a492,
+    type: 3}
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -11827,7 +11829,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000003337779}
+  m_AnchoredPosition: {x: 0, y: 0.00024869427}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1294734280
@@ -15088,7 +15090,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7235615}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999866
+  m_Size: 0.99960613
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
