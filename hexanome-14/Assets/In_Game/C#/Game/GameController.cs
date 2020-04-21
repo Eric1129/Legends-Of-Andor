@@ -52,6 +52,8 @@ public class GameController : MonoBehaviour
     public GameObject scroll;
     public GameObject prince;
     public GameObject farmer;
+    public GameObject medicinalHerb3;
+
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -62,6 +64,7 @@ public class GameController : MonoBehaviour
     public Dictionary<Monster, GameObject> monsterObjects;
     //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
+    public Dictionary<MedicinalHerb, GameObject> medicinalHerbObject;
 
     //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
     //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
@@ -385,11 +388,48 @@ public class GameController : MonoBehaviour
         scroll.SetActive(true);
     }
 
-    public void updateGameConsoleText(string message)
+    public void overtime()
     {
-        gameConsoleText.text = message;
+        scrollTxt.text = "You will now lose 2 willpower points for each additional hour!";
+        StartCoroutine(overtimeCoroutine());
     }
 
+    public void cannotFinishMove()
+    {
+        scrollTxt.text = "You do not have enough willpower points to finish your move! Please end your day!";
+        StartCoroutine(overtimeCoroutine());
+    }
+
+   IEnumerator overtimeCoroutine()
+    {
+        //Print the time of when the function is first called.
+        //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        instance.scroll.SetActive(true);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(3);
+        instance.scroll.SetActive(false);
+
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    }
+
+public void updateGameConsoleText(string message)
+    {
+           gameConsoleText.text = message;
+    }
+
+
+    //IEnumerator consoleCoroutine(string message)
+    //{
+    //    //Print the time of when the function is first called.
+    //    //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+    //    gameConsoleText.text = message;
+    //    //yield on a new YieldInstruction that waits for 5 seconds.
+    //    yield return new WaitForSeconds(5);
+    //    //After we have waited 5 seconds print the time again.
+    //   // Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    //}
     //public void updateGameConsoleText(string message, string[] players)
     //{
     //    gameConsoleText.text = message;
@@ -446,6 +486,8 @@ public class GameController : MonoBehaviour
             loadPrinceThorald();
 
             loadFarmers();
+
+            instantiateMedicinalHerb(3);
 
         }
 
@@ -659,6 +701,30 @@ public class GameController : MonoBehaviour
     }
 
 
+
+
+
+    private void instantiateMedicinalHerb(int roll)
+    {
+        int loc = 0;
+        if (roll == 1 || roll == 2)
+        {
+            loc = 37;
+        }
+        if (roll == 3 || roll == 4)
+        {
+            loc = 67;
+        }
+        if (roll == 5 || roll == 6)
+        {
+            loc = 61;
+        }
+        GameObject herb = Instantiate(medicinalHerb3, tiles[loc].getMiddle(), transform.rotation);
+        MedicinalHerb mh = new MedicinalHerb(Game.positionGraph.getNode(loc), herb);
+        Game.gameState.addMedicinalHerb(mh);
+        medicinalHerbObject.Add(mh, herb);
+        Debug.Log("Added medicinal herb at position: " + mh.getLocation());
+    }
 
     public void loadFogTokens()
     {
