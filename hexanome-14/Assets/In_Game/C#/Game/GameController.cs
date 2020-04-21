@@ -658,7 +658,27 @@ public class GameController : MonoBehaviour
 
     }
 
-
+ //private void instantiateMedicinalHerb(int roll)
+    //{
+    //    int loc;
+    //    if(roll == 1 || roll == 2)
+    //    {
+    //        loc = 37;
+    //    }
+    //    if (roll == 3 || roll == 4)
+    //    {
+    //        loc = 67;
+    //    }
+    //    if (roll == 5 || roll == 6)
+    //    {
+    //        loc = 61;
+    //    }
+    //    GameObject herb = Instantiate(medicinalHerb3, tiles[loc].getMiddle(), transform.rotation);
+    //    MedicinalHerb mh = new MedicinalHerb(Game.positionGraph.getNode(loc), princeThorald);
+    //    Game.gameState.addMedicinalHERB(;
+    //    princeThoraldObject.Add(princeT, princeThorald);
+    //    Debug.Log("Added prince at position: " + princeT.getLocation());
+    //}
 
     public void loadFogTokens()
     {
