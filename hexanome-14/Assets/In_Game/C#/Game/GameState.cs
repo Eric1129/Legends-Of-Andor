@@ -30,7 +30,7 @@ public class GameState
     public string[] fogtoken_order;
     public int day;
     private Dictionary<Farmer, int> farmers;
-
+    public int overtime;
 
 public GameState()
 	{
