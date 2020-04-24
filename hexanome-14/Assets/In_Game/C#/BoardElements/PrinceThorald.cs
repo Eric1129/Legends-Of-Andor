@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrinceThorald : MonoBehaviour
+public class PrinceThorald
 {
     private Node location;
     protected GameObject prefab;
