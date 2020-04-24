@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedicinalHerb : MonoBehaviour
+public class MedicinalHerb 
 {
 
 	private Node location;
