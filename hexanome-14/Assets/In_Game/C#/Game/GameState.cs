@@ -32,6 +32,7 @@ public class GameState
     public int day;
     private Dictionary<Farmer, int> farmers;
     public int overtime = 8;
+    public int endtime = 10;
 
 public GameState()
 	{
