@@ -42,9 +42,7 @@ public class MerchantScreen : MonoBehaviour
         {
             foreach (string key in Game.gameState.getEquipmentBoard().Keys)
             {
-                List<Article> articles = Game.gameState.getArticlesOfType(key);
-                int quantity = articles.Count;
-
+                
                 Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
                 articleBuyButton.interactable = false;
 
@@ -74,6 +72,14 @@ public class MerchantScreen : MonoBehaviour
                 string articleName = articles[0].articleToString();
                 Text articleText = GameObject.Find(key).GetComponent<Text>();
                 articleText.text = quantity + " x " + articleName;
+
+                Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+                articleBuyButton.interactable = true;
+
+                
+                UnityEngine.Color zm = articleText.color;  //  makes a new color zm
+                zm.a = 1.0f; // makes the color zm transparent
+                articleText.color = zm;
             }
             else
             {
@@ -91,8 +97,30 @@ public class MerchantScreen : MonoBehaviour
         }
     }
 
+    public void resetBuyButtons()
+    {
+        foreach (string key in Game.gameState.getEquipmentBoard().Keys)
+        {
+            //List<Article> articles = Game.gameState.getArticlesOfType(key);
+            //int quantity = articles.Count;
+
+            Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+            articleBuyButton.interactable = true;
+
+            Text articleText = GameObject.Find(key).GetComponent<Text>();
+            UnityEngine.Color zm = articleText.color;  //  makes a new color zm
+            zm.a = 1.0f; // makes the color zm transparent
+            articleText.color = zm;
+
+
+        }
+        Button strengthBuyButton = GameObject.Find("BuyStrength").GetComponent<Button>();
+        strengthBuyButton.interactable = true;
+    }
+
     public void close()
     {
+        resetBuyButtons();
         merchantBoard.gameObject.SetActive(false);
         client = "";
         

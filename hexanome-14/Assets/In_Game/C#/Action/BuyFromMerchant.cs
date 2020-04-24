@@ -43,7 +43,7 @@ public class BuyFromMerchant : Action
             Article saleItem = Game.gameState.removeFromEquimentBoard(saleItemStr);
             //add item to heroes articles
             client.addArticle(saleItem);
-            Debug.Log(client.allArticles());
+            Debug.Log(client.allArticlesAsString());
         }
         else
         {

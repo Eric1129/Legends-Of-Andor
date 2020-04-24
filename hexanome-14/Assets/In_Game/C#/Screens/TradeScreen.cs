@@ -13,12 +13,21 @@ public class TradeScreen : MonoBehaviour
     public Transform selectHeroTrade;
     public Transform selectHeroGive;
     public Transform unavailable;
+
+    public Transform nextButton;
+    public Transform actionText;
+    public Transform tradeActionButton;
+    public Button giveGoldActionButton;
+    public Transform giveGemstoneActionButton;
     
 
     private bool selectHeroTradeActive;
     private bool selectHeroGiveActive;
     int tradeTypeIndex;
-    string[] playersInvolved;
+    //string[] e;
+    List<string> eligibleTrade;
+    List<string> eligibleGold;
+    List<string> eligibleGemstone;
     string selectedHero;
     int giveItemIndex;
     int receiveItemIndex;
@@ -36,123 +45,344 @@ public class TradeScreen : MonoBehaviour
         receiveItemIndex = 0;
         tradeType = new string[3];
         players = new string[2];
-        //GameObject tradeContainer = GameObject.Find("TradeContainer");
-        //Transform[] screens = tradeContainer.GetComponentsInChildren<Transform>(true);
-        //foreach (Transform screen in screens)
-        //{
-        //    if (screen.name == "SelectTradeType")
-        //    {
-        //        selectTradeType = screen;
-        //    }
-        //    //if (screen.name == "SelectHeroGive")
-        //    //{
-        //    //    selectHeroGive = screen;
-        //    //}
-
-        //    //if (screen.name == "SelectHeroTrade")
-        //    //{
-        //    //    selectHeroTrade = screen;
-        //    //}
-        //}
+        selectHeroTradeActive = false;
+        selectHeroGiveActive = false;
+        eligibleTrade = new List<string>();
+        eligibleGold = new List<string>();
+        eligibleGemstone = new List<string>();
     }
+
 
     public void displayTradeType()
     {
         selectTradeType.gameObject.SetActive(true);
-    }
-    public void nextClick()
-    {
-        Debug.Log("next clicked");
-        displayHeroTrade();
-
-    }
-
-    public void displayHeroTrade()
-    {
-
-
-        if (tradeTypeIndex == 0)
+        if (interactionPossible())
         {
-            selectHeroTrade.gameObject.SetActive(true);
-            selectHeroTradeActive = true;
+            //check if trade is possible
+            tradeActionButton.GetComponent<Button>().interactable = tradePossible();
+            //check if gold is possible
+            giveGoldActionButton.interactable = goldPossible();
+                
+            //check if gemstone is possible
+            giveGemstoneActionButton.GetComponent<Button>().interactable = gemstonePossible();
         }
         else
         {
+            actionText.GetComponent<Text>().text = "No actions available.";
+        }
+        Debug.Log("trade " + eligibleTrade.Count);
+        Debug.Log("gold " + eligibleGold.Count);
+        Debug.Log("gemstone " + eligibleGemstone.Count);
+
+    }
+    
+    public bool interactionPossible()
+    {
+        //and set elible players
+        bool interactionPossible = false;
+        if (Game.myPlayer.getHero().hasArticle("Falcon"))
+        {
+            //has a falcon
+            interactionPossible = true;
+            foreach (Andor.Player p in Game.gameState.getPlayers())
+            {
+                if (!Game.myPlayer.Equals(p))
+                {
+                    //myPlayer can trade with all players as long as they have articles to give
+                    if (p.getHero().allArticlesAsStringList().Count > 0)
+                    {
+                        eligibleTrade.Add(p.getNetworkID());
+                    }
+                    eligibleGold.Add(p.getNetworkID());
+                    eligibleGemstone.Add(p.getNetworkID());
+                }
+                
+            }
+        }
+        else
+        {
+             
+            foreach (Andor.Player p in Game.gameState.getPlayers())
+            {
+                if (!Game.myPlayer.Equals(p))
+                {
+                    if (Game.gameState.playerLocations[p.getNetworkID()]
+                    == Game.gameState.playerLocations[Game.myPlayer.getNetworkID()])
+                    {
+                        //if myPlayer doesn't have a falcon, they can interact with anyone who is on the same space
+                        interactionPossible = true;
+                        if (p.getHero().allArticlesAsStringList().Count > 0)
+                        {
+                            eligibleTrade.Add(p.getNetworkID());
+                        }
+                        eligibleGold.Add(p.getNetworkID());
+                        eligibleGemstone.Add(p.getNetworkID());
+                    }
+
+                    else if (p.getHero().hasArticle("Falcon"))
+                    {
+                        //if myPlayer doesn't have a falcon, they can interact with anyone who has a falcon
+                        interactionPossible = true;
+                        if (p.getHero().allArticlesAsStringList().Count > 0)
+                        {
+                            eligibleTrade.Add(p.getNetworkID());
+                        }
+
+                    }
+                }
+
+            }
+        }
+
+        return interactionPossible;
+    }
+
+
+    public bool tradePossible()
+    {
+        bool trade = (Game.myPlayer.getHero().allArticlesAsStringList().Count > 0)
+            && (eligibleTrade.Count > 0);
+        Debug.Log("Trade possible  " + trade);
+        //hero has something to trade and the other heroes have something to trade as well
+        return trade;
+
+        
+    }
+
+
+    public bool goldPossible()
+    {
+        
+        //hero has gold
+        return (Game.myPlayer.getHero().getGold() > 0);
             
+    }
+
+    public bool gemstonePossible()
+    {
+        return (Game.myPlayer.getHero().getGemstone() > 0);
+            
+    }
+
+    public void setTradeType(int value)
+    {
+
+        tradeTypeIndex = value;
+        actionText.gameObject.SetActive(true);
+        switch (value)
+        {
+            case 0:
+                actionText.GetComponent<Text>().text = "Action: trade";
+                break;
+            case 1:
+                actionText.GetComponent<Text>().text = "Action: give gold";
+                break;
+            case 2:
+                actionText.GetComponent<Text>().text = "Action: give gemstone";
+                break;
+            default:
+                actionText.GetComponent<Text>().text = "Action: None selected";
+                break;
+        }
+        nextButton.GetComponent<Button>().interactable = true;
+        //Debug.Log(tradeTypeIndex);
+
+    }
+    public void nextClick()
+    {
+        if(tradeTypeIndex == 0)
+        {
+            //trade
+            selectHeroTrade.gameObject.SetActive(true);
+            int i = 1;
+            foreach (string p in eligibleTrade)
+            {
+                Debug.Log("Eligible trade (nextClick()): " + Game.gameState.getPlayer(p).getHeroType());
+                //display the hero
+                displayPlayerInfo(Game.gameState.getPlayer(p), i);
+                i++;
+            }
+        }
+        else
+        { 
+            //give
             selectHeroGive.gameObject.SetActive(true);
-            selectHeroGiveActive = true;
             GameObject parentObj = GameObject.Find("SelectHero");
             Transform[] trs = parentObj.GetComponentsInChildren<Transform>();
-            foreach(Transform t in trs)
+            foreach (Transform t in trs)
             {
-                if(t.name == "HeaderText")
+                if (t.name == "HeaderText")
                 {
                     Text giveText = t.gameObject.GetComponent<Text>();
                     string type = "";
-                    if(tradeTypeIndex == 1)
+                    if (tradeTypeIndex == 1)
                     {
                         type = "gold";
                     }
 
-                    if(tradeTypeIndex == 2)
+                    if (tradeTypeIndex == 2)
                     {
                         type = "a gemstone";
                     }
-                    giveText.text = "Select a hero to give " +type +" to:";
+                    giveText.text = "Select a hero to give " + type + " to:";
+                }
+            }
+            if(tradeTypeIndex == 1)
+            {
+                int i = 1;
+                foreach (string p in eligibleGold)
+                {
+                    //display the hero
+                    displayPlayerInfo(Game.gameState.getPlayer(p), i);
+                    i++;
+                }
+            }
+
+            if(tradeTypeIndex == 2)
+            {
+                int i = 1;
+                foreach (string p in eligibleGemstone)
+                {
+                    //display the hero
+                    displayPlayerInfo(Game.gameState.getPlayer(p), i);
+                    i++;
                 }
             }
         }
+        //displayHeroTrade();
+        
 
-        //get all players on the same location
-        //get the player that clicked on trade button
-        if (!displayPlayers())
-        {
-            displayUnavailablePlayers("No available players", "There are no players available to trade wtih. You may trade if you are on the same tile as another player.");
-        }
-
-        if(tradeTypeIndex == 1 && Game.myPlayer.getHero().getGold() < 1)
-        {
-            displayUnavailablePlayers("No Gold", "You do not have any gold to give.");
-        }
-
-        if (tradeTypeIndex == 2 && Game.myPlayer.getHero().getGemstone() < 1)
-        {
-            displayUnavailablePlayers("No gemstones", "You do not have any gemstones to give.");
-        }
     }
 
-    public bool displayPlayers()
-    {
-        int myLocation = 0;
-        playersInvolved = new string[4];
-        int i = 1;
-        playersInvolved[0] = Game.myPlayer.getNetworkID();
-        bool playersAvail = false;
-        if (Game.gameState.playerLocations.TryGetValue(Game.myPlayer.getNetworkID(), out myLocation))
-        {
-            foreach (Andor.Player p in Game.gameState.getPlayers())
-            {
-                int playerLocation = 0;
-                if (Game.gameState.playerLocations.TryGetValue(p.getNetworkID(), out playerLocation))
-                {
-                    if (playerLocation == myLocation && !Game.myPlayer.Equals(p))
-                    {
-                        playersInvolved[i] = p.getNetworkID();
-                        displayPlayerInfo(p, i);
-                        i++;
-                        playersAvail = true;
+    
+
+    //public void displayHeroTrade()
+    //{
+
+
+    //    if (tradeTypeIndex == 0)
+    //    {
+    //        selectHeroTrade.gameObject.SetActive(true);
+    //        selectHeroTradeActive = true;
+    //    }
+    //    else
+    //    {
+            
+    //        selectHeroGive.gameObject.SetActive(true);
+    //        selectHeroGiveActive = true;
+    //        GameObject parentObj = GameObject.Find("SelectHero");
+    //        Transform[] trs = parentObj.GetComponentsInChildren<Transform>();
+    //        foreach(Transform t in trs)
+    //        {
+    //            if(t.name == "HeaderText")
+    //            {
+    //                Text giveText = t.gameObject.GetComponent<Text>();
+    //                string type = "";
+    //                if(tradeTypeIndex == 1)
+    //                {
+    //                    type = "gold";
+    //                }
+
+    //                if(tradeTypeIndex == 2)
+    //                {
+    //                    type = "a gemstone";
+    //                }
+    //                giveText.text = "Select a hero to give " +type +" to:";
+    //            }
+    //        }
+    //    }
+
+    //    //get all players on the same location
+    //    //get the player that clicked on trade button
+    //    if (!displayPlayers())
+    //    {
+    //        displayUnavailable("No available players", "There are no players available to trade wtih. You may trade if you are on the same tile as another player or if you or another player has a falcon.");
+    //    }
+
+    //    if(tradeTypeIndex == 1 && Game.myPlayer.getHero().getGold() < 1)
+    //    {
+    //        displayUnavailable("No Gold", "You do not have any gold to give.");
+    //    }
+
+    //    if (tradeTypeIndex == 2 && Game.myPlayer.getHero().getGemstone() < 1)
+    //    {
+    //        displayUnavailable("No gemstones", "You do not have any gemstones to give.");
+    //    }
+    //}
+
+    //public bool displayPlayers()
+    //{
+        
+    //    eligiblePlayers = new string[4];
+    //    int i = 1;
+    //    eligiblePlayers[0] = Game.myPlayer.getNetworkID();
+    //    bool playersAvail = false;
+    //    if (Game.myPlayer.getHero().hasArticle("Falcon"))
+    //    {
+    //        //if myPlayer has a falcon then all players are available
+    //        foreach (Andor.Player p in Game.gameState.getPlayers())
+    //        {
+    //            eligiblePlayers[i] = p.getNetworkID();
+    //            displayPlayerInfo(p, i);
+    //            i++;
+    //        }
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        //otherwise need to check if they are on the same space or if anoother player has a falcon
+    //        foreach (Andor.Player p in Game.gameState.getPlayers())
+    //        {
+    //            if (!Game.myPlayer.Equals(p))
+    //            {
+    //                if ((Game.gameState.playerLocations[p.getNetworkID()]
+    //                == Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]))
+    //                {
+    //                    //check on the same tile
+    //                    eligiblePlayers[i] = p.getNetworkID();
+    //                    displayPlayerInfo(p, i);
+    //                    i++;
+    //                    playersAvail = true;
+    //                }
+    //                else if (p.getHero().hasArticle("Falcon"))
+    //                {
+    //                    //check if the player has a falcon
+    //                    eligiblePlayers[i] = p.getNetworkID();
+    //                    i++;
+    //                    playersAvail = true;
+
+    //                }
+    //            }
+                
+    //        }
+
+    //    }
+        
+
+    //    //if (Game.gameState.playerLocations.TryGetValue(Game.myPlayer.getNetworkID(), out myLocation))
+    //    //{
+    //    //    foreach (Andor.Player p in Game.gameState.getPlayers())
+    //    //    {
+    //    //        int playerLocation = 0;
+    //    //        if (Game.gameState.playerLocations.TryGetValue(p.getNetworkID(), out playerLocation))
+    //    //        {
+    //    //            if (playerLocation == myLocation && !Game.myPlayer.Equals(p))
+    //    //            {
+    //    //                eligiblePlayers[i] = p.getNetworkID();
+    //    //                displayPlayerInfo(p, i);
+    //    //                i++;
+    //    //                playersAvail = true;
                         
 
-                    }
+    //    //            }
 
-                }
-            }
-
+    //    //        }
+    //    //    }
             
-        }
+    //    //}
        
-        return playersAvail;
-    }
+    //    return playersAvail;
+    //}
 
     public void displayPlayerInfo(Andor.Player player, int i)
     {
@@ -188,14 +418,28 @@ public class TradeScreen : MonoBehaviour
                     {
                         Debug.Log("Hero items");
                         Text heroitems = attr.GetComponent<Text>();
-                        heroitems.text = "Gold: " + player.getHero().getGold() + "\n";
-                        heroitems.text += "\nGemstones: " + player.getHero().getGemstone() + "\n";
-                        heroitems.text += "\nArticles: ";
-                        List<string> heroAr = player.getHero().getArticlesAsStringList();
-                        foreach (string ar in heroAr)
+                        if (tradeTypeIndex == 0)
                         {
-                            heroitems.text += (ar + " ");
+                            heroitems.text += "Articles: ";
+                            heroitems.text += player.getHero().allArticlesAsString();
+                        }else if(tradeTypeIndex == 1)
+                        {
+                            heroitems.text = "Gold: " + player.getHero().getGold();
                         }
+                        else
+                        {
+                            heroitems.text += "\nGemstones: " + player.getHero().getGemstone() + "\n";
+                        }
+                        
+                        //for(int j=0; j< heroAr.Count; j++)
+                        //{
+                        //    heroitems.text += heroAr[j];
+                        //    if(j < heroAr.Count - 1)
+                        //    {
+                        //        heroitems.text += ", ";
+                        //    }
+                            
+                        //}
                     }
                 }
             }
@@ -206,30 +450,19 @@ public class TradeScreen : MonoBehaviour
 
     public void back()
     {
-        if (selectHeroTradeActive)
-        {
-            selectHeroTrade.gameObject.SetActive(false);
-            selectHeroTradeActive = false;
-        }
-        if (selectHeroGiveActive)
-        {
-            selectHeroGive.gameObject.SetActive(false);
-            selectHeroGiveActive = false;
-        }
-    }
 
-    public void setTradeType(int menuIndex)
-    {
-        
-        tradeTypeIndex = menuIndex;
-        Debug.Log("setting trade type" + tradeTypeIndex);
-        
-        //Debug.Log(tradeTypeIndex);
+        selectHeroTrade.gameObject.SetActive(false);
+        selectHeroTradeActive = false;
+
+        selectHeroGive.gameObject.SetActive(false);
+        selectHeroGiveActive = false;
 
     }
 
 
-    public void displayUnavailablePlayers(string title, string msg)
+
+
+    public void displayUnavailable(string title, string msg)
     {
        
         unavailable.gameObject.SetActive(true);
@@ -247,25 +480,42 @@ public class TradeScreen : MonoBehaviour
     //add to each Hero[i]
     public void onHeroClick(int index)
     {
-        
-        selectedHero = playersInvolved[index];
-        Button sendRequestButton = GameObject.Find("SendRequest").GetComponent<Button>();
-        sendRequestButton.interactable = true;
-
-        Text selHerotxt = GameObject.Find("SelectedHero").GetComponent<Text>();
-        selHerotxt.text = Game.gameState.getPlayer(playersInvolved[index]).getHeroType();
-        switch (tradeTypeIndex)
+        Debug.Log(index);
+        if(tradeTypeIndex == 0)
         {
-            case 0: updateDropdowns();
-                
-                break;
-            default:
-                
-                break; ;
+            selectedHero = eligibleTrade.ToArray()[index - 1];
+        }else if(tradeTypeIndex == 1)
+        {
+            selectedHero = eligibleGold.ToArray()[index - 1];
+        }
+        else
+        {
+            selectedHero = eligibleGemstone.ToArray()[index - 1];
         }
 
+        if (tradeTypeIndex == 0)
+        {
+            updateDropdowns();
+        }
 
-
+        GameObject parentObj = GameObject.Find("SelectHero");
+        Transform[] trs = parentObj.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if(t.name == "SelectedHero")
+            {
+                Text selHerotxt = t.gameObject.GetComponent<Text>();
+                
+                selHerotxt.text = Game.gameState.getPlayer(selectedHero).getHeroType();
+            }
+            if(t.name == "SendRequest")
+            {
+                Button sendRequestButton = t.gameObject.GetComponent<Button>();
+                sendRequestButton.interactable = true;
+            }
+        }
+        
+  
         //Game.sendAction(new InitiateTrade(playersInvolved));
 
     }
@@ -273,9 +523,9 @@ public class TradeScreen : MonoBehaviour
     public void updateDropdowns()
     {
 
-        myArticles = Game.myPlayer.getHero().getArticlesAsStringList();
+        myArticles = Game.myPlayer.getHero().allArticlesAsStringList();
         Andor.Player selectedPlayer = Game.gameState.getPlayer(selectedHero);
-        heroArticles = selectedPlayer.getHero().getArticlesAsStringList();
+        heroArticles = selectedPlayer.getHero().allArticlesAsStringList();
 
         
         GameObject parentObj = GameObject.Find("SelectHero");
@@ -302,11 +552,11 @@ public class TradeScreen : MonoBehaviour
                 Text heroArText = t.gameObject.GetComponent<Text>();
                 heroArText.text = selectedPlayer.getHeroType() + " articles";
             }
-            if(t.name == "SendRequest")
-            {
-                Button sendRequestButton = t.gameObject.GetComponent<Button>();
-                sendRequestButton.interactable = true;
-            }
+            //if(t.name == "SendRequest")
+            //{
+            //    Button sendRequestButton = t.gameObject.GetComponent<Button>();
+            //    sendRequestButton.interactable = true;
+            //}
         }
         
     }
@@ -314,18 +564,17 @@ public class TradeScreen : MonoBehaviour
     //add to myArticles dropdown obj
     public void setGiveItem(int val)
     {
-        GameObject parentObj = GameObject.Find("SelectHero");
+        //GameObject parentObj = GameObject.Find("SelectHero");
         giveItemIndex = val;
         
      
-
     }
 
 
     //add to heroArticles dropdown obj
     public void setReceiveItem(int val)
     {
-        GameObject parentObj = GameObject.Find("SelectHero");
+        //GameObject parentObj = GameObject.Find("SelectHero");
         receiveItemIndex = val;
        
     }
@@ -387,6 +636,10 @@ public class TradeScreen : MonoBehaviour
         selectHeroGive.gameObject.SetActive(false);
         selectHeroTrade.gameObject.SetActive(false);
         unavailable.gameObject.SetActive(false);
+        eligibleGemstone.Clear();
+        eligibleGold.Clear();
+        eligibleTrade.Clear();
+        
         tradeTypeIndex = -1;
     }
 }

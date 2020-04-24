@@ -5,10 +5,10 @@ using System.Reflection;
 
 public class eventCards : MonoBehaviour
 {
-    public Andor.Player archer;
-    public Andor.Player warrior;
-    public Andor.Player wizard;
-    public Andor.Player dwarf;
+    public static Andor.Player archer;
+    public static Andor.Player warrior;
+    public static Andor.Player wizard;
+    public static Andor.Player dwarf;
 
     public bool hasArcher;
     public bool hasWarrior;
@@ -183,14 +183,15 @@ public static void eventCard13()
         GameController.instance.updateGameConsoleText("14 - The Dwarf and Warrior immediately get 3 willpower points each.");
         if (instance.hasDwarf)
         {
-            int currWillpower = instance.dwarf.getHero().getWillpower();
-            instance.dwarf.getHero().setWillpower(currWillpower + 3);
+            int currWillpower = dwarf.getHero().getWillpower();
+            Debug.Log("14");
+            dwarf.getHero().setWillpower(currWillpower + 3);
         }
 
         if (instance.hasWarrior)
         {
-            int currWillpower = instance.warrior.getHero().getWillpower();
-            instance.warrior.getHero().setWillpower(currWillpower + 3);
+            int currWillpower = warrior.getHero().getWillpower();
+            warrior.getHero().setWillpower(currWillpower + 3);
         }
     }
 
@@ -341,13 +342,13 @@ public static void eventCard13()
         GameController.instance.updateGameConsoleText("idk - The wizard and the archer each immediately get 3 willpower points.");
         if (instance.hasWizard)
         {
-            int willpower = instance.wizard.getHero().getWillpower();
-            instance.wizard.getHero().setWillpower(willpower + 3);
+            int willpower = wizard.getHero().getWillpower();
+            wizard.getHero().setWillpower(willpower + 3);
         }
         if (instance.hasArcher)
         {
-            int willpower = instance.archer.getHero().getWillpower();
-            instance.archer.getHero().setWillpower(willpower + 3);
+            int willpower = archer.getHero().getWillpower();
+            archer.getHero().setWillpower(willpower + 3);
         }
     }
 

@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
     public Text shieldCountText;
     public Text dayCountText;
     public Text witchText;
+    public Text heroStatsText;
 
 
     public GameObject emptyPrefab;
@@ -200,6 +201,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void updateHeroStats()
+    {
+        string update = Game.myPlayer.getHeroType()
+            + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
+            + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+            + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString();
+        heroStatsText.text = update;
+    }
+
     void Update()
     {
         //if(Game.gameState.fogtoken_order == null && tok != 1)
@@ -251,6 +262,8 @@ public class GameController : MonoBehaviour
             {
                 turnLabel.color = UnityEngine.Color.black;
             }
+
+            updateHeroStats(); 
         }
 
         if (tradeRequestSent)
@@ -287,6 +300,13 @@ public class GameController : MonoBehaviour
         merchantButton.gameObject.SetActive(onMerchant);
 
         //if(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()])
+        foreach(string player in playersToNotify)
+        {
+            if(Game.myPlayer.getNetworkID() == player)
+            {
+                updateGameConsoleText(this.gameConsoleText.text.ToString());
+            }
+        }
 
     }
     public void moveToNewPos(Andor.Player player)
@@ -393,11 +413,18 @@ public class GameController : MonoBehaviour
         gameConsoleText.text = message;
     }
 
-    //public void updateGameConsoleText(string message, string[] players)
-    //{
-    //    gameConsoleText.text = message;
-    //    playersToNotify = players;
-    //}
+    public void updateGameConsoleText(string message, string[] players)
+    {
+        //foreach(string p in players)
+        //{
+        //    if(Game.myPlayer.getNetworkID() == p)
+        //    {
+        //        gameConsoleText.text = message;
+        //    }
+        //}
+        gameConsoleText.text = message;
+        playersToNotify = players;
+    }
 
     public void updateShieldCount(int shieldLeft)
     {

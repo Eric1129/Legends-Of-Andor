@@ -47,8 +47,10 @@ public GameState()
         princeThor = new List<PrinceThorald>();
         day = 1;
         farmers = new Dictionary<Farmer, int>();
+
         merchants = new Dictionary<int, Merchant>();
         equipmentBoard = new Dictionary<string, List<Article>>();
+
 
     }
 

@@ -73,9 +73,12 @@ public class RespondTrade : Action
         {
             msg = playerTo.getHeroType() + " has declined your request.";
         }
-        Debug.Log("playerTo " + playerTo.getHero().allArticles());
-        Debug.Log("playerFrom " + playerFrom.getHero().allArticles());
-        GameController.instance.sendNotif(msg, 20.0f, players[0]);
+        Debug.Log(playerTo.getHeroType() + " " + playerTo.getHero().allArticlesAsString());
+        Debug.Log(playerFrom.getHeroType() + "playerFrom " + playerFrom.getHero().allArticlesAsString());
+        //GameController.instance.sendNotif(msg, 20.0f, players[0]);
+        string[] playersToNotify = new string[1];
+        playersToNotify[0] = players[0];
+        GameController.instance.updateGameConsoleText(msg, playersToNotify);
         
 
     }

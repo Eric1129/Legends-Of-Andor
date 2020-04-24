@@ -127,14 +127,45 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return this.pronouns;
     }
 
-    public List<string> getArticlesAsStringList()
+    public string allArticlesAsString()
+    {
+        string articles = "";
+        foreach(string key in this.heroArticles.Keys)
+        {
+            int quantity = heroArticles[key].Count;
+            articles += quantity + " x " + key;
+        }
+
+        return articles;
+        //List<string> articles = new List<string>();
+        //foreach(string key in this.heroArticles.Keys)
+        //{
+        //    articles.Add(key);
+        //}
+        //return articles;
+    }
+
+    public List<string> allArticlesAsStringList()
     {
         List<string> articles = new List<string>();
-        foreach(string key in this.heroArticles.Keys)
+        foreach (string key in this.heroArticles.Keys)
         {
             articles.Add(key);
         }
         return articles;
+    }
+    public bool hasArticle(string key)
+    {
+        List<Article> articles;
+        if(heroArticles.TryGetValue(key, out articles))
+        {
+            return heroArticles[key].Count > 0;
+           
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public int getGemstone()
@@ -174,15 +205,15 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return removedArticle;
     }
 
-    public string allArticles()
-    {
-        string s_articles = "";
-        foreach(string ar in getArticlesAsStringList())
-        {
-            s_articles += (ar + " ");
-        }
-        return s_articles;
-    }
+    //public string allArticles()
+    //{
+    //    string s_articles = "";
+    //    foreach(string ar in getArticlesAsStringList())
+    //    {
+    //        s_articles += (ar + " ");
+    //    }
+    //    return s_articles;
+    //}
 
     public void incGold(int amount)
     {
