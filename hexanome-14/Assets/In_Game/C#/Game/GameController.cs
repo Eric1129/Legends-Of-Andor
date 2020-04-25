@@ -297,6 +297,7 @@ public class GameController : MonoBehaviour
         }
 
     }
+
     public void moveToNewPos(Andor.Player player)
     {
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
