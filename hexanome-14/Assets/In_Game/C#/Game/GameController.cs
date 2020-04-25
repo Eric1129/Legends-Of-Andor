@@ -33,6 +33,12 @@ public class GameController : MonoBehaviour
     public Button movePrinceButton;
     public Button emptyWellButton;
     public Button buyBrewButton;
+    public Button chatButton;
+    public Button closeChatButton;
+    public Text chatText;
+    public GameObject chat;
+    public Text input;
+
 
     public Text turnLabel;
     //public Text scrollText;
@@ -100,6 +106,7 @@ public class GameController : MonoBehaviour
     private int[] event_cards2;
     private string[] fogTokens2;
     private string[] playersToNotify;
+    public string chatMessages;
 
     // Start is called before the first frame update
     void Start()
@@ -227,6 +234,8 @@ public class GameController : MonoBehaviour
         //    tok = 1;
         //    loadFogTokens();
         //}
+        chatText.text = chatMessages;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
@@ -425,6 +434,12 @@ public class GameController : MonoBehaviour
         
     }
 
+    public void sendChat()
+    {
+        Debug.Log("chat button clicked");
+        string message = input.text;
+        Game.sendAction(new SendChat(message, Game.myPlayer.getNetworkID(), PhotonNetwork.LocalPlayer.NickName));
+    }
 
     public void wellClick()
     {
@@ -434,6 +449,22 @@ public class GameController : MonoBehaviour
     public void buyBrewClick()
     {
         Game.sendAction(new BuyBrew(Game.myPlayer.getNetworkID()));
+    }
+
+    public void chatClick()
+    {
+        //Game.sendAction(new ChatOpen(Game.myPlayer.getNetworkID()));
+        chat.SetActive(true);
+        chatButton.gameObject.SetActive(false);
+        closeChatButton.gameObject.SetActive(true);
+    }
+
+    public void closeChatClick()
+    {
+        //Game.sendAction(new ChatOpen(Game.myPlayer.getNetworkID()));
+        chat.SetActive(false);
+        chatButton.gameObject.SetActive(true);
+        closeChatButton.gameObject.SetActive(false);
     }
 
 
@@ -460,7 +491,22 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(3));
     }
 
+    public void updateChatText(string all_messages)
+    {
+        //chatText.text = all_messages;
+        chatMessages = all_messages;
+    }
 
+    public void buttonIsClicked()
+    {
+        Debug.Log("chat button clicked");
+        string message = input.text;
+        Game.sendAction(new SendChat(message, Game.myPlayer.getNetworkID(), PhotonNetwork.LocalPlayer.NickName));
+        //Debug.Log("got the input");
+        //object[] data = { message, photonView.ViewID, PhotonNetwork.LocalPlayer.NickName };
+        //Debug.Log("sent the data");
+        //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
+    }
     public void foundWitch(int loc)
     {
         //instantiateTheWitch here
