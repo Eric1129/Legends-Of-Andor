@@ -4467,7 +4467,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 473716814}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999963
+  m_Size: 0.970306
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6473,6 +6473,7 @@ MonoBehaviour:
   scroll: {fileID: 451896549}
   prince: {fileID: 2117744765780500821, guid: 68b95c66f40c947a68e15c74c44753d9, type: 3}
   farmer: {fileID: 1820249372567332425, guid: 65a7c86113b594c64b96662e66af169b, type: 3}
+  medicinalHerb3: {fileID: 0}
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -13240,7 +13241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00032346006}
+  m_AnchoredPosition: {x: 0, y: 0.00009340431}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1200317106

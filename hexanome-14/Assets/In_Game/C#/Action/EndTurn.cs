@@ -79,6 +79,8 @@ public class EndTurn :Action
         }
 
         gs.uncoverEventCard();
+        gs.overtime = 8;
+        gs.endtime = 10;
         //advance narrator 
     }
     //public void moveGors(GameState gs)
