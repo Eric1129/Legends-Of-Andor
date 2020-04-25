@@ -124,7 +124,7 @@ public class Move : Action
     {
         int finalDest = gs.playerLocations[players[0]];
 
-        checkWells(gs, finalDest);
+        //checkWells(gs, finalDest);
         checkFogTokens(gs, finalDest);
         checkFarmers(gs, finalDest);
 
@@ -142,18 +142,21 @@ public class Move : Action
             {
                 if (w.getLocation() == location && !w.used)
                 {
-                    GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
-                    Debug.Log("emptying a well");
-                    w.emptyWell();
+                   //GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
+                    Debug.Log("landed on a well");
+                    // w.emptyWell();
                     //Object.Destroy(w.getPrefab());
                     //w.getPrefab().GetComponent<Renderer>().enabled = false;
                     //GameController.instance.emptyWell(w.getPrefab());
                     //string player =  gs.turnManager.currentPlayerTurn()
                     //add 3 willpower points to the hero who emptied the well
-                    int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
-                    gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+                    //int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                    //gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+                    // GameController.instance.emptyWellButton.IsActive();
+                    GameController.instance.emptyWellButton.gameObject.SetActive(true);
 
                 }
+
             }
         }
     }
@@ -211,7 +214,7 @@ public class Move : Action
                     else if (token_type == "wineskin")
                     {
                         GameController.instance.updateGameConsoleText("You have uncovered a wineskin Fog Token.");
-
+                        gs.getPlayer(players[0]).getHero().addArticle("wineskin");
                     }
                     else if (token_type == "willpower2")
                     {
@@ -227,7 +230,9 @@ public class Move : Action
                     }
                     else if (token_type == "brew")
                     {
-                        GameController.instance.updateGameConsoleText("You have uncovered a brew Fog Token");
+                        GameController.instance.updateGameConsoleText("You have uncovered the witch Fog Token! You will be given a brew for free!");
+                        gs.getPlayer(players[0]).getHero().addArticle("brew");
+                        GameController.instance.foundWitch();
 
                     }
                     else if (token_type == "gor")
