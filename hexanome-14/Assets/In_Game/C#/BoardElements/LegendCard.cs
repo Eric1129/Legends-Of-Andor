@@ -200,21 +200,18 @@ public class LegendCard : MonoBehaviour
             }
             if (LegendNumber == 3 && !easy)
             {
-                string textA3Hard = "A3_Hard\n" +
-                                    "This adventure starts with farmers who can be brought into the castle. " +
-                                    "The players can move their heroes to a farmer token and carry it along with their own figure. " +
-                                    "They can also do that if they just pass through a space with a farmer token. " +
-                                    "A hero can carry several farmer tokens at one time. " +
-                                    "If a hero carrying a farmer moves to a space with a creature or if a creature enters a space with a farmer, the farmer is immediately killed and removed from the game. " +
-                                    "The heroes can leave a farmer behind on a space at any time. " +
-                                    "Farmers who have been saved offer a great advantage: For each farmer brought into the castle, one extra creature can get into the castle without loss of the Legend. " +
-                                    "The farmer token is simply flipped onto its rear side and placed next to the golden shields. " +
-                                    "At first sunlight, the heroes receive a message: Old King Brandur’s willpower seems to have weakened with the passage of time. " +
-                                    "But there is said to be an herb growing in the mountain passes that can revive a person’s life. " +
-                                    "Task: " +
-                                    "The heroes must heal the king with the medicinal herb. To do that, they must find the witch. " +
-                                    "Only she knows the locations where this herb grows. The witch is hiding behind one of the fog tokens. " +
-                                    "Now continue to Legend card A5.";
+                string textA3Hard = "A3_Hard\n " +
+                    "Start by carrying out the instructions on the Checklist card. Then, get the following materials ready and arrange them next to the game board: " +
+                    "• “The Witch” and “The Rune Stones” Legend cards, 1 witch figure, 1 horseman figure, “Prince Thorald,” I tower, 1 medicinal herb(any value) " +
+                    "• face - down and mixed up: 6 magic rune stones " +
+                    "Finally, place stars on letters C, G, and N of the Legend track. " +
+                    "A gloomy mood has fallen upon the people. Rumors are making the rounds that skrals have set up a stronghold in some undisclosed location. " +
+                    "The heroes have scattered themselves across the entire land in search of this location.The defense of the castle is in their hands alone. " +
+                    "Place your heroes on the spaces corresponding to their rank numbers: dwarf on 7, warrior on 14, archer on 25, wizard on 34 " +
+                    "Place gors on spaces 8, 20, 21, 26,48 and one skral on 19. " +
+                    "Many farmers have asked for help and are seeking shelter behind the high walls of Rietburg Castle. " +
+                    "Place one farmer token on space 24. Now continue to Legend card A4.";
+
                 currentText.text = textA3Hard;
             }
             if (LegendNumber == 4)
