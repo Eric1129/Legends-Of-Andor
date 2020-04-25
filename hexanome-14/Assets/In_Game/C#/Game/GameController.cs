@@ -256,17 +256,6 @@ public class GameController : MonoBehaviour
                 {
                     if (w.getLocation() == loc && !w.used)
                     {
-                        //GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
-                        //Debug.Log("landed on a well");
-                        // w.emptyWell();
-                        //Object.Destroy(w.getPrefab());
-                        //w.getPrefab().GetComponent<Renderer>().enabled = false;
-                        //GameController.instance.emptyWell(w.getPrefab());
-                        //string player =  gs.turnManager.currentPlayerTurn()
-                        //add 3 willpower points to the hero who emptied the well
-                        //int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
-                        //gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
-                        // GameController.instance.emptyWellButton.IsActive();
                         GameController.instance.emptyWellButton.gameObject.SetActive(true);
                         wellValid = true;
                     }
@@ -423,60 +412,12 @@ public class GameController : MonoBehaviour
         
     }
 
-    //public void emptyWell()
-    //{
-    //    Dictionary<string, int> players = new Dictionary<string, int>();
-    //    players = Game.gameState.getPlayerLocations();
-    //    int loc = players[Game.myPlayer.getNetworkID()];
-    //    Debug.Log(loc);
-    //    foreach (Well w in Game.gameState.getWells().Keys)
-    //    {
-    //        if (w.getLocation() == loc && !w.used)
-    //        {
-    //            w.emptyWell();
-    //            int currWillpower = Game.myPlayer.getHero().getWillpower();
-    //            Debug.Log(currWillpower);
-    //            Game.myPlayer.getHero().setWillpower(currWillpower + 3);
-    //            updateGameConsoleText("You have emptied the well!");
-    //            //well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
-    //            // w.getPrefab().GetComponent<Renderer>().enabled = false;
-
-    //        }
-    //    }
-    //    emptyWellButton.gameObject.SetActive(false);
-    //}
 
     public void wellClick()
     {
         Game.sendAction(new EmptyWell(Game.myPlayer.getNetworkID()));
     }
-    //public void emptyWell()
-    //{
-    //    Dictionary<string, int> players = new Dictionary<string, int>();
-    //    players = Game.gameState.getPlayerLocations();
-    //    int loc = players[Game.myPlayer.getNetworkID()];
-    //    Debug.Log(loc);
-    //    foreach (Well w in Game.gameState.getWells().Keys)
-    //    {
-    //        if (w.getLocation() == loc && !w.used)
-    //        {
-
-    //            Game.sendAction(new EmptyWell(w, Game.myPlayer));
-
-    //            //w.emptyWell();
-    //            //int currWillpower = Game.myPlayer.getHero().getWillpower();
-    //            //Debug.Log(currWillpower);
-    //            //Game.myPlayer.getHero().setWillpower(currWillpower + 3);
-    //            //updateGameConsoleText("You have emptied the well!");
-    //            //well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
-    //            // w.getPrefab().GetComponent<Renderer>().enabled = false;
-
-    //        }
-    //    }
-    //    emptyWellButton.gameObject.SetActive(false);
-    //}
-
-
+ 
 
     public void loseScenario()
     {
