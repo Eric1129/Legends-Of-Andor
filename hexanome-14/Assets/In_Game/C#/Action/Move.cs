@@ -63,13 +63,27 @@ public class Move : Action
                 //going into overtime
                 if(overtime == setHour)
                 {
-                    //each additional hour costs 2 do u agree
-                    GameController.instance.updateGameConsoleText("You will lose 2 willpower points per additional hour");
+                    //each additional hour costs 2
+                    if (Game.gameState.eventcard19)
+                    {
+                        GameController.instance.updateGameConsoleText("You will lose 2 points for the 8th hour and " + gs.overtimeCost + " willpower points per additional hour after");
+                        
+                    }
                     GameController.instance.overtime();
-                    Debug.Log("You will lose 2 willpower points per additional hour");
+                    Debug.Log("You will lose " + gs.overtimeCost + " willpower points per additional hour");
                 }
 
-                int newPower = gs.getPlayer(players[0]).getHero().getWillpower() - 2;
+                int newPower;
+                if (Game.gameState.eventcard19 && overtime == (setHour-1) )
+                {
+                    newPower = gs.getPlayer(players[0]).getHero().getWillpower() - 2;
+                    Game.gameState.eventcard19 = false;
+                }
+                else
+                {
+                    newPower = gs.getPlayer(players[0]).getHero().getWillpower() - gs.overtimeCost;
+
+                }
 
                 if ( newPower <= 0)
                 {
@@ -79,13 +93,18 @@ public class Move : Action
                    // break;
                 }
 
-                //subtract 2 willpower points
-                gs.getPlayer(players[0]).getHero().setWillpower(gs.getPlayer(players[0]).getHero().getWillpower() - 2); 
+                //subtract willpower points
+                gs.getPlayer(players[0]).getHero().setWillpower(newPower); 
 
             }
             // Move
             gs.playerLocations[players[0]] = path[i].getIndex();
             Debug.Log(path[i].getIndex());
+            if(path[i].getIndex() == 57 && Game.gameState.eventcard3)
+            {
+                gs.getPlayer(players[0]).getHero().increaseStrength(1);
+                Game.gameState.eventcard3 = false;
+            }
 
             // Take an hour
             gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());

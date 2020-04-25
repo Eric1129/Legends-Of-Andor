@@ -210,7 +210,9 @@ public class GameController : MonoBehaviour
             + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
             + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
             + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
-            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString();
+            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+            + "\nArticles: " + Game.myPlayer.getHero().allArticles();
+            
         heroStatsText.text = update;
     }
 
@@ -506,12 +508,25 @@ public void updateGameConsoleText(string message)
             Debug.Log("INITIALIZING THE STRENGTH POINTS");
             initializeStrengthPoints();
 
+            Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            initializeWineskin();
+
             Debug.Log("INITIALIZING THE MED HERB");
             instantiateMedicinalHerb(3);
 
         }
 
     }
+
+
+    public void initializeWineskin()
+    {
+        foreach (Andor.Player player in Game.gameState.getPlayers())
+        {
+            player.getHero().addArticle("Wineskin");
+        }
+    }
+   
 
     public void monsterAtCastle(Monster monster)
     {

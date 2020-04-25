@@ -81,6 +81,7 @@ public class EndTurn :Action
         gs.uncoverEventCard();
         gs.overtime = 8;
         gs.endtime = 10;
+        gs.overtimeCost = 2;
         //advance narrator 
     }
     //public void moveGors(GameState gs)
