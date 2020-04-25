@@ -16,7 +16,8 @@ public enum Type
     MovePrinceThoald,
     EmptyWell,
     BuyBrew,
-    SendChat
+    SendChat,
+    UseTelescope
 }
 
 public interface Action

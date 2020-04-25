@@ -247,6 +247,11 @@ public class Move : Action
                         GameController.instance.instantiateEventGor(location);
 
                     }
+                    else if(token_type == "strength")
+                    {
+                        GameController.instance.updateGameConsoleText("You have uncovered a Strength Fog Token.");
+                        gs.getPlayer(players[0]).getHero().increaseStrength(1);
+                    }
                     Object.Destroy(f.getPrefab());
                    //remove fog token from dictionary
                 }
