@@ -33,8 +33,15 @@ public class GameState
     private Dictionary<Farmer, int> farmers;
     public int overtime = 8;
     public int endtime = 10;
+    public int overtimeCost = 2;
     public bool skralTowerDefeated;
-public GameState()
+    public bool eventcard19;
+    public bool eventcard3;
+    public int brewCost;
+    public int witchLocation;
+    public bool witchFound;
+
+    public GameState()
 	{
         players = new Dictionary<string, Player>();
         monsters = new List<Monster>();
@@ -52,6 +59,11 @@ public GameState()
         merchants = new Dictionary< int, Merchant>();
         skralTowerDefeated = false;
         medicinalHerb = new List<MedicinalHerb>();
+        eventcard19 = false;
+        eventcard3 = false;
+        brewCost = 2;
+        witchLocation = -1;
+        witchFound = false;
     }
 
     public void addPlayer(Player p)
@@ -159,6 +171,12 @@ public GameState()
     {
         return wells;
     }
+
+    public void setWells(Dictionary<Well, int> updatedWells)
+    {
+        this.wells = updatedWells;
+    }
+
     public void addWell(Well w)
     {
         wells.Add(w, w.getLocation());

@@ -54,7 +54,10 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     {
         this.gold += gold;
     }
-
+    public void decreaseGold(int gold)
+    {
+        this.gold -= gold;
+    }
     public int getStrength()
     {
         return strength;
@@ -67,6 +70,11 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     {
         this.strength += strength;
     }
+    public bool decreaseStrength(int strength)
+    {
+        this.strength -= strength;
+        return true;
+    }
     public int getWillpower()
     {
         return willpower;
@@ -78,6 +86,10 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void increaseWillpower(int willpower)
     {
         this.willpower += willpower;
+    }
+    public void decreaseWillpower(int willpower)
+    {
+        this.willpower -= willpower;
     }
     public int getHour()
     {

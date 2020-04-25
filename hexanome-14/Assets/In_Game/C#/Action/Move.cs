@@ -63,13 +63,27 @@ public class Move : Action
                 //going into overtime
                 if(overtime == setHour)
                 {
-                    //each additional hour costs 2 do u agree
-                    GameController.instance.updateGameConsoleText("You will lose 2 willpower points per additional hour");
+                    //each additional hour costs 2
+                    if (Game.gameState.eventcard19)
+                    {
+                        GameController.instance.updateGameConsoleText("You will lose 2 points for the 8th hour and " + gs.overtimeCost + " willpower points per additional hour after");
+                        
+                    }
                     GameController.instance.overtime();
-                    Debug.Log("You will lose 2 willpower points per additional hour");
+                    Debug.Log("You will lose " + gs.overtimeCost + " willpower points per additional hour");
                 }
 
-                int newPower = gs.getPlayer(players[0]).getHero().getWillpower() - 2;
+                int newPower;
+                if (Game.gameState.eventcard19 && overtime == (setHour-1) )
+                {
+                    newPower = gs.getPlayer(players[0]).getHero().getWillpower() - 2;
+                    Game.gameState.eventcard19 = false;
+                }
+                else
+                {
+                    newPower = gs.getPlayer(players[0]).getHero().getWillpower() - gs.overtimeCost;
+
+                }
 
                 if ( newPower <= 0)
                 {
@@ -79,13 +93,18 @@ public class Move : Action
                    // break;
                 }
 
-                //subtract 2 willpower points
-                gs.getPlayer(players[0]).getHero().setWillpower(gs.getPlayer(players[0]).getHero().getWillpower() - 2); 
+                //subtract willpower points
+                gs.getPlayer(players[0]).getHero().setWillpower(newPower); 
 
             }
             // Move
             gs.playerLocations[players[0]] = path[i].getIndex();
             Debug.Log(path[i].getIndex());
+            if(path[i].getIndex() == 57 && Game.gameState.eventcard3)
+            {
+                gs.getPlayer(players[0]).getHero().increaseStrength(1);
+                Game.gameState.eventcard3 = false;
+            }
 
             // Take an hour
             gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
@@ -105,7 +124,7 @@ public class Move : Action
     {
         int finalDest = gs.playerLocations[players[0]];
 
-        checkWells(gs, finalDest);
+        //checkWells(gs, finalDest);
         checkFogTokens(gs, finalDest);
         checkFarmers(gs, finalDest);
 
@@ -123,18 +142,21 @@ public class Move : Action
             {
                 if (w.getLocation() == location && !w.used)
                 {
-                    GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
-                    Debug.Log("emptying a well");
-                    w.emptyWell();
+                   //GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
+                    Debug.Log("landed on a well");
+                    // w.emptyWell();
                     //Object.Destroy(w.getPrefab());
                     //w.getPrefab().GetComponent<Renderer>().enabled = false;
                     //GameController.instance.emptyWell(w.getPrefab());
                     //string player =  gs.turnManager.currentPlayerTurn()
                     //add 3 willpower points to the hero who emptied the well
-                    int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
-                    gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+                    //int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                    //gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+                    // GameController.instance.emptyWellButton.IsActive();
+                    GameController.instance.emptyWellButton.gameObject.SetActive(true);
 
                 }
+
             }
         }
     }
@@ -192,7 +214,7 @@ public class Move : Action
                     else if (token_type == "wineskin")
                     {
                         GameController.instance.updateGameConsoleText("You have uncovered a wineskin Fog Token.");
-
+                        gs.getPlayer(players[0]).getHero().addArticle("wineskin");
                     }
                     else if (token_type == "willpower2")
                     {
@@ -208,7 +230,12 @@ public class Move : Action
                     }
                     else if (token_type == "brew")
                     {
-                        GameController.instance.updateGameConsoleText("You have uncovered a brew Fog Token");
+                        //GameController.instance.updateGameConsoleText("You have uncovered the witch Fog Token! You will be given a brew for free!");
+                        GameController.instance.foundWitch(location);
+                        gs.getPlayer(players[0]).getHero().addArticle("brew");
+                        gs.witchLocation = location;
+                        //GameController.instance.instantiateWitch();
+                        //GameController.instance.foundWitch();
 
                     }
                     else if (token_type == "gor")

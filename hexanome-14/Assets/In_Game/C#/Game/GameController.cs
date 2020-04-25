@@ -31,6 +31,9 @@ public class GameController : MonoBehaviour
 
     public Button moveButton;
     public Button movePrinceButton;
+    public Button emptyWellButton;
+    public Button buyBrewButton;
+
     public Text turnLabel;
     //public Text scrollText;
     public Text scrollTxt;
@@ -53,6 +56,7 @@ public class GameController : MonoBehaviour
     public GameObject prince;
     public GameObject farmer;
     public GameObject medicinalHerb3;
+    public GameObject witch;
 
 
     public Dictionary<int, BoardPosition> tiles;
@@ -210,7 +214,9 @@ public class GameController : MonoBehaviour
             + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
             + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
             + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
-            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString();
+            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+            + "\nArticles: " + Game.myPlayer.getHero().allArticles();
+            
         heroStatsText.text = update;
     }
 
@@ -243,6 +249,35 @@ public class GameController : MonoBehaviour
 
                 timeObjects[player.getNetworkID()].transform.position =
                     moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
+
+            }
+
+            int loc = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            bool wellValid = false;
+                foreach (Well w in Game.gameState.getWells().Keys)
+                {
+                    if (w.getLocation() == loc && !w.used)
+                    {
+                        GameController.instance.emptyWellButton.gameObject.SetActive(true);
+                        wellValid = true;
+                    }
+
+                }
+
+            if (!wellValid)
+            {
+                GameController.instance.emptyWellButton.gameObject.SetActive(false);
+            }
+
+            bool brewValid = false;
+            if(loc == Game.gameState.witchLocation && Game.gameState.witchLocation != -1)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(true);
+                brewValid = true;
+            }
+            if (!brewValid)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(false);
             }
 
             // Update Player position
@@ -391,6 +426,17 @@ public class GameController : MonoBehaviour
     }
 
 
+    public void wellClick()
+    {
+        Game.sendAction(new EmptyWell(Game.myPlayer.getNetworkID()));
+    }
+
+    public void buyBrewClick()
+    {
+        Game.sendAction(new BuyBrew(Game.myPlayer.getNetworkID()));
+    }
+
+
     public void loseScenario()
     {
         scrollTxt.text = "YOU LOST!";
@@ -401,8 +447,11 @@ public class GameController : MonoBehaviour
 
     public void overtime()
     {
-        scrollTxt.text = "You will now lose 2 willpower points for each additional hour!";
-        StartCoroutine(overtimeCoroutine(3));
+        if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
+        {
+            scrollTxt.text = "You will now lose +" + Game.gameState.overtimeCost+ " willpower points for each additional hour!";
+            StartCoroutine(overtimeCoroutine(3));
+        }       
     }
 
     public void cannotFinishMove()
@@ -411,7 +460,28 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(3));
     }
 
-   IEnumerator overtimeCoroutine(int sleep)
+
+    public void foundWitch(int loc)
+    {
+        //instantiateTheWitch here
+        scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
+        StartCoroutine(overtimeCoroutine(5));
+        //instantiate witch
+        Debug.Log("Added witch at position: " + loc);
+        GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+        //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
+        //Debug.Log(w);
+        //Debug.Log(w.getLocation());
+        //Game.gameState.addWell(w);
+
+
+        //if it is my player, then get roll
+        //instantiateMedicinalHerb(roll)
+        //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
+        //Game.gameState.foundWitch
+        //Game.gameState.brewCost
+    }
+    IEnumerator overtimeCoroutine(int sleep)
     {
         //Print the time of when the function is first called.
         //Debug.Log("Started Coroutine at timestamp : " + Time.time);
@@ -507,12 +577,25 @@ public void updateGameConsoleText(string message)
             Debug.Log("INITIALIZING THE STRENGTH POINTS");
             initializeStrengthPoints();
 
+            Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            initializeWineskin();
+
             Debug.Log("INITIALIZING THE MED HERB");
             instantiateMedicinalHerb(3);
 
         }
 
     }
+
+
+    public void initializeWineskin()
+    {
+        foreach (Andor.Player player in Game.gameState.getPlayers())
+        {
+            player.getHero().addArticle("Wineskin");
+        }
+    }
+   
 
     public void monsterAtCastle(Monster monster)
     {
@@ -746,6 +829,8 @@ public void updateGameConsoleText(string message)
         Debug.Log("instantiated3");
         medicinalHerbObject.Add(mh, herb);
         Debug.Log("Added medicinal herb at position: " + mh.getLocation());
+
+        //need to instantiate Gor on the same spot
     }
 
     public void loadFogTokens()
@@ -1110,4 +1195,6 @@ public void updateGameConsoleText(string message)
             Debug.Log(p.getHero() + " " + p.getHero().getStrength());
         }
     }
+
+
 }
