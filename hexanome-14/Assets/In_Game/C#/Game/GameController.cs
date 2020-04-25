@@ -541,15 +541,18 @@ public void updateGameConsoleText(string message)
         if (playerCount == 1 || playerCount == 2)
         {
             Game.gameState.maxMonstersAllowedInCastle = 3;
+            Game.gameState.brewCost = 3;
         }
         else if (playerCount == 3)
         {
             Game.gameState.maxMonstersAllowedInCastle = 2;
+            Game.gameState.brewCost = 4;
 
         }
         else if (playerCount == 4)
         {
             Game.gameState.maxMonstersAllowedInCastle = 1;
+            Game.gameState.brewCost = 5;
 
         }
         GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
