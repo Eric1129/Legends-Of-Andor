@@ -248,9 +248,10 @@ public class GameController : MonoBehaviour
                 timeObjects[player.getNetworkID()].transform.position =
                     moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
 
-                int loc = Game.gameState.getPlayerLocations()[player.getNetworkID()];
-                bool wellValid = false;
+            }
 
+            int loc = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            bool wellValid = false;
                 foreach (Well w in Game.gameState.getWells().Keys)
                 {
                     if (w.getLocation() == loc && !w.used)
@@ -271,10 +272,10 @@ public class GameController : MonoBehaviour
                     }
 
                 }
-                if (!wellValid)
-                {
-                    GameController.instance.emptyWellButton.gameObject.SetActive(false);
-                }
+
+            if (!wellValid)
+            {
+                GameController.instance.emptyWellButton.gameObject.SetActive(false);
             }
 
             // Update Player position
@@ -422,28 +423,59 @@ public class GameController : MonoBehaviour
         
     }
 
-    public void emptyWell()
-    {
-        Dictionary<string, int> players = new Dictionary<string, int>();
-        players = Game.gameState.getPlayerLocations();
-        int loc = players[Game.myPlayer.getNetworkID()];
-        Debug.Log(loc);
-        foreach (Well w in Game.gameState.getWells().Keys)
-        {
-            if (w.getLocation() == loc && !w.used)
-            {
-                w.emptyWell();
-                int currWillpower = Game.myPlayer.getHero().getWillpower();
-                Debug.Log(currWillpower);
-                Game.myPlayer.getHero().setWillpower(currWillpower + 3);
-                updateGameConsoleText("You have emptied the well!");
-                //well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
-                // w.getPrefab().GetComponent<Renderer>().enabled = false;
+    //public void emptyWell()
+    //{
+    //    Dictionary<string, int> players = new Dictionary<string, int>();
+    //    players = Game.gameState.getPlayerLocations();
+    //    int loc = players[Game.myPlayer.getNetworkID()];
+    //    Debug.Log(loc);
+    //    foreach (Well w in Game.gameState.getWells().Keys)
+    //    {
+    //        if (w.getLocation() == loc && !w.used)
+    //        {
+    //            w.emptyWell();
+    //            int currWillpower = Game.myPlayer.getHero().getWillpower();
+    //            Debug.Log(currWillpower);
+    //            Game.myPlayer.getHero().setWillpower(currWillpower + 3);
+    //            updateGameConsoleText("You have emptied the well!");
+    //            //well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
+    //            // w.getPrefab().GetComponent<Renderer>().enabled = false;
 
-            }
-        }
-        emptyWellButton.gameObject.SetActive(false);
+    //        }
+    //    }
+    //    emptyWellButton.gameObject.SetActive(false);
+    //}
+
+    public void wellClick()
+    {
+        Game.sendAction(new EmptyWell(Game.myPlayer.getNetworkID()));
     }
+    //public void emptyWell()
+    //{
+    //    Dictionary<string, int> players = new Dictionary<string, int>();
+    //    players = Game.gameState.getPlayerLocations();
+    //    int loc = players[Game.myPlayer.getNetworkID()];
+    //    Debug.Log(loc);
+    //    foreach (Well w in Game.gameState.getWells().Keys)
+    //    {
+    //        if (w.getLocation() == loc && !w.used)
+    //        {
+
+    //            Game.sendAction(new EmptyWell(w, Game.myPlayer));
+
+    //            //w.emptyWell();
+    //            //int currWillpower = Game.myPlayer.getHero().getWillpower();
+    //            //Debug.Log(currWillpower);
+    //            //Game.myPlayer.getHero().setWillpower(currWillpower + 3);
+    //            //updateGameConsoleText("You have emptied the well!");
+    //            //well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
+    //            // w.getPrefab().GetComponent<Renderer>().enabled = false;
+
+    //        }
+    //    }
+    //    emptyWellButton.gameObject.SetActive(false);
+    //}
+
 
 
     public void loseScenario()
