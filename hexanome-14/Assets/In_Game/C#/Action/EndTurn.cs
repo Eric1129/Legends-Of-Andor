@@ -43,8 +43,7 @@ public class EndTurn :Action
             gs.day += 1;
             GameController.instance.updateDayCount(Game.gameState.day);
 
-            // advance legend card
-            LegendCard.instance.advanceLegendCard(Game.gameState.day);
+           
             foreach (Andor.Player player in gs.getPlayers())
             {
                 player.getHero().setHour(0);
