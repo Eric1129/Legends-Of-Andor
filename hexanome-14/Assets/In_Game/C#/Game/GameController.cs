@@ -711,7 +711,7 @@ public void updateGameConsoleText(string message)
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
         }
-        foreach (int skralTile in new int[]{9})
+        foreach (int skralTile in new int[]{19})
         {
             Skral s = new Skral(Game.positionGraph.getNode(skralTile));
             Game.gameState.addMonster(s);
