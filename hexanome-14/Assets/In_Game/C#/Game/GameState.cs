@@ -26,12 +26,14 @@ public class GameState
     private Dictionary<FogToken, int> fogTokens;
     // private Dictionary<PrinceThorald, int> princeThor;
     private List<PrinceThorald> princeThor;
+    private List<MedicinalHerb> medicinalHerb;
     public int[] event_cards;
     public string[] fogtoken_order;
     public int day;
     private Dictionary<Farmer, int> farmers;
-
-
+    public int overtime = 8;
+    public int endtime = 10;
+    public bool skralTowerDefeated;
 public GameState()
 	{
         players = new Dictionary<string, Player>();
@@ -48,6 +50,8 @@ public GameState()
         day = 1;
         farmers = new Dictionary<Farmer, int>();
         merchants = new Dictionary< int, Merchant>();
+        skralTowerDefeated = false;
+        medicinalHerb = new List<MedicinalHerb>();
     }
 
     public void addPlayer(Player p)
@@ -191,7 +195,14 @@ public GameState()
         princeThor.Add(prince);
     }
 
-
+    public MedicinalHerb getMedicinalHerb()
+    {
+        return medicinalHerb.ToArray().ElementAt(0);
+    }
+    public void addMedicinalHerb(MedicinalHerb m)
+    {
+        medicinalHerb.Add(m);
+    }
     public void updateGorLocations()
     {
         Dictionary<Gor,int> updatedGors = new Dictionary<Gor, int>();

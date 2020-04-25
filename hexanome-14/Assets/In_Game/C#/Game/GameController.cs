@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
     public Text shieldCountText;
     public Text dayCountText;
     public Text witchText;
+    public Text heroStatsText;
 
 
     public GameObject emptyPrefab;
@@ -51,6 +52,8 @@ public class GameController : MonoBehaviour
     public GameObject scroll;
     public GameObject prince;
     public GameObject farmer;
+    public GameObject medicinalHerb3;
+
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -61,6 +64,7 @@ public class GameController : MonoBehaviour
     public Dictionary<Monster, GameObject> monsterObjects;
     //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
+    public Dictionary<MedicinalHerb, GameObject> medicinalHerbObject;
 
     //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
     //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
@@ -112,6 +116,7 @@ public class GameController : MonoBehaviour
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
         princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
+        medicinalHerbObject = new Dictionary<MedicinalHerb,GameObject>();
         initTransform = transform;
 
         instance = this;
@@ -199,6 +204,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void updateHeroStats()
+    {
+        string update = Game.myPlayer.getHeroType()
+            + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
+            + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+            + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString();
+        heroStatsText.text = update;
+    }
+
     void Update()
     {
         //if(Game.gameState.fogtoken_order == null && tok != 1)
@@ -219,6 +234,7 @@ public class GameController : MonoBehaviour
         }
         if(Game.gameState != null)
         {
+
             // Update Player position
             foreach (Andor.Player player in Game.gameState.getPlayers())
             {
@@ -250,6 +266,14 @@ public class GameController : MonoBehaviour
             {
                 turnLabel.color = UnityEngine.Color.black;
             }
+
+            updateHeroStats();
+
+            if (winScenario() && Game.gameState.outcome == "won")
+            {
+                Game.gameState.outcome = "wonNotified";
+                winNotify();
+            }
         }
 
         if (tradeRequestSent)
@@ -271,7 +295,7 @@ public class GameController : MonoBehaviour
             notify();
             notifTime -= Time.deltaTime;
         }
-        
+
     }
     public void moveToNewPos(Andor.Player player)
     {
@@ -369,14 +393,60 @@ public class GameController : MonoBehaviour
     public void loseScenario()
     {
         scrollTxt.text = "YOU LOST!";
-        scroll.SetActive(true);
+        //scroll.SetActive(true);
+        Game.gameState.outcome = "lost";
+        StartCoroutine(overtimeCoroutine(10));
     }
 
-    public void updateGameConsoleText(string message)
+    public void overtime()
     {
-        gameConsoleText.text = message;
+        scrollTxt.text = "You will now lose 2 willpower points for each additional hour!";
+        StartCoroutine(overtimeCoroutine(3));
     }
 
+    public void cannotFinishMove()
+    {
+        scrollTxt.text = "You do not have enough willpower points to finish your move! Please end your day!";
+        StartCoroutine(overtimeCoroutine(3));
+    }
+
+   IEnumerator overtimeCoroutine(int sleep)
+    {
+        //Print the time of when the function is first called.
+        //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        instance.scroll.SetActive(true);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(sleep);
+        instance.scroll.SetActive(false);
+
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    }
+
+public void updateGameConsoleText(string message)
+    {
+           gameConsoleText.text = message;
+    }
+
+
+    public void winNotify()
+    {
+        scrollTxt.text = "Congratulations, you have successfully completed the legend!";
+        StartCoroutine(overtimeCoroutine(10));
+        
+    }
+
+    //IEnumerator consoleCoroutine(string message)
+    //{
+    //    //Print the time of when the function is first called.
+    //    //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+    //    gameConsoleText.text = message;
+    //    //yield on a new YieldInstruction that waits for 5 seconds.
+    //    yield return new WaitForSeconds(5);
+    //    //After we have waited 5 seconds print the time again.
+    //   // Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    //}
     //public void updateGameConsoleText(string message, string[] players)
     //{
     //    gameConsoleText.text = message;
@@ -424,7 +494,6 @@ public class GameController : MonoBehaviour
 
             loadWells();
 
-
             loadMerchants();
 
             loadFogTokens();
@@ -433,6 +502,12 @@ public class GameController : MonoBehaviour
             loadPrinceThorald();
 
             loadFarmers();
+
+            Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            initializeStrengthPoints();
+
+            Debug.Log("INITIALIZING THE MED HERB");
+            instantiateMedicinalHerb(3);
 
         }
 
@@ -646,6 +721,31 @@ public class GameController : MonoBehaviour
     }
 
 
+    private void instantiateMedicinalHerb(int roll)
+    {
+        int loc = 0;
+        if (roll == 1 || roll == 2)
+        {
+            loc = 37;
+        }
+        if (roll == 3 || roll == 4)
+        {
+            loc = 67;
+        }
+        if (roll == 5 || roll == 6)
+        {
+            loc = 61;
+        }
+        Debug.Log("got roll");
+        GameObject herb = Instantiate(medicinalHerb3, tiles[loc].getMiddle(), transform.rotation);
+        Debug.Log("instantiated");
+        MedicinalHerb mh = new MedicinalHerb(Game.positionGraph.getNode(loc), herb);
+        Debug.Log("instantiated2");
+        Game.gameState.addMedicinalHerb(mh);
+        Debug.Log("instantiated3");
+        medicinalHerbObject.Add(mh, herb);
+        Debug.Log("Added medicinal herb at position: " + mh.getLocation());
+    }
 
     public void loadFogTokens()
     {
@@ -961,5 +1061,52 @@ public class GameController : MonoBehaviour
     public void SLEEP(float sec)
     {
         StartCoroutine(Game.sleep(sec));
+    }
+
+
+    public bool winScenario()
+    {
+        //checks that herb is in castle, castle defended
+        if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
+        {
+            Game.gameState.outcome = "won";
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public bool checkMedicinalHerbAtCastle()
+    {
+        //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
+        //{
+        //    if (mh.getLocation() == 0)
+        //    {
+        //        return true;
+        //    }
+        //}
+        //return false;
+        if (Game.gameState.getMedicinalHerb() != null)
+        {
+            return false;
+        }
+
+        if(Game.gameState.getMedicinalHerb().getLocation() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void initializeStrengthPoints()
+    {
+        foreach(Andor.Player p in Game.gameState.getPlayers())
+        {
+            p.getHero().increaseStrength(2);
+            Debug.Log(p.getHero() + " " + p.getHero().getStrength());
+        }
     }
 }
