@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     public Button moveButton;
     public Button movePrinceButton;
     public Button emptyWellButton;
+    public Button buyBrewButton;
 
     public Text turnLabel;
     //public Text scrollText;
@@ -55,6 +56,7 @@ public class GameController : MonoBehaviour
     public GameObject prince;
     public GameObject farmer;
     public GameObject medicinalHerb3;
+    public GameObject witch;
 
 
     public Dictionary<int, BoardPosition> tiles;
@@ -267,6 +269,17 @@ public class GameController : MonoBehaviour
                 GameController.instance.emptyWellButton.gameObject.SetActive(false);
             }
 
+            bool brewValid = false;
+            if(loc == Game.gameState.witchLocation && Game.gameState.witchLocation != -1)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(true);
+                brewValid = true;
+            }
+            if (!brewValid)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(false);
+            }
+
             // Update Player position
             foreach (Monster monster in Game.gameState.getMonsters())
             {
@@ -417,7 +430,12 @@ public class GameController : MonoBehaviour
     {
         Game.sendAction(new EmptyWell(Game.myPlayer.getNetworkID()));
     }
- 
+
+    public void buyBrewClick()
+    {
+        Game.sendAction(new BuyBrew(Game.myPlayer.getNetworkID()));
+    }
+
 
     public void loseScenario()
     {
@@ -443,11 +461,20 @@ public class GameController : MonoBehaviour
     }
 
 
-    public void foundWitch()
+    public void foundWitch(int loc)
     {
         //instantiateTheWitch here
-        scrollTxt.text = "You have found Reka the witch!";
-        StartCoroutine(overtimeCoroutine(3));
+        scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
+        StartCoroutine(overtimeCoroutine(5));
+        //instantiate witch
+        Debug.Log("Added witch at position: " + loc);
+        GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+        //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
+        //Debug.Log(w);
+        //Debug.Log(w.getLocation());
+        //Game.gameState.addWell(w);
+
+
         //if it is my player, then get roll
         //instantiateMedicinalHerb(roll)
         //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
@@ -1168,9 +1195,6 @@ public void updateGameConsoleText(string message)
             Debug.Log(p.getHero() + " " + p.getHero().getStrength());
         }
     }
-
-
-   
 
 
 }

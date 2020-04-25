@@ -14,7 +14,8 @@ public enum Type
     RespondTrade,
     BuyFromMerchant,
     MovePrinceThoald,
-    EmptyWell
+    EmptyWell,
+    BuyBrew
 }
 
 public interface Action
