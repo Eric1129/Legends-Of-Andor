@@ -37,16 +37,16 @@ public class BuyBrew : Action
         Debug.Log(loc);
         if(loc == gs.witchLocation && gs.witchLocation != -1)
         {
-            if (gs.getPlayer(players[0]).getHero().getStrength() - gs.brewCost >= 0)
+            if (gs.getPlayer(players[0]).getHero().getGold() - gs.brewCost >= 0)
             {
-                gs.getPlayer(players[0]).getHero().decreaseStrength(gs.brewCost);
+                gs.getPlayer(players[0]).getHero().decreaseGold(gs.brewCost);
                 gs.getPlayer(players[0]).getHero().addArticle("brew");
                 GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has purchased the brew!");
 
             }
             else
             {
-                GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " does not have enough strength points to purchase brew");
+                GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " does not have enough gold to purchase the brew");
             }
         }
 
