@@ -230,9 +230,12 @@ public class Move : Action
                     }
                     else if (token_type == "brew")
                     {
-                        GameController.instance.updateGameConsoleText("You have uncovered the witch Fog Token! You will be given a brew for free!");
+                        //GameController.instance.updateGameConsoleText("You have uncovered the witch Fog Token! You will be given a brew for free!");
+                        GameController.instance.foundWitch(location);
                         gs.getPlayer(players[0]).getHero().addArticle("brew");
-                        GameController.instance.foundWitch();
+                        gs.witchLocation = location;
+                        //GameController.instance.instantiateWitch();
+                        //GameController.instance.foundWitch();
 
                     }
                     else if (token_type == "gor")

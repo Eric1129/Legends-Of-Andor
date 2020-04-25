@@ -37,6 +37,9 @@ public class GameState
     public bool skralTowerDefeated;
     public bool eventcard19;
     public bool eventcard3;
+    public int brewCost;
+    public int witchLocation;
+    public bool witchFound;
 
     public GameState()
 	{
@@ -58,6 +61,9 @@ public class GameState
         medicinalHerb = new List<MedicinalHerb>();
         eventcard19 = false;
         eventcard3 = false;
+        brewCost = 2;
+        witchLocation = -1;
+        witchFound = false;
     }
 
     public void addPlayer(Player p)
