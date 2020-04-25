@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour
 
     public Button moveButton;
     public Button movePrinceButton;
+    public Button emptyWellButton;
+
     public Text turnLabel;
     //public Text scrollText;
     public Text scrollTxt;
@@ -210,7 +212,9 @@ public class GameController : MonoBehaviour
             + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
             + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
             + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
-            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString();
+            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+            + "\nArticles: " + Game.myPlayer.getHero().allArticles();
+            
         heroStatsText.text = update;
     }
 
@@ -243,6 +247,34 @@ public class GameController : MonoBehaviour
 
                 timeObjects[player.getNetworkID()].transform.position =
                     moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
+
+                int loc = Game.gameState.getPlayerLocations()[player.getNetworkID()];
+                bool wellValid = false;
+
+                foreach (Well w in Game.gameState.getWells().Keys)
+                {
+                    if (w.getLocation() == loc && !w.used)
+                    {
+                        //GameController.instance.updateGameConsoleText("You have emptied the well and have been granted 3 willpower points!");
+                        //Debug.Log("landed on a well");
+                        // w.emptyWell();
+                        //Object.Destroy(w.getPrefab());
+                        //w.getPrefab().GetComponent<Renderer>().enabled = false;
+                        //GameController.instance.emptyWell(w.getPrefab());
+                        //string player =  gs.turnManager.currentPlayerTurn()
+                        //add 3 willpower points to the hero who emptied the well
+                        //int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
+                        //gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+                        // GameController.instance.emptyWellButton.IsActive();
+                        GameController.instance.emptyWellButton.gameObject.SetActive(true);
+                        wellValid = true;
+                    }
+
+                }
+                if (!wellValid)
+                {
+                    GameController.instance.emptyWellButton.gameObject.SetActive(false);
+                }
             }
 
             // Update Player position
@@ -390,6 +422,29 @@ public class GameController : MonoBehaviour
         
     }
 
+    public void emptyWell()
+    {
+        Dictionary<string, int> players = new Dictionary<string, int>();
+        players = Game.gameState.getPlayerLocations();
+        int loc = players[Game.myPlayer.getNetworkID()];
+        Debug.Log(loc);
+        foreach (Well w in Game.gameState.getWells().Keys)
+        {
+            if (w.getLocation() == loc && !w.used)
+            {
+                w.emptyWell();
+                int currWillpower = Game.myPlayer.getHero().getWillpower();
+                Debug.Log(currWillpower);
+                Game.myPlayer.getHero().setWillpower(currWillpower + 3);
+                updateGameConsoleText("You have emptied the well!");
+                //well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
+                // w.getPrefab().GetComponent<Renderer>().enabled = false;
+
+            }
+        }
+        emptyWellButton.gameObject.SetActive(false);
+    }
+
 
     public void loseScenario()
     {
@@ -401,8 +456,11 @@ public class GameController : MonoBehaviour
 
     public void overtime()
     {
-        scrollTxt.text = "You will now lose 2 willpower points for each additional hour!";
-        StartCoroutine(overtimeCoroutine(3));
+        if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
+        {
+            scrollTxt.text = "You will now lose +" + Game.gameState.overtimeCost+ " willpower points for each additional hour!";
+            StartCoroutine(overtimeCoroutine(3));
+        }       
     }
 
     public void cannotFinishMove()
@@ -411,7 +469,19 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(3));
     }
 
-   IEnumerator overtimeCoroutine(int sleep)
+
+    public void foundWitch()
+    {
+        //instantiateTheWitch here
+        scrollTxt.text = "You have found Reka the witch!";
+        StartCoroutine(overtimeCoroutine(3));
+        //if it is my player, then get roll
+        //instantiateMedicinalHerb(roll)
+        //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
+        //Game.gameState.foundWitch
+        //Game.gameState.brewCost
+    }
+    IEnumerator overtimeCoroutine(int sleep)
     {
         //Print the time of when the function is first called.
         //Debug.Log("Started Coroutine at timestamp : " + Time.time);
@@ -507,12 +577,25 @@ public void updateGameConsoleText(string message)
             Debug.Log("INITIALIZING THE STRENGTH POINTS");
             initializeStrengthPoints();
 
+            Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            initializeWineskin();
+
             Debug.Log("INITIALIZING THE MED HERB");
             instantiateMedicinalHerb(3);
 
         }
 
     }
+
+
+    public void initializeWineskin()
+    {
+        foreach (Andor.Player player in Game.gameState.getPlayers())
+        {
+            player.getHero().addArticle("Wineskin");
+        }
+    }
+   
 
     public void monsterAtCastle(Monster monster)
     {
@@ -746,6 +829,8 @@ public void updateGameConsoleText(string message)
         Debug.Log("instantiated3");
         medicinalHerbObject.Add(mh, herb);
         Debug.Log("Added medicinal herb at position: " + mh.getLocation());
+
+        //need to instantiate Gor on the same spot
     }
 
     public void loadFogTokens()
@@ -1110,4 +1195,9 @@ public void updateGameConsoleText(string message)
             Debug.Log(p.getHero() + " " + p.getHero().getStrength());
         }
     }
+
+
+   
+
+
 }
