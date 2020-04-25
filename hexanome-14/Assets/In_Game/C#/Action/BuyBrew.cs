@@ -37,17 +37,36 @@ public class BuyBrew : Action
         Debug.Log(loc);
         if(loc == gs.witchLocation && gs.witchLocation != -1)
         {
-            if (gs.getPlayer(players[0]).getHero().getGold() - gs.brewCost >= 0)
+            if(gs.getPlayer(players[0]).getHeroType() == "Male Archer" || gs.getPlayer(players[0]).getHeroType() == "Female Archer")
             {
-                gs.getPlayer(players[0]).getHero().decreaseGold(gs.brewCost);
-                gs.getPlayer(players[0]).getHero().addArticle("brew");
-                GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has purchased the brew!");
+                GameController.instance.archerBuysBrew();
+                if (gs.getPlayer(players[0]).getHero().getGold() - (gs.brewCost-1) >= 0)
+                {
+                    gs.getPlayer(players[0]).getHero().decreaseGold(gs.brewCost-1);
+                    gs.getPlayer(players[0]).getHero().addArticle("brew");
+                    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has purchased the brew!");
 
+                }
+                else
+                {
+                    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " does not have enough gold to purchase the brew");
+                }
             }
             else
             {
-                GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " does not have enough gold to purchase the brew");
+                if (gs.getPlayer(players[0]).getHero().getGold() - gs.brewCost >= 0)
+                {
+                    gs.getPlayer(players[0]).getHero().decreaseGold(gs.brewCost);
+                    gs.getPlayer(players[0]).getHero().addArticle("brew");
+                    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has purchased the brew!");
+
+                }
+                else
+                {
+                    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " does not have enough gold to purchase the brew");
+                }
             }
+            
         }
 
         GameController.instance.buyBrewButton.gameObject.SetActive(false);

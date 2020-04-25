@@ -496,6 +496,16 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(10));
     }
 
+    public void archerBuysBrew()
+    {
+        if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
+        {
+            scrollTxt.text = "Archer pays 1 less gold for brew!";
+            StartCoroutine(overtimeCoroutine(3));
+        }
+        
+    }
+
     public void overtime()
     {
         if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
@@ -1322,6 +1332,8 @@ public void updateGameConsoleText(string message)
         foreach(Andor.Player p in Game.gameState.getPlayers())
         {
             p.getHero().increaseStrength(2);
+            //will comment out
+            p.getHero().increaseWillpower(5);
             Debug.Log(p.getHero() + " " + p.getHero().getStrength());
         }
     }
