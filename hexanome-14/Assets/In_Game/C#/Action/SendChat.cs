@@ -46,6 +46,11 @@ public class SendChat :Action
         string all_messages = GameController.instance.chatText.text;
         all_messages = String.Concat(all_messages, messageToBeSent);
         GameController.instance.updateChatText(all_messages);
+        //if(GameController.instance.chatButton.IsActive())
+        //{
+        //    GameController.instance.scrollTxt.text = "New message in Chat!";
+        //    GameController.instance.overtimeCoroutine(2);
+        //}
     }
     // Start is called before the first frame update
     void Start()

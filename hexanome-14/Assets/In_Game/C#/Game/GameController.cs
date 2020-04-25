@@ -495,6 +495,11 @@ public class GameController : MonoBehaviour
     {
         //chatText.text = all_messages;
         chatMessages = all_messages;
+        if (chatButton.IsActive())
+        {
+            scrollTxt.text = "New message in Chat!";
+            StartCoroutine(overtimeCoroutine(2));
+        }
     }
 
     public void buttonIsClicked()
