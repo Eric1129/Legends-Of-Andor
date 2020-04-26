@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farmer
+public class Farmer : Article
 {
     private Node location;
     public bool pickedUp;
@@ -51,4 +51,23 @@ public class Farmer
         return prefab;
     }
 
+    void Article.useArticle()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    ArticleType Article.getArticle()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    string Article.articleToString()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    string Article.getDescription()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ArticleType
 {
-    Shield, MedicinalHerb, Falcon, Wineskin, Telescope, WitchBrew, Helm, MedicinaHerb
+    Shield, MedicinalHerb, Falcon, Wineskin, Telescope, WitchBrew, Helm, MedicinaHerb, Farmer
 }//add more if needed
 public interface Article 
 {
@@ -14,6 +14,7 @@ public interface Article
     ArticleType getArticle();
     string articleToString(); //return item.toString()
     string getDescription();
+   
 
 
 }
