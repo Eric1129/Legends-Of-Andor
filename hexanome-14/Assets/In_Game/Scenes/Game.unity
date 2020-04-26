@@ -3344,14 +3344,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292996775}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5b7574ab23834b8ba619e79d4641d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 379228259}
   button: {fileID: 1059340385}
-  input: {fileID: 2064765650}
 --- !u!1 &293506030
 GameObject:
   m_ObjectHideFlags: 0
@@ -5831,7 +5830,6 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   chatMessages: 
-  easy: 1
 --- !u!1 &418087399
 GameObject:
   m_ObjectHideFlags: 0

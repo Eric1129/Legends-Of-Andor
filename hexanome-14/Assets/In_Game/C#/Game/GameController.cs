@@ -1124,7 +1124,7 @@ public void updateGameConsoleText(string message)
 
     public void loadNarrator()
     {
-        Debug.Log("Added Narrator at position: " + pos);
+        Debug.Log("Added Narrator at position: " );
     }
 
 
