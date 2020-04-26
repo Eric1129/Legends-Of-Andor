@@ -1,14 +1,27 @@
 ﻿using System;
-public class Merchant
+using System.Collections.Generic;
+
+public class Merchant   
 {
-    public int location;
-    public Merchant(int location)
+    public int location; 
+    private Dictionary<string, List<Article>> inventory;
+
+    public Merchant(int location)       
     {
-        this.location = location;
+        {
+            this.location = location; 
+            inventory = Game.gameState.getEquipmentBoard();
+        }
     }
 
-    public void buyFromMerchant(string item, string client)
+
+    public void buyFromMerchant(string item, string client) 
     {
-        //Game.sendAction(new BuyFromMerchant())
+        {
+            //Game.sendAction(new BuyFromMerchant())
+            string[] players = new string[1];
+            players[0] = client;
+            Game.sendAction(new BuyFromMerchant(players, item));
+        }
     }
-}
+}	
