@@ -297,7 +297,7 @@ public class GameController : MonoBehaviour
                 GameController.instance.emptyWellButton.gameObject.SetActive(false);
             }
             //check if player has telescope
-            if (Game.myPlayer.getHero().getArticles().Contains("telescope"))
+            if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Telescope"))
             {
                 GameController.instance.useTelescope.gameObject.SetActive(true);
             }
