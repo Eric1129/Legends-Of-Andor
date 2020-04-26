@@ -35,7 +35,7 @@ public class UseTelescope : Action
 
     public bool isLegal(GameState gs)
     {
-        if (gs.getPlayer(players[0]).getHero().getArticles().Contains("telescope")){ 
+        if (gs.getPlayer(players[0]).getHero().allArticlesAsStringList().Contains("Telescope")){ 
             return true;
         }
         else
