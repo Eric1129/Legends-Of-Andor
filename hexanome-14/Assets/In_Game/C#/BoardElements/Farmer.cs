@@ -22,6 +22,7 @@ public class Farmer : Article
         this.pickedUp = true;
         this.prefab.GetComponent<Renderer>().enabled = false;
         //assign to player who picked it up
+
     }
 
     public void dropped()
