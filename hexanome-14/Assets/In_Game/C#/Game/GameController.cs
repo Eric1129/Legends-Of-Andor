@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     public Transform tradeRequest;
     public Transform tradeScreenController;
     public Transform notification;
+    public Transform merchantScreenController;
     //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
@@ -35,6 +36,9 @@ public class GameController : MonoBehaviour
     public Button buyBrewButton;
     public Button chatButton;
     public Button closeChatButton;
+    public Transform merchantButton;
+
+
     public Text chatText;
     public GameObject chat;
     public Text input;
@@ -237,7 +241,7 @@ public class GameController : MonoBehaviour
             + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
             + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
             + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
-            + "\nArticles: " + Game.myPlayer.getHero().allArticles();
+            + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
             
         heroStatsText.text = update;
     }
@@ -364,6 +368,30 @@ public class GameController : MonoBehaviour
             notify();
             notifTime -= Time.deltaTime;
         }
+
+
+        bool onMerchant = false;
+
+        foreach (int merchantLoc in Game.gameState.getMerchants().Keys)
+        {
+            if (Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()] == merchantLoc)
+            {
+                onMerchant = true;
+                updateGameConsoleText("You've landed on the same space as a merchant. Click the merchatn button to buy articles");
+
+            }
+        }
+        merchantButton.gameObject.SetActive(onMerchant);
+
+        //if(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()])
+        foreach (string player in playersToNotify)
+        {
+            if (Game.myPlayer.getNetworkID() == player)
+            {
+                updateGameConsoleText(this.gameConsoleText.text.ToString());
+            }
+        }
+
 
     }
 
@@ -591,6 +619,19 @@ public void updateGameConsoleText(string message)
            gameConsoleText.text = message;
     }
 
+    public void updateGameConsoleText(string message, string[] players)
+    {
+        //foreach(string p in players)
+        //{
+        //    if(Game.myPlayer.getNetworkID() == p)
+        //    {
+        //        gameConsoleText.text = message;
+        //    }
+        //}
+        gameConsoleText.text = message;
+        playersToNotify = players;
+    }
+
 
     public void winNotify()
     {
@@ -648,6 +689,7 @@ public void updateGameConsoleText(string message)
         }
         GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
         GameController.instance.updateDayCount(Game.gameState.day);
+        ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         /////////////////////////////////////////////////////////////////////
 
         // load players
@@ -668,11 +710,15 @@ public void updateGameConsoleText(string message)
 
             loadFarmers();
 
-            Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            setupEquipmentBoard();
+
+        
+
+        Debug.Log("INITIALIZING THE STRENGTH POINTS");
             initializeStrengthPoints();
 
             Debug.Log("INITIALIZING THE STRENGTH POINTS");
-            initializeWineskin();
+            //initializeWineskin();
 
             Debug.Log("INITIALIZING THE MED HERB");
             instantiateMedicinalHerb(3);
@@ -682,15 +728,60 @@ public void updateGameConsoleText(string message)
     }
 
 
-    public void initializeWineskin()
+    public void setupEquipmentBoard()
     {
-        foreach (Andor.Player player in Game.gameState.getPlayers())
-        {
-            player.getHero().addArticle("wineskin");
-            player.getHero().addArticle("telescope");
 
+        //4 shields
+        List<Article> shields = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Shield", shields);
+        for (int i = 0; i < 4; i++)
+        {
+            Game.gameState.equipmentBoard["Shield"].Add(new Shield());
+        }
+
+        //3 bows
+        List<Article> bows = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Bow", bows);
+        for (int i = 0; i < 3; i++)
+        {
+            Game.gameState.equipmentBoard["Bow"].Add(new Bow());
+        }
+
+        //2 falcon
+        List<Article> falcons = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Falcon", falcons);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Falcon"].Add(new Falcon());
+        }
+
+        //2 wineskin
+        List<Article> wineskins = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Wineskin", wineskins);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Wineskin"].Add(new Wineskin());
+        }
+
+        //2 telescope
+        List<Article> telescopes = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Telescope", telescopes);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Telescope"].Add(new Telescope());
+        }
+
+
+        //3 helm
+        List<Article> helms = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Helm", helms);
+        for (int i = 0; i < 3; i++)
+        {
+            Game.gameState.equipmentBoard["Helm"].Add(new Helm());
         }
     }
+
+   
    
 
     public void monsterAtCastle(Monster monster)
@@ -1145,7 +1236,7 @@ public void updateGameConsoleText(string message)
 
     public void merchantClick()
     {
-
+        ms.displayAvailableItems();
     }
 
     #region buttonClicks
@@ -1345,6 +1436,18 @@ public void updateGameConsoleText(string message)
             //will comment out
             p.getHero().increaseWillpower(5);
             Debug.Log(p.getHero() + " " + p.getHero().getStrength());
+        }
+    }
+
+    public void initializeWineskin()
+    {
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            //p.getHero().increaseStrength(2);
+            ////will comment out
+            //p.getHero().increaseWillpower(5);
+            //Debug.Log(p.getHero() + " " + p.getHero().getStrength());
+            //p.getHero().addArticle(Wineskin w);
         }
     }
 

@@ -214,7 +214,7 @@ public class Move : Action
                     else if (token_type == "wineskin")
                     {
                         GameController.instance.updateGameConsoleText("You have uncovered a wineskin Fog Token.");
-                        gs.getPlayer(players[0]).getHero().addArticle("wineskin");
+                        gs.getPlayer(players[0]).getHero().addArticle(new Wineskin());
                     }
                     else if (token_type == "willpower2")
                     {
@@ -232,7 +232,7 @@ public class Move : Action
                     {
                         //GameController.instance.updateGameConsoleText("You have uncovered the witch Fog Token! You will be given a brew for free!");
                         GameController.instance.foundWitch(location);
-                        gs.getPlayer(players[0]).getHero().addArticle("brew");
+                        gs.getPlayer(players[0]).getHero().addArticle(new WitchBrew());
                         gs.witchLocation = location;
                         //GameController.instance.instantiateWitch();
                         //GameController.instance.foundWitch();
