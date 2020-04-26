@@ -292,8 +292,17 @@ public class GameController : MonoBehaviour
             {
                 GameController.instance.emptyWellButton.gameObject.SetActive(false);
             }
+            //check if player has telescope
+            if (Game.myPlayer.getHero().getArticles().Contains("telescope"))
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(true);
+            }
+            else
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(false);
+            }
 
-            bool brewValid = false;
+                bool brewValid = false;
             if(loc == Game.gameState.witchLocation && Game.gameState.witchLocation != -1)
             {
                 GameController.instance.buyBrewButton.gameObject.SetActive(true);
@@ -304,8 +313,9 @@ public class GameController : MonoBehaviour
                 GameController.instance.buyBrewButton.gameObject.SetActive(false);
             }
 
-            // Update Player position
-            foreach (Monster monster in Game.gameState.getMonsters())
+            
+                // Update Player position
+                foreach (Monster monster in Game.gameState.getMonsters())
             {
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
