@@ -50,8 +50,8 @@ public class RespondTrade : Action
             
             if (tradeType[0].Equals("Gold"))
             {
-                playerFrom.getHero().decGold();
-                playerTo.getHero().incGold();
+                playerFrom.getHero().decGold(1);
+                playerTo.getHero().incGold(1);
                 msg = playerTo.getHeroType() + " has accepted your gold.";
 
             }else if (tradeType[0].Equals("Gemstones"))
@@ -62,21 +62,24 @@ public class RespondTrade : Action
             {
                 Debug.Log("responde trade TRADE");
                 //trade
-                playerTo.getHero().removeArticle(tradeType[2]);
-                playerFrom.getHero().addArticle(tradeType[2]);
-                playerFrom.getHero().removeArticle(tradeType[1]);
-                playerTo.getHero().addArticle(tradeType[1]);
-                msg = playerTo.getHeroType() + " has accepted your trade request!";
+                Article playerTosArticle = playerTo.getHero().removeArticle(tradeType[2]);
+                playerFrom.getHero().addArticle(tradeType[2]); playerFrom.getHero().addArticle(playerTosArticle);
+                playerFrom.getHero().removeArticle(tradeType[1]); Article playerFromsArticle = playerFrom.getHero().removeArticle(tradeType[1]);
+                playerTo.getHero().addArticle(tradeType[1]); playerTo.getHero().addArticle(playerFromsArticle);
+                msg = playerTo.getHeroType() + " has accepted your trade request!"; msg = playerTo.getHeroType() + " has accepted your trade request!";
             }
         }
         else
         {
             msg = playerTo.getHeroType() + " has declined your request.";
         }
-        Debug.Log("playerTo " + playerTo.getHero().allArticles());
-        Debug.Log("playerFrom " + playerFrom.getHero().allArticles());
-        GameController.instance.sendNotif(msg, 20.0f, players[0]);
-        
+        Debug.Log(playerTo.getHeroType() + " " + playerTo.getHero().allArticlesAsString());
+        Debug.Log("playerFrom " + playerFrom.getHero().allArticles()); Debug.Log(playerFrom.getHeroType() + "playerFrom " + playerFrom.getHero().allArticlesAsString());
+        GameController.instance.sendNotif(msg, 20.0f, players[0]);	        //GameController.instance.sendNotif(msg, 20.0f, players[0]);
+        string[] playersToNotify = new string[1];
+        playersToNotify[0] = players[0];
+        GameController.instance.updateGameConsoleText(msg, playersToNotify);
+
 
     }
 

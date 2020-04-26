@@ -40,6 +40,7 @@ public class GameState
     public int brewCost;
     public int witchLocation;
     public bool witchFound;
+    public Dictionary<string, List<Article>> equipmentBoard;
 
     public GameState()
 	{
@@ -56,7 +57,8 @@ public class GameState
         princeThor = new List<PrinceThorald>();
         day = 1;
         farmers = new Dictionary<Farmer, int>();
-        merchants = new Dictionary< int, Merchant>();
+        merchants = new Dictionary<int, Merchant>();
+        equipmentBoard = new Dictionary<string, List<Article>>();
         skralTowerDefeated = false;
         medicinalHerb = new List<MedicinalHerb>();
         eventcard19 = false;
@@ -329,6 +331,30 @@ public class GameState
         int[] e = new int[event_cards.Length - 1];
         Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
         event_cards = e;
+    }
+
+    public Dictionary<int, Merchant> getMerchants()
+    {
+        return this.merchants;
+    }
+    public Article removeFromEquimentBoard(string articleName)
+    {
+        Debug.Log("removign article");
+        //remove the last item in the list
+        int numArticles = equipmentBoard[articleName].Count;
+        Article removedArticle = equipmentBoard[articleName][numArticles - 1];
+        equipmentBoard[articleName].Remove(equipmentBoard[articleName][numArticles - 1]);
+        return removedArticle;
+    }
+
+    public List<Article> getArticlesOfType(string key)
+    {
+        return equipmentBoard[key];
+    }
+
+    public Dictionary<string, List<Article>> getEquipmentBoard()
+    {
+        return equipmentBoard;
     }
 
 }

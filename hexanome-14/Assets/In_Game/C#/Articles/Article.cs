@@ -8,11 +8,12 @@ public enum ArticleType
 }//add more if needed
 public interface Article 
 {
-    
-    
+    //each class should have a field ArticleType article
+
     void useArticle();
     ArticleType getArticle();
     string articleToString(); //return item.toString()
-  
+    string getDescription();
+
 
 }
