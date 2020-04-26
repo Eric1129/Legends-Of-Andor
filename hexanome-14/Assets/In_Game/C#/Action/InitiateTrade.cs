@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class InitiateTrade: Action
+public class InitiateTrade : Action
 {
     private Type type;
     private string[] players;
@@ -14,19 +14,19 @@ public class InitiateTrade: Action
         type = Type.InitiateTrade;
         this.players = new string[2];
         this.tradeType = new string[3];
-        
-        
+
+
         this.players = players;
         this.tradeType = tradeType;
-        for(int i = 0; i<3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            
+
             this.tradeType[i] = tradeType[i];
         }
         for (int i = 0; i < 2; i++)
         {
             this.players[i] = players[i];
-           
+
         }
 
 
@@ -50,12 +50,12 @@ public class InitiateTrade: Action
         gs.playerLocations.TryGetValue(players[0], out location0);
         int location1 = -1;
         gs.playerLocations.TryGetValue(players[1], out location1);
-        if( location0 == location1)
+        if (location0 == location1)
         {
             return true;
         }
 
-        if(Game.gameState.getPlayer(players[0]).getHero().hasArticle("Falcon")
+        if (Game.gameState.getPlayer(players[0]).getHero().hasArticle("Falcon")
             || Game.gameState.getPlayer(players[1]).getHero().hasArticle("Falcon"))
         {
             return true;

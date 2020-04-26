@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-public class Helm: Article
+public class Helm : Article
 {
     private ArticleType article;
     private string description;
-  
+
     public Helm()
     {
-        
+
         this.article = ArticleType.Helm;
         this.description = "A hero can use a helm to let him total up all " +
             "identical dice valuesin a battle. For an archer or a hero using a " +

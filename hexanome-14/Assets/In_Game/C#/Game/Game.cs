@@ -43,6 +43,12 @@ public static class Game
         //If you want to send something through the network, you need to execute this command and create the corresponding class
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(MovePrinceThorald), 9, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(BuyFromMerchant), 10, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(EmptyWell), 11, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(BuyBrew), 12, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(SendChat), 13, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(UseTelescope), 14, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+
+        // ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(MovePrinceThorald), 9, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
 
         // MUST HAVE PV
         gameState.addPlayer(myPlayer);

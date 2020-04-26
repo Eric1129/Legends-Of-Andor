@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Telescope: Article
+public class Telescope : Article
 {
     private ArticleType article;
     private string description;
-  
+
     public Telescope()
     {
-        
+
         this.article = ArticleType.Telescope;
         this.description = "The telescope can only be used while " +
             "its owner is stopped on a space. It cannot be used while " +

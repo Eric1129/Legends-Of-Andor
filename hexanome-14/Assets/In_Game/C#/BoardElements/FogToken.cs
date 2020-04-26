@@ -56,6 +56,11 @@ public class FogToken
 		return prefab;
 	}
 
+    public void setPrefab(GameObject go)
+    {
+        this.prefab = go;
+    }
+
     public string getType()
     {
         return type;

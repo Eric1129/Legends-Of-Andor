@@ -19,7 +19,7 @@ public class TradeScreen : MonoBehaviour
     public Transform tradeActionButton;
     public Button giveGoldActionButton;
     public Transform giveGemstoneActionButton;
-    
+
 
     private bool selectHeroTradeActive;
     private bool selectHeroGiveActive;
@@ -35,12 +35,12 @@ public class TradeScreen : MonoBehaviour
     private static List<string> myArticles;
     private static List<string> heroArticles;
 
-    public  string[] players;
-    public  string[] tradeType;
+    public string[] players;
+    public string[] tradeType;
 
     public TradeScreen()
     {
-        
+
         giveItemIndex = 0;
         receiveItemIndex = 0;
         tradeType = new string[3];
@@ -62,7 +62,7 @@ public class TradeScreen : MonoBehaviour
             tradeActionButton.GetComponent<Button>().interactable = tradePossible();
             //check if gold is possible
             giveGoldActionButton.interactable = goldPossible();
-                
+
             //check if gemstone is possible
             giveGemstoneActionButton.GetComponent<Button>().interactable = gemstonePossible();
         }
@@ -75,7 +75,7 @@ public class TradeScreen : MonoBehaviour
         Debug.Log("gemstone " + eligibleGemstone.Count);
 
     }
-    
+
     public bool interactionPossible()
     {
         //and set elible players
@@ -96,12 +96,12 @@ public class TradeScreen : MonoBehaviour
                     eligibleGold.Add(p.getNetworkID());
                     eligibleGemstone.Add(p.getNetworkID());
                 }
-                
+
             }
         }
         else
         {
-             
+
             foreach (Andor.Player p in Game.gameState.getPlayers())
             {
                 if (!Game.myPlayer.Equals(p))
@@ -146,22 +146,22 @@ public class TradeScreen : MonoBehaviour
         //hero has something to trade and the other heroes have something to trade as well
         return trade;
 
-        
+
     }
 
 
     public bool goldPossible()
     {
-        
+
         //hero has gold
         return (Game.myPlayer.getHero().getGold() > 0);
-            
+
     }
 
     public bool gemstonePossible()
     {
         return (Game.myPlayer.getHero().getGemstone() > 0);
-            
+
     }
 
     public void setTradeType(int value)
@@ -190,7 +190,7 @@ public class TradeScreen : MonoBehaviour
     }
     public void nextClick()
     {
-        if(tradeTypeIndex == 0)
+        if (tradeTypeIndex == 0)
         {
             //trade
             selectHeroTrade.gameObject.SetActive(true);
@@ -204,7 +204,7 @@ public class TradeScreen : MonoBehaviour
             }
         }
         else
-        { 
+        {
             //give
             selectHeroGive.gameObject.SetActive(true);
             GameObject parentObj = GameObject.Find("SelectHero");
@@ -227,7 +227,7 @@ public class TradeScreen : MonoBehaviour
                     giveText.text = "Select a hero to give " + type + " to:";
                 }
             }
-            if(tradeTypeIndex == 1)
+            if (tradeTypeIndex == 1)
             {
                 int i = 1;
                 foreach (string p in eligibleGold)
@@ -238,7 +238,7 @@ public class TradeScreen : MonoBehaviour
                 }
             }
 
-            if(tradeTypeIndex == 2)
+            if (tradeTypeIndex == 2)
             {
                 int i = 1;
                 foreach (string p in eligibleGemstone)
@@ -250,11 +250,11 @@ public class TradeScreen : MonoBehaviour
             }
         }
         //displayHeroTrade();
-        
+
 
     }
 
-    
+
 
     //public void displayHeroTrade()
     //{
@@ -267,7 +267,7 @@ public class TradeScreen : MonoBehaviour
     //    }
     //    else
     //    {
-            
+
     //        selectHeroGive.gameObject.SetActive(true);
     //        selectHeroGiveActive = true;
     //        GameObject parentObj = GameObject.Find("SelectHero");
@@ -312,7 +312,7 @@ public class TradeScreen : MonoBehaviour
 
     //public bool displayPlayers()
     //{
-        
+
     //    eligiblePlayers = new string[4];
     //    int i = 1;
     //    eligiblePlayers[0] = Game.myPlayer.getNetworkID();
@@ -353,11 +353,11 @@ public class TradeScreen : MonoBehaviour
 
     //                }
     //            }
-                
+
     //        }
 
     //    }
-        
+
 
     //    //if (Game.gameState.playerLocations.TryGetValue(Game.myPlayer.getNetworkID(), out myLocation))
     //    //{
@@ -372,15 +372,15 @@ public class TradeScreen : MonoBehaviour
     //    //                displayPlayerInfo(p, i);
     //    //                i++;
     //    //                playersAvail = true;
-                        
+
 
     //    //            }
 
     //    //        }
     //    //    }
-            
+
     //    //}
-       
+
     //    return playersAvail;
     //}
 
@@ -413,6 +413,7 @@ public class TradeScreen : MonoBehaviour
                         Debug.Log("Image");
                         Sprite herosprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
                         attr.GetComponent<Image>().sprite = herosprite;
+                        attr.GetComponent<Image>().useSpriteMesh = true;
                     }
                     if (attr.name == "HeroItems")
                     {
@@ -422,7 +423,8 @@ public class TradeScreen : MonoBehaviour
                         {
                             heroitems.text += "Articles: ";
                             heroitems.text += player.getHero().allArticlesAsString();
-                        }else if(tradeTypeIndex == 1)
+                        }
+                        else if (tradeTypeIndex == 1)
                         {
                             heroitems.text = "Gold: " + player.getHero().getGold();
                         }
@@ -430,7 +432,7 @@ public class TradeScreen : MonoBehaviour
                         {
                             heroitems.text += "\nGemstones: " + player.getHero().getGemstone() + "\n";
                         }
-                        
+
                         //for(int j=0; j< heroAr.Count; j++)
                         //{
                         //    heroitems.text += heroAr[j];
@@ -438,7 +440,7 @@ public class TradeScreen : MonoBehaviour
                         //    {
                         //        heroitems.text += ", ";
                         //    }
-                            
+
                         //}
                     }
                 }
@@ -464,7 +466,7 @@ public class TradeScreen : MonoBehaviour
 
     public void displayUnavailable(string title, string msg)
     {
-       
+
         unavailable.gameObject.SetActive(true);
         Text title_text = unavailable.Find("Title").GetComponent<Text>();
         title_text.text = title;
@@ -481,10 +483,11 @@ public class TradeScreen : MonoBehaviour
     public void onHeroClick(int index)
     {
         Debug.Log(index);
-        if(tradeTypeIndex == 0)
+        if (tradeTypeIndex == 0)
         {
             selectedHero = eligibleTrade.ToArray()[index - 1];
-        }else if(tradeTypeIndex == 1)
+        }
+        else if (tradeTypeIndex == 1)
         {
             selectedHero = eligibleGold.ToArray()[index - 1];
         }
@@ -496,26 +499,27 @@ public class TradeScreen : MonoBehaviour
         if (tradeTypeIndex == 0)
         {
             updateDropdowns();
+            Debug.Log("trying to update dropdown");
         }
 
         GameObject parentObj = GameObject.Find("SelectHero");
         Transform[] trs = parentObj.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
-            if(t.name == "SelectedHero")
+            if (t.name == "SelectedHero")
             {
                 Text selHerotxt = t.gameObject.GetComponent<Text>();
-                
+
                 selHerotxt.text = Game.gameState.getPlayer(selectedHero).getHeroType();
             }
-            if(t.name == "SendRequest")
+            if (t.name == "SendRequest")
             {
                 Button sendRequestButton = t.gameObject.GetComponent<Button>();
                 sendRequestButton.interactable = true;
             }
         }
-        
-  
+
+
         //Game.sendAction(new InitiateTrade(playersInvolved));
 
     }
@@ -527,17 +531,19 @@ public class TradeScreen : MonoBehaviour
         Andor.Player selectedPlayer = Game.gameState.getPlayer(selectedHero);
         heroArticles = selectedPlayer.getHero().allArticlesAsStringList();
 
-        
+
         GameObject parentObj = GameObject.Find("SelectHero");
         Transform[] trs = parentObj.GetComponentsInChildren<Transform>(true);
-        foreach(Transform t in trs)
+        foreach (Transform t in trs)
         {
-            if(t.name == "myArticles")
+            if (t.name == "myArticles")
             {
-                
+
                 Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
                 myArticlesMenu.ClearOptions();
                 myArticlesMenu.AddOptions(myArticles);
+                //myArticlesMenu.GetComponent<Dropdown>().captionText.text = myArticles[0];
+                Debug.Log("added it to dropdowns!");
             }
             if (t.name == "heroArticles")
             {
@@ -546,7 +552,7 @@ public class TradeScreen : MonoBehaviour
                 heroArticlesMenu.ClearOptions();
                 heroArticlesMenu.AddOptions(heroArticles);
             }
-            if(t.name == "HeroArText")
+            if (t.name == "HeroArText")
             {
                 t.gameObject.SetActive(true);
                 Text heroArText = t.gameObject.GetComponent<Text>();
@@ -558,7 +564,7 @@ public class TradeScreen : MonoBehaviour
             //    sendRequestButton.interactable = true;
             //}
         }
-        
+
     }
 
     //add to myArticles dropdown obj
@@ -566,8 +572,8 @@ public class TradeScreen : MonoBehaviour
     {
         //GameObject parentObj = GameObject.Find("SelectHero");
         giveItemIndex = val;
-        
-     
+
+
     }
 
 
@@ -576,30 +582,33 @@ public class TradeScreen : MonoBehaviour
     {
         //GameObject parentObj = GameObject.Find("SelectHero");
         receiveItemIndex = val;
-       
+
     }
-   
+
     public void sendRequest()
     {
         Debug.Log("sending request!");
-        
+
         players[0] = Game.myPlayer.getNetworkID();
         players[1] = selectedHero;
-        
+
 
         switch (tradeTypeIndex)
         {
             case 0:
                 tradeType[0] = "trade";
                 tradeType[1] = myArticles[giveItemIndex];
-                tradeType[2]= heroArticles[receiveItemIndex];
-                
+                tradeType[2] = heroArticles[receiveItemIndex];
+
                 break;
-            case 1: tradeType[0] = "Gold";
+            case 1:
+                tradeType[0] = "Gold";
                 break;
-            case 2: tradeType[0] = "Gemstones";
+            case 2:
+                tradeType[0] = "Gemstones";
                 break;
-            default: tradeType[0] = "";
+            default:
+                tradeType[0] = "";
                 break;
         }
         selectTradeType.gameObject.SetActive(false);
@@ -612,11 +621,11 @@ public class TradeScreen : MonoBehaviour
 
     public void accept(bool accept)
     {
-        
+
         GameController.instance.setTradeRequest(false);
         Game.sendAction(new RespondTrade(players, tradeType, accept));
 
-        
+
         //GameController.instance.sendNotif()
     }
 
@@ -639,11 +648,7 @@ public class TradeScreen : MonoBehaviour
         eligibleGemstone.Clear();
         eligibleGold.Clear();
         eligibleTrade.Clear();
-        
+
         tradeTypeIndex = -1;
     }
 }
-
-
-
-    

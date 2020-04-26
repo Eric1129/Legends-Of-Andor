@@ -20,9 +20,9 @@ public class GameController : MonoBehaviour
     public Transform tradeScreenController;
     public Transform notification;
     public Transform merchantScreenController;
+    //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
-    public Transform merchantButton;
 
     public Transform boardSpriteContainer;
     public Transform playerContainer;
@@ -32,6 +32,33 @@ public class GameController : MonoBehaviour
 
     public Button moveButton;
     public Button movePrinceButton;
+    public Button emptyWellButton;
+    public Button buyBrewButton;
+    public Button chatButton;
+    public Button closeChatButton;
+    public Transform merchantButton;
+
+
+    public Text chatText;
+    public GameObject chat;
+    public Text input;
+
+    //Article
+    public Button useTelescope;
+
+    //FogToken
+    public GameObject willpower2Token;
+    public GameObject willpower3Token;
+    public GameObject brewToken;
+    public GameObject gold1Token;
+    public GameObject gorToken;
+    public GameObject wineskinToken;
+    public GameObject eventToken;
+    public GameObject strengthToken;
+
+
+
+
     public Text turnLabel;
     //public Text scrollText;
     public Text scrollTxt;
@@ -54,6 +81,7 @@ public class GameController : MonoBehaviour
     public GameObject prince;
     public GameObject farmer;
     public GameObject medicinalHerb3;
+    public GameObject witch;
 
 
     public Dictionary<int, BoardPosition> tiles;
@@ -97,12 +125,13 @@ public class GameController : MonoBehaviour
     private int[] event_cards2;
     private string[] fogTokens2;
     private string[] playersToNotify;
+    public string chatMessages;
 
     // Start is called before the first frame update
     void Start()
     {
         ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
-        
+        //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         playersToNotify = new string[4];
         //ts = new TradeScreen();
         //this.tradeType = new string[3];
@@ -211,7 +240,9 @@ public class GameController : MonoBehaviour
             + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
             + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
             + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
-            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString();
+            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+            + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
+            
         heroStatsText.text = update;
     }
 
@@ -222,6 +253,8 @@ public class GameController : MonoBehaviour
         //    tok = 1;
         //    loadFogTokens();
         //}
+        chatText.text = chatMessages;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
@@ -244,10 +277,49 @@ public class GameController : MonoBehaviour
 
                 timeObjects[player.getNetworkID()].transform.position =
                     moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
+
             }
 
-            // Update Player position
-            foreach (Monster monster in Game.gameState.getMonsters())
+            int loc = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            bool wellValid = false;
+                foreach (Well w in Game.gameState.getWells().Keys)
+                {
+                    if (w.getLocation() == loc && !w.used)
+                    {
+                        GameController.instance.emptyWellButton.gameObject.SetActive(true);
+                        wellValid = true;
+                    }
+
+                }
+
+            if (!wellValid)
+            {
+                GameController.instance.emptyWellButton.gameObject.SetActive(false);
+            }
+            //check if player has telescope
+            if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Telescope"))
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(true);
+            }
+            else
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(false);
+            }
+
+                bool brewValid = false;
+            if(loc == Game.gameState.witchLocation && Game.gameState.witchLocation != -1)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(true);
+                brewValid = true;
+            }
+            if (!brewValid)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(false);
+            }
+
+            
+                // Update Player position
+                foreach (Monster monster in Game.gameState.getMonsters())
             {
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
@@ -300,21 +372,21 @@ public class GameController : MonoBehaviour
 
         bool onMerchant = false;
 
-        foreach(int merchantLoc in Game.gameState.getMerchants().Keys)
+        foreach (int merchantLoc in Game.gameState.getMerchants().Keys)
         {
-            if(Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()] == merchantLoc)
+            if (Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()] == merchantLoc)
             {
                 onMerchant = true;
                 updateGameConsoleText("You've landed on the same space as a merchant. Click the merchatn button to buy articles");
-                
+
             }
         }
         merchantButton.gameObject.SetActive(onMerchant);
 
         //if(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()])
-        foreach(string player in playersToNotify)
+        foreach (string player in playersToNotify)
         {
-            if(Game.myPlayer.getNetworkID() == player)
+            if (Game.myPlayer.getNetworkID() == player)
             {
                 updateGameConsoleText(this.gameConsoleText.text.ToString());
             }
@@ -322,6 +394,7 @@ public class GameController : MonoBehaviour
 
 
     }
+
     public void moveToNewPos(Andor.Player player)
     {
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
@@ -414,6 +487,44 @@ public class GameController : MonoBehaviour
         
     }
 
+    public void sendChat()
+    {
+        Debug.Log("chat button clicked");
+        string message = input.text;
+        Game.sendAction(new SendChat(message, Game.myPlayer.getNetworkID(), PhotonNetwork.LocalPlayer.NickName));
+    }
+
+    public void wellClick()
+    {
+        Game.sendAction(new EmptyWell(Game.myPlayer.getNetworkID()));
+    }
+
+    public void buyBrewClick()
+    {
+        Game.sendAction(new BuyBrew(Game.myPlayer.getNetworkID()));
+    }
+
+    public void chatClick()
+    {
+        //Game.sendAction(new ChatOpen(Game.myPlayer.getNetworkID()));
+        chat.SetActive(true);
+        chatButton.gameObject.SetActive(false);
+        closeChatButton.gameObject.SetActive(true);
+    }
+
+    public void  clickTelescope()
+    {
+        Game.sendAction(new UseTelescope(Game.myPlayer.getNetworkID()));
+    }
+
+
+    public void closeChatClick()
+    {
+        //Game.sendAction(new ChatOpen(Game.myPlayer.getNetworkID()));
+        chat.SetActive(false);
+        chatButton.gameObject.SetActive(true);
+        closeChatButton.gameObject.SetActive(false);
+    }
 
     public void loseScenario()
     {
@@ -423,10 +534,23 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(10));
     }
 
+    public void archerBuysBrew()
+    {
+        if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
+        {
+            scrollTxt.text = "Archer pays 1 less gold for brew!";
+            StartCoroutine(overtimeCoroutine(3));
+        }
+        
+    }
+
     public void overtime()
     {
-        scrollTxt.text = "You will now lose 2 willpower points for each additional hour!";
-        StartCoroutine(overtimeCoroutine(3));
+        if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
+        {
+            scrollTxt.text = "You will now lose +" + Game.gameState.overtimeCost+ " willpower points for each additional hour!";
+            StartCoroutine(overtimeCoroutine(3));
+        }       
     }
 
     public void cannotFinishMove()
@@ -435,7 +559,48 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(3));
     }
 
-   IEnumerator overtimeCoroutine(int sleep)
+    public void updateChatText(string all_messages)
+    {
+        //chatText.text = all_messages;
+        chatMessages = all_messages;
+        if (chatButton.IsActive())
+        {
+            scrollTxt.text = "New message in Chat!";
+            StartCoroutine(overtimeCoroutine(2));
+        }
+    }
+
+    public void buttonIsClicked()
+    {
+        Debug.Log("chat button clicked");
+        string message = input.text;
+        Game.sendAction(new SendChat(message, Game.myPlayer.getNetworkID(), PhotonNetwork.LocalPlayer.NickName));
+        //Debug.Log("got the input");
+        //object[] data = { message, photonView.ViewID, PhotonNetwork.LocalPlayer.NickName };
+        //Debug.Log("sent the data");
+        //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
+    }
+    public void foundWitch(int loc)
+    {
+        //instantiateTheWitch here
+        scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
+        StartCoroutine(overtimeCoroutine(5));
+        //instantiate witch
+        Debug.Log("Added witch at position: " + loc);
+        GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+        //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
+        //Debug.Log(w);
+        //Debug.Log(w.getLocation());
+        //Game.gameState.addWell(w);
+
+
+        //if it is my player, then get roll
+        //instantiateMedicinalHerb(roll)
+        //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
+        //Game.gameState.foundWitch
+        //Game.gameState.brewCost
+    }
+    IEnumerator overtimeCoroutine(int sleep)
     {
         //Print the time of when the function is first called.
         //Debug.Log("Started Coroutine at timestamp : " + Time.time);
@@ -449,6 +614,10 @@ public class GameController : MonoBehaviour
         Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 
+public void updateGameConsoleText(string message)
+    {
+           gameConsoleText.text = message;
+    }
 
     public void updateGameConsoleText(string message, string[] players)
     {
@@ -461,11 +630,6 @@ public class GameController : MonoBehaviour
         //}
         gameConsoleText.text = message;
         playersToNotify = players;
-    }
-
-public void updateGameConsoleText(string message)
-    {
-           gameConsoleText.text = message;
     }
 
 
@@ -492,7 +656,6 @@ public void updateGameConsoleText(string message)
     //    playersToNotify = players;
     //}
 
-
     public void updateShieldCount(int shieldLeft)
     {
         shieldCountText.text = "Shields Left: " + shieldLeft.ToString();
@@ -510,21 +673,25 @@ public void updateGameConsoleText(string message)
         if (playerCount == 1 || playerCount == 2)
         {
             Game.gameState.maxMonstersAllowedInCastle = 3;
+            Game.gameState.brewCost = 3;
         }
         else if (playerCount == 3)
         {
             Game.gameState.maxMonstersAllowedInCastle = 2;
+            Game.gameState.brewCost = 4;
 
         }
         else if (playerCount == 4)
         {
             Game.gameState.maxMonstersAllowedInCastle = 1;
+            Game.gameState.brewCost = 5;
 
         }
         GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
         GameController.instance.updateDayCount(Game.gameState.day);
-        /////////////////////////////////////////////////////////////////////
         ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
+        /////////////////////////////////////////////////////////////////////
+
         // load players
         if (Game.gameState != null)
         {
@@ -543,18 +710,27 @@ public void updateGameConsoleText(string message)
 
             loadFarmers();
 
-
             setupEquipmentBoard();
+
+        
+
+        Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            initializeStrengthPoints();
+
+            Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            //initializeWineskin();
+
+            Debug.Log("INITIALIZING THE MED HERB");
+            instantiateMedicinalHerb(3);
 
         }
 
-        
-
     }
+
 
     public void setupEquipmentBoard()
     {
-        
+
         //4 shields
         List<Article> shields = new List<Article>();
         Game.gameState.equipmentBoard.Add("Shield", shields);
@@ -595,28 +771,18 @@ public void updateGameConsoleText(string message)
             Game.gameState.equipmentBoard["Telescope"].Add(new Telescope());
         }
 
-        
+
         //3 helm
         List<Article> helms = new List<Article>();
         Game.gameState.equipmentBoard.Add("Helm", helms);
         for (int i = 0; i < 3; i++)
         {
             Game.gameState.equipmentBoard["Helm"].Add(new Helm());
-
-
-            //////////////////////////////////////////////////////////
-            //should this be in this loop??
-            Debug.Log("INITIALIZING THE STRENGTH POINTS");
-            initializeStrengthPoints();
-
-            Debug.Log("INITIALIZING THE MED HERB");
-            instantiateMedicinalHerb(3);
-            //////////////////////////////////////////////////////////
-
-
         }
-
     }
+
+   
+   
 
     public void monsterAtCastle(Monster monster)
     {
@@ -729,7 +895,7 @@ public void updateGameConsoleText(string message)
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
         }
-        foreach (int skralTile in new int[]{9})
+        foreach (int skralTile in new int[]{19})
         {
             Skral s = new Skral(Game.positionGraph.getNode(skralTile));
             Game.gameState.addMonster(s);
@@ -850,6 +1016,8 @@ public void updateGameConsoleText(string message)
         Debug.Log("instantiated3");
         medicinalHerbObject.Add(mh, herb);
         Debug.Log("Added medicinal herb at position: " + mh.getLocation());
+
+        //need to instantiate Gor on the same spot
     }
 
     public void loadFogTokens()
@@ -868,6 +1036,60 @@ public void updateGameConsoleText(string message)
         }
     }
 
+    public void tele(int loc)
+    {
+        Vector3 boardContainerScaling3 = new Vector3(0.15f / boardSpriteContainer.parent.lossyScale.x, 0.15f / boardSpriteContainer.parent.lossyScale.y, 0.15f / boardSpriteContainer.parent.lossyScale.z);
+
+        List<Node> neighbors = Game.positionGraph.getNode(loc).getAdjacentNodes();
+        foreach (Node n in neighbors)
+        {
+            int nodeIndex = n.getIndex();
+            foreach (KeyValuePair<FogToken, int> f in Game.gameState.getFogTokens())
+            {
+                if (f.Value == nodeIndex && !f.Key.used)
+                {
+                    GameObject fogToken = f.Key.getPrefab();
+                    UnityEngine.Object.Destroy(f.Key.getPrefab());
+                    if (f.Key.type == "brew")
+                    {
+                        fogToken = Instantiate(brewToken,tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "gor")
+                    {
+                        fogToken = Instantiate(gorToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "willpower2")
+                    {
+                        fogToken = Instantiate(willpower2Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "willpower3")
+                    {
+                        fogToken = Instantiate(willpower3Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "wineskin")
+                    {
+                        fogToken = Instantiate(wineskinToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "event")
+                    {
+                        fogToken = Instantiate(eventToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "gold1")
+                    {
+                        fogToken = Instantiate(gold1Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "strength")
+                    {
+                        fogToken = Instantiate(strengthToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    fogToken.transform.localScale = boardContainerScaling3;
+                    f.Key.setPrefab(fogToken);
+                    
+                }
+            }
+
+        }
+    }
 
     public void loadFarmers()
     {
@@ -1211,7 +1433,23 @@ public void updateGameConsoleText(string message)
         foreach(Andor.Player p in Game.gameState.getPlayers())
         {
             p.getHero().increaseStrength(2);
+            //will comment out
+            p.getHero().increaseWillpower(5);
             Debug.Log(p.getHero() + " " + p.getHero().getStrength());
         }
     }
+
+    public void initializeWineskin()
+    {
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            //p.getHero().increaseStrength(2);
+            ////will comment out
+            //p.getHero().increaseWillpower(5);
+            //Debug.Log(p.getHero() + " " + p.getHero().getStrength());
+            //p.getHero().addArticle(Wineskin w);
+        }
+    }
+
+
 }

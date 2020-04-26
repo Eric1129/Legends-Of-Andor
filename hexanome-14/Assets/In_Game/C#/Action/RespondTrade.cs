@@ -46,15 +46,16 @@ public class RespondTrade : Action
         Andor.Player playerTo = gs.getPlayer(players[1]);
         if (accept)
         {
-            
-            
+
+
             if (tradeType[0].Equals("Gold"))
             {
-                playerFrom.getHero().decGold(1);
-                playerTo.getHero().incGold(1);
+                playerFrom.getHero().decreaseGold(1);
+                playerTo.getHero().increaseGold(1);
                 msg = playerTo.getHeroType() + " has accepted your gold.";
 
-            }else if (tradeType[0].Equals("Gemstones"))
+            }
+            else if (tradeType[0].Equals("Gemstones"))
             {
                 //gemstones
             }
@@ -79,7 +80,7 @@ public class RespondTrade : Action
         string[] playersToNotify = new string[1];
         playersToNotify[0] = players[0];
         GameController.instance.updateGameConsoleText(msg, playersToNotify);
-        
+
 
     }
 

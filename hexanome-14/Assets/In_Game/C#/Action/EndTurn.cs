@@ -42,6 +42,8 @@ public class EndTurn :Action
             gs.turnManager.reset();
             gs.day += 1;
             GameController.instance.updateDayCount(Game.gameState.day);
+
+           
             foreach (Andor.Player player in gs.getPlayers())
             {
                 player.getHero().setHour(0);
@@ -75,12 +77,21 @@ public class EndTurn :Action
         foreach (Well w in gs.getWells().Keys)
         {
             //check if there is a Hero on the same spot first
-            w.refreshWell();
+            foreach(Andor.Player p in gs.getPlayers())
+            {
+                int loc = gs.getPlayerLocations()[p.getNetworkID()];
+                if(w.getLocation() != loc)
+                {
+                    w.refreshWell();
+                }
+            }
+           
         }
 
         gs.uncoverEventCard();
         gs.overtime = 8;
         gs.endtime = 10;
+        gs.overtimeCost = 2;
         //advance narrator 
     }
     //public void moveGors(GameState gs)

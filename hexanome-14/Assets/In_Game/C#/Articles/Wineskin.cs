@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Wineskin: Article
+public class Wineskin : Article
 {
     ArticleType article;
     private string description;
-  
+
     public Wineskin()
     {
-        
+
         this.article = ArticleType.Wineskin;
         this.description = "When a hero opts for the “move” action, " +
             "he can use each side of the wineskin to advance 1 space " +

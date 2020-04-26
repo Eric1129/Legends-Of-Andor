@@ -9,7 +9,7 @@ public class Chat : MonoBehaviourPun
     public ScrollRect scrollRect;
     public Button button;
     //public InputField input;
-    public Text input;
+    public static Text input;
     PhotonView PV;
     //public string messages;
     static Photon.Realtime.RaiseEventOptions sendToAllOptions = new Photon.Realtime.RaiseEventOptions()
@@ -32,17 +32,18 @@ public class Chat : MonoBehaviourPun
 
     }
 
-    public void buttonIsClicked()
+    public static void buttonIsClicked()
     {
         Debug.Log("chat button clicked");
         string message = input.text;
-        Debug.Log("got the input");
-        object[] data = { message, photonView.ViewID, PhotonNetwork.LocalPlayer.NickName };
-        Debug.Log("sent the data");
-        PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
+        Game.sendAction(new SendChat(message, Game.myPlayer.getNetworkID(), PhotonNetwork.LocalPlayer.NickName));
+        //Debug.Log("got the input");
+        //object[] data = { message, photonView.ViewID, PhotonNetwork.LocalPlayer.NickName };
+        //Debug.Log("sent the data");
+        //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
     }
 
-    public void sendMessageToPlayers(string Message, string playerNickname)
+    public static void sendMessageToPlayers(string Message, string playerNickname)
     {
         string messageToBeSent = playerNickname + ": ";
         messageToBeSent += Message + " \n";

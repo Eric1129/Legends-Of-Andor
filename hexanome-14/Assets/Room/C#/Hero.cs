@@ -27,20 +27,82 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int heroRank;
 
 
-    private int gold = 2;
+    private int gold = 10;
     private int strength = 0;
     private int willpower = 0;
 
     private int hour = 0;
-    private List<string> articles = new List<string>();
-    private Dictionary<string, List<Article>> heroArticles;
+    //private List<string> articles = new List<string>();
     private int gemstones = 0;
+    private Dictionary<string, List<Article>> heroArticles;
+
 
     public Hero()
     {
+        
         pronouns = new string[3];
         heroArticles = new Dictionary<string, List<Article>>();
     }
+
+    public string allArticlesAsString()
+    {
+        string articles = "";
+        foreach (string key in this.heroArticles.Keys)
+        {
+            int quantity = heroArticles[key].Count;
+            articles += quantity + " x " + key +  " \n";
+        }
+
+        return articles;
+        //List<string> articles = new List<string>();
+        //foreach(string key in this.heroArticles.Keys)
+        //{
+        //    articles.Add(key);
+        //}
+        //return articles;
+    }
+
+    public List<string> allArticlesAsStringList()
+    {
+        List<string> articles = new List<string>();
+        foreach (string key in this.heroArticles.Keys)
+        {
+            articles.Add(key);
+        }
+        return articles;
+    }
+
+    public bool hasArticle(string key)
+    {
+        List<Article> articles;
+        if (heroArticles.TryGetValue(key, out articles))
+        {
+            return heroArticles[key].Count > 0;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+
+    public void addArticle(Article article)
+    {
+        if (heroArticles.ContainsKey(article.ToString()))
+        {
+            heroArticles[article.ToString()].Add(article);
+        }
+        else
+        {
+            List<Article> articles = new List<Article>();
+            articles.Add(article);
+            heroArticles.Add(article.ToString(), articles);
+        }
+
+    }
+
 
     public int getGold()
     {
@@ -54,7 +116,10 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     {
         this.gold += gold;
     }
-
+    public void decreaseGold(int gold)
+    {
+        this.gold -= gold;
+    }
     public int getStrength()
     {
         return strength;
@@ -67,6 +132,11 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     {
         this.strength += strength;
     }
+    public bool decreaseStrength(int strength)
+    {
+        this.strength -= strength;
+        return true;
+    }
     public int getWillpower()
     {
         return willpower;
@@ -78,6 +148,10 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void increaseWillpower(int willpower)
     {
         this.willpower += willpower;
+    }
+    public void decreaseWillpower(int willpower)
+    {
+        this.willpower -= willpower;
     }
     public int getHour()
     {
@@ -127,72 +201,17 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return this.pronouns;
     }
 
-    public string allArticlesAsString()
-    {
-        string articles = "";
-        foreach(string key in this.heroArticles.Keys)
-        {
-            int quantity = heroArticles[key].Count;
-            articles += quantity + " x " + key;
-        }
-
-        return articles;
-        //List<string> articles = new List<string>();
-        //foreach(string key in this.heroArticles.Keys)
-        //{
-        //    articles.Add(key);
-        //}
-        //return articles;
-    }
-
-    public List<string> allArticlesAsStringList()
-    {
-        List<string> articles = new List<string>();
-        foreach (string key in this.heroArticles.Keys)
-        {
-            articles.Add(key);
-        }
-        return articles;
-    }
-    public bool hasArticle(string key)
-    {
-        List<Article> articles;
-        if(heroArticles.TryGetValue(key, out articles))
-        {
-            return heroArticles[key].Count > 0;
-           
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     public int getGemstone()
     {
         return this.gemstones;
     }
 
-    public void addArticle(Article article)
-    {
-        if (heroArticles.ContainsKey(article.ToString()))
-        {
-            heroArticles[article.ToString()].Add(article);
-        }
-        else
-        {
-            List<Article> articles = new List<Article>();
-            articles.Add(article);
-            heroArticles.Add(article.ToString(), articles);
-        }
-        
-    }
 
     public Article removeArticle(string articleName)
     {
         int numArticles = heroArticles[articleName].Count;
         Article removedArticle = heroArticles[articleName][numArticles - 1];
-        if(numArticles > 1)
+        if (numArticles > 1)
         {
             heroArticles[articleName].Remove(heroArticles[articleName][numArticles - 1]);
         }
@@ -201,32 +220,9 @@ public class Hero // : MonoBehaviour, Movable, Fightable
             heroArticles.Remove(articleName);
         }
 
-        
+
         return removedArticle;
     }
 
-    //public string allArticles()
-    //{
-    //    string s_articles = "";
-    //    foreach(string ar in getArticlesAsStringList())
-    //    {
-    //        s_articles += (ar + " ");
-    //    }
-    //    return s_articles;
-    //}
-
-    public void incGold(int amount)
-    {
-        this.gold+= amount;
-    }
-
-    public void decGold(int amount)
-    {
-        this.gold-=amount;
-    }
-
-    public void updateStrength(int numPoints)
-    {
-        this.strength += numPoints;
-    }
+   
 }

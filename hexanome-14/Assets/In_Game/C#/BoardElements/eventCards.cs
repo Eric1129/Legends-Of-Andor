@@ -14,14 +14,15 @@ public class eventCards : MonoBehaviour
     public bool hasWarrior;
     public bool hasWizard;
     public bool hasDwarf;
+    public static ArrayList borderingRiver = new ArrayList() { 15, 9, 8, 11, 12, 13, 116, 32, 38, 28, 29, 30, 33, 31, 27, 26, 49, 48, 47, 56, 63, 64, 46, 44, 42, 39, 40, 41, 37 };
 
     public static eventCards instance;
 
-    private void setPlayers()
+    private void setUp()
     {
-        foreach(Andor.Player player in Game.gameState.getPlayers())
+        foreach (Andor.Player player in Game.gameState.getPlayers())
         {
-            if(player.getHeroType() == "Male Archer" || player.getHeroType() == "Female Archer")
+            if (player.getHeroType() == "Male Archer" || player.getHeroType() == "Female Archer")
             {
                 archer = player;
                 hasArcher = true;
@@ -31,17 +32,18 @@ public class eventCards : MonoBehaviour
                 warrior = player;
                 hasWarrior = true;
             }
-            if(player.getHeroType() == "Male Dwarf" || player.getHeroType() == "Female Dwarf")
+            if (player.getHeroType() == "Male Dwarf" || player.getHeroType() == "Female Dwarf")
             {
                 dwarf = player;
                 hasDwarf = true;
             }
-            if(player.getHeroType() == "Male Wizard" || player.getHeroType() == "Female Wizard")
+            if (player.getHeroType() == "Male Wizard" || player.getHeroType() == "Female Wizard")
             {
                 wizard = player;
                 hasWizard = true;
             }
         }
+
     }
 
     IEnumerator consoleCoroutine(string message)
@@ -53,7 +55,7 @@ public class eventCards : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        setPlayers();
+        setUp();
     }
 
     public static void execute(int num)
@@ -66,9 +68,21 @@ public class eventCards : MonoBehaviour
         {
             eventCard2();
         }
+        if (num == 3)
+        {
+            eventCard3();
+        }
+        if (num == 4)
+        {
+            eventCard4();
+        }
         if (num == 11)
         {
             eventCard11();
+        }
+        if (num == 9)
+        {
+            eventCard9();
         }
         if (num == 13)
         {
@@ -78,9 +92,21 @@ public class eventCards : MonoBehaviour
         {
             eventCard14();
         }
+        if (num == 15)
+        {
+            eventCard15();
+        }
         if (num == 17)
         {
             eventCard17();
+        }
+        if (num == 19)
+        {
+            eventCard19();
+        }
+        if (num == 22)
+        {
+            eventCard22();
         }
         if (num == 24)
         {
@@ -97,6 +123,14 @@ public class eventCards : MonoBehaviour
         if (num == 32)
         {
             eventCard32();
+        }
+        if (num == 39)
+        {
+            eventCard39();
+        }
+        if (num == 40)
+        {
+            eventCard40();
         }
         //string meth = "eventCard" + num.ToString();
         //MethodInfo method = eventCards.instance.GetType().GetMethod("eventCard" + num.ToString());
@@ -125,8 +159,63 @@ public class eventCards : MonoBehaviour
 
 
     //     //EVENT CARD - 3
+    public static void eventCard3()
+    {
+        List<Andor.Player> p = new List<Andor.Player>();
+        Andor.Player playerOnTree = new Andor.Player();
+        int rank = -1000000;
+        int i = 0;
+        GameController.instance.updateGameConsoleText("3 - A hero who enters the Tree of Songs space or is already standing there gets 1 strength point");
+        foreach(Andor.Player player in Game.gameState.getPlayers())
+        {
+            i++;
+            Dictionary<string, int> players = new Dictionary<string, int>();
+            players = Game.gameState.getPlayerLocations();
+            int location = players[player.getNetworkID()];
+            if (location == 57)
+            {
+                p.Add(player);
+            }
+
+        }
+
+        //if someone is already on the spot
+        if(p.Count >= 1)
+        {
+            foreach(Andor.Player play in p)
+            {
+                if(play.getHero().getHeroRank() > rank)
+                {
+                    rank = play.getHeroRank();
+                    playerOnTree = play;
+                }
+            }
+            playerOnTree.getHero().increaseStrength(1);
+        }
+
+        //else
+        Game.gameState.eventcard3 = true;
+
+    }
 
     //     //EVENT CARD - 4
+    public static void eventCard4()
+    {
+        GameController.instance.updateGameConsoleText("4 - The well token on space 55 is removed from the game");
+        foreach (KeyValuePair<Well, int> w in Game.gameState.getWells())
+        {
+            if (w.Value == 55)
+            {
+                Object.Destroy(w.Key.getPrefab());
+                Dictionary<Well, int> wells = new Dictionary<Well, int>();
+                wells = Game.gameState.getWells();
+                wells.Remove(w.Key);
+                Game.gameState.setWells(wells);
+                break;
+            }
+        }
+    }
+
 
     //     //EVENT CARD - 5
 
@@ -145,6 +234,11 @@ public class eventCards : MonoBehaviour
     //     //EVENT CARD - 8
 
     //     //EVENT CARD - 9
+    public static void eventCard9()
+    {
+        GameController.instance.updateGameConsoleText("On this day, no hero is allowed to use a 10th hour.");
+        Game.gameState.endtime = 9;
+    }
 
     //     //EVENT CARD - 10
     public static void eventCard10()
@@ -161,18 +255,18 @@ public class eventCards : MonoBehaviour
         monsters = Game.gameState.getMonsters();
         foreach (Monster m in monsters)
         {
-           int currStrength = m.getStrength();
+            int currStrength = m.getStrength();
             m.setStrength(currStrength + 1);
         }
     }
 
 
 
-//EVENT CARD - 12
+    //EVENT CARD - 12
 
 
-//EVENT CARD - 13
-public static void eventCard13()
+    //EVENT CARD - 13
+    public static void eventCard13()
     {
         GameController.instance.updateGameConsoleText("13 - The lovely sound of a horn echoes across the land...");
         GameController.instance.updateGameConsoleText("13-  Each Hero who has fewer than 10 willpower points can immediately raise his total to 10.");
@@ -206,10 +300,22 @@ public static void eventCard13()
 
 
     //     //EVENT CARD - 15
-    //public static void eventCard15()
-    //{
-        //GameConsole.displayMessage("15 - The well token on space 35 is removed from the game");
-    //}
+    public static void eventCard15()
+    {
+        GameController.instance.updateGameConsoleText("15 - The well token on space 35 is removed from the game");
+        foreach (KeyValuePair<Well, int> w in Game.gameState.getWells())
+        {
+            if (w.Value == 35)
+            {
+                Object.Destroy(w.Key.getPrefab());
+                Dictionary<Well, int> wells = new Dictionary<Well, int>();
+                wells = Game.gameState.getWells();
+                wells.Remove(w.Key);
+                Game.gameState.setWells(wells);
+                break;
+            }
+        }
+    }
 
     //     //EVENT CARD - 16
 
@@ -221,7 +327,7 @@ public static void eventCard13()
         GameController.instance.updateGameConsoleText("17-  Each hero with more than 12 willpower points immediately reduced his point total to 12");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
-           if(player.getHero().getStrength() > 12)
+            if (player.getHero().getStrength() > 12)
             {
                 int currStrength = player.getHero().getStrength();
                 player.getHero().setStrength(12);
@@ -232,6 +338,13 @@ public static void eventCard13()
     //     //EVENT CARD - 18
 
     //     //EVENT CARD - 19
+    public static void eventCard19()
+    {
+        Game.gameState.eventcard19 = true;
+        GameController.instance.updateGameConsoleText("19 - On this day, the 9th and 10th hours will each cost 3 willpower points instead of two");
+        Game.gameState.overtimeCost = 3;
+    
+    }
 
     //     //EVENT CARD - 20
 
@@ -250,11 +363,21 @@ public static void eventCard13()
 
 
 
-    //EVENT CARD - 22
     public static void eventCard22()
     {
-        //GameConsole.displayMessage("22-  The Well token on space 45 is removed from the game");
-        
+        GameController.instance.updateGameConsoleText("22 - The well token on space 45 is removed from the game");
+        foreach (KeyValuePair<Well, int> w in Game.gameState.getWells())
+        {
+            if (w.Value == 45)
+            {
+                Object.Destroy(w.Key.getPrefab());
+                Dictionary<Well, int> wells = new Dictionary<Well, int>();
+                wells = Game.gameState.getWells();
+                wells.Remove(w.Key);
+                Game.gameState.setWells(wells);
+                break;
+            }
+        }
     }
 
 
@@ -293,7 +416,7 @@ public static void eventCard13()
         GameController.instance.updateGameConsoleText("28 - Every Hero whose time marker is presently in the sunrise box gets 2 willpower points");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
-            if(player.getHero().getHour() == 0)
+            if (player.getHero().getHour() == 0)
             {
                 int currWillpower = player.getHero().getWillpower();
                 player.getHero().setWillpower(currWillpower + 2);
@@ -359,9 +482,9 @@ public static void eventCard13()
     }
 
     //EVENT CARD - Random2
-    public static void eventCard3()
+    public static void eventCard39()
     {
-        GameController.instance.updateGameConsoleText("idk - The wizard and the archer each immediately get 3 willpower points.");
+        GameController.instance.updateGameConsoleText("39 - The wizard and the archer each immediately get 3 willpower points.");
         if (instance.hasWizard)
         {
             int willpower = wizard.getHero().getWillpower();
@@ -375,5 +498,22 @@ public static void eventCard13()
     }
 
 
+    //random - bordering river
+    public static void eventCard40()
+    {
+        GameController.instance.updateGameConsoleText("idk - Each hero is now standing on a space bordering the river gets a wineskin");
+        foreach (Andor.Player player in Game.gameState.getPlayers())
+        {
+            Dictionary<string, int> players = new Dictionary<string, int>();
+            players = Game.gameState.getPlayerLocations();
+            int location = players[player.getNetworkID()];
+            if (borderingRiver.Contains(location))
+            {
+                player.getHero().addArticle(new Wineskin());
+            }
+
+        }
+
+    }
 
 }

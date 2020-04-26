@@ -31,13 +31,18 @@ public class GameState
     public string[] fogtoken_order;
     public int day;
     private Dictionary<Farmer, int> farmers;
-    public Dictionary<string, List<Article>> equipmentBoard;
-
     public int overtime = 8;
     public int endtime = 10;
+    public int overtimeCost = 2;
     public bool skralTowerDefeated;
+    public bool eventcard19;
+    public bool eventcard3;
+    public int brewCost;
+    public int witchLocation;
+    public bool witchFound;
+    public Dictionary<string, List<Article>> equipmentBoard;
 
-public GameState()
+    public GameState()
 	{
         players = new Dictionary<string, Player>();
         monsters = new List<Monster>();
@@ -56,7 +61,11 @@ public GameState()
         equipmentBoard = new Dictionary<string, List<Article>>();
         skralTowerDefeated = false;
         medicinalHerb = new List<MedicinalHerb>();
-
+        eventcard19 = false;
+        eventcard3 = false;
+        brewCost = 2;
+        witchLocation = -1;
+        witchFound = false;
     }
 
     public void addPlayer(Player p)
@@ -160,46 +169,16 @@ public GameState()
         return merchants[location];
     }
 
-    public Dictionary<int, Merchant> getMerchants()
-    {
-        return this.merchants;
-    }
-
-    //public List<Merchant> getMerchants()
-    //{
-        
-    //}
-
-    
-
-    public Article removeFromEquimentBoard(string articleName)
-    {
-        Debug.Log("removign article");
-        //remove the last item in the list
-        int numArticles = equipmentBoard[articleName].Count;
-        Article removedArticle = equipmentBoard[articleName][numArticles - 1];
-        equipmentBoard[articleName].Remove(equipmentBoard[articleName][numArticles-1]);
-        return removedArticle;
-    }
-
-    public Dictionary<string,List<Article>> getEquipmentBoard(){
-        return equipmentBoard;
-    }
-
-    public void addToEquipmentBoard(Article article)
-    {
-        equipmentBoard[article.ToString()].Add(article);
-    }
-
-    public List<Article> getArticlesOfType(string key)
-    {
-        return equipmentBoard[key];
-    }
-
     public Dictionary<Well, int> getWells()
     {
         return wells;
     }
+
+    public void setWells(Dictionary<Well, int> updatedWells)
+    {
+        this.wells = updatedWells;
+    }
+
     public void addWell(Well w)
     {
         wells.Add(w, w.getLocation());
@@ -352,6 +331,33 @@ public GameState()
         int[] e = new int[event_cards.Length - 1];
         Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
         event_cards = e;
+    }
+
+    public Dictionary<int, Merchant> getMerchants()
+    {
+        return this.merchants;
+    }
+    public Article removeFromEquimentBoard(string articleName)
+    {
+        Debug.Log("removing article: "+ articleName);
+        //remove the last item in the list
+        int numArticles = equipmentBoard[articleName].Count;
+        Debug.Log("removing article2");
+        Article removedArticle = equipmentBoard[articleName][numArticles - 1];
+        Debug.Log("removing article3");
+        equipmentBoard[articleName].Remove(equipmentBoard[articleName][numArticles - 1]);
+        Debug.Log("removing article4");
+        return removedArticle;
+    }
+
+    public List<Article> getArticlesOfType(string key)
+    {
+        return equipmentBoard[key];
+    }
+
+    public Dictionary<string, List<Article>> getEquipmentBoard()
+    {
+        return equipmentBoard;
     }
 
 }

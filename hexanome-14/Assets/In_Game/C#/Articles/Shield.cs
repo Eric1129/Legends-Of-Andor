@@ -5,10 +5,9 @@ public class Shield: Article
 {
     private ArticleType article;
     private string description;
-  
+
     public Shield()
     {
-        
         article = ArticleType.Shield;
         this.description = "Each side of the shield can be used once to help a " +
             "hero avoid losing willpower points after a battle round. Even in a " +
@@ -22,7 +21,6 @@ public class Shield: Article
             "being returned to the bottom of the stack. \n\n After a shield is used for the " +
             "first time, turn it over so its opposite, damaged, side is up. After the " +
             "second use, it is returned to the equipment board.";
-
     }
 
     public void useArticle()
@@ -37,6 +35,7 @@ public class Shield: Article
 
     public ArticleType getArticle()
     {
+        //return ArticleType.Shield;
         return this.article;
     }
 
@@ -44,5 +43,4 @@ public class Shield: Article
     {
         return this.description;
     }
-
 }

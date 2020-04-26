@@ -5,6 +5,7 @@ using System.Drawing;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class MerchantScreen : MonoBehaviour
 {
     private Merchant merchant;
@@ -12,24 +13,23 @@ public class MerchantScreen : MonoBehaviour
     private string saleItem;
     public Transform merchantBoard;
     public Transform equipBoard;
-    
 
     public MerchantScreen()
     {
         //client = Game.myPlayer.getNetworkID();
         //int clientLoc = Game.gameState.playerLocations[client];
         //merchant = Game.gameState.getMerchant(clientLoc);
-        
     }
 
     public void displayAvailableItems()
     {
         client = Game.myPlayer.getNetworkID();
-        int clientLoc = Game.gameState.playerLocations[client];
+        int clientLoc = Game.gameState.playerLocations[client]; 
         merchant = Game.gameState.getMerchant(clientLoc);
         merchantBoard.gameObject.SetActive(true);
         updateStatusOfInventory();
         updateGold();
+
 
     }
 
@@ -42,7 +42,7 @@ public class MerchantScreen : MonoBehaviour
         {
             foreach (string key in Game.gameState.getEquipmentBoard().Keys)
             {
-                
+
                 Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
                 articleBuyButton.interactable = false;
 
@@ -58,16 +58,15 @@ public class MerchantScreen : MonoBehaviour
         }
     }
 
-    
     public void updateStatusOfInventory()
     {
-        
-        foreach(string key in Game.gameState.getEquipmentBoard().Keys)
+
+        foreach (string key in Game.gameState.getEquipmentBoard().Keys)
         {
             List<Article> articles = Game.gameState.getArticlesOfType(key);
             int quantity = articles.Count;
 
-            if(quantity > 0)
+            if (quantity > 0)
             {
                 string articleName = articles[0].articleToString();
                 Text articleText = GameObject.Find(key).GetComponent<Text>();
@@ -76,7 +75,7 @@ public class MerchantScreen : MonoBehaviour
                 Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
                 articleBuyButton.interactable = true;
 
-                
+
                 UnityEngine.Color zm = articleText.color;  //  makes a new color zm
                 zm.a = 1.0f; // makes the color zm transparent
                 articleText.color = zm;
@@ -93,7 +92,7 @@ public class MerchantScreen : MonoBehaviour
                 zm.a = 0.6f; // makes the color zm transparent
                 articleText.color = zm;
             }
-           
+
         }
     }
 
@@ -103,11 +102,13 @@ public class MerchantScreen : MonoBehaviour
         {
             //List<Article> articles = Game.gameState.getArticlesOfType(key);
             //int quantity = articles.Count;
-
+            Debug.Log(key);
             Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+            Debug.Log("Found button");
             articleBuyButton.interactable = true;
 
             Text articleText = GameObject.Find(key).GetComponent<Text>();
+            Debug.Log("Found text");
             UnityEngine.Color zm = articleText.color;  //  makes a new color zm
             zm.a = 1.0f; // makes the color zm transparent
             articleText.color = zm;
@@ -118,15 +119,24 @@ public class MerchantScreen : MonoBehaviour
         strengthBuyButton.interactable = true;
     }
 
+
+
+    public void itemClick(string item)
+    {
+        saleItem = item;
+    }
+
+    //public void buyClick()
+    //{
+    //    merchant.buyFromMerchant(client, saleItem);
+    //}
+
     public void close()
     {
         resetBuyButtons();
-        merchantBoard.gameObject.SetActive(false);
-        client = "";
-        
+        merchantBoard.gameObject.SetActive(false); merchantBoard.gameObject.SetActive(false);
+        client = ""; client = "";
     }
-
-    
 
     public void buyClick(string item)
     {
@@ -144,5 +154,4 @@ public class MerchantScreen : MonoBehaviour
     {
         equipBoard.gameObject.SetActive(false);
     }
-    
 }
