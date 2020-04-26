@@ -777,7 +777,7 @@ public void updateGameConsoleText(string message)
         Game.gameState.equipmentBoard.Add("Helm", helms);
         for (int i = 0; i < 3; i++)
         {
-            Game.gameState.equipmentBoard["Helm"].Add(new Article.Helm());
+            Game.gameState.equipmentBoard["Helm"].Add(new Helm());
         }
     }
 

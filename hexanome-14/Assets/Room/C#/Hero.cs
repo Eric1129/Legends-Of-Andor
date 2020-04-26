@@ -87,23 +87,21 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         }
     }
 
- 
+
 
     public void addArticle(Article article)
     {
+        if (heroArticles.ContainsKey(article.ToString()))
         {
-            this.articles.Remove(article); if (heroArticles.ContainsKey(article.ToString()))
-            {
-                heroArticles[article.ToString()].Add(article);
-            }
-            else
-            {
-                List<Article> articles = new List<Article>();
-                articles.Add(article);
-                heroArticles.Add(article.ToString(), articles);
-            }
-
+            heroArticles[article.ToString()].Add(article);
         }
+        else
+        {
+            List<Article> articles = new List<Article>();
+            articles.Add(article);
+            heroArticles.Add(article.ToString(), articles);
+        }
+
     }
 
 
