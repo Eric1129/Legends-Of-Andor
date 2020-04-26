@@ -339,11 +339,14 @@ public class GameState
     }
     public Article removeFromEquimentBoard(string articleName)
     {
-        Debug.Log("removign article");
+        Debug.Log("removing article: "+ articleName);
         //remove the last item in the list
         int numArticles = equipmentBoard[articleName].Count;
+        Debug.Log("removing article2");
         Article removedArticle = equipmentBoard[articleName][numArticles - 1];
+        Debug.Log("removing article3");
         equipmentBoard[articleName].Remove(equipmentBoard[articleName][numArticles - 1]);
+        Debug.Log("removing article4");
         return removedArticle;
     }
 

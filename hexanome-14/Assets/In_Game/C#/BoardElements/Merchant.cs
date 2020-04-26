@@ -15,7 +15,7 @@ public class Merchant
     }
 
 
-    public void buyFromMerchant(string item, string client) 
+    public void buyFromMerchant(string client, string item) 
     {
         {
             //Game.sendAction(new BuyFromMerchant())

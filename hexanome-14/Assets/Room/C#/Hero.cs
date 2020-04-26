@@ -27,7 +27,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int heroRank;
 
 
-    private int gold = 2;
+    private int gold = 10;
     private int strength = 0;
     private int willpower = 0;
 
@@ -212,10 +212,10 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return this.gemstones;
     }
 
-    public void addArticle(string article)
-    {
-        this.articles.Add(article);
-    }
+    //public void addArticle(string article)
+    //{
+    //    this.articles.Add(article);
+    //}
 
     //public void removeArticle(string article)
     //{

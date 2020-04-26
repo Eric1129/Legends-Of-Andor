@@ -10,12 +10,11 @@ public class BuyFromMerchant : Action
 
     public BuyFromMerchant(string[] players, string saleItem)
     {
-        {
-            type = Type.BuyFromMerchant; type = Type.BuyFromMerchant;
-            this.players = new string[1];
-            this.players = players;
-            this.saleItemStr = saleItem;
-        }
+
+        type = Type.BuyFromMerchant;
+        this.players = new string[1];
+        this.players = players;
+        this.saleItemStr = saleItem;
     }
 
     public Type getType()
@@ -37,23 +36,32 @@ public class BuyFromMerchant : Action
     {
         Hero client = Game.gameState.getPlayer(players[0]).getHero();
         //decrement gold
-        client.decGold(2);
-
-        if (saleItemStr != "Strength")
+        if (client.getGold() - 2 >= 0)
         {
-            //remove item from inventory
-            Article saleItem = Game.gameState.removeFromEquimentBoard(saleItemStr);
-            //add item to heroes articles
-            client.addArticle(saleItem);
-            Debug.Log(client.allArticlesAsString());
+
+            Debug.Log(saleItemStr + " !!!");
+
+            if (saleItemStr != "Strength")
+            {
+                //remove item from inventory
+                Article saleItem = Game.gameState.removeFromEquimentBoard(saleItemStr);
+                //add item to heroes articles
+                client.addArticle(saleItem);
+                Debug.Log(client.allArticlesAsString());
+            }
+            else
+            {
+                client.updateStrength(1);
+                Debug.Log(client.getStrength());
+            }
+            client.decGold(2);
         }
         else
         {
-            client.updateStrength(1);
-            Debug.Log(client.getStrength());
+            //GameController.instance.cannotBuyFromMerchant
         }
+
+
+
     }
-
-    
-
 }

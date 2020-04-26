@@ -241,7 +241,7 @@ public class GameController : MonoBehaviour
             + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
             + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
             + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
-            + "\nArticles: " + Game.myPlayer.getHero().allArticles();
+            + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
             
         heroStatsText.text = update;
     }
@@ -718,7 +718,7 @@ public void updateGameConsoleText(string message)
             initializeStrengthPoints();
 
             Debug.Log("INITIALIZING THE STRENGTH POINTS");
-            initializeWineskin();
+            //initializeWineskin();
 
             Debug.Log("INITIALIZING THE MED HERB");
             instantiateMedicinalHerb(3);

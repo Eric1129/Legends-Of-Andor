@@ -102,11 +102,13 @@ public class MerchantScreen : MonoBehaviour
         {
             //List<Article> articles = Game.gameState.getArticlesOfType(key);
             //int quantity = articles.Count;
-
+            Debug.Log(key);
             Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+            Debug.Log("Found button");
             articleBuyButton.interactable = true;
 
             Text articleText = GameObject.Find(key).GetComponent<Text>();
+            Debug.Log("Found text");
             UnityEngine.Color zm = articleText.color;  //  makes a new color zm
             zm.a = 1.0f; // makes the color zm transparent
             articleText.color = zm;
@@ -124,10 +126,10 @@ public class MerchantScreen : MonoBehaviour
         saleItem = item;
     }
 
-    public void buyClick()
-    {
-        merchant.buyFromMerchant(saleItem, client);
-    }
+    //public void buyClick()
+    //{
+    //    merchant.buyFromMerchant(client, saleItem);
+    //}
 
     public void close()
     {
