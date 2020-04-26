@@ -592,6 +592,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(5));
         //instantiate witch
         Debug.Log("Added witch at position: " + loc);
+        //ned to make this true everywhere
+        Game.gameState.witchFound = true;
+        //
         GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
         //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
         //Debug.Log(w);
@@ -783,6 +786,13 @@ public void updateGameConsoleText(string message)
         for (int i = 0; i < 3; i++)
         {
             Game.gameState.equipmentBoard["Helm"].Add(new Helm());
+        }
+
+        List<Article> brews = new List<Article>();
+        Game.gameState.equipmentBoard.Add("WitchBrew", brews);
+        for (int i = 0; i < 5; i++)
+        {
+            Game.gameState.equipmentBoard["WitchBrew"].Add(new WitchBrew());
         }
     }
 
