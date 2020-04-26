@@ -9,7 +9,7 @@ public class Bow : Article
     public Bow()
     {
 
-        this.article = ArticleType.Bow;
+        this.article = ArticleType.MedicinalHerb;
         this.description = "A hero with a bow may attack a creature in an adjacent space. " +
             "He rolls each of his dice in turn and decides when to stop rolling. " +
             "Only the final roll counts. When a hero carrying a bow (not the archer) " +
