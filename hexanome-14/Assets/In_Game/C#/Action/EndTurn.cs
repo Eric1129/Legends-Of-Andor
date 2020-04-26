@@ -77,7 +77,15 @@ public class EndTurn :Action
         foreach (Well w in gs.getWells().Keys)
         {
             //check if there is a Hero on the same spot first
-            w.refreshWell();
+            foreach(Andor.Player p in gs.getPlayers())
+            {
+                int loc = gs.getPlayerLocations()[p.getNetworkID()];
+                if(w.getLocation() != loc)
+                {
+                    w.refreshWell();
+                }
+            }
+           
         }
 
         gs.uncoverEventCard();

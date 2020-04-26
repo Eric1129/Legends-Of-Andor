@@ -509,7 +509,7 @@ public class eventCards : MonoBehaviour
             int location = players[player.getNetworkID()];
             if (borderingRiver.Contains(location))
             {
-                player.getHero().addArticle("wineskin");
+                player.getHero().addArticle(new Wineskin());
             }
 
         }
