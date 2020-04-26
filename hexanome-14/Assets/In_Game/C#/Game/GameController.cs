@@ -39,6 +39,21 @@ public class GameController : MonoBehaviour
     public GameObject chat;
     public Text input;
 
+    //Article
+    public Button useTelescope;
+
+    //FogToken
+    public GameObject willpower2Token;
+    public GameObject willpower3Token;
+    public GameObject brewToken;
+    public GameObject gold1Token;
+    public GameObject gorToken;
+    public GameObject wineskinToken;
+    public GameObject eventToken;
+    public GameObject strengthToken;
+
+
+
 
     public Text turnLabel;
     //public Text scrollText;
@@ -277,8 +292,17 @@ public class GameController : MonoBehaviour
             {
                 GameController.instance.emptyWellButton.gameObject.SetActive(false);
             }
+            //check if player has telescope
+            if (Game.myPlayer.getHero().getArticles().Contains("telescope"))
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(true);
+            }
+            else
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(false);
+            }
 
-            bool brewValid = false;
+                bool brewValid = false;
             if(loc == Game.gameState.witchLocation && Game.gameState.witchLocation != -1)
             {
                 GameController.instance.buyBrewButton.gameObject.SetActive(true);
@@ -289,8 +313,9 @@ public class GameController : MonoBehaviour
                 GameController.instance.buyBrewButton.gameObject.SetActive(false);
             }
 
-            // Update Player position
-            foreach (Monster monster in Game.gameState.getMonsters())
+            
+                // Update Player position
+                foreach (Monster monster in Game.gameState.getMonsters())
             {
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
@@ -459,6 +484,12 @@ public class GameController : MonoBehaviour
         closeChatButton.gameObject.SetActive(true);
     }
 
+    public void  clickTelescope()
+    {
+        Game.sendAction(new UseTelescope(Game.myPlayer.getNetworkID()));
+    }
+
+
     public void closeChatClick()
     {
         //Game.sendAction(new ChatOpen(Game.myPlayer.getNetworkID()));
@@ -467,13 +498,22 @@ public class GameController : MonoBehaviour
         closeChatButton.gameObject.SetActive(false);
     }
 
-
     public void loseScenario()
     {
         scrollTxt.text = "YOU LOST!";
         //scroll.SetActive(true);
         Game.gameState.outcome = "lost";
         StartCoroutine(overtimeCoroutine(10));
+    }
+
+    public void archerBuysBrew()
+    {
+        if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
+        {
+            scrollTxt.text = "Archer pays 1 less gold for brew!";
+            StartCoroutine(overtimeCoroutine(3));
+        }
+        
     }
 
     public void overtime()
@@ -646,7 +686,9 @@ public void updateGameConsoleText(string message)
     {
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
-            player.getHero().addArticle("Wineskin");
+            player.getHero().addArticle("wineskin");
+            player.getHero().addArticle("telescope");
+
         }
     }
    
@@ -903,6 +945,60 @@ public void updateGameConsoleText(string message)
         }
     }
 
+    public void tele(int loc)
+    {
+        Vector3 boardContainerScaling3 = new Vector3(0.15f / boardSpriteContainer.parent.lossyScale.x, 0.15f / boardSpriteContainer.parent.lossyScale.y, 0.15f / boardSpriteContainer.parent.lossyScale.z);
+
+        List<Node> neighbors = Game.positionGraph.getNode(loc).getAdjacentNodes();
+        foreach (Node n in neighbors)
+        {
+            int nodeIndex = n.getIndex();
+            foreach (KeyValuePair<FogToken, int> f in Game.gameState.getFogTokens())
+            {
+                if (f.Value == nodeIndex && !f.Key.used)
+                {
+                    GameObject fogToken = f.Key.getPrefab();
+                    UnityEngine.Object.Destroy(f.Key.getPrefab());
+                    if (f.Key.type == "brew")
+                    {
+                        fogToken = Instantiate(brewToken,tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "gor")
+                    {
+                        fogToken = Instantiate(gorToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "willpower2")
+                    {
+                        fogToken = Instantiate(willpower2Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "willpower3")
+                    {
+                        fogToken = Instantiate(willpower3Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "wineskin")
+                    {
+                        fogToken = Instantiate(wineskinToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "event")
+                    {
+                        fogToken = Instantiate(eventToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "gold1")
+                    {
+                        fogToken = Instantiate(gold1Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "strength")
+                    {
+                        fogToken = Instantiate(strengthToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    fogToken.transform.localScale = boardContainerScaling3;
+                    f.Key.setPrefab(fogToken);
+                    
+                }
+            }
+
+        }
+    }
 
     public void loadFarmers()
     {
@@ -1246,6 +1342,8 @@ public void updateGameConsoleText(string message)
         foreach(Andor.Player p in Game.gameState.getPlayers())
         {
             p.getHero().increaseStrength(2);
+            //will comment out
+            p.getHero().increaseWillpower(5);
             Debug.Log(p.getHero() + " " + p.getHero().getStrength());
         }
     }
