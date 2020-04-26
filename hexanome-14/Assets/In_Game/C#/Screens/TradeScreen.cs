@@ -413,6 +413,7 @@ public class TradeScreen : MonoBehaviour
                         Debug.Log("Image");
                         Sprite herosprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
                         attr.GetComponent<Image>().sprite = herosprite;
+                        attr.GetComponent<Image>().useSpriteMesh = true;
                     }
                     if (attr.name == "HeroItems")
                     {
@@ -541,6 +542,7 @@ public class TradeScreen : MonoBehaviour
                 Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
                 myArticlesMenu.ClearOptions();
                 myArticlesMenu.AddOptions(myArticles);
+                //myArticlesMenu.GetComponent<Dropdown>().captionText.text = myArticles[0];
                 Debug.Log("added it to dropdowns!");
             }
             if (t.name == "heroArticles")
