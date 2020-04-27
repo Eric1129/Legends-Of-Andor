@@ -45,7 +45,6 @@ public class GameController : MonoBehaviour
     public GameObject wineskin;
     public GameObject useFalcon;
 
-
     public Transform merchantButton;
 
 
@@ -367,6 +366,7 @@ public class GameController : MonoBehaviour
             {
                 GameController.instance.wineskin.gameObject.SetActive(false);
             }
+
             bool validFalcon = false;
             //check for falcon
             if (Game.myPlayer.getHero().hasArticle("Falcon"))
@@ -1415,7 +1415,7 @@ public void updateGameConsoleText(string message)
     {
         fightRequestSent = false;
         fightRequest.gameObject.SetActive(false);
-
+        fsc.acceptFightRequest(accept, Game.myPlayer.getNetworkID());
 
     }
 
@@ -1779,5 +1779,6 @@ public void updateGameConsoleText(string message)
     {
         ts.clear();
     }
+
 
 }
