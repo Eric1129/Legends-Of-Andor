@@ -54,7 +54,7 @@ public class MovePrinceThorald : Action
 
     private void threadExecute(GameState gs)
     {
-        List<Node> path = Game.positionGraph.getPath(from, to);
+        List<Node> path = Game.gameState.positionGraph.getPath(from, to);
         int spaces = path.Count;
         //int hours = Math.Ceiling((decimal)spaces / 4);
         Debug.Log("Number of spaces: " + path.Count);

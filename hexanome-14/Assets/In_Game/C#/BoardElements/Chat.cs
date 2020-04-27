@@ -4,12 +4,11 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Chat : MonoBehaviourPun
+public class chat : MonoBehaviourPun
 {
     public ScrollRect scrollRect;
     public Button button;
-    //public InputField input;
-    public Text input;
+    public InputField input;
     PhotonView PV;
     //public string messages;
     static Photon.Realtime.RaiseEventOptions sendToAllOptions = new Photon.Realtime.RaiseEventOptions()
@@ -48,7 +47,7 @@ public class Chat : MonoBehaviourPun
         messageToBeSent += Message + " \n";
         //messages += messageToBeSent;
         Debug.Log("reached boo");
-        GameObject text = GameObject.Find("/Canvas/Chat/Scroll View/Viewport/Content");
+        GameObject text = GameObject.Find("/Canvas/GameContainer/Chat/Scroll View/Viewport/Text");
         Debug.Log("reached boo 2");
         string all_messages = text.GetComponent<Text>().text;
         all_messages = String.Concat(all_messages, messageToBeSent);

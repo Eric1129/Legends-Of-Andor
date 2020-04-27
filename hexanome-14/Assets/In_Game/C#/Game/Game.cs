@@ -17,7 +17,6 @@ public static class Game
     public static bool started = false;
     public static System.Random RANDOM = new System.Random();
     public static bool loadedFromFile = false;
-    public static Graph positionGraph;
     public static int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
     private static string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
             "wineskin", "gor", "event", "gor", "gold1", "gold1", "gold1", "event", "event", "event",};
@@ -29,7 +28,7 @@ public static class Game
 
         myPlayer = player;
         gameState = new GameState();
-        positionGraph = new Graph();
+        
 
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Player), 1, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(List<Player>), 2, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
@@ -42,6 +41,19 @@ public static class Game
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(RespondTrade), 8, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         //If you want to send something through the network, you need to execute this command and create the corresponding class
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(MovePrinceThorald), 9, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(BuyFromMerchant), 10, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(EmptyWell), 11, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(BuyBrew), 12, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(SendChat), 13, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(UseTelescope), 14, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Interact), 15, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(UseWineskin), 16, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(InviteFighter), 17, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(RespondFight), 18, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+
+        // ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(MovePrinceThorald), 9, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
 
         // MUST HAVE PV
         gameState.addPlayer(myPlayer);

@@ -13,7 +13,15 @@ public enum Type
     InitiateTrade,
     RespondTrade,
     BuyFromMerchant,
-    MovePrinceThoald
+    MovePrinceThoald,
+    EmptyWell,
+    BuyBrew,
+    SendChat,
+    UseTelescope,
+    InviteFighter,
+    RespondFight,
+    UseWineskin
+
 }
 
 public interface Action

@@ -27,19 +27,88 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int heroRank;
 
 
-    private int gold = 2;
+    private int gold = 10;
     private int strength = 0;
     private int willpower = 0;
 
     private int hour = 0;
-    private List<string> articles = new List<string>();
+    //private List<string> articles = new List<string>();
     private int gemstones = 0;
+    public Dictionary<string, List<Article>> heroArticles;
+    public bool selectedWineskin;
+    public int wineskinsides = 0;
+
+    public Dictionary<int, int> numDice; //<wp, numberOfDice>
 
     public Hero()
     {
-        articles.Add("test1");
-        articles.Add("test2");
+        
         pronouns = new string[3];
+        heroArticles = new Dictionary<string, List<Article>>();
+        numDice = new Dictionary<int, int>();
+    }
+
+    public string allArticlesAsString()
+    {
+        string articles = "";
+        foreach (string key in this.heroArticles.Keys)
+        {
+            int quantity = heroArticles[key].Count;
+            articles += quantity + " x " + key +  " \n";
+        }
+
+        return articles;
+        //List<string> articles = new List<string>();
+        //foreach(string key in this.heroArticles.Keys)
+        //{
+        //    articles.Add(key);
+        //}
+        //return articles;
+    }
+
+    public List<string> allArticlesAsStringList()
+    {
+        List<string> articles = new List<string>();
+        foreach (string key in this.heroArticles.Keys)
+        {
+            articles.Add(key);
+        }
+        return articles;
+    }
+
+    public bool hasArticle(string key)
+    {
+        List<Article> articles;
+        if (heroArticles.TryGetValue(key, out articles))
+        {
+            return heroArticles[key].Count > 0;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+
+    public void addArticle(Article article)
+    {
+        if (heroArticles.ContainsKey(article.ToString()))
+        {
+            heroArticles[article.ToString()].Add(article);
+        }
+        else
+        {
+            List<Article> articles = new List<Article>();
+            articles.Add(article);
+            heroArticles.Add(article.ToString(), articles);
+        }
+
+    }
+    public Dictionary<string,List<Article>>  getAllArticles()
+    {
+        return heroArticles;
     }
 
     public int getGold()
@@ -54,7 +123,10 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     {
         this.gold += gold;
     }
-
+    public void decreaseGold(int gold)
+    {
+        this.gold -= gold;
+    }
     public int getStrength()
     {
         return strength;
@@ -67,6 +139,11 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     {
         this.strength += strength;
     }
+    public bool decreaseStrength(int strength)
+    {
+        this.strength -= strength;
+        return true;
+    }
     public int getWillpower()
     {
         return willpower;
@@ -78,6 +155,10 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public void increaseWillpower(int willpower)
     {
         this.willpower += willpower;
+    }
+    public void decreaseWillpower(int willpower)
+    {
+        this.willpower -= willpower;
     }
     public int getHour()
     {
@@ -110,6 +191,68 @@ public class Hero // : MonoBehaviour, Movable, Fightable
             pronouns[2] = "her";
         }
 
+        if (hero.Contains("Mage"))
+        {
+            for(int i = 0; i<=20; i++)
+            {
+                numDice.Add(i, 1);
+            }
+        }
+
+        if (hero.Contains("Warrior"))
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                numDice.Add(i, 2);
+            }
+
+            for (int i = 7; i < 14; i++)
+            {
+                numDice.Add(i, 3);
+            }
+
+            for (int i = 14; i < 21; i++)
+            {
+                numDice.Add(i, 4);
+            }
+        }
+
+        if (hero.Contains("Dwarf"))
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                numDice.Add(i, 1);
+            }
+
+            for (int i = 7; i < 14; i++)
+            {
+                numDice.Add(i, 2);
+            }
+
+            for (int i = 14; i < 21; i++)
+            {
+                numDice.Add(i, 3);
+            }
+        }
+
+        if (hero.Contains("Archer"))
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                numDice.Add(i, 3);
+            }
+
+            for (int i = 7; i < 14; i++)
+            {
+                numDice.Add(i, 4);
+            }
+
+            for (int i = 14; i < 21; i++)
+            {
+                numDice.Add(i, 5);
+            }
+        }
+
     }
 
     public int getHeroRank()
@@ -127,43 +270,65 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return this.pronouns;
     }
 
-    public List<string> getArticles()
-    {
-        return this.articles;
-    }
-
     public int getGemstone()
     {
         return this.gemstones;
     }
 
-    public void addArticle(string article)
-    {
-        this.articles.Add(article);
-    }
 
-    public void removeArticle(string article)
+    public Article removeArticle(string articleName)
     {
-        this.articles.Remove(article);
-    }
-
-    public string allArticles()
-    {
-        string s_articles = "";
-        foreach(string ar in this.articles)
+        int numArticles = heroArticles[articleName].Count;
+        Article removedArticle = heroArticles[articleName][numArticles - 1];
+        if (numArticles > 1)
         {
-            s_articles += (ar + " ");
+            heroArticles[articleName].Remove(heroArticles[articleName][numArticles - 1]);
         }
-        return s_articles;
+        else
+        {
+            heroArticles.Remove(articleName);
+        }
+
+
+        return removedArticle;
     }
 
-    public void incGold()
+
+    public Article removeArticle2(string articleName, Article article)
     {
-        this.gold++;
+
+        heroArticles[articleName].Remove(article);
+       
+        return article;
+       
     }
 
-    public void decGold()
+
+    //public string allArticles()
+    //{
+    //    string s_articles = "";
+    //    foreach(string ar in this.articles)
+    //    {
+    //        s_articles += (ar + " ");
+    //    }
+    //    return s_articles;
+    //}
+
+    public void incGold(int amount)
     {
-        this.gold--;
+        this.gold += amount;
     }
+
+    public void decGold(int amount)
+    {
+        this.gold -= amount;
+    }
+
+    public void updateStrength(int numPoints)
+    {
+        this.strength += numPoints;
+    }
+
+    
+
 }

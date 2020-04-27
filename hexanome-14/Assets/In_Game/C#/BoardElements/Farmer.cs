@@ -2,53 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farmer
+public class Farmer : PickDrop
 {
-    private Node location;
-    public bool pickedUp;
-    protected GameObject prefab;
+  
 
-    public Farmer(Node startingPos, GameObject prefab)
+    public Farmer(Node startingPos, GameObject instance) : base(startingPos, instance, false, "Farmer")
     {
-        location = startingPos;
-        this.prefab = prefab;
-        pickedUp = false;
+        startingPos.addInteractable(this);
     }
 
-    private Farmer() { }
-
-    public void picked()
-    {
-        this.pickedUp = true;
-        this.prefab.GetComponent<Renderer>().enabled = false;
-        //assign to player who picked it up
-    }
-
-    public void dropped()
-    {
-        this.pickedUp = false;
-        this.prefab.GetComponent<Renderer>().enabled = true;
-        //remove from player who initially picked it up 
-    }
-
-    public int getLocation()
-    {
-        return location.getIndex();
-    }
-
-    public void setLocationNode(Node x)
-    {
-        location = x;
-    }
-
-    public Node getLocationNode()
-    {
-        return location;
-    }
-
-    public GameObject getPrefab()
-    {
-        return prefab;
-    }
+    private Farmer() : base(null, null, false, "NULL") { }
 
 }

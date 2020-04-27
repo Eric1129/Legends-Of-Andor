@@ -19,6 +19,12 @@ public class GameController : MonoBehaviour
     public Transform tradeRequest;
     public Transform tradeScreenController;
     public Transform notification;
+    public Transform merchantScreenController;
+    public Transform fightScreenController;
+    
+
+    public Transform fightRequest;
+   
     //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
@@ -28,9 +34,44 @@ public class GameController : MonoBehaviour
     public Transform playerTimeContainer;
     public Transform monsterContainer;
     public Transform heroInfoContainer;
+    public Transform pickDropContainer;
 
     public Button moveButton;
+    public Button fightButton;
     public Button movePrinceButton;
+    public Button emptyWellButton;
+    public Button buyBrewButton;
+    public Button chatButton;
+    public Button closeChatButton;
+    public Button dropPickButton;
+    //public Button wineskinButton;
+    public GameObject wineskinDropdown;
+    public GameObject wineskin;
+    public GameObject useFalcon;
+
+    public Transform merchantButton;
+
+
+    public Text chatText;
+    public GameObject chat;
+    public Text input;
+
+    //Article
+    public Button useTelescope;
+
+    //FogToken
+    public GameObject willpower2Token;
+    public GameObject willpower3Token;
+    public GameObject brewToken;
+    public GameObject gold1Token;
+    public GameObject gorToken;
+    public GameObject wineskinToken;
+    public GameObject eventToken;
+    public GameObject strengthToken;
+
+
+
+
     public Text turnLabel;
     //public Text scrollText;
     public Text scrollTxt;
@@ -38,6 +79,7 @@ public class GameController : MonoBehaviour
     public Text shieldCountText;
     public Text dayCountText;
     public Text witchText;
+    public Text heroStatsText;
 
 
     public GameObject emptyPrefab;
@@ -51,6 +93,9 @@ public class GameController : MonoBehaviour
     public GameObject scroll;
     public GameObject prince;
     public GameObject farmer;
+    public GameObject medicinalHerb3;
+    public GameObject witch;
+
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -61,6 +106,7 @@ public class GameController : MonoBehaviour
     public Dictionary<Monster, GameObject> monsterObjects;
     //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
+    public Dictionary<MedicinalHerb, GameObject> medicinalHerbObject;
 
     //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
     //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
@@ -85,6 +131,8 @@ public class GameController : MonoBehaviour
     private bool notificationOn = false;
     public static MerchantScreen ms;
 
+    public FightScreenController fsc;
+
     private Transform initTransform;
     //private string[] tradeType;
     //private string[] players;
@@ -92,11 +140,19 @@ public class GameController : MonoBehaviour
     private int[] event_cards2;
     private string[] fogTokens2;
     private string[] playersToNotify;
+    public string chatMessages;
+
+
+    public bool easy = true;
+
+    private string[] invitedFighters;
+    private bool fightRequestSent;
 
     // Start is called before the first frame update
     void Start()
     {
         ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
+        fsc = fightScreenController.gameObject.GetComponent<FightScreenController>();
         //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         playersToNotify = new string[4];
         //ts = new TradeScreen();
@@ -112,9 +168,12 @@ public class GameController : MonoBehaviour
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
         princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
+        medicinalHerbObject = new Dictionary<MedicinalHerb,GameObject>();
         initTransform = transform;
 
         instance = this;
+
+        movePrinceButton.interactable = false;
 
         // For drawing everything
         loadBoard();
@@ -199,6 +258,39 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void updateHeroStats()
+    {
+        //string update = Game.myPlayer.getHeroType()
+        //    + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
+        //    + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+        //    + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+        //    + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+        //    + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
+
+        //heroStatsText.text = update;
+        string update = "";
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            string text = p.getHeroType() + " hour: " + p.getHero().getHour() + " , gold: " + p.getHero().getGold() + " , will: " + p.getHero().getWillpower() + " ,strength: " + p.getHero().getStrength() + " " + p.getHero().allArticlesAsString() + "\n" + "\n";
+            update += text;
+
+        }
+        //string update = Game.myPlayer.getHeroType()
+        //   + "\nG: " + Game.myPlayer.getHero().getGold().ToString()
+        //   + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+        //   + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+        //   + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+        //   + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
+
+        heroStatsText.text = update;
+    }
+
+    public bool checkFalconUse()
+    {
+        return ts.usingFalcon;
+    }
+   
+
     void Update()
     {
         //if(Game.gameState.fogtoken_order == null && tok != 1)
@@ -206,6 +298,8 @@ public class GameController : MonoBehaviour
         //    tok = 1;
         //    loadFogTokens();
         //}
+        chatText.text = chatMessages;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
@@ -217,8 +311,9 @@ public class GameController : MonoBehaviour
                 this.displayPauseMenu();
             }
         }
-        if(Game.gameState != null)
+        if (Game.gameState != null)
         {
+
             // Update Player position
             foreach (Andor.Player player in Game.gameState.getPlayers())
             {
@@ -227,7 +322,77 @@ public class GameController : MonoBehaviour
 
                 timeObjects[player.getNetworkID()].transform.position =
                     moveTowards(timeObjects[player.getNetworkID()].transform.position, rndPosInTimeBox[player.getNetworkID()], 1);
+
             }
+
+            int loc = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            bool wellValid = false;
+            foreach (Well w in Game.gameState.getWells().Keys)
+            {
+                if (w.getLocation() == loc && !w.used)
+                {
+                    GameController.instance.emptyWellButton.gameObject.SetActive(true);
+                    wellValid = true;
+                }
+
+            }
+
+            if (!wellValid)
+            {
+                GameController.instance.emptyWellButton.gameObject.SetActive(false);
+            }
+            //check if player has telescope
+            if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Telescope"))
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(true);
+            }
+            else
+            {
+                GameController.instance.useTelescope.gameObject.SetActive(false);
+            }
+
+            bool brewValid = false;
+            if (loc == Game.gameState.witchLocation && Game.gameState.witchLocation != -1)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(true);
+                brewValid = true;
+            }
+            if (!brewValid)
+            {
+                GameController.instance.buyBrewButton.gameObject.SetActive(false);
+            }
+            if (Game.myPlayer.getHero().hasArticle("Wineskin"))
+            {
+                GameController.instance.wineskin.gameObject.SetActive(true);
+
+            }
+            else
+            {
+                GameController.instance.wineskin.gameObject.SetActive(false);
+            }
+
+            bool validFalcon = false;
+            //check for falcon
+            if (Game.myPlayer.getHero().hasArticle("Falcon"))
+            {
+                foreach (Falcon f in Game.myPlayer.getHero().heroArticles["Falcon"])
+                {
+                    if (!f.checkUsedToday())
+                    {
+                        GameController.instance.useFalcon.gameObject.SetActive(true);
+                        validFalcon = true;
+                        break;
+
+                    }
+                }
+
+            }
+            if (!validFalcon)
+            {
+                GameController.instance.useFalcon.gameObject.SetActive(false);
+                //Debug.Log("removing falcon");
+            }
+
 
             // Update Player position
             foreach (Monster monster in Game.gameState.getMonsters())
@@ -235,12 +400,12 @@ public class GameController : MonoBehaviour
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
             }
-            foreach(PrinceThorald princeT in Game.gameState.getPrinceThorald())
+            foreach (PrinceThorald princeT in Game.gameState.getPrinceThorald())
             {
                 princeThoraldObject[princeT].transform.position = moveTowards(princeThoraldObject[princeT].transform.position, tiles[princeT.getLocation()].getMiddle(), 0.5f);
 
             }
-           // Update player turn
+            // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
             {
@@ -250,29 +415,128 @@ public class GameController : MonoBehaviour
             {
                 turnLabel.color = UnityEngine.Color.black;
             }
-        }
 
-        if (tradeRequestSent)
-        {
-            
-            if (Game.myPlayer.getNetworkID().Equals(playerTradeTo))
+            updateHeroStats();
+
+
+            if (winScenario() && Game.gameState.outcome == "won")
             {
-                processTradeRequest();
+                Game.gameState.outcome = "wonNotified";
+                winNotify();
+            }
+
+
+            if (tradeRequestSent)
+            {
+
+                if (Game.myPlayer.getNetworkID().Equals(playerTradeTo))
+                {
+                    processTradeRequest();
+                }
+            }
+
+            //if (ts.tradeType[0] != "")
+            //{
+            //    Debug.Log("trade type " + ts.tradeType[0]);
+            //}
+
+            if (notificationOn)
+            {
+                notify();
+                notifTime -= Time.deltaTime;
+            }
+
+
+            bool onMerchant = false;
+
+            foreach (int merchantLoc in Game.gameState.getMerchants().Keys)
+            {
+                if (Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()] == merchantLoc)
+                {
+                    onMerchant = true;
+                    updateGameConsoleText("You've landed on the same space as a merchant. Click the merchatn button to buy articles");
+
+                }
+            }
+            merchantButton.gameObject.SetActive(onMerchant);
+
+            //if(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()])
+            foreach (string player in playersToNotify)
+            {
+                if (Game.myPlayer.getNetworkID() == player)
+                {
+                    updateGameConsoleText(this.gameConsoleText.text.ToString());
+                }
+            }
+
+            if (fightRequestSent)
+            {
+
+                foreach (string p in invitedFighters)
+                {
+
+                    if (!Game.myPlayer.getNetworkID().Equals(invitedFighters[0]))
+                    {
+                        processFightRequest(true);
+                    }
+                    else
+                    {
+                        processFightRequest(false);
+                       
+                    }
+                    
+                }
+
             }
         }
 
-        //if (ts.tradeType[0] != "")
-        //{
-        //    Debug.Log("trade type " + ts.tradeType[0]);
-        //}
-
-        if (notificationOn)
+        if (invitedFighters != null)
         {
-            notify();
-            notifTime -= Time.deltaTime;
+            if (Game.myPlayer.getNetworkID().Equals(invitedFighters[0])
+            && fsc.allResponded())
+            {
+                fsc.fightReady();
+            }
         }
         
+
+        bool canFight = false;
+        if (Game.myPlayer.getNetworkID().Equals(Game.gameState.turnManager.currentPlayerTurn())){
+            //check if player is on the same space as a monster
+            
+            int myLocation = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            
+            foreach (Monster m in Game.gameState.getMonsters())
+            {
+                
+                int monsterLoc = m.getLocation();
+                
+                if (monsterLoc == myLocation)
+                {
+                    canFight = true;
+                }
+                else
+                {
+                    if (Game.myPlayer.getHero().hasArticle("Bow"))
+                    {
+                        List<Node> neighbours = Game.gameState.positionGraph.getNode(myLocation).getAdjacentNodes();
+                        foreach (Node n in neighbours)
+                        {
+                            if (monsterLoc == n.getIndex())
+                            {
+                                canFight = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        fightButton.interactable = canFight;
+
+
+
     }
+
     public void moveToNewPos(Andor.Player player)
     {
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
@@ -304,8 +568,6 @@ public class GameController : MonoBehaviour
         Debug.Log(boardSpriteContainer.position);
         Debug.Log(boardSpriteContainer.parent.position);
         Debug.Log(boardContainerPos);
-
-
 
 
         // load sprites
@@ -365,18 +627,184 @@ public class GameController : MonoBehaviour
         
     }
 
+    public void sendChat()
+    {
+        Debug.Log("chat button clicked");
+        string message = input.text;
+        Game.sendAction(new SendChat(message, Game.myPlayer.getNetworkID(), PhotonNetwork.LocalPlayer.NickName));
+    }
+
+
+    public void wellClick()
+    {
+        Game.sendAction(new EmptyWell(Game.myPlayer.getNetworkID()));
+    }
+
+    public void buyBrewClick()
+    {
+        Game.sendAction(new BuyBrew(Game.myPlayer.getNetworkID()));
+    }
+
+    public void chatClick()
+    {
+        //Game.sendAction(new ChatOpen(Game.myPlayer.getNetworkID()));
+        chat.SetActive(true);
+        chatButton.gameObject.SetActive(false);
+        closeChatButton.gameObject.SetActive(true);
+    }
+
+    public void  clickTelescope()
+    {
+        Game.sendAction(new UseTelescope(Game.myPlayer.getNetworkID()));
+    }
+
+
+    public void closeChatClick()
+    {
+        //Game.sendAction(new ChatOpen(Game.myPlayer.getNetworkID()));
+        chat.SetActive(false);
+        chatButton.gameObject.SetActive(true);
+        closeChatButton.gameObject.SetActive(false);
+    }
 
     public void loseScenario()
     {
         scrollTxt.text = "YOU LOST!";
-        scroll.SetActive(true);
+        //scroll.SetActive(true);
+        Game.gameState.outcome = "lost";
+        StartCoroutine(overtimeCoroutine(10));
     }
 
-    public void updateGameConsoleText(string message)
+    public void archerBuysBrew()
     {
-        gameConsoleText.text = message;
+        if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
+        {
+            scrollTxt.text = "Archer pays 1 less gold for brew!";
+            StartCoroutine(overtimeCoroutine(3));
+        }
+        
     }
 
+    public void overtime()
+    {
+        if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
+        {
+            scrollTxt.text = "You will now lose +" + Game.gameState.TIME_overtimeCost+ " willpower points for each additional hour!";
+            StartCoroutine(overtimeCoroutine(3));
+        }       
+    }
+
+    public void cannotFinishMove()
+    {
+        scrollTxt.text = "You do not have enough willpower points to finish your move! Please end your day!";
+        StartCoroutine(overtimeCoroutine(3));
+    }
+
+    public void updateChatText(string all_messages)
+    {
+        //chatText.text = all_messages;
+        chatMessages = all_messages;
+        if (chatButton.IsActive())
+        {
+            scrollTxt.text = "New message in Chat!";
+            StartCoroutine(overtimeCoroutine(2));
+        }
+    }
+    public void wineskinClicked()
+    {
+        Game.myPlayer.getHero().selectedWineskin = true;
+        Debug.Log("selected wineskin");
+    }
+    public void buttonIsClicked()
+    {
+        Debug.Log("chat button clicked");
+        string message = input.text;
+        Game.sendAction(new SendChat(message, Game.myPlayer.getNetworkID(), PhotonNetwork.LocalPlayer.NickName));
+        //Debug.Log("got the input");
+        //object[] data = { message, photonView.ViewID, PhotonNetwork.LocalPlayer.NickName };
+        //Debug.Log("sent the data");
+        //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
+    }
+    public void foundWitch(int loc)
+    {
+        //instantiateTheWitch here
+        scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
+        StartCoroutine(overtimeCoroutine(5));
+        //instantiate witch
+        Debug.Log("Added witch at position: " + loc);
+        //ned to make this true everywhere
+        Game.gameState.witchFound = true;
+        //
+        GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+        //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
+        //Debug.Log(w);
+        //Debug.Log(w.getLocation());
+        //Game.gameState.addWell(w);
+
+
+        //if it is my player, then get roll
+        //instantiateMedicinalHerb(roll)
+        //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
+        //Game.gameState.foundWitch
+        //Game.gameState.brewCost
+    }
+    IEnumerator overtimeCoroutine(int sleep)
+    {
+        //Print the time of when the function is first called.
+        //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        instance.scroll.SetActive(true);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(sleep);
+        instance.scroll.SetActive(false);
+
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    }
+
+public void updateGameConsoleText(string message)
+    {
+           gameConsoleText.text = message;
+    }
+
+    public void updateGameConsoleText(string message, string[] players)
+    {
+        //foreach(string p in players)
+        //{
+        //    if(Game.myPlayer.getNetworkID() == p)
+        //    {
+        //        gameConsoleText.text = message;
+        //    }
+        //}
+        gameConsoleText.text = message;
+        playersToNotify = players;
+    }
+
+
+    public void winNotify()
+    {
+        scrollTxt.text = "Congratulations, you have successfully completed the legend!";
+        StartCoroutine(overtimeCoroutine(10));
+        
+    }
+
+    public void invalidTradeNotify()
+    {
+        scrollTxt.text = "Invalid Trade Request!";
+        StartCoroutine(overtimeCoroutine(10));
+
+    }
+
+    //IEnumerator consoleCoroutine(string message)
+    //{
+    //    //Print the time of when the function is first called.
+    //    //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+    //    gameConsoleText.text = message;
+    //    //yield on a new YieldInstruction that waits for 5 seconds.
+    //    yield return new WaitForSeconds(5);
+    //    //After we have waited 5 seconds print the time again.
+    //   // Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    //}
     //public void updateGameConsoleText(string message, string[] players)
     //{
     //    gameConsoleText.text = message;
@@ -400,19 +828,23 @@ public class GameController : MonoBehaviour
         if (playerCount == 1 || playerCount == 2)
         {
             Game.gameState.maxMonstersAllowedInCastle = 3;
+            Game.gameState.brewCost = 3;
         }
         else if (playerCount == 3)
         {
             Game.gameState.maxMonstersAllowedInCastle = 2;
+            Game.gameState.brewCost = 4;
 
         }
         else if (playerCount == 4)
         {
             Game.gameState.maxMonstersAllowedInCastle = 1;
+            Game.gameState.brewCost = 5;
 
         }
         GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - Game.gameState.monstersInCastle);
         GameController.instance.updateDayCount(Game.gameState.day);
+        ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         /////////////////////////////////////////////////////////////////////
 
         // load players
@@ -424,7 +856,6 @@ public class GameController : MonoBehaviour
 
             loadWells();
 
-
             loadMerchants();
 
             loadFogTokens();
@@ -434,9 +865,88 @@ public class GameController : MonoBehaviour
 
             loadFarmers();
 
+            setupEquipmentBoard();
+
+        
+
+        Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            initializeStrengthPoints();
+
+            Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            initializeWineskin();
+
+            Debug.Log("INITIALIZING THE MED HERB");
+            instantiateMedicinalHerb(3);
+
         }
 
     }
+
+
+    public void setupEquipmentBoard()
+    {
+
+        //4 shields
+        List<Article> shields = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Shield", shields);
+        for (int i = 0; i < 4; i++)
+        {
+            Game.gameState.equipmentBoard["Shield"].Add(new Shield());
+        }
+
+        //3 bows
+        List<Article> bows = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Bow", bows);
+        for (int i = 0; i < 3; i++)
+        {
+            Game.gameState.equipmentBoard["Bow"].Add(new Bow());
+        }
+
+        //2 falcon
+        List<Article> falcons = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Falcon", falcons);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Falcon"].Add(new Falcon());
+        }
+
+        //2 wineskin
+        List<Article> wineskins = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Wineskin", wineskins);
+        for (int i = 0; i < 2; i++)
+        {
+            Wineskin w = new Wineskin();
+            w.numUsed = 0;
+            Game.gameState.equipmentBoard["Wineskin"].Add(w);
+        }
+
+        //2 telescope
+        List<Article> telescopes = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Telescope", telescopes);
+        for (int i = 0; i < 2; i++)
+        {
+            Game.gameState.equipmentBoard["Telescope"].Add(new Telescope());
+        }
+
+
+        //3 helm
+        List<Article> helms = new List<Article>();
+        Game.gameState.equipmentBoard.Add("Helm", helms);
+        for (int i = 0; i < 3; i++)
+        {
+            Game.gameState.equipmentBoard["Helm"].Add(new Helm());
+        }
+
+        List<Article> brews = new List<Article>();
+        Game.gameState.equipmentBoard.Add("WitchBrew", brews);
+        for (int i = 0; i < 5; i++)
+        {
+            Game.gameState.equipmentBoard["WitchBrew"].Add(new WitchBrew());
+        }
+    }
+
+   
+   
 
     public void monsterAtCastle(Monster monster)
     {
@@ -544,14 +1054,14 @@ public class GameController : MonoBehaviour
         //created all the monsters for Legend 2
         foreach (int gorTile in new int[]{8, 20, 21, 26, 48})
         {
-            Gor g = new Gor(Game.positionGraph.getNode(gorTile));
+            Gor g = new Gor(Game.gameState.positionGraph.getNode(gorTile));
             //Debug.Log("Gor" + g);
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
         }
-        foreach (int skralTile in new int[]{9})
+        foreach (int skralTile in new int[]{19})
         {
-            Skral s = new Skral(Game.positionGraph.getNode(skralTile));
+            Skral s = new Skral(Game.gameState.positionGraph.getNode(skralTile));
             Game.gameState.addMonster(s);
             Game.gameState.addSkral(s);
         }
@@ -599,7 +1109,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Added well at position: " + pos);
             GameObject wellObject = Instantiate(well_front, tiles[pos].getMiddle(), transform.rotation);
-            Well w = new Well(Game.positionGraph.getNode(pos),wellObject);
+            Well w = new Well(Game.gameState.positionGraph.getNode(pos),wellObject);
             Debug.Log(w);
             Debug.Log(w.getLocation());
             Game.gameState.addWell(w);
@@ -611,7 +1121,7 @@ public class GameController : MonoBehaviour
     private void loadPrinceThorald()
     {
         GameObject princeThorald = Instantiate(prince, tiles[72].getMiddle(), transform.rotation);
-        PrinceThorald princeT = new PrinceThorald(Game.positionGraph.getNode(72), princeThorald);
+        PrinceThorald princeT = new PrinceThorald(Game.gameState.positionGraph.getNode(72), princeThorald);
         Game.gameState.addPrince(princeT);
         princeThoraldObject.Add(princeT, princeThorald);
         Debug.Log("Added prince at position: " + princeT.getLocation());
@@ -619,7 +1129,7 @@ public class GameController : MonoBehaviour
 
     public void instantiateEventGor(int location)
     {
-        Gor g = new Gor(Game.positionGraph.getNode(location));
+        Gor g = new Gor(Game.gameState.positionGraph.getNode(location));
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         GameObject tempObj = Instantiate(g.getPrefab(), -transform.position, transform.rotation, monsterContainer);
         tempObj.transform.position = tiles[g.getLocation()].getMiddle();
@@ -633,7 +1143,7 @@ public class GameController : MonoBehaviour
 
     public void instantiateEventSkral(int location)
     {
-        Skral s = new Skral(Game.positionGraph.getNode(location));
+        Skral s = new Skral(Game.gameState.positionGraph.getNode(location));
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         GameObject tempObj = Instantiate(s.getPrefab(), -transform.position, transform.rotation, monsterContainer);
         tempObj.transform.position = tiles[s.getLocation()].getMiddle();
@@ -646,6 +1156,33 @@ public class GameController : MonoBehaviour
     }
 
 
+    private void instantiateMedicinalHerb(int roll)
+    {
+        int loc = 0;
+        if (roll == 1 || roll == 2)
+        {
+            loc = 37;
+        }
+        if (roll == 3 || roll == 4)
+        {
+            loc = 67;
+        }
+        if (roll == 5 || roll == 6)
+        {
+            loc = 61;
+        }
+        Debug.Log("got roll");
+        GameObject herb = Instantiate(medicinalHerb3, tiles[loc].getMiddle(), transform.rotation);
+        Debug.Log("instantiated");
+        MedicinalHerb mh = new MedicinalHerb(Game.gameState.positionGraph.getNode(loc), herb);
+        Debug.Log("instantiated2");
+        Game.gameState.addMedicinalHerb(mh);
+        Debug.Log("instantiated3");
+        medicinalHerbObject.Add(mh, herb);
+        Debug.Log("Added medicinal herb at position: " + mh.getLocation());
+
+        //need to instantiate Gor on the same spot
+    }
 
     public void loadFogTokens()
     {
@@ -656,28 +1193,81 @@ public class GameController : MonoBehaviour
             Debug.Log("Added fog at position: " + pos);
             GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
             //Game.gameState.fogtoken_order[i]
-            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[i]);
+            FogToken f = new FogToken(Game.gameState.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[i]);
             Game.gameState.addFogToken(f);
             i++;
             //Debug.Log("Added well at position: " + pos);
         }
     }
 
+    public void tele(int loc)
+    {
+        Vector3 boardContainerScaling3 = new Vector3(0.15f / boardSpriteContainer.parent.lossyScale.x, 0.15f / boardSpriteContainer.parent.lossyScale.y, 0.15f / boardSpriteContainer.parent.lossyScale.z);
+
+        List<Node> neighbors = Game.gameState.positionGraph.getNode(loc).getAdjacentNodes();
+        foreach (Node n in neighbors)
+        {
+            int nodeIndex = n.getIndex();
+            foreach (KeyValuePair<FogToken, int> f in Game.gameState.getFogTokens())
+            {
+                if (f.Value == nodeIndex && !f.Key.used)
+                {
+                    GameObject fogToken = f.Key.getPrefab();
+                    UnityEngine.Object.Destroy(f.Key.getPrefab());
+                    if (f.Key.type == "brew")
+                    {
+                        fogToken = Instantiate(brewToken,tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "gor")
+                    {
+                        fogToken = Instantiate(gorToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "willpower2")
+                    {
+                        fogToken = Instantiate(willpower2Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "willpower3")
+                    {
+                        fogToken = Instantiate(willpower3Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "wineskin")
+                    {
+                        fogToken = Instantiate(wineskinToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "event")
+                    {
+                        fogToken = Instantiate(eventToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "gold1")
+                    {
+                        fogToken = Instantiate(gold1Token, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    if (f.Key.type == "strength")
+                    {
+                        fogToken = Instantiate(strengthToken, tiles[nodeIndex].getMiddle(), transform.rotation);
+                    }
+                    fogToken.transform.localScale = boardContainerScaling3;
+                    f.Key.setPrefab(fogToken);
+                    
+                }
+            }
+
+        }
+    }
 
     public void loadFarmers()
     {
-
-        int i = 0;
         foreach (int pos in new int[] { 24,36 })
         {
             Debug.Log("Added farmer at position: " + pos);
-            GameObject Farmer = Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation);
-            //Game.gameState.fogtoken_order[i]
-            Farmer f = new Farmer(Game.positionGraph.getNode(pos), Farmer);
+            Farmer f = new Farmer(Game.gameState.positionGraph.getNode(pos), Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation));
             Game.gameState.addFarmer(f);
-            i++;
-            //Debug.Log("Added well at position: " + pos);
         }
+    }
+
+    public void loadNarrator()
+    {
+        Debug.Log("Added Narrator at position: " );
     }
 
 
@@ -734,7 +1324,7 @@ public class GameController : MonoBehaviour
         notification.gameObject.SetActive(false);
     }
 
-    public void sendTradeRequest(string[] tradeType, string playerFrom, string playerTo)
+    public void sendTradeRequest(string[] tradeType, string playerFrom, string playerTo, bool usingFalcon)
     {
         //foreach(string t in ts.tradeType)
         //{
@@ -748,25 +1338,56 @@ public class GameController : MonoBehaviour
         pl[1] = playerTo;
         ts.setPlayers(pl);
 
-        tradeRequestSent = true;
         playerTradeTo = playerTo;
         playerTradeFrom = playerFrom;
         string msg = "";
         if (tradeType[0].Equals("Gold"))
         {
             msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give gold";
-            
+            tradeRequestSent = true;
+
         }
         else if (tradeType[0].Equals("Gemstones"))
         {
             msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give a gemstone";
-            
+            tradeRequestSent = true;
+
         }
         else
         {
-            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
+
+            if (usingFalcon)
+            {
+                Debug.Log("using falcon!");
+                if (tradeType[1] == "Shield" || tradeType[2] == "Shield" || tradeType[1] == "Bow" || tradeType[2] == "Bow")
+                {
+                    Debug.Log(tradeType[1]);
+                    Debug.Log(tradeType[2]);
+                    Debug.Log("invalid!");
+                    ts.clear();
+                    invalidTradeNotify();
+
+                }
+                else
+                {
+                    ts.usingFalcon = true;
+                    msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
                 + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
-            
+                    tradeRequestSent = true;
+
+                }
+
+            }
+            else {
+                Debug.Log(tradeType[1]);
+                Debug.Log(tradeType[2]);
+
+                msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
+                + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
+                tradeRequestSent = true;
+
+            }
+
         }
 
         tradeMsg = msg;
@@ -809,6 +1430,61 @@ public class GameController : MonoBehaviour
 
     public void merchantClick()
     {
+        ms.displayAvailableItems();
+    }
+
+    public void sendFightRequest(string[] players)
+    {
+        //invitedFighters = new string[players.Length - 1];
+        //for(int i=1; i<players.Length; i++)
+        //{
+        //    invitedFighters[i - 1] = players[i];
+        //}
+        invitedFighters = players;
+       
+        fightRequestSent = true;
+        
+    }
+
+    public void processFightRequest(bool otherPlayers)
+    {
+        fightRequestSent = false;
+        
+        Debug.Log("processing fight request");
+
+        if (otherPlayers)
+        {
+
+            fightRequest.gameObject.SetActive(true);
+            string msg = Game.gameState.getPlayer(invitedFighters[0]).getHeroType() + " has invited you to fight!";
+            Transform[] trs = fightRequest.gameObject.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trs)
+            {
+                if (t.name == "HeaderText")
+                {
+                    t.gameObject.GetComponent<Text>().text = msg;
+                }
+            }
+        }
+        else
+        {
+            //string[] fightPlayers = new string[1];
+            //fightPlayers[0] = invitedFighters[0];
+            //Game.sendAction(new RespondFight(fightPlayers, true));
+            fsc.openFightLobby(invitedFighters[0]);
+        }
+            
+        
+        
+        
+
+    }
+
+    public void acceptFightRequest(bool accept)
+    {
+        fightRequestSent = false;
+        fightRequest.gameObject.SetActive(false);
+        fsc.acceptFightRequest(accept, Game.myPlayer.getNetworkID());
 
     }
 
@@ -818,7 +1494,12 @@ public class GameController : MonoBehaviour
     {
         if (moveSelected)
         {
+            
+            // if(Game.myPlayer.getHero().selectedWineskin == true)
+            //{
             Game.sendAction(new Move(Game.myPlayer.getNetworkID(), Game.getGame().playerLocations[Game.myPlayer.getNetworkID()], tile.tileID));
+
+           // }
 
             ColorBlock cb = moveButton.colors;
             cb.normalColor = new Color32(229, 175, 81, 255);
@@ -846,6 +1527,12 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void wineskinUse(int sides)
+    {
+        Debug.Log("controller sides" + sides);
+        Game.sendAction(new UseWineskin(Game.myPlayer.getNetworkID(), sides));
+
+    }
 
     public void moveClick()
     {
@@ -856,7 +1543,8 @@ public class GameController : MonoBehaviour
             moveSelected = true;
             cb.normalColor = new Color32(255, 240, 150, 255);
             cb.selectedColor = new Color32(255, 240, 150, 255);
-
+            Debug.Log("updating wineskin");
+            updateWineskin2();
         }
         else
         {
@@ -898,12 +1586,119 @@ public class GameController : MonoBehaviour
     public void fightClick()
     {
         Debug.Log("fight clicked");
+        fsc.displayTypeOfFight();
     }
     public void passClick()
     {
         Debug.Log("pass clicked");
-        Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
+        //Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
+        //updateWineskin();
+        
 
+
+    }
+    public void updateWineskin2()
+    {
+        int numLeft = 0;
+        Debug.Log("wineskin1");
+        if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Wineskin"))
+        {
+            Debug.Log("wineskin2");
+            foreach (Wineskin w in Game.myPlayer.getHero().getAllArticles()["Wineskin"])
+            {
+                Debug.Log("wineskincheckloop");
+                int left = 2 - w.getNumUsed();
+                numLeft += left;
+            }
+            Debug.Log(numLeft);
+            Debug.Log("searching for dropdown");
+            List<String> numbers = new List<String>();
+            for (int i = 0; i < numLeft + 1; i++)
+            {
+                numbers.Add(i.ToString());
+            }
+
+            Transform[] trs = wineskinDropdown.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trs)
+            {
+                if (t.name == "wineselect")
+                {
+
+                    Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+                    Debug.Log("got dropdown");
+
+                    myArticlesMenu.ClearOptions();
+                    myArticlesMenu.AddOptions(numbers);
+                    //myArticlesMenu.GetComponent<Dropdown>().captionText.text = myArticles[0];
+                    Debug.Log("added it to dropdowns!");
+                }
+
+            }
+
+        }
+    }
+
+    public void updateWineskin()
+    {
+        int numLeft = 0;
+        Debug.Log("wineskin1");
+        if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Wineskin"))
+        {
+            Debug.Log("wineskin2");
+
+            //foreach (Article a in Game.myPlayer.getHero().getAllArticles()["Wineskin"])
+            //{
+            Debug.Log("wineskincheckloop");
+
+            //if (a.getArticle() == ArticleType.Wineskin)
+            //{
+            //    Debug.Log("WOOOOOOOGOOOOOOOO");
+            //}
+            //int left = 2 - a.getNumUsed();
+            // numLeft += left;
+            //w.useArticle();
+            //if (w.getNumUsed() == 2)
+            //{
+            // Game.myPlayer.getHero().removeArticle2("Wineskin", w);
+            //Debug.Log("removed Article");
+            // Game.gameState.
+            //add to equipment board
+            //}
+            // }
+            Debug.Log("wineskin3");
+
+            Debug.Log(numLeft);
+            Debug.Log("searching for dropdown");
+            List<String> numbers = new List<String>();
+            for (int i = 0; i < numLeft + 5; i--)
+            {
+                numbers.Add(i.ToString());
+            }
+
+            //GameObject parentObj = GameObject.Find("SelectHero");
+            //Transform[] trs = wineskinDropdown.GetComponentsInChildren<Transform>(true);
+            //foreach (Transform t in trs)
+            //{
+            //    if (t.name == "wineselect")
+            //    {
+
+            //        Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+            //        Debug.Log("got dropdown");
+
+            //        myArticlesMenu.ClearOptions();
+            //        myArticlesMenu.AddOptions(numbers);
+            //        //myArticlesMenu.GetComponent<Dropdown>().captionText.text = myArticles[0];
+            //        Debug.Log("added it to dropdowns!");
+            //    }
+
+            //}
+
+
+            //Debug.Log("setting dropdown");
+            //wineMenu.ClearOptions();
+            //wineMenu.AddOptions(numbers);
+            //}
+        }
     }
     public void endDayClick()
     {
@@ -918,6 +1713,34 @@ public class GameController : MonoBehaviour
         //List<Dropdown.OptionData> menuOptions = dropdown.GetComponent<Dropdown>().options;
         //string value = menuOptions[menuIndex].text;
 
+    }
+
+    public void dropPickClick()
+    {
+
+        pickDropContainer.gameObject.SetActive(true);
+        pickDropContainer.GetChild(0).GetChild(0).GetComponent<PickDropController>().updateInteractables();
+        // Dropping Item
+        /*foreach (Interactable interact in Game.gameState.getInteractables(Game.myPlayer.getNetworkID()))
+        {
+            if(interact is PickDrop)
+            {
+                Debug.Log("Dropping ITEM!");
+                Game.sendAction(new Interact(Game.myPlayer.getNetworkID(), interact.getInteractableID(), -1));
+                return;
+            }
+        }
+
+        // Picking up an item
+        foreach (Interactable interact in Game.gameState.positionGraph.getNode(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]).getInteractables())
+        {
+            if (interact is PickDrop)
+            {
+                Debug.Log("Picking up ITEM!");
+                Game.sendAction(new Interact(Game.myPlayer.getNetworkID(), interact.getInteractableID(), Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]));
+                return;
+            }
+        }*/
     }
 
 
@@ -962,4 +1785,72 @@ public class GameController : MonoBehaviour
     {
         StartCoroutine(Game.sleep(sec));
     }
+
+
+    public bool winScenario()
+    {
+        //checks that herb is in castle, castle defended
+        if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
+        {
+            Game.gameState.outcome = "won";
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public bool checkMedicinalHerbAtCastle()
+    {
+        //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
+        //{
+        //    if (mh.getLocation() == 0)
+        //    {
+        //        return true;
+        //    }
+        //}
+        //return false;
+        if (Game.gameState.getMedicinalHerb() != null)
+        {
+            return false;
+        }
+
+        if(Game.gameState.getMedicinalHerb().getLocation() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void initializeStrengthPoints()
+    {
+        foreach(Andor.Player p in Game.gameState.getPlayers())
+        {
+            p.getHero().increaseStrength(2);
+            //will comment out
+            p.getHero().increaseWillpower(5);
+            Debug.Log(p.getHero() + " " + p.getHero().getStrength());
+        }
+    }
+
+    public void initializeWineskin()
+    {
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            //p.getHero().increaseStrength(2);
+            ////will comment out
+            //p.getHero().increaseWillpower(5);
+            //Debug.Log(p.getHero() + " " + p.getHero().getStrength());
+            p.getHero().addArticle(new Wineskin());
+        }
+    }
+
+    public void clearTrade()
+    {
+        ts.clear();
+    }
+
+
 }

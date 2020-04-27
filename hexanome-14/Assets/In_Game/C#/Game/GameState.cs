@@ -18,6 +18,12 @@ public class GameState
     private Dictionary<Skral, int> skrals;
     private Dictionary<Gor, int> gors;
     public TurnManager turnManager;
+
+    public Dictionary<string, List<Interactable>> playerInteractables;
+    public Graph positionGraph;
+
+    private List<Farmer> farmers;
+
     public string outcome;
     public int maxMonstersAllowedInCastle;
     public int monstersInCastle;
@@ -26,15 +32,28 @@ public class GameState
     private Dictionary<FogToken, int> fogTokens;
     // private Dictionary<PrinceThorald, int> princeThor;
     private List<PrinceThorald> princeThor;
+    private List<MedicinalHerb> medicinalHerb;
     public int[] event_cards;
     public string[] fogtoken_order;
     public int day;
-    private Dictionary<Farmer, int> farmers;
+    
+    public int TIME_overtime = 8;
+    public int TIME_endTime = 10;
+    public int TIME_overtimeCost = 2;
+    public bool skralTowerDefeated;
+    //public bool eventcard19;
+    public bool EVENTCARD_treeOfSongBonusIsActive = false;
+    public int brewCost;
+    public int witchLocation;
+    public bool witchFound;
+    public Dictionary<string, List<Article>> equipmentBoard;
 
-
-public GameState()
+    public GameState()
 	{
         players = new Dictionary<string, Player>();
+        playerInteractables = new Dictionary<string, List<Interactable>>();
+        positionGraph = new Graph();
+
         monsters = new List<Monster>();
         playerLocations = new Dictionary<string, int>();
         gors = new Dictionary<Gor, int>();
@@ -46,8 +65,16 @@ public GameState()
         fogTokens = new Dictionary<FogToken, int>();
         princeThor = new List<PrinceThorald>();
         day = 1;
-        farmers = new Dictionary<Farmer, int>();
-        merchants = new Dictionary< int, Merchant>();
+        farmers = new List<Farmer>();
+        merchants = new Dictionary<int, Merchant>();
+        equipmentBoard = new Dictionary<string, List<Article>>();
+        skralTowerDefeated = false;
+        medicinalHerb = new List<MedicinalHerb>();
+        //eventcard19 = false;
+        EVENTCARD_treeOfSongBonusIsActive = false;
+        brewCost = 2;
+        witchLocation = -1;
+        witchFound = false;
     }
 
     public void addPlayer(Player p)
@@ -55,6 +82,7 @@ public GameState()
         if (!players.ContainsKey(p.getNetworkID()))
         {
             players.Add(p.getNetworkID(), p);
+            playerInteractables.Add(p.getNetworkID(), new List<Interactable>());
             Debug.Log("Added player " + p);
 
         }
@@ -155,6 +183,12 @@ public GameState()
     {
         return wells;
     }
+
+    public void setWells(Dictionary<Well, int> updatedWells)
+    {
+        this.wells = updatedWells;
+    }
+
     public void addWell(Well w)
     {
         wells.Add(w, w.getLocation());
@@ -171,13 +205,13 @@ public GameState()
     }
 
 
-    public Dictionary<Farmer, int> getFarmers()
+    public List<Farmer> getFarmers()
     {
         return farmers;
     }
     public void addFarmer(Farmer f)
     {
-        farmers.Add(f, f.getLocation());
+        farmers.Add(f);
     }
 
 
@@ -191,7 +225,14 @@ public GameState()
         princeThor.Add(prince);
     }
 
-
+    public MedicinalHerb getMedicinalHerb()
+    {
+        return medicinalHerb.ToArray().ElementAt(0);
+    }
+    public void addMedicinalHerb(MedicinalHerb m)
+    {
+        medicinalHerb.Add(m);
+    }
     public void updateGorLocations()
     {
         Dictionary<Gor,int> updatedGors = new Dictionary<Gor, int>();
@@ -269,6 +310,39 @@ public GameState()
     {
         return dateSaved;
     }
+
+
+    public Interactable removePlayerInteractable(string playerID, Interactable interactable)
+    {
+        playerInteractables[playerID].Remove(interactable);
+
+        // Update interactable IDs
+        for(int i = 0; i< playerInteractables[playerID].Count; i++)
+        {
+            playerInteractables[playerID][i].setInteractableID(i);
+        }
+
+        return interactable;
+    }
+    public void addPlayerInteractable(string playerID, Interactable interactable)
+    {
+        interactable.setInteractableID(playerInteractables[playerID].Count);
+        playerInteractables[playerID].Add(interactable);
+    }
+    public List<Interactable> getInteractables(string playerID)
+    {
+        return playerInteractables[playerID];
+    }
+
+    public Interactable getPlayerInteractable(string playerID, int interactableID)
+    {
+        return playerInteractables[playerID][interactableID];
+    }
+    public Interactable getNodeInteractable(int NodeID, int interactableID)
+    {
+        return positionGraph.getNode(NodeID).getInteractables()[interactableID];
+    }
+
     //public void setEventCardOrder(int[] event_card)
     //{
     //    event_cards = event_card;
@@ -300,6 +374,72 @@ public GameState()
         int[] e = new int[event_cards.Length - 1];
         Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
         event_cards = e;
+    }
+
+    public Dictionary<int, Merchant> getMerchants()
+    {
+        return this.merchants;
+    }
+    public Article removeFromEquimentBoard(string articleName)
+    {
+        Debug.Log("removing article: "+ articleName);
+        //remove the last item in the list
+        int numArticles = equipmentBoard[articleName].Count;
+        Debug.Log("removing article2");
+        Article removedArticle = equipmentBoard[articleName][numArticles - 1];
+        Debug.Log("removing article3");
+        equipmentBoard[articleName].Remove(equipmentBoard[articleName][numArticles - 1]);
+        Debug.Log("removing article4");
+        return removedArticle;
+    }
+
+    public void addToEquimentBoard(string articleName)
+    {
+        Debug.Log("adding article: " + articleName);
+        //remove the last item in the list
+        int numArticles = equipmentBoard[articleName].Count;
+        Debug.Log("removing article2");
+        if(articleName == "Wineskin")
+        {
+            equipmentBoard[articleName].Add(new Wineskin());
+        }
+        if(articleName == "Helm")
+        {
+            equipmentBoard[articleName].Add(new Helm());
+        }
+        if (articleName == "Shield")
+        {
+            equipmentBoard[articleName].Add(new Shield());
+        }
+        if (articleName == "Bow")
+        {
+            equipmentBoard[articleName].Add(new Bow());
+        }
+        if (articleName == "Falcon")
+        {
+            equipmentBoard[articleName].Add(new Falcon());
+        }
+        if (articleName == "Telescope")
+        {
+            equipmentBoard[articleName].Add(new Telescope());
+        }
+        if (articleName == "WitchBrew")
+        {
+            equipmentBoard[articleName].Add(new WitchBrew());
+        }
+
+
+    }
+
+
+    public List<Article> getArticlesOfType(string key)
+    {
+        return equipmentBoard[key];
+    }
+
+    public Dictionary<string, List<Article>> getEquipmentBoard()
+    {
+        return equipmentBoard;
     }
 
 }
