@@ -1371,6 +1371,7 @@ public void updateGameConsoleText(string message)
                     msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
                 + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
                     tradeRequestSent = true;
+
                 }
 
             }
