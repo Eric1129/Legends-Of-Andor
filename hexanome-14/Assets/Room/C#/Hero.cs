@@ -32,15 +32,14 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int willpower = 0;
 
     private int hour = 0;
-    private List<string> articles = new List<string>();
+    //private List<string> articles = new List<string>();
     private int gemstones = 0;
     private Dictionary<string, List<Article>> heroArticles;
 
 
     public Hero()
     {
-        articles.Add("test1");
-        articles.Add("test2");
+        
         pronouns = new string[3];
         heroArticles = new Dictionary<string, List<Article>>();
     }
@@ -202,25 +201,11 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return this.pronouns;
     }
 
-    public List<string> getArticles()
-    {
-        return this.articles;
-    }
-
     public int getGemstone()
     {
         return this.gemstones;
     }
 
-    //public void addArticle(string article)
-    //{
-    //    this.articles.Add(article);
-    //}
-
-    //public void removeArticle(string article)
-    //{
-    //    this.articles.Remove(article);
-    //}
 
     public Article removeArticle(string articleName)
     {
@@ -239,29 +224,5 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         return removedArticle;
     }
 
-
-    public string allArticles()
-    {
-        string s_articles = "";
-        foreach(string ar in this.articles)
-        {
-            s_articles += (ar + " ");
-        }
-        return s_articles;
-    }
-
-    public void incGold(int amount)
-    {
-        this.gold += amount;
-    }
-
-    public void decGold(int amount)
-    {
-        this.gold -= amount;
-    }
-
-    public void updateStrength(int numPoints)
-    {
-        this.strength += numPoints;
-    }
+   
 }
