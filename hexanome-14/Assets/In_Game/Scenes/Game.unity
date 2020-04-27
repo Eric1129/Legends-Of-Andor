@@ -5213,6 +5213,7 @@ MonoBehaviour:
   selectHeroTrade: {fileID: 1510585929}
   selectHeroGive: {fileID: 1602201280}
   unavailable: {fileID: 519924838}
+  dropdowns: {fileID: 397009028}
   nextButton: {fileID: 1677195122}
   actionText: {fileID: 1622993454}
   tradeActionButton: {fileID: 404121584}
@@ -5225,6 +5226,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  usingFalcon: 0
 --- !u!1 &344200213
 GameObject:
   m_ObjectHideFlags: 0

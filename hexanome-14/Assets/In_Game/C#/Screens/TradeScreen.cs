@@ -14,6 +14,8 @@ public class TradeScreen : MonoBehaviour
     public Transform selectHeroGive;
     public Transform unavailable;
 
+    public GameObject dropdowns;
+
     public Transform nextButton;
     public Transform actionText;
     public Transform tradeActionButton;
@@ -80,6 +82,7 @@ public class TradeScreen : MonoBehaviour
 
     public void clear()
     {
+        
         selectTradeType.gameObject.SetActive(false);
         selectHeroGive.gameObject.SetActive(false);
         selectHeroTrade.gameObject.SetActive(false);
@@ -89,6 +92,8 @@ public class TradeScreen : MonoBehaviour
         eligibleTrade.Clear();
         usingFalcon = false;
         tradeTypeIndex = -1;
+        clearDropdown();
+
     }
 
     public bool interactionPossible()
@@ -583,6 +588,35 @@ public class TradeScreen : MonoBehaviour
 
     }
 
+    public void clearDropdown()
+    {
+        
+        Transform[] trs = dropdowns.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "myArticles")
+            {
+
+                Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+                myArticlesMenu.ClearOptions();
+                Debug.Log("cleared");
+
+            }
+            if (t.name == "heroArticles")
+            {
+               Dropdown heroArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+                heroArticlesMenu.ClearOptions();
+                Debug.Log("cleared");
+            }
+
+            if (t.name == "HeroArText")
+            {
+             Text heroArText = t.gameObject.GetComponent<Text>();
+                heroArText.text = " articles: ";
+            }
+        }
+    }
+
     //add to myArticles dropdown obj
     public void setGiveItem(int val)
     {
@@ -674,7 +708,7 @@ public class TradeScreen : MonoBehaviour
         eligibleGold.Clear();
         eligibleTrade.Clear();
         usingFalcon = false;
-
+        clearDropdown();
         tradeTypeIndex = -1;
     }
 }
