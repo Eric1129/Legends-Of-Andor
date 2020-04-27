@@ -8,12 +8,14 @@ public class PickDrop : Interactable, TileObject
     private Node location = null;
     private int interactID;
     private GameObject prefab;
+    public string name;
 
-    public PickDrop(Node location, GameObject prefab, bool pickedUp)
+    public PickDrop(Node location, GameObject prefab, bool pickedUp, string name)
     {
         this.location = location;
         this.prefab = prefab;
         this.pickedUp = pickedUp;
+        this.name = name;
     }
 
 

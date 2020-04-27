@@ -6,11 +6,11 @@ public class Farmer : PickDrop
 {
   
 
-    public Farmer(Node startingPos, GameObject instance) : base(startingPos, instance, false)
+    public Farmer(Node startingPos, GameObject instance) : base(startingPos, instance, false, "Farmer")
     {
         startingPos.addInteractable(this);
     }
 
-    private Farmer() : base(null, null, false) { }
+    private Farmer() : base(null, null, false, "NULL") { }
 
 }
