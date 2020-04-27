@@ -239,15 +239,15 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
 
 
-    public string allArticles()
-    {
-        string s_articles = "";
-        foreach(string ar in this.articles)
-        {
-            s_articles += (ar + " ");
-        }
-        return s_articles;
-    }
+    //public string allArticles()
+    //{
+    //    string s_articles = "";
+    //    foreach(string ar in this.articles)
+    //    {
+    //        s_articles += (ar + " ");
+    //    }
+    //    return s_articles;
+    //}
 
     public void incGold(int amount)
     {
