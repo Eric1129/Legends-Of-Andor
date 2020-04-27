@@ -202,8 +202,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 338503483}
-        m_MethodName: sendRequest
+      - m_Target: {fileID: 1239323458}
+        m_MethodName: sendFightRequest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7036,8 +7036,6 @@ MonoBehaviour:
   chatButton: {fileID: 419121213}
   closeChatButton: {fileID: 45180415}
   dropPickButton: {fileID: 1545343501}
-  wineskinDropdown: {fileID: 2136160813}
-  wineskin: {fileID: 2136160813}
   merchantButton: {fileID: 467138535}
   chatText: {fileID: 931771261}
   chat: {fileID: 292996775}

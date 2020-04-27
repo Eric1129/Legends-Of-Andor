@@ -154,8 +154,8 @@ public class FightScreenController : MonoBehaviour
                         Debug.Log("Hero items");
                         Text heroitems = attr.GetComponent<Text>();
 
-                        heroitems.text = "Gold: " + player.getHero().getGold();
-                        heroitems.text += "\nGemstones: " + player.getHero().getGemstone() + "\n";
+                        heroitems.text = "Strength: " + player.getHero().getStrength();
+                        heroitems.text += "\nWill Power: " + player.getHero().getWillpower() + "\n";
 
                         heroitems.text += "Articles: ";
                         heroitems.text += player.getHero().allArticlesAsString();
@@ -174,7 +174,7 @@ public class FightScreenController : MonoBehaviour
         string selectedPlayer = availablePlayers[index-1];
         invitedPlayers.Add(selectedPlayer);
         GameObject selectHero = GameObject.Find("SelectHero");
-        GameObject herogameobj;
+       
         Transform[] trs = selectHero.GetComponentsInChildren<Transform>(true);
         //Transform[] heroattr = new Transform[3];
         foreach (Transform t in trs)
@@ -187,6 +187,38 @@ public class FightScreenController : MonoBehaviour
             if(t.name == "InviteList")
             {
                 t.gameObject.SetActive(true);
+                string invitePlayersString = "Invite List: ";
+                foreach (string p in invitedPlayers)
+                {
+                    invitePlayersString += Game.gameState.getPlayer(p).getHeroType();
+                }
+                t.gameObject.GetComponent<Text>().text = invitePlayersString;
+            }
+            if(t.name == "SendRequest")
+            {
+                t.gameObject.GetComponent<Button>().interactable = true;
+            }
+        }
+    }
+
+    public void removePlayerFromInvite(int index)
+    {
+        string removedPlayer = invitedPlayers[index-1];
+        invitedPlayers.Remove(removedPlayer);
+        GameObject selectHero = GameObject.Find("SelectHero");
+
+        Transform[] trs = selectHero.GetComponentsInChildren<Transform>(true);
+        //Transform[] heroattr = new Transform[3];
+        foreach (Transform t in trs)
+        {
+            if (t.name == "Remove" + index)
+            {
+                t.gameObject.SetActive(false);
+            }
+
+            if (t.name == "InviteList")
+            {
+                t.gameObject.SetActive(true);
                 string invitePlayersString = "";
                 foreach (string p in invitedPlayers)
                 {
@@ -194,12 +226,16 @@ public class FightScreenController : MonoBehaviour
                 }
                 t.gameObject.GetComponent<Text>().text = invitePlayersString;
             }
+            if (t.name == "SendRequest")
+            {
+                if(invitedPlayers.Count == 0)
+                {
+                    t.gameObject.GetComponent<Button>().interactable = false;
+                }
+                
+            }
+
         }
-    }
-
-    public void removePlayerFromInvite(int index)
-    {
-
     }
 
     public void sendFightRequest()
