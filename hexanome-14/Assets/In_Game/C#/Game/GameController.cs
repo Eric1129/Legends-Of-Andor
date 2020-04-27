@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
     public Button chatButton;
     public Button closeChatButton;
     public Button dropPickButton;
+    //public Button wineskinButton;
+    public GameObject wineskinDropdown;
 
     public Transform merchantButton;
 
@@ -247,15 +249,32 @@ public class GameController : MonoBehaviour
 
     public void updateHeroStats()
     {
-        string update = Game.myPlayer.getHeroType()
-            + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
-            + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
-            + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
-            + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
-            + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
-            
+        //string update = Game.myPlayer.getHeroType()
+        //    + "\nGold: " + Game.myPlayer.getHero().getGold().ToString()
+        //    + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+        //    + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+        //    + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+        //    + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
+
+        //heroStatsText.text = update;
+        string update = "";
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            string text = p.getHeroType() + " hour: " + p.getHero().getHour() + " , gold: " + p.getHero().getGold() + " , will: " + p.getHero().getWillpower() + " ,strength: " + p.getHero().getStrength() + " " + p.getHero().allArticlesAsString() + "\n" + "\n";
+            update += text;
+
+        }
+        //string update = Game.myPlayer.getHeroType()
+        //   + "\nG: " + Game.myPlayer.getHero().getGold().ToString()
+        //   + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+        //   + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+        //   + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+        //   + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
+
         heroStatsText.text = update;
     }
+
+   
 
     void Update()
     {
@@ -352,6 +371,7 @@ public class GameController : MonoBehaviour
             }
 
             updateHeroStats();
+            
 
             if (winScenario() && Game.gameState.outcome == "won")
             {
@@ -580,7 +600,11 @@ public class GameController : MonoBehaviour
             StartCoroutine(overtimeCoroutine(2));
         }
     }
-
+    public void wineskinClicked()
+    {
+        Game.myPlayer.getHero().selectedWineskin = true;
+        Debug.Log("selected wineskin");
+    }
     public void buttonIsClicked()
     {
         Debug.Log("chat button clicked");
@@ -732,7 +756,7 @@ public void updateGameConsoleText(string message)
             initializeStrengthPoints();
 
             Debug.Log("INITIALIZING THE STRENGTH POINTS");
-            //initializeWineskin();
+            initializeWineskin();
 
             Debug.Log("INITIALIZING THE MED HERB");
             instantiateMedicinalHerb(3);
@@ -774,7 +798,9 @@ public void updateGameConsoleText(string message)
         Game.gameState.equipmentBoard.Add("Wineskin", wineskins);
         for (int i = 0; i < 2; i++)
         {
-            Game.gameState.equipmentBoard["Wineskin"].Add(new Wineskin());
+            Wineskin w = new Wineskin();
+            w.numUsed = 0;
+            Game.gameState.equipmentBoard["Wineskin"].Add(w);
         }
 
         //2 telescope
@@ -1265,7 +1291,12 @@ public void updateGameConsoleText(string message)
     {
         if (moveSelected)
         {
+            
+            // if(Game.myPlayer.getHero().selectedWineskin == true)
+            //{
             Game.sendAction(new Move(Game.myPlayer.getNetworkID(), Game.getGame().playerLocations[Game.myPlayer.getNetworkID()], tile.tileID));
+
+           // }
 
             ColorBlock cb = moveButton.colors;
             cb.normalColor = new Color32(229, 175, 81, 255);
@@ -1293,6 +1324,12 @@ public void updateGameConsoleText(string message)
 
     }
 
+    public void wineskinUse(int sides)
+    {
+        Debug.Log("controller sides" + sides);
+        Game.sendAction(new UseWineskin(Game.myPlayer.getNetworkID(), sides));
+
+    }
 
     public void moveClick()
     {
@@ -1303,7 +1340,8 @@ public void updateGameConsoleText(string message)
             moveSelected = true;
             cb.normalColor = new Color32(255, 240, 150, 255);
             cb.selectedColor = new Color32(255, 240, 150, 255);
-
+            Debug.Log("updating wineskin");
+            updateWineskin2();
         }
         else
         {
@@ -1350,8 +1388,114 @@ public void updateGameConsoleText(string message)
     public void passClick()
     {
         Debug.Log("pass clicked");
-        Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
+        //Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
+        //updateWineskin();
+        
 
+
+    }
+    public void updateWineskin2()
+    {
+        int numLeft = 0;
+        Debug.Log("wineskin1");
+        if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Wineskin"))
+        {
+            Debug.Log("wineskin2");
+            foreach (Wineskin w in Game.myPlayer.getHero().getAllArticles()["Wineskin"])
+            {
+                Debug.Log("wineskincheckloop");
+                int left = 2 - w.getNumUsed();
+                numLeft += left;
+            }
+            Debug.Log(numLeft);
+            Debug.Log("searching for dropdown");
+            List<String> numbers = new List<String>();
+            for (int i = 0; i < numLeft + 1; i++)
+            {
+                numbers.Add(i.ToString());
+            }
+
+            Transform[] trs = wineskinDropdown.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trs)
+            {
+                if (t.name == "wineselect")
+                {
+
+                    Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+                    Debug.Log("got dropdown");
+
+                    myArticlesMenu.ClearOptions();
+                    myArticlesMenu.AddOptions(numbers);
+                    //myArticlesMenu.GetComponent<Dropdown>().captionText.text = myArticles[0];
+                    Debug.Log("added it to dropdowns!");
+                }
+
+            }
+
+        }
+    }
+
+    public void updateWineskin()
+    {
+        int numLeft = 0;
+        Debug.Log("wineskin1");
+        if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Wineskin"))
+        {
+            Debug.Log("wineskin2");
+
+            //foreach (Article a in Game.myPlayer.getHero().getAllArticles()["Wineskin"])
+            //{
+            Debug.Log("wineskincheckloop");
+
+            //if (a.getArticle() == ArticleType.Wineskin)
+            //{
+            //    Debug.Log("WOOOOOOOGOOOOOOOO");
+            //}
+            //int left = 2 - a.getNumUsed();
+            // numLeft += left;
+            //w.useArticle();
+            //if (w.getNumUsed() == 2)
+            //{
+            // Game.myPlayer.getHero().removeArticle2("Wineskin", w);
+            //Debug.Log("removed Article");
+            // Game.gameState.
+            //add to equipment board
+            //}
+            // }
+            Debug.Log("wineskin3");
+
+            Debug.Log(numLeft);
+            Debug.Log("searching for dropdown");
+            List<String> numbers = new List<String>();
+            for (int i = 0; i < numLeft + 5; i--)
+            {
+                numbers.Add(i.ToString());
+            }
+
+            //GameObject parentObj = GameObject.Find("SelectHero");
+            //Transform[] trs = wineskinDropdown.GetComponentsInChildren<Transform>(true);
+            //foreach (Transform t in trs)
+            //{
+            //    if (t.name == "wineselect")
+            //    {
+
+            //        Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+            //        Debug.Log("got dropdown");
+
+            //        myArticlesMenu.ClearOptions();
+            //        myArticlesMenu.AddOptions(numbers);
+            //        //myArticlesMenu.GetComponent<Dropdown>().captionText.text = myArticles[0];
+            //        Debug.Log("added it to dropdowns!");
+            //    }
+
+            //}
+
+
+            //Debug.Log("setting dropdown");
+            //wineMenu.ClearOptions();
+            //wineMenu.AddOptions(numbers);
+            //}
+        }
     }
     public void endDayClick()
     {
@@ -1493,7 +1637,7 @@ public void updateGameConsoleText(string message)
             ////will comment out
             //p.getHero().increaseWillpower(5);
             //Debug.Log(p.getHero() + " " + p.getHero().getStrength());
-            //p.getHero().addArticle(Wineskin w);
+            p.getHero().addArticle(new Wineskin());
         }
     }
 
