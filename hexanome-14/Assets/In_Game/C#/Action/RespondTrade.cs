@@ -80,6 +80,7 @@ public class RespondTrade : Action
         string[] playersToNotify = new string[1];
         playersToNotify[0] = players[0];
         GameController.instance.updateGameConsoleText(msg, playersToNotify);
+        GameController.instance.clearTrade();
 
 
     }

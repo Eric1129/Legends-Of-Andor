@@ -5,8 +5,10 @@ public class Falcon : Article
 {
 	private ArticleType article;
 	private string description;
+    private bool usedToday;
 
-	public Falcon()
+
+    public Falcon()
 	{
 
 		article = ArticleType.Falcon;
@@ -16,14 +18,28 @@ public class Falcon : Article
 			"Then the token is flipped onto its rear side, and at sunrise it is flipped back onto its front side. " +
 			"The falcon can also be used in the mine in Legend 4.However, it cannot fly on or over spaces with rubble.The falcon " +
 			"cannot be used during a battle.";
-	}
+        usedToday = false;
 
-	public void useArticle()
-	{
+    }
 
-	}
+    public bool checkUsedToday()
+    {
+        return usedToday;
+    }
 
-	public string articleToString()
+
+    public void resetFalcon()
+    {
+        usedToday = false;
+    }
+    public void useArticle()
+    {
+
+        usedToday = true;
+    }
+
+
+    public string articleToString()
 	{
 		return this.article.ToString();
 	}
