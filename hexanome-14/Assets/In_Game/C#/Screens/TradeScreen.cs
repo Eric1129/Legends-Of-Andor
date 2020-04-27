@@ -37,6 +37,7 @@ public class TradeScreen : MonoBehaviour
 
     public string[] players;
     public string[] tradeType;
+    public bool usingFalcon;
 
     public TradeScreen()
     {
@@ -50,6 +51,7 @@ public class TradeScreen : MonoBehaviour
         eligibleTrade = new List<string>();
         eligibleGold = new List<string>();
         eligibleGemstone = new List<string>();
+        usingFalcon = false;
     }
 
 
@@ -85,7 +87,7 @@ public class TradeScreen : MonoBehaviour
         eligibleGemstone.Clear();
         eligibleGold.Clear();
         eligibleTrade.Clear();
-
+        usingFalcon = false;
         tradeTypeIndex = -1;
     }
 
@@ -339,11 +341,12 @@ public class TradeScreen : MonoBehaviour
     public void back()
     {
 
-        selectHeroTrade.gameObject.SetActive(false);
-        selectHeroTradeActive = false;
+        //selectHeroTrade.gameObject.SetActive(false);
+        //selectHeroTradeActive = false;
 
-        selectHeroGive.gameObject.SetActive(false);
-        selectHeroGiveActive = false;
+        //selectHeroGive.gameObject.SetActive(false);
+        //selectHeroGiveActive = false;
+        clear();
 
     }
 
@@ -501,7 +504,16 @@ public class TradeScreen : MonoBehaviour
         selectHeroGive.gameObject.SetActive(false);
         selectHeroTrade.gameObject.SetActive(false);
         unavailable.gameObject.SetActive(false);
-        Game.sendAction(new InitiateTrade(players, tradeType));
+
+        if(tradeType[1] == "Shield" || tradeType[2] == "Shield" || tradeType[1] == "Bow" || tradeType[1] == "Bow")
+        {
+            //GameController.instance.notify("Invalid Trade! Cannot trade shield or bow with falcon!",);
+        }
+        else
+        {
+            Game.sendAction(new InitiateTrade(players, tradeType));
+
+        }
 
     }
 
@@ -534,6 +546,7 @@ public class TradeScreen : MonoBehaviour
         eligibleGemstone.Clear();
         eligibleGold.Clear();
         eligibleTrade.Clear();
+        usingFalcon = false;
 
         tradeTypeIndex = -1;
     }
