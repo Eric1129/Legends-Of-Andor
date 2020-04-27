@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     public Transform notification;
     public Transform merchantScreenController;
     public Transform fightScreenController;
+    
 
     public Transform fightRequest;
    
@@ -35,6 +36,7 @@ public class GameController : MonoBehaviour
     public Transform heroInfoContainer;
 
     public Button moveButton;
+    public Button fightButton;
     public Button movePrinceButton;
     public Button emptyWellButton;
     public Button buyBrewButton;
@@ -488,11 +490,49 @@ public class GameController : MonoBehaviour
             
         }
 
-        if (Game.myPlayer.getNetworkID().Equals(invitedFighters[0])
-            && fsc.allResponded())
+        if (invitedFighters != null)
         {
-            fsc.fightReady();
+            if (Game.myPlayer.getNetworkID().Equals(invitedFighters[0])
+            && fsc.allResponded())
+            {
+                fsc.fightReady();
+            }
         }
+        
+
+        bool canFight = false;
+        if (Game.myPlayer.getNetworkID().Equals(Game.gameState.turnManager.currentPlayerTurn())){
+            //check if player is on the same space as a monster
+            
+            int myLocation = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            
+            foreach (Monster m in Game.gameState.getMonsters())
+            {
+                
+                int monsterLoc = m.getLocation();
+                
+                if (monsterLoc == myLocation)
+                {
+                    canFight = true;
+                }
+                else
+                {
+                    if (Game.myPlayer.getHero().hasArticle("Bow"))
+                    {
+                        List<Node> neighbours = Game.gameState.positionGraph.getNode(myLocation).getAdjacentNodes();
+                        foreach (Node n in neighbours)
+                        {
+                            if (monsterLoc == n.getIndex())
+                            {
+                                canFight = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        fightButton.interactable = canFight;
+
 
 
     }
@@ -528,8 +568,6 @@ public class GameController : MonoBehaviour
         Debug.Log(boardSpriteContainer.position);
         Debug.Log(boardSpriteContainer.parent.position);
         Debug.Log(boardContainerPos);
-
-
 
 
         // load sprites
