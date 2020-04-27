@@ -202,8 +202,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 338503483}
-        m_MethodName: sendRequest
+      - m_Target: {fileID: 1239323458}
+        m_MethodName: sendFightRequest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
