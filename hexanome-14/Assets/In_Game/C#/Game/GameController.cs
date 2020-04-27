@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour
     public Button dropPickButton;
     //public Button wineskinButton;
     public GameObject wineskinDropdown;
+    public GameObject wineskin;
 
     public Transform merchantButton;
 
@@ -346,10 +347,18 @@ public class GameController : MonoBehaviour
             {
                 GameController.instance.buyBrewButton.gameObject.SetActive(false);
             }
+            if (Game.myPlayer.getHero().hasArticle("Wineskin"))
+            {
+                GameController.instance.wineskin.gameObject.SetActive(true);
 
-            
-                // Update Player position
-                foreach (Monster monster in Game.gameState.getMonsters())
+            }
+            else
+            {
+                GameController.instance.wineskin.gameObject.SetActive(false);
+            }
+
+            // Update Player position
+            foreach (Monster monster in Game.gameState.getMonsters())
             {
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
