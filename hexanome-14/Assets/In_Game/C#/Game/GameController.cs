@@ -43,8 +43,6 @@ public class GameController : MonoBehaviour
     //public Button wineskinButton;
     public GameObject wineskinDropdown;
     public GameObject wineskin;
-    public GameObject useFalcon;
-
 
     public Transform merchantButton;
 
@@ -363,28 +361,6 @@ public class GameController : MonoBehaviour
             {
                 GameController.instance.wineskin.gameObject.SetActive(false);
             }
-            bool validFalcon = false;
-            //check for falcon
-            if (Game.myPlayer.getHero().hasArticle("Falcon"))
-            {
-                foreach (Falcon f in Game.myPlayer.getHero().heroArticles["Falcon"])
-                {
-                    if (!f.checkUsedToday())
-                    {
-                        GameController.instance.useFalcon.gameObject.SetActive(true);
-                        validFalcon = true;
-                        break;
-
-                    }
-                }
-
-            }
-            if (!validFalcon)
-            {
-                GameController.instance.useFalcon.gameObject.SetActive(false);
-                Debug.Log("removing falcon");
-            }
-
 
             // Update Player position
             foreach (Monster monster in Game.gameState.getMonsters())
@@ -1374,7 +1350,7 @@ public void updateGameConsoleText(string message)
     {
         fightRequestSent = false;
         fightRequest.gameObject.SetActive(false);
-
+        fsc.acceptFightRequest(accept, Game.myPlayer.getNetworkID());
 
     }
 
@@ -1734,9 +1710,5 @@ public void updateGameConsoleText(string message)
         }
     }
 
-    public void clearTrade()
-    {
-        ts.clear();
-    }
 
 }
