@@ -19,6 +19,7 @@ public enum Type
     SendChat,
     UseTelescope,
     InviteFighter,
+    RespondFight,
     UseWineskin
 
 }

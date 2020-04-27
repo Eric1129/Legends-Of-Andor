@@ -128,7 +128,7 @@ public class GameController : MonoBehaviour
     private bool notificationOn = false;
     public static MerchantScreen ms;
 
-    public static FightScreenController fsc;
+    public FightScreenController fsc;
 
     private Transform initTransform;
     //private string[] tradeType;
@@ -473,7 +473,16 @@ public class GameController : MonoBehaviour
             {
                 if (Game.myPlayer.getNetworkID().Equals(p))
                 {
-                    processFightRequest();
+                    if (!Game.myPlayer.getNetworkID().Equals(invitedFighters[0]))
+                    {
+                        processFightRequest(true);
+                    }
+                    else
+                    {
+                        processFightRequest(false);
+                       
+                    }
+                    
                 }
             }
             
@@ -1391,18 +1400,21 @@ public void updateGameConsoleText(string message)
         
     }
 
-    public void processFightRequest()
+    public void processFightRequest(bool otherPlayers)
     {
-        if (!Game.myPlayer.getNetworkID().Equals(invitedFighters[0]))
+        fightRequestSent = false;
+        
+        Debug.Log("processing fight request");
+
+        if (otherPlayers)
         {
-            Debug.Log("processing fight request");
-            fightRequestSent = false;
+
             fightRequest.gameObject.SetActive(true);
             string msg = Game.gameState.getPlayer(invitedFighters[0]).getHeroType() + " has invited you to fight!";
             Transform[] trs = fightRequest.gameObject.GetComponentsInChildren<Transform>(true);
             foreach (Transform t in trs)
             {
-                if(t.name == "HeaderText")
+                if (t.name == "HeaderText")
                 {
                     t.gameObject.GetComponent<Text>().text = msg;
                 }
@@ -1410,8 +1422,14 @@ public void updateGameConsoleText(string message)
         }
         else
         {
-            fsc.joinFightLobby();
+            //string[] fightPlayers = new string[1];
+            //fightPlayers[0] = invitedFighters[0];
+            //Game.sendAction(new RespondFight(fightPlayers, true));
+            fsc.openFightLobby(invitedFighters[0]);
         }
+            
+        
+        
         
 
     }
