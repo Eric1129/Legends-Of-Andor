@@ -92,6 +92,10 @@ public class EndTurn :Action
         gs.TIME_overtime = 8;
         gs.TIME_endTime = 10;
         gs.TIME_overtimeCost = 2;
+
+
+        refreshFalcons(gs);
+
         //advance narrator 
     }
     //public void moveGors(GameState gs)
@@ -266,4 +270,22 @@ public class EndTurn :Action
             }
 
         }
+
+    public void refreshFalcons(GameState gs)
+    {
+        foreach (Andor.Player p in gs.getPlayers())
+        {
+            if (p.getHero().allArticlesAsStringList().Contains("Falcon"))
+            {
+                foreach (Falcon f in p.getHero().heroArticles["Falcon"])
+                {
+                    f.resetFalcon();
+                }
+            }
+
+        }
+    }
 }
+
+
+
