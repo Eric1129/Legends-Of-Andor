@@ -9,6 +9,7 @@ public class Move : Action
     public int to;
     private Type type;
     private string[] players;
+    public bool usedWineskin;
 
     public Move(string playerID, int from, int to)
     {
@@ -35,27 +36,52 @@ public class Move : Action
     }
     public void execute(GameState gs)
     {
-        Thread thread = new Thread(() => threadExecute(gs));
-        thread.Start();
-        //while(thread.IsAlive)
+        //Thread thread = new Thread(() => threadExecute(gs));
+        //thread.Start();
+        threadExecute(gs);
+        //while (thread.IsAlive)
         //{
-        //    //Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
         //}
-        //threadExecute(gs);
-        //{
-        //    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
-        //};
-        //checkMove(gs);
-        gs.turnManager.passTurn();
+            //    //Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
+            //}
+            //threadExecute(gs);
+            //{
+            //    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
+            //};
+            checkMove(gs);
+            gs.turnManager.passTurn();
 
 
     }
     private void threadExecute(GameState gs)
     {
-        List<Node> path = Game.gameState.positionGraph.getPath(from, to);
+        
+        int pass = 1;
+        int wineskinsides = gs.getPlayer(players[0]).getHero().wineskinsides;
+        Debug.Log("move: " + wineskinsides);
+        List <Node> path = Game.gameState.positionGraph.getPath(from, to);
         for (int i = 1; i<path.Count; i++)
         {
-            int playerTimeHour = gs.getPlayer(players[0]).getHero().getHour() + 1;
+            int playerTimeHour = gs.getPlayer(players[0]).getHero().getHour();
+            if (pass >  wineskinsides)
+            {
+                playerTimeHour = gs.getPlayer(players[0]).getHero().getHour() + 1;
+            }
+            else
+            {
+                usedWineskin = true;
+                foreach (Wineskin w in gs.getPlayer(players[0]).getHero().getAllArticles()["Wineskin"])
+                {
+                    w.useArticle();
+                    if(w.getNumUsed() == 2)
+                    {
+                        gs.getPlayer(players[0]).getHero().removeArticle2("Wineskin",w);
+                        gs.addToEquimentBoard("Wineskin");
+                    }
+                    break;
+                }
+               // GameController.instance.updateGameConsoleText("USING WINESKIN");
+            }
             /*if (gs.TIME_overtime <= playerTimeHour)
             {
                 //going into overtime
@@ -111,13 +137,17 @@ public class Move : Action
             }
 
             // Take an hour
-            gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
-            GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
+            if( pass > wineskinsides)
+            {
+                gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
+                GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
+            }
+            pass++;
 
             // Move player
             gs.playerLocations[players[0]] = path[i].getIndex();
             Debug.Log(path[i].getIndex());
-            Thread.Sleep(500);
+            //Thread.Sleep(500);
 
             // For event card
             if(path[i].getIndex() == 57 && Game.gameState.EVENTCARD_treeOfSongBonusIsActive)
@@ -134,13 +164,15 @@ public class Move : Action
             }
           
         }
+        gs.getPlayer(players[0]).getHero().selectedWineskin = false;
+        gs.getPlayer(players[0]).getHero().wineskinsides = 0;
     }
 
     public void checkMove(GameState gs)
     {
         int finalDest = gs.playerLocations[players[0]];
 
-        //checkWells(gs, finalDest);
+        checkWells(gs, finalDest);
         checkFogTokens(gs, finalDest);
         //checkFarmers(gs, finalDest);
 
@@ -207,6 +239,10 @@ public class Move : Action
 
     public void checkFogTokens(GameState gs, int location)
     {
+        if (usedWineskin)
+        {
+            GameController.instance.updateGameConsoleText("You have used the  wineskin");
+        }
         if (gs.getFogTokens().ContainsValue(location))
         {
             foreach (FogToken f in gs.getFogTokens().Keys)

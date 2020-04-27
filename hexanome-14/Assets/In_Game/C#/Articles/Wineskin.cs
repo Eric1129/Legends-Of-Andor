@@ -5,6 +5,7 @@ public class Wineskin : Article
 {
     ArticleType article;
     private string description;
+    public int numUsed;
 
     public Wineskin()
     {
@@ -17,14 +18,25 @@ public class Wineskin : Article
             "its half-full side. After the second use, place the token back on" +
             " the equipment board. The hero can also use both sides of the wineskin" +
             " in one turn or use several wineskins at once.";
-
+        this.numUsed = 0;
     }
 
     public void useArticle()
     {
-
+        this.numUsed += 1;
+    
     }
 
+    public void reset()
+    {
+        this.numUsed = 0;
+    }
+
+
+    public int getNumUsed()
+    {
+        return this.numUsed;
+    }
     public string articleToString()
     {
         return this.article.ToString();
