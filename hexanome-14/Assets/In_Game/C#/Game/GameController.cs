@@ -503,11 +503,15 @@ public class GameController : MonoBehaviour
         bool canFight = false;
         if (Game.myPlayer.getNetworkID().Equals(Game.gameState.turnManager.currentPlayerTurn())){
             //check if player is on the same space as a monster
+            
             int myLocation = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            
             foreach (Monster m in Game.gameState.getMonsters())
             {
+                
                 int monsterLoc = m.getLocation();
-                if(monsterLoc == myLocation)
+                
+                if (monsterLoc == myLocation)
                 {
                     canFight = true;
                 }
@@ -564,8 +568,6 @@ public class GameController : MonoBehaviour
         Debug.Log(boardSpriteContainer.position);
         Debug.Log(boardSpriteContainer.parent.position);
         Debug.Log(boardContainerPos);
-
-
 
 
         // load sprites
