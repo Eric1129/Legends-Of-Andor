@@ -115,6 +115,15 @@ public class FightScreenController : MonoBehaviour
         }
     }
 
+    public void startSoloFight()
+    {
+        //send an action
+
+        //create new fight
+
+       
+    }
+
     public void pickYourFighter()
     {
         int i = 1;
