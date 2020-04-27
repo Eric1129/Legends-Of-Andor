@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public Transform fightScreenController;
 
     public Transform fightRequest;
+   
     //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
@@ -1406,6 +1407,10 @@ public void updateGameConsoleText(string message)
                     t.gameObject.GetComponent<Text>().text = msg;
                 }
             }
+        }
+        else
+        {
+            fsc.joinFightLobby();
         }
         
 

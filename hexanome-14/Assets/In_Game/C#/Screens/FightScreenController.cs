@@ -8,6 +8,8 @@ public class FightScreenController : MonoBehaviour
     // Start is called before the first frame update
     public Transform fightChoice;
     public Transform collabButton;
+
+    public Transform fightLobby;
     public Button nextButton;
     public Text selectedChoiceText;
     public Transform selectHeroFight;
@@ -259,6 +261,11 @@ public class FightScreenController : MonoBehaviour
         {
             involvedPlayers.Add(player);
         }
+    }
+
+    public void joinFightLobby()
+    {
+        fightLobby.gameObject.SetActive(true);
     }
 
     public void closeFightScreen()
