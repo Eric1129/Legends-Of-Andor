@@ -50,8 +50,8 @@ public class RespondTrade : Action
 
             if (tradeType[0].Equals("Gold"))
             {
-                playerFrom.getHero().decGold(1);
-                playerTo.getHero().incGold(1);
+                playerFrom.getHero().decreaseGold(1);
+                playerTo.getHero().increaseGold(1);
                 msg = playerTo.getHeroType() + " has accepted your gold.";
 
             }

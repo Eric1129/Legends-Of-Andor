@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     public Transform tradeScreenController;
     public Transform notification;
     public Transform merchantScreenController;
+    public Transform fightScreenController;
     //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
@@ -122,6 +123,8 @@ public class GameController : MonoBehaviour
     private bool notificationOn = false;
     public static MerchantScreen ms;
 
+    public static FightScreenController fsc;
+
     private Transform initTransform;
     //private string[] tradeType;
     //private string[] players;
@@ -138,6 +141,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
+        fsc = fightScreenController.gameObject.GetComponent<FightScreenController>();
         //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         playersToNotify = new string[4];
         //ts = new TradeScreen();
@@ -1379,6 +1383,7 @@ public void updateGameConsoleText(string message)
     public void fightClick()
     {
         Debug.Log("fight clicked");
+        fsc.displayTypeOfFight();
     }
     public void passClick()
     {

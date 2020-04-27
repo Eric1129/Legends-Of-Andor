@@ -51,10 +51,10 @@ public class BuyFromMerchant : Action
             }
             else
             {
-                client.updateStrength(1);
+                client.increaseStrength(1);
                 Debug.Log(client.getStrength());
             }
-            client.decGold(2);
+            client.decreaseGold(2);
         }
         else
         {
