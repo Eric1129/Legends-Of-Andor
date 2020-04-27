@@ -44,6 +44,7 @@ public class BuyBrew : Action
                 {
                     gs.getPlayer(players[0]).getHero().decreaseGold(gs.brewCost-1);
                     gs.getPlayer(players[0]).getHero().addArticle(new WitchBrew());
+                    Game.gameState.removeFromEquimentBoard("WitchBrew");
                     GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has purchased the brew!");
 
                 }
@@ -58,6 +59,8 @@ public class BuyBrew : Action
                 {
                     gs.getPlayer(players[0]).getHero().decreaseGold(gs.brewCost);
                     gs.getPlayer(players[0]).getHero().addArticle(new WitchBrew());
+                    Game.gameState.removeFromEquimentBoard("WitchBrew");
+
                     GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has purchased the brew!");
 
                 }

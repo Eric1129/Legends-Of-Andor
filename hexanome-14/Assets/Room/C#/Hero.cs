@@ -51,7 +51,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         foreach (string key in this.heroArticles.Keys)
         {
             int quantity = heroArticles[key].Count;
-            articles += quantity + " x " + key;
+            articles += quantity + " x " + key +  " \n";
         }
 
         return articles;

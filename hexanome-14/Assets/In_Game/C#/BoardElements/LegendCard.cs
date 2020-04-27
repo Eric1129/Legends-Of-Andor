@@ -5,19 +5,33 @@ using UnityEngine.UI;
 
 public class LegendCard : MonoBehaviour
 {
-
-    public static LegendCard instance;
-
     
     public Text currentText;
-    public bool easy = true;
-    public char currentLegend = 'A';
-    public int LegendNumber = 1;
+    public bool easy;
+    public char currentLegend;
+    public int LegendNumber;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentLegend = 'A';
+        LegendNumber = 1;
+        easy = true;
+        currentText.text = " A1:\n " +
+            "Here’s a reminder before continuing to Legend 2:\n" +
+            "A hero always chooses between two options: Move or fight.\n" +
+            "Both cost time on the time track.Fighting costs 1 hour per battle round. Moving costs 1 hour per game board space.\n" +
+            "If the hero does not want to move or fight, he can “pass:’ That will also cost him 1 hour.\n" +
+            "The free actions:\n" +
+            "• Activate a fog token\n" +
+            "• Empty a well\n" +
+            "• Pick up or deposit gold / gemstones or articles from or onto a space\n" +
+            "• Trade or give gold/ gemstones or articles with or to another hero on the same space\n" +
+            "• Use articles\n" +
+            "• Buy articles or strength points from a merchant\n" +
+            "None of these actions cost any hours on the time track.They can also be carried out when it isn’t the hero’s turn.\n" +
+            "A hero cannot perform them, however, if he has already ended his day.\n" +
+            "Now continue to Legend card A2.";
     }
 
     // Update is called once per frame
@@ -80,6 +94,7 @@ public class LegendCard : MonoBehaviour
                     "Tip: To prepare for a collective battle against this powerful creature, " +
                     "calculate your collective strength points and place a star on a game board space with a number matching your total collective strength points.";
                 currentText.text = textG;
+
                 break;
 
             case 14:
@@ -158,9 +173,7 @@ public class LegendCard : MonoBehaviour
                 currentText.text = textW;
                 break;
         }
-        
     }
-
 
     public void nextLegend()
     {

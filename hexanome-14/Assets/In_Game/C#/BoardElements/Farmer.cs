@@ -13,5 +13,4 @@ public class Farmer : PickDrop
 
     private Farmer() : base(null, null, false) { }
 
-
 }

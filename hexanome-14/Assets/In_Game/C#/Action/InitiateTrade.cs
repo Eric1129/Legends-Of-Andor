@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class InitiateTrade: Action
+public class InitiateTrade : Action
 {
     private Type type;
     private string[] players;
@@ -14,19 +14,19 @@ public class InitiateTrade: Action
         type = Type.InitiateTrade;
         this.players = new string[2];
         this.tradeType = new string[3];
-        
-        
+
+
         this.players = players;
         this.tradeType = tradeType;
-        for(int i = 0; i<3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            
+
             this.tradeType[i] = tradeType[i];
         }
         for (int i = 0; i < 2; i++)
         {
             this.players[i] = players[i];
-           
+
         }
 
 

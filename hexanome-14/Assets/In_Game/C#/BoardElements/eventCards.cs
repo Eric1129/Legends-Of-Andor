@@ -520,6 +520,8 @@ public class eventCards : MonoBehaviour
             if (borderingRiver.Contains(location))
             {
                 player.getHero().addArticle(new Wineskin());
+                Game.gameState.removeFromEquimentBoard("Wineskin");
+
             }
 
         }

@@ -21,14 +21,15 @@ public class PickDrop : Interactable, TileObject
     {
         if (pickedUp)   // Dropping the object
         {
-            this.prefab.GetComponent<Renderer>().enabled = true;
+            display();
             Game.gameState.removePlayerInteractable(player.getNetworkID(), this);
             location = Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[player.getNetworkID()]);
+            prefab.transform.position = GameController.instance.tiles[location.getIndex()].getMiddle();
             location.addInteractable(this);
         }
         else            // Picking up the object
         {
-            this.prefab.GetComponent<Renderer>().enabled = false;
+            hide();
             Game.gameState.addPlayerInteractable(player.getNetworkID(), this);
             location.removeInteractable(this);
         }
@@ -48,11 +49,11 @@ public class PickDrop : Interactable, TileObject
 
     public void display()
     {
-        throw new NotImplementedException();
+        this.prefab.GetComponent<Renderer>().enabled = true;
     }
 
     public void hide()
     {
-        throw new NotImplementedException();
+        this.prefab.GetComponent<Renderer>().enabled = false;
     }
 }

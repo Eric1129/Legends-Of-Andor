@@ -42,7 +42,7 @@ public class GameState
     public int TIME_overtimeCost = 2;
     public bool skralTowerDefeated;
     //public bool eventcard19;
-    //public bool eventcard3;
+    public bool EVENTCARD_treeOfSongBonusIsActive = false;
     public int brewCost;
     public int witchLocation;
     public bool witchFound;
@@ -70,8 +70,8 @@ public class GameState
         equipmentBoard = new Dictionary<string, List<Article>>();
         skralTowerDefeated = false;
         medicinalHerb = new List<MedicinalHerb>();
-        eventcard19 = false;
-        eventcard3 = false;
+        //eventcard19 = false;
+        EVENTCARD_treeOfSongBonusIsActive = false;
         brewCost = 2;
         witchLocation = -1;
         witchFound = false;
@@ -329,6 +329,11 @@ public class GameState
         interactable.setInteractableID(playerInteractables[playerID].Count);
         playerInteractables[playerID].Add(interactable);
     }
+    public List<Interactable> getInteractables(string playerID)
+    {
+        return playerInteractables[playerID];
+    }
+
     public Interactable getPlayerInteractable(string playerID, int interactableID)
     {
         return playerInteractables[playerID][interactableID];

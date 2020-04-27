@@ -36,6 +36,8 @@ public class GameController : MonoBehaviour
     public Button buyBrewButton;
     public Button chatButton;
     public Button closeChatButton;
+    public Button dropPickButton;
+
     public Transform merchantButton;
 
 
@@ -127,6 +129,9 @@ public class GameController : MonoBehaviour
     private string[] playersToNotify;
     public string chatMessages;
 
+
+    public bool easy = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -150,6 +155,8 @@ public class GameController : MonoBehaviour
         initTransform = transform;
 
         instance = this;
+
+        movePrinceButton.interactable = false;
 
         // For drawing everything
         loadBoard();
@@ -297,7 +304,7 @@ public class GameController : MonoBehaviour
                 GameController.instance.emptyWellButton.gameObject.SetActive(false);
             }
             //check if player has telescope
-            if (Game.myPlayer.getHero().getArticles().Contains("telescope"))
+            if (Game.myPlayer.getHero().allArticlesAsStringList().Contains("Telescope"))
             {
                 GameController.instance.useTelescope.gameObject.SetActive(true);
             }
@@ -548,7 +555,7 @@ public class GameController : MonoBehaviour
     {
         if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
         {
-            scrollTxt.text = "You will now lose +" + Game.gameState.overtimeCost+ " willpower points for each additional hour!";
+            scrollTxt.text = "You will now lose +" + Game.gameState.TIME_overtimeCost+ " willpower points for each additional hour!";
             StartCoroutine(overtimeCoroutine(3));
         }       
     }
@@ -587,6 +594,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(overtimeCoroutine(5));
         //instantiate witch
         Debug.Log("Added witch at position: " + loc);
+        //ned to make this true everywhere
+        Game.gameState.witchFound = true;
+        //
         GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
         //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
         //Debug.Log(w);
@@ -778,6 +788,13 @@ public void updateGameConsoleText(string message)
         for (int i = 0; i < 3; i++)
         {
             Game.gameState.equipmentBoard["Helm"].Add(new Helm());
+        }
+
+        List<Article> brews = new List<Article>();
+        Game.gameState.equipmentBoard.Add("WitchBrew", brews);
+        for (int i = 0; i < 5; i++)
+        {
+            Game.gameState.equipmentBoard["WitchBrew"].Add(new WitchBrew());
         }
     }
 
@@ -1093,13 +1110,17 @@ public void updateGameConsoleText(string message)
 
     public void loadFarmers()
     {
-
         foreach (int pos in new int[] { 24,36 })
         {
             Debug.Log("Added farmer at position: " + pos);
             Farmer f = new Farmer(Game.gameState.positionGraph.getNode(pos), Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation));
             Game.gameState.addFarmer(f);
         }
+    }
+
+    public void loadNarrator()
+    {
+        Debug.Log("Added Narrator at position: " );
     }
 
 
@@ -1340,6 +1361,31 @@ public void updateGameConsoleText(string message)
         //List<Dropdown.OptionData> menuOptions = dropdown.GetComponent<Dropdown>().options;
         //string value = menuOptions[menuIndex].text;
 
+    }
+
+    public void dropPickClick()
+    {
+        // Dropping Item
+        foreach(Interactable interact in Game.gameState.getInteractables(Game.myPlayer.getNetworkID()))
+        {
+            if(interact is PickDrop)
+            {
+                Debug.Log("Dropping ITEM!");
+                Game.sendAction(new Interact(Game.myPlayer.getNetworkID(), interact.getInteractableID(), -1));
+                return;
+            }
+        }
+
+        // Picking up an item
+        foreach (Interactable interact in Game.gameState.positionGraph.getNode(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]).getInteractables())
+        {
+            if (interact is PickDrop)
+            {
+                Debug.Log("Picking up ITEM!");
+                Game.sendAction(new Interact(Game.myPlayer.getNetworkID(), interact.getInteractableID(), Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]));
+                return;
+            }
+        }
     }
 
 

@@ -47,6 +47,9 @@ public static class Game
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(SendChat), 13, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(UseTelescope), 14, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
 
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Interact), 15, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+
+
         // ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(MovePrinceThorald), 9, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
 
         // MUST HAVE PV
