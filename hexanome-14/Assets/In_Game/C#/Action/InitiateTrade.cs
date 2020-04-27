@@ -8,12 +8,14 @@ public class InitiateTrade : Action
     private string[] players;
 
     private string[] tradeType;
+    private bool usingFalcon;
 
     public InitiateTrade(string[] players, string[] tradeType)
     {
         type = Type.InitiateTrade;
         this.players = new string[2];
         this.tradeType = new string[3];
+        usingFalcon = false;
 
 
         this.players = players;
@@ -64,8 +66,9 @@ public class InitiateTrade : Action
 
         if (checkPlayersCanUseFalcon(gs))
         {
+            usingFalcon = true;
             Debug.Log("removing falcon ye");
-            checkPlayersCanUseFalcon(gs);
+            //checkPlayersCanUseFalcon(gs);
             return true;
         }
         return false;
@@ -73,7 +76,8 @@ public class InitiateTrade : Action
 
     public void execute(GameState gs)
     {
-        GameController.instance.sendTradeRequest(tradeType, players[0], players[1]);
+        GameController.instance.sendTradeRequest(tradeType, players[0], players[1], usingFalcon);
+        Debug.Log("using falcon: " + usingFalcon);
     }
 
 
@@ -86,7 +90,7 @@ public class InitiateTrade : Action
             {
                 if (!f.checkUsedToday())
                 {
-                    f.useArticle();
+                    //f.useArticle();
                     Debug.Log("falcon is valid: " + f.checkUsedToday());
                     return true;
                 }
@@ -98,7 +102,7 @@ public class InitiateTrade : Action
             {
                 if (!f.checkUsedToday())
                 {
-                    f.useArticle();
+                    //f.useArticle();
                     Debug.Log("falcon is valid: " + f.checkUsedToday());
                     return true;
                 }
