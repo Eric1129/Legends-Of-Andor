@@ -1775,5 +1775,10 @@ public void updateGameConsoleText(string message)
         }
     }
 
+    public void clearTrade()
+    {
+        ts.clear();
+    }
+
 
 }
