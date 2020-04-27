@@ -27,10 +27,12 @@ public class FightScreenController : MonoBehaviour
         availablePlayers = new List<string>();
         invitedPlayers = new List<string>();
         involvedPlayers = new List<string>();
+        
     }
 
     public void displayTypeOfFight()
     {
+        
         fightChoice.gameObject.SetActive(true);
         collabButton.GetComponent<Button>().interactable = setAvailablePlayers();
     }
@@ -257,15 +259,60 @@ public class FightScreenController : MonoBehaviour
 
     public void acceptFightRequest(bool accept, string player)
     {
+        Debug.Log("Accepting fight");
+        string[] players = new string[1];
+        players[0] = player;
         if (accept)
         {
-            involvedPlayers.Add(player);
+            Game.sendAction(new RespondFight(players, accept, false));
         }
     }
 
-    public void joinFightLobby()
+    public void openFightLobby(string fighter)
     {
+        string[] players = new string[1];
+        players[0] = fighter;
+        Game.sendAction(new RespondFight(players, true, true));
         fightLobby.gameObject.SetActive(true);
+        updateFightLobby();
+    }
+
+    public void addHostPlayer(string player)
+    {
+        involvedPlayers.Add(player);
+    }
+
+    public void joinFightLobby(string fighter)
+    {
+        Debug.Log(Game.gameState.getPlayer(fighter).getHeroType() + " joining fight lobby");
+        involvedPlayers.Add(fighter);
+        Debug.Log("Num players " + involvedPlayers.Count);
+        fightLobby.gameObject.SetActive(true);
+        
+        updateFightLobby();
+        
+    }
+
+    private void updateFightLobby()
+    {
+        int i = 1;
+        foreach(string fighter in involvedPlayers)
+        {
+            displayPlayerInFightLobby(fighter, i);
+            i++;
+        }
+    }
+
+    private void displayPlayerInFightLobby(string player, int i)
+    {
+        Transform[] trs = fightLobby.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "Hero" + i)
+            {
+                t.gameObject.GetComponent<Text>().text = Game.gameState.getPlayer(player).getHeroType();
+            }
+        }
     }
 
     public void closeFightScreen()
