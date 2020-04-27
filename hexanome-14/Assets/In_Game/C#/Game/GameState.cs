@@ -393,6 +393,45 @@ public class GameState
         return removedArticle;
     }
 
+    public void addToEquimentBoard(string articleName)
+    {
+        Debug.Log("adding article: " + articleName);
+        //remove the last item in the list
+        int numArticles = equipmentBoard[articleName].Count;
+        Debug.Log("removing article2");
+        if(articleName == "Wineskin")
+        {
+            equipmentBoard[articleName].Add(new Wineskin());
+        }
+        if(articleName == "Helm")
+        {
+            equipmentBoard[articleName].Add(new Helm());
+        }
+        if (articleName == "Shield")
+        {
+            equipmentBoard[articleName].Add(new Shield());
+        }
+        if (articleName == "Bow")
+        {
+            equipmentBoard[articleName].Add(new Bow());
+        }
+        if (articleName == "Falcon")
+        {
+            equipmentBoard[articleName].Add(new Falcon());
+        }
+        if (articleName == "Telescope")
+        {
+            equipmentBoard[articleName].Add(new Telescope());
+        }
+        if (articleName == "WitchBrew")
+        {
+            equipmentBoard[articleName].Add(new WitchBrew());
+        }
+
+
+    }
+
+
     public List<Article> getArticlesOfType(string key)
     {
         return equipmentBoard[key];
