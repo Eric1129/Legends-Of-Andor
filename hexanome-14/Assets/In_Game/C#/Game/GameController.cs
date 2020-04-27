@@ -1335,6 +1335,7 @@ public void updateGameConsoleText(string message)
     public void fightClick()
     {
         Debug.Log("fight clicked");
+        //fs.displayFightType()
     }
     public void passClick()
     {
