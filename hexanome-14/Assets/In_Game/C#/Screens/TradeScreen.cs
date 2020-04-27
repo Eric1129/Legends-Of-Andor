@@ -76,6 +76,19 @@ public class TradeScreen : MonoBehaviour
 
     }
 
+    public void clear()
+    {
+        selectTradeType.gameObject.SetActive(false);
+        selectHeroGive.gameObject.SetActive(false);
+        selectHeroTrade.gameObject.SetActive(false);
+        unavailable.gameObject.SetActive(false);
+        eligibleGemstone.Clear();
+        eligibleGold.Clear();
+        eligibleTrade.Clear();
+
+        tradeTypeIndex = -1;
+    }
+
     public bool interactionPossible()
     {
         //and set elible players

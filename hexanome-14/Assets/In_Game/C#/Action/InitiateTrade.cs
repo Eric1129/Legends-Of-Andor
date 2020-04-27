@@ -55,9 +55,17 @@ public class InitiateTrade : Action
             return true;
         }
 
-        if (Game.gameState.getPlayer(players[0]).getHero().hasArticle("Falcon")
-            || Game.gameState.getPlayer(players[1]).getHero().hasArticle("Falcon"))
+        //if (Game.gameState.getPlayer(players[0]).getHero().hasArticle("Falcon")
+        //    || Game.gameState.getPlayer(players[1]).getHero().hasArticle("Falcon"))
+        //{
+        //    return true;
+        //}
+        //return false;
+
+        if (checkPlayersCanUseFalcon(gs))
         {
+            Debug.Log("removing falcon ye");
+            checkPlayersCanUseFalcon(gs);
             return true;
         }
         return false;
@@ -67,4 +75,37 @@ public class InitiateTrade : Action
     {
         GameController.instance.sendTradeRequest(tradeType, players[0], players[1]);
     }
+
+
+    //check valid use of falcon
+    public bool checkPlayersCanUseFalcon(GameState gs)
+    {
+        if (Game.gameState.getPlayer(players[0]).getHero().hasArticle("Falcon"))
+        {
+            foreach (Falcon f in gs.getPlayer(players[0]).getHero().heroArticles["Falcon"])
+            {
+                if (!f.checkUsedToday())
+                {
+                    f.useArticle();
+                    Debug.Log("falcon is valid: " + f.checkUsedToday());
+                    return true;
+                }
+            }
+        }
+        else if (Game.gameState.getPlayer(players[1]).getHero().hasArticle("Falcon"))
+        {
+            foreach (Falcon f in gs.getPlayer(players[1]).getHero().heroArticles["Falcon"])
+            {
+                if (!f.checkUsedToday())
+                {
+                    f.useArticle();
+                    Debug.Log("falcon is valid: " + f.checkUsedToday());
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
 }
+
