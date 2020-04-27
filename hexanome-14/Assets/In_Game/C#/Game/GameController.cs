@@ -277,6 +277,10 @@ public class GameController : MonoBehaviour
         heroStatsText.text = update;
     }
 
+    public bool checkFalconUse()
+    {
+        return ts.usingFalcon;
+    }
    
 
     void Update()
@@ -377,7 +381,7 @@ public class GameController : MonoBehaviour
             if (!validFalcon)
             {
                 GameController.instance.useFalcon.gameObject.SetActive(false);
-                Debug.Log("removing falcon");
+                //Debug.Log("removing falcon");
             }
 
 
@@ -709,6 +713,13 @@ public void updateGameConsoleText(string message)
         scrollTxt.text = "Congratulations, you have successfully completed the legend!";
         StartCoroutine(overtimeCoroutine(10));
         
+    }
+
+    public void invalidTradeNotify()
+    {
+        scrollTxt.text = "Invalid Trade Request!";
+        StartCoroutine(overtimeCoroutine(10));
+
     }
 
     //IEnumerator consoleCoroutine(string message)
@@ -1240,7 +1251,7 @@ public void updateGameConsoleText(string message)
         notification.gameObject.SetActive(false);
     }
 
-    public void sendTradeRequest(string[] tradeType, string playerFrom, string playerTo)
+    public void sendTradeRequest(string[] tradeType, string playerFrom, string playerTo, bool usingFalcon)
     {
         //foreach(string t in ts.tradeType)
         //{
@@ -1254,25 +1265,55 @@ public void updateGameConsoleText(string message)
         pl[1] = playerTo;
         ts.setPlayers(pl);
 
-        tradeRequestSent = true;
         playerTradeTo = playerTo;
         playerTradeFrom = playerFrom;
         string msg = "";
         if (tradeType[0].Equals("Gold"))
         {
             msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give gold";
-            
+            tradeRequestSent = true;
+
         }
         else if (tradeType[0].Equals("Gemstones"))
         {
             msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to give a gemstone";
-            
+            tradeRequestSent = true;
+
         }
         else
         {
-            msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
+
+            if (usingFalcon)
+            {
+                Debug.Log("using falcon!");
+                if (tradeType[1] == "Shield" || tradeType[2] == "Shield" || tradeType[1] == "Bow" || tradeType[2] == "Bow")
+                {
+                    Debug.Log(tradeType[1]);
+                    Debug.Log(tradeType[2]);
+                    Debug.Log("invalid!");
+                    ts.clear();
+                    invalidTradeNotify();
+
+                }
+                else
+                {
+                    ts.usingFalcon = true;
+                    msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
                 + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
-            
+                    tradeRequestSent = true;
+                }
+
+            }
+            else {
+                Debug.Log(tradeType[1]);
+                Debug.Log(tradeType[2]);
+
+                msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
+                + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
+                tradeRequestSent = true;
+
+            }
+
         }
 
         tradeMsg = msg;
