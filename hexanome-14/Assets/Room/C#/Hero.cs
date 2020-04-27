@@ -38,11 +38,14 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public bool selectedWineskin;
     public int wineskinsides = 0;
 
+    public Dictionary<int, int> numDice; //<wp, numberOfDice>
+
     public Hero()
     {
         
         pronouns = new string[3];
         heroArticles = new Dictionary<string, List<Article>>();
+        numDice = new Dictionary<int, int>();
     }
 
     public string allArticlesAsString()
@@ -188,6 +191,68 @@ public class Hero // : MonoBehaviour, Movable, Fightable
             pronouns[2] = "her";
         }
 
+        if (hero.Contains("Mage"))
+        {
+            for(int i = 0; i<=20; i++)
+            {
+                numDice.Add(i, 1);
+            }
+        }
+
+        if (hero.Contains("Warrior"))
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                numDice.Add(i, 2);
+            }
+
+            for (int i = 7; i < 14; i++)
+            {
+                numDice.Add(i, 3);
+            }
+
+            for (int i = 14; i < 21; i++)
+            {
+                numDice.Add(i, 4);
+            }
+        }
+
+        if (hero.Contains("Dwarf"))
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                numDice.Add(i, 1);
+            }
+
+            for (int i = 7; i < 14; i++)
+            {
+                numDice.Add(i, 2);
+            }
+
+            for (int i = 14; i < 21; i++)
+            {
+                numDice.Add(i, 3);
+            }
+        }
+
+        if (hero.Contains("Archer"))
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                numDice.Add(i, 3);
+            }
+
+            for (int i = 7; i < 14; i++)
+            {
+                numDice.Add(i, 4);
+            }
+
+            for (int i = 14; i < 21; i++)
+            {
+                numDice.Add(i, 5);
+            }
+        }
+
     }
 
     public int getHeroRank()
@@ -263,5 +328,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     {
         this.strength += numPoints;
     }
+
+    
 
 }
