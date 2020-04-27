@@ -127,6 +127,9 @@ public class GameController : MonoBehaviour
     private string[] playersToNotify;
     public string chatMessages;
 
+
+    public bool easy = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -150,6 +153,8 @@ public class GameController : MonoBehaviour
         initTransform = transform;
 
         instance = this;
+
+        movePrinceButton.interactable = false;
 
         // For drawing everything
         loadBoard();
@@ -1103,7 +1108,7 @@ public void updateGameConsoleText(string message)
 
     public void loadFarmers()
     {
-
+        
         int i = 0;
         foreach (int pos in new int[] { 24,36 })
         {
@@ -1115,6 +1120,11 @@ public void updateGameConsoleText(string message)
             i++;
             //Debug.Log("Added well at position: " + pos);
         }
+    }
+
+    public void loadNarrator()
+    {
+        Debug.Log("Added Narrator at position: " );
     }
 
 

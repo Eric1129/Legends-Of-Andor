@@ -30,14 +30,15 @@ public class MerchantScreen : MonoBehaviour
         updateStatusOfInventory();
         updateGold();
 
-
     }
 
     public void updateGold()
     {
         GameObject gold = GameObject.Find("HeroGold");
+        Debug.Log("FOUND GOLD");
         Text heroGold = gold.GetComponent<Text>();
         heroGold.text = Game.gameState.getPlayer(client).getHero().getGold().ToString();
+        Debug.Log("GOLD: " + Game.gameState.getPlayer(client).getHero().getGold());
         if (Game.gameState.getPlayer(client).getHero().getGold() < 2)
         {
             foreach (string key in Game.gameState.getEquipmentBoard().Keys)
@@ -72,9 +73,12 @@ public class MerchantScreen : MonoBehaviour
                 Text articleText = GameObject.Find(key).GetComponent<Text>();
                 articleText.text = quantity + " x " + articleName;
 
-                Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
-                articleBuyButton.interactable = true;
-
+                if(key != "WitchBrew")
+                {
+                    Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+                    articleBuyButton.interactable = true;
+                }
+        
 
                 UnityEngine.Color zm = articleText.color;  //  makes a new color zm
                 zm.a = 1.0f; // makes the color zm transparent
@@ -83,8 +87,13 @@ public class MerchantScreen : MonoBehaviour
             else
             {
                 string articleName = key;
-                Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
-                articleBuyButton.interactable = false;
+
+                if (key != "WitchBrew")
+                {
+                    Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+                    articleBuyButton.interactable = false;
+                }
+                    
 
                 Text articleText = GameObject.Find(key).GetComponent<Text>();
                 articleText.text = quantity + " x " + articleName;
@@ -102,11 +111,14 @@ public class MerchantScreen : MonoBehaviour
         {
             //List<Article> articles = Game.gameState.getArticlesOfType(key);
             //int quantity = articles.Count;
-            Debug.Log(key);
-            Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
-            Debug.Log("Found button");
-            articleBuyButton.interactable = true;
-
+            if(key != "WitchBrew")
+            {
+                Debug.Log(key);
+                Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+                Debug.Log("Found button");
+                articleBuyButton.interactable = true;
+            }
+           
             Text articleText = GameObject.Find(key).GetComponent<Text>();
             Debug.Log("Found text");
             UnityEngine.Color zm = articleText.color;  //  makes a new color zm
@@ -134,8 +146,8 @@ public class MerchantScreen : MonoBehaviour
     public void close()
     {
         resetBuyButtons();
-        merchantBoard.gameObject.SetActive(false); merchantBoard.gameObject.SetActive(false);
-        client = ""; client = "";
+        merchantBoard.gameObject.SetActive(false);
+        client = ""; 
     }
 
     public void buyClick(string item)
