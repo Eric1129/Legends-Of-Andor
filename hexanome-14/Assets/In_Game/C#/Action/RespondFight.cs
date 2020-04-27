@@ -37,7 +37,15 @@ public class RespondFight : Action
         }
         else
         {
-            GameController.instance.fsc.joinFightLobby(players[0]);
+            if (accept)
+            {
+                GameController.instance.fsc.joinFightLobby(players[0]);
+            }
+            else
+            {
+                GameController.instance.fsc.respondToFight(players[0]);
+            }
+            
         }
         
     }

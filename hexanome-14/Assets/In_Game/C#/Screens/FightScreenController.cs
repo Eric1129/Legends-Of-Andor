@@ -13,12 +13,15 @@ public class FightScreenController : MonoBehaviour
     public Button nextButton;
     public Text selectedChoiceText;
     public Transform selectHeroFight;
+    public Button startFight;
 
     private int fightType; //solo = 0, collab = 1
 
     private List<string> availablePlayers; //players that are eligible to fight
     private List<string> invitedPlayers; //players that are invited to the fight
     private List<string> involvedPlayers; //players that have accepted the fight invite
+
+    private Dictionary<string, bool> playerResponded; //keeps track of which players have responded to fight request
 
     private int round;
 
@@ -27,7 +30,8 @@ public class FightScreenController : MonoBehaviour
         availablePlayers = new List<string>();
         invitedPlayers = new List<string>();
         involvedPlayers = new List<string>();
-        
+        playerResponded = new Dictionary<string, bool>();
+
     }
 
     public void displayTypeOfFight()
@@ -250,6 +254,7 @@ public class FightScreenController : MonoBehaviour
         int i = 1;
         foreach(string p in invitedPlayers)
         {
+            playerResponded.Add(p, false);
             players[i] = p;
             i++;
         }
@@ -275,6 +280,7 @@ public class FightScreenController : MonoBehaviour
         Game.sendAction(new RespondFight(players, true, true));
         fightLobby.gameObject.SetActive(true);
         updateFightLobby();
+        startFight.gameObject.SetActive(true);
     }
 
     public void addHostPlayer(string player)
@@ -285,10 +291,10 @@ public class FightScreenController : MonoBehaviour
     public void joinFightLobby(string fighter)
     {
         Debug.Log(Game.gameState.getPlayer(fighter).getHeroType() + " joining fight lobby");
+        respondToFight(fighter);
         involvedPlayers.Add(fighter);
         Debug.Log("Num players " + involvedPlayers.Count);
         fightLobby.gameObject.SetActive(true);
-        
         updateFightLobby();
         
     }
@@ -303,6 +309,30 @@ public class FightScreenController : MonoBehaviour
         }
     }
 
+    public void respondToFight(string player)
+    {
+        playerResponded[player] = true;
+    }
+
+    public bool allResponded()
+    {
+        
+        foreach(bool r in playerResponded.Values)
+        {
+            if(r == false)
+            {
+                return false;
+            }
+        }
+
+        return playerResponded.Values.Count > 0;
+    }
+
+    public void fightReady()
+    {
+        startFight.interactable = true;
+    }
+
     private void displayPlayerInFightLobby(string player, int i)
     {
         Transform[] trs = fightLobby.GetComponentsInChildren<Transform>(true);
@@ -313,6 +343,11 @@ public class FightScreenController : MonoBehaviour
                 t.gameObject.GetComponent<Text>().text = Game.gameState.getPlayer(player).getHeroType();
             }
         }
+    }
+
+    public void startFightClick()
+    {
+        Debug.Log("FIGHT");
     }
 
     public void closeFightScreen()

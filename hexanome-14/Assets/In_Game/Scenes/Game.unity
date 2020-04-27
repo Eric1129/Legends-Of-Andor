@@ -7564,6 +7564,7 @@ MonoBehaviour:
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+  fsc: {fileID: 0}
   chatMessages: 
   easy: 1
 --- !u!1 &418087399
@@ -15825,7 +15826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &998643795
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15888,7 +15889,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 998643797}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1239323458}
+        m_MethodName: startFightClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &998643797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19729,6 +19741,7 @@ MonoBehaviour:
   nextButton: {fileID: 471405054}
   selectedChoiceText: {fileID: 954816847}
   selectHeroFight: {fileID: 1046865808}
+  startFight: {fileID: 998643796}
 --- !u!1 &1243182464
 GameObject:
   m_ObjectHideFlags: 0

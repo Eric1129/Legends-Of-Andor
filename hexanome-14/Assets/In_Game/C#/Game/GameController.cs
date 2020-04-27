@@ -488,6 +488,12 @@ public class GameController : MonoBehaviour
             
         }
 
+        if (Game.myPlayer.getNetworkID().Equals(invitedFighters[0])
+            && fsc.allResponded())
+        {
+            fsc.fightReady();
+        }
+
 
     }
 
