@@ -52,7 +52,7 @@ public class Move : Action
     }
     private bool threadExecute(GameState gs)
     {
-        List<Node> path = Game.positionGraph.getPath(from, to);
+        List<Node> path = Game.gameState.positionGraph.getPath(from, to);
         int pass = 1;
         for (int i = 1; i<path.Count; i++)
         {
@@ -126,7 +126,7 @@ public class Move : Action
 
         //checkWells(gs, finalDest);
         checkFogTokens(gs, finalDest);
-        checkFarmers(gs, finalDest);
+        //checkFarmers(gs, finalDest);
 
     }
 
@@ -161,7 +161,7 @@ public class Move : Action
         }
     }
 
-    public void checkFarmers(GameState gs, int location)
+    /*public void checkFarmers(GameState gs, int location)
     {
         if (gs.getFarmers().ContainsValue(location))
         {
@@ -187,7 +187,7 @@ public class Move : Action
                 }
             }
         }
-    }
+    }*/
 
     public void checkFogTokens(GameState gs, int location)
     {

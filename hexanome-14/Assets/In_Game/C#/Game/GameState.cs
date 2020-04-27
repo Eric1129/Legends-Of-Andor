@@ -18,6 +18,12 @@ public class GameState
     private Dictionary<Skral, int> skrals;
     private Dictionary<Gor, int> gors;
     public TurnManager turnManager;
+
+    public Dictionary<string, List<Interactable>> playerInteractables;
+    public Graph positionGraph;
+
+    private List<Farmer> farmers;
+
     public string outcome;
     public int maxMonstersAllowedInCastle;
     public int monstersInCastle;
@@ -30,13 +36,13 @@ public class GameState
     public int[] event_cards;
     public string[] fogtoken_order;
     public int day;
-    private Dictionary<Farmer, int> farmers;
-    public int overtime = 8;
-    public int endtime = 10;
-    public int overtimeCost = 2;
+    
+    public int TIME_overtime = 8;
+    public int TIME_endTime = 10;
+    public int TIME_overtimeCost = 2;
     public bool skralTowerDefeated;
-    public bool eventcard19;
-    public bool eventcard3;
+    //public bool eventcard19;
+    //public bool eventcard3;
     public int brewCost;
     public int witchLocation;
     public bool witchFound;
@@ -45,6 +51,9 @@ public class GameState
     public GameState()
 	{
         players = new Dictionary<string, Player>();
+        playerInteractables = new Dictionary<string, List<Interactable>>();
+        positionGraph = new Graph();
+
         monsters = new List<Monster>();
         playerLocations = new Dictionary<string, int>();
         gors = new Dictionary<Gor, int>();
@@ -56,7 +65,7 @@ public class GameState
         fogTokens = new Dictionary<FogToken, int>();
         princeThor = new List<PrinceThorald>();
         day = 1;
-        farmers = new Dictionary<Farmer, int>();
+        farmers = new List<Farmer>();
         merchants = new Dictionary<int, Merchant>();
         equipmentBoard = new Dictionary<string, List<Article>>();
         skralTowerDefeated = false;
@@ -73,6 +82,7 @@ public class GameState
         if (!players.ContainsKey(p.getNetworkID()))
         {
             players.Add(p.getNetworkID(), p);
+            playerInteractables.Add(p.getNetworkID(), new List<Interactable>());
             Debug.Log("Added player " + p);
 
         }
@@ -195,13 +205,13 @@ public class GameState
     }
 
 
-    public Dictionary<Farmer, int> getFarmers()
+    public List<Farmer> getFarmers()
     {
         return farmers;
     }
     public void addFarmer(Farmer f)
     {
-        farmers.Add(f, f.getLocation());
+        farmers.Add(f);
     }
 
 
@@ -300,6 +310,34 @@ public class GameState
     {
         return dateSaved;
     }
+
+
+    public Interactable removePlayerInteractable(string playerID, Interactable interactable)
+    {
+        playerInteractables[playerID].Remove(interactable);
+
+        // Update interactable IDs
+        for(int i = 0; i< playerInteractables[playerID].Count; i++)
+        {
+            playerInteractables[playerID][i].setInteractableID(i);
+        }
+
+        return interactable;
+    }
+    public void addPlayerInteractable(string playerID, Interactable interactable)
+    {
+        interactable.setInteractableID(playerInteractables[playerID].Count);
+        playerInteractables[playerID].Add(interactable);
+    }
+    public Interactable getPlayerInteractable(string playerID, int interactableID)
+    {
+        return playerInteractables[playerID][interactableID];
+    }
+    public Interactable getNodeInteractable(int NodeID, int interactableID)
+    {
+        return positionGraph.getNode(NodeID).getInteractables()[interactableID];
+    }
+
     //public void setEventCardOrder(int[] event_card)
     //{
     //    event_cards = event_card;
