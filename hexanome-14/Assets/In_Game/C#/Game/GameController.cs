@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     public Transform notification;
     public Transform merchantScreenController;
     public Transform fightScreenController;
+    
 
     public Transform fightRequest;
    
@@ -36,6 +37,7 @@ public class GameController : MonoBehaviour
     public Transform pickDropContainer;
 
     public Button moveButton;
+    public Button fightButton;
     public Button movePrinceButton;
     public Button emptyWellButton;
     public Button buyBrewButton;
@@ -129,7 +131,7 @@ public class GameController : MonoBehaviour
     private bool notificationOn = false;
     public static MerchantScreen ms;
 
-    public static FightScreenController fsc;
+    public FightScreenController fsc;
 
     private Transform initTransform;
     //private string[] tradeType;
@@ -472,14 +474,65 @@ public class GameController : MonoBehaviour
 
                 foreach (string p in invitedFighters)
                 {
-                    if (Game.myPlayer.getNetworkID().Equals(p))
+
+                    if (!Game.myPlayer.getNetworkID().Equals(invitedFighters[0]))
                     {
-                        processFightRequest();
+                        processFightRequest(true);
                     }
+                    else
+                    {
+                        processFightRequest(false);
+                       
+                    }
+                    
                 }
 
             }
         }
+
+        if (invitedFighters != null)
+        {
+            if (Game.myPlayer.getNetworkID().Equals(invitedFighters[0])
+            && fsc.allResponded())
+            {
+                fsc.fightReady();
+            }
+        }
+        
+
+        bool canFight = false;
+        if (Game.myPlayer.getNetworkID().Equals(Game.gameState.turnManager.currentPlayerTurn())){
+            //check if player is on the same space as a monster
+            
+            int myLocation = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
+            
+            foreach (Monster m in Game.gameState.getMonsters())
+            {
+                
+                int monsterLoc = m.getLocation();
+                
+                if (monsterLoc == myLocation)
+                {
+                    canFight = true;
+                }
+                else
+                {
+                    if (Game.myPlayer.getHero().hasArticle("Bow"))
+                    {
+                        List<Node> neighbours = Game.gameState.positionGraph.getNode(myLocation).getAdjacentNodes();
+                        foreach (Node n in neighbours)
+                        {
+                            if (monsterLoc == n.getIndex())
+                            {
+                                canFight = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        fightButton.interactable = canFight;
+
 
 
     }
@@ -515,8 +568,6 @@ public class GameController : MonoBehaviour
         Debug.Log(boardSpriteContainer.position);
         Debug.Log(boardSpriteContainer.parent.position);
         Debug.Log(boardContainerPos);
-
-
 
 
         // load sprites
@@ -1323,6 +1374,7 @@ public void updateGameConsoleText(string message)
                     msg = Game.gameState.getPlayer(playerFrom).getHeroType() + " would like to trade your " + tradeType[2]
                 + " for " + Game.gameState.getPlayer(playerFrom).getHero().getPronouns()[2] + " " + tradeType[1];
                     tradeRequestSent = true;
+
                 }
 
             }
@@ -1394,18 +1446,21 @@ public void updateGameConsoleText(string message)
         
     }
 
-    public void processFightRequest()
+    public void processFightRequest(bool otherPlayers)
     {
-        if (!Game.myPlayer.getNetworkID().Equals(invitedFighters[0]))
+        fightRequestSent = false;
+        
+        Debug.Log("processing fight request");
+
+        if (otherPlayers)
         {
-            Debug.Log("processing fight request");
-            fightRequestSent = false;
+
             fightRequest.gameObject.SetActive(true);
             string msg = Game.gameState.getPlayer(invitedFighters[0]).getHeroType() + " has invited you to fight!";
             Transform[] trs = fightRequest.gameObject.GetComponentsInChildren<Transform>(true);
             foreach (Transform t in trs)
             {
-                if(t.name == "HeaderText")
+                if (t.name == "HeaderText")
                 {
                     t.gameObject.GetComponent<Text>().text = msg;
                 }
@@ -1413,8 +1468,14 @@ public void updateGameConsoleText(string message)
         }
         else
         {
-            fsc.joinFightLobby();
+            //string[] fightPlayers = new string[1];
+            //fightPlayers[0] = invitedFighters[0];
+            //Game.sendAction(new RespondFight(fightPlayers, true));
+            fsc.openFightLobby(invitedFighters[0]);
         }
+            
+        
+        
         
 
     }

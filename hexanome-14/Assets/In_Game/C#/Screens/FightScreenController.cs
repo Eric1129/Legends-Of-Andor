@@ -13,12 +13,15 @@ public class FightScreenController : MonoBehaviour
     public Button nextButton;
     public Text selectedChoiceText;
     public Transform selectHeroFight;
+    public Button startFight;
 
     private int fightType; //solo = 0, collab = 1
 
     private List<string> availablePlayers; //players that are eligible to fight
     private List<string> invitedPlayers; //players that are invited to the fight
     private List<string> involvedPlayers; //players that have accepted the fight invite
+
+    private Dictionary<string, bool> playerResponded; //keeps track of which players have responded to fight request
 
     private int round;
 
@@ -27,10 +30,13 @@ public class FightScreenController : MonoBehaviour
         availablePlayers = new List<string>();
         invitedPlayers = new List<string>();
         involvedPlayers = new List<string>();
+        playerResponded = new Dictionary<string, bool>();
+
     }
 
     public void displayTypeOfFight()
     {
+        
         fightChoice.gameObject.SetActive(true);
         collabButton.GetComponent<Button>().interactable = setAvailablePlayers();
     }
@@ -107,6 +113,15 @@ public class FightScreenController : MonoBehaviour
             pickYourFighter();
 
         }
+    }
+
+    public void startSoloFight()
+    {
+        //send an action
+
+        //create new fight
+
+       
     }
 
     public void pickYourFighter()
@@ -248,6 +263,7 @@ public class FightScreenController : MonoBehaviour
         int i = 1;
         foreach(string p in invitedPlayers)
         {
+            playerResponded.Add(p, false);
             players[i] = p;
             i++;
         }
@@ -257,15 +273,90 @@ public class FightScreenController : MonoBehaviour
 
     public void acceptFightRequest(bool accept, string player)
     {
+        Debug.Log("Accepting fight");
+        string[] players = new string[1];
+        players[0] = player;
         if (accept)
         {
-            involvedPlayers.Add(player);
+            Game.sendAction(new RespondFight(players, accept, false));
         }
     }
 
-    public void joinFightLobby()
+    public void openFightLobby(string fighter)
     {
+        string[] players = new string[1];
+        players[0] = fighter;
+        Game.sendAction(new RespondFight(players, true, true));
         fightLobby.gameObject.SetActive(true);
+        updateFightLobby();
+        startFight.gameObject.SetActive(true);
+    }
+
+    public void addHostPlayer(string player)
+    {
+        involvedPlayers.Add(player);
+    }
+
+    public void joinFightLobby(string fighter)
+    {
+        Debug.Log(Game.gameState.getPlayer(fighter).getHeroType() + " joining fight lobby");
+        respondToFight(fighter);
+        involvedPlayers.Add(fighter);
+        Debug.Log("Num players " + involvedPlayers.Count);
+        fightLobby.gameObject.SetActive(true);
+        updateFightLobby();
+        
+    }
+
+    private void updateFightLobby()
+    {
+        int i = 1;
+        foreach(string fighter in involvedPlayers)
+        {
+            displayPlayerInFightLobby(fighter, i);
+            i++;
+        }
+    }
+
+    public void respondToFight(string player)
+    {
+        playerResponded[player] = true;
+    }
+
+    public bool allResponded()
+    {
+        
+        foreach(bool r in playerResponded.Values)
+        {
+            if(r == false)
+            {
+                return false;
+            }
+        }
+
+        return playerResponded.Values.Count > 0;
+    }
+
+    public void fightReady()
+    {
+        startFight.interactable = true;
+    }
+
+    private void displayPlayerInFightLobby(string player, int i)
+    {
+        Transform[] trs = fightLobby.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "Hero" + i)
+            {
+                t.gameObject.GetComponent<Text>().text = Game.gameState.getPlayer(player).getHeroType();
+            }
+        }
+    }
+
+    public void startFightClick()
+    {
+        Debug.Log("FIGHT");
     }
 
     public void closeFightScreen()
