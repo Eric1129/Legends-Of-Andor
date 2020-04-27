@@ -241,6 +241,24 @@ public class FightScreenController : MonoBehaviour
     public void sendFightRequest()
     {
 
+        string[] players = new string[1 + invitedPlayers.Count];
+        players[0] = Game.myPlayer.getNetworkID();
+        int i = 1;
+        foreach(string p in invitedPlayers)
+        {
+            players[i] = p;
+            i++;
+        }
+        closeFightScreen();
+        Game.sendAction(new InviteFighter(players));
+    }
+
+    public void acceptFightRequest(bool accept, string player)
+    {
+        if (accept)
+        {
+            involvedPlayers.Add(player);
+        }
     }
 
     public void closeFightScreen()

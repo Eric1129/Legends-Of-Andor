@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     public Transform notification;
     public Transform merchantScreenController;
     public Transform fightScreenController;
+
+    public Transform fightRequest;
     //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
@@ -137,6 +139,9 @@ public class GameController : MonoBehaviour
 
 
     public bool easy = true;
+
+    private string[] invitedFighters;
+    private bool fightRequestSent;
 
     // Start is called before the first frame update
     void Start()
@@ -430,6 +435,19 @@ public class GameController : MonoBehaviour
             {
                 updateGameConsoleText(this.gameConsoleText.text.ToString());
             }
+        }
+
+        if (fightRequestSent)
+        {
+
+            foreach(string p in invitedFighters)
+            {
+                if (Game.myPlayer.getNetworkID().Equals(p))
+                {
+                    processFightRequest();
+                }
+            }
+            
         }
 
 
@@ -1292,6 +1310,48 @@ public void updateGameConsoleText(string message)
     public void merchantClick()
     {
         ms.displayAvailableItems();
+    }
+
+    public void sendFightRequest(string[] players)
+    {
+        //invitedFighters = new string[players.Length - 1];
+        //for(int i=1; i<players.Length; i++)
+        //{
+        //    invitedFighters[i - 1] = players[i];
+        //}
+        invitedFighters = players;
+       
+        fightRequestSent = true;
+        
+    }
+
+    public void processFightRequest()
+    {
+        if (!Game.myPlayer.getNetworkID().Equals(invitedFighters[0]))
+        {
+            Debug.Log("processing fight request");
+            fightRequestSent = false;
+            fightRequest.gameObject.SetActive(true);
+            string msg = Game.gameState.getPlayer(invitedFighters[0]).getHeroType() + " has invited you to fight!";
+            Transform[] trs = fightRequest.gameObject.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trs)
+            {
+                if(t.name == "HeaderText")
+                {
+                    t.gameObject.GetComponent<Text>().text = msg;
+                }
+            }
+        }
+        
+
+    }
+
+    public void acceptFightRequest(bool accept)
+    {
+        fightRequestSent = false;
+        fightRequest.gameObject.SetActive(false);
+
+
     }
 
     #region buttonClicks

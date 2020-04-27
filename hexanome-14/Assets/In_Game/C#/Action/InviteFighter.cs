@@ -7,8 +7,10 @@ public class InviteFighter: Action
     private Type type;
     private string[] players;
 
-    public InviteFighter()
+    public InviteFighter(string[] players)
     {
+        this.players = players;
+        this.type = Type.InviteFighter;
     }
 
     
@@ -26,13 +28,13 @@ public class InviteFighter: Action
 
     public bool isLegal(GameState gs)
     {
-       
-        return false;
+
+        return players[0].Equals(gs.turnManager.currentPlayerTurn());
     }
 
     public void execute(GameState gs)
     {
-        
+        GameController.instance.sendFightRequest(players);
     }
 }
 
