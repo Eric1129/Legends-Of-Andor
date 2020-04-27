@@ -31,34 +31,32 @@ public class Move : Action
 
     public bool isLegal(GameState gs)
     {
-        return players[0].Equals(gs.turnManager.currentPlayerTurn()) && gs.getPlayer(players[0]).getHero().getHour() < 10;
+        return players[0].Equals(gs.turnManager.currentPlayerTurn()) && gs.getPlayer(players[0]).getHero().getHour() < gs.TIME_endTime;
     }
     public void execute(GameState gs)
     {
-        //Thread thread = new Thread(() => threadExecute(gs));
-        //thread.Start();
+        Thread thread = new Thread(() => threadExecute(gs));
+        thread.Start();
         //while(thread.IsAlive)
         //{
         //    //Debug.Log("thread is alllliiiiiivvvvvvveeeeee");
         //}
-        if (threadExecute(gs))
-        {
-            GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
-        };
-        checkMove(gs);
+        //threadExecute(gs);
+        //{
+        //    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has moved to position " + gs.playerLocations[players[0]]);
+        //};
+        //checkMove(gs);
         gs.turnManager.passTurn();
 
 
     }
-    private bool threadExecute(GameState gs)
+    private void threadExecute(GameState gs)
     {
-        List<Node> path = Game.positionGraph.getPath(from, to);
-        int pass = 1;
+        List<Node> path = Game.gameState.positionGraph.getPath(from, to);
         for (int i = 1; i<path.Count; i++)
         {
-            int overtime = gs.overtime;
-            int setHour = gs.getPlayer(players[0]).getHero().getHour() + 1;
-            if (overtime <= setHour)
+            int playerTimeHour = gs.getPlayer(players[0]).getHero().getHour() + 1;
+            /*if (gs.TIME_overtime <= playerTimeHour)
             {
                 //going into overtime
                 if(overtime == setHour)
@@ -66,7 +64,7 @@ public class Move : Action
                     //each additional hour costs 2
                     if (Game.gameState.eventcard19)
                     {
-                        GameController.instance.updateGameConsoleText("You will lose 2 points for the 8th hour and " + gs.overtimeCost + " willpower points per additional hour after");
+                        GameController.instance.updateGameConsoleText("You will lose 2 points for the 8th hour and " + gs.TIME_overtimeCost + " willpower points per additional hour after");
                         
                     }
                     GameController.instance.overtime();
@@ -96,28 +94,46 @@ public class Move : Action
                 //subtract willpower points
                 gs.getPlayer(players[0]).getHero().setWillpower(newPower); 
 
-            }
-            // Move
-            gs.playerLocations[players[0]] = path[i].getIndex();
-            Debug.Log(path[i].getIndex());
-            if(path[i].getIndex() == 57 && Game.gameState.eventcard3)
+            }*/
+
+            // Set new willpower if in overtime
+            int newWillPower = gs.getPlayer(players[0]).getHero().getWillpower();
+            
+            if(playerTimeHour >= gs.TIME_overtime)
             {
-                gs.getPlayer(players[0]).getHero().increaseStrength(1);
-                Game.gameState.eventcard3 = false;
+                newWillPower -= gs.TIME_overtimeCost;
+                // Check if possible to lose willpower
+                if(newWillPower < 0)
+                {
+                    break;
+                }
+                gs.getPlayer(players[0]).getHero().setWillpower(newWillPower);
             }
 
             // Take an hour
             gs.getPlayer(players[0]).getHero().setHour(1 + gs.getPlayer(players[0]).getHero().getHour());
             GameController.instance.setTime(players[0], gs.getPlayer(players[0]).getHero().getHour());
 
-            if(gs.getPlayer(players[0]).getHero().getHour() == gs.endtime)
+            // Move player
+            gs.playerLocations[players[0]] = path[i].getIndex();
+            Debug.Log(path[i].getIndex());
+            Thread.Sleep(500);
+
+            // For event card
+            if(path[i].getIndex() == 57 && Game.gameState.EVENTCARD_treeOfSongBonusIsActive)
+            {
+                gs.getPlayer(players[0]).getHero().increaseStrength(1);
+                Game.gameState.EVENTCARD_treeOfSongBonusIsActive = false;
+            }
+
+
+            // If past
+            if(gs.getPlayer(players[0]).getHero().getHour() == gs.TIME_endTime)
             {
                 break;
             }
           
-            //Thread.Sleep(500);
         }
-        return true;
     }
 
     public void checkMove(GameState gs)
@@ -126,7 +142,7 @@ public class Move : Action
 
         //checkWells(gs, finalDest);
         checkFogTokens(gs, finalDest);
-        checkFarmers(gs, finalDest);
+        //checkFarmers(gs, finalDest);
 
     }
 
@@ -161,7 +177,7 @@ public class Move : Action
         }
     }
 
-    public void checkFarmers(GameState gs, int location)
+    /*public void checkFarmers(GameState gs, int location)
     {
         if (gs.getFarmers().ContainsValue(location))
         {
@@ -187,7 +203,7 @@ public class Move : Action
                 }
             }
         }
-    }
+    }*/
 
     public void checkFogTokens(GameState gs, int location)
     {

@@ -36,6 +36,8 @@ public class GameController : MonoBehaviour
     public Button buyBrewButton;
     public Button chatButton;
     public Button closeChatButton;
+    public Button dropPickButton;
+
     public Transform merchantButton;
 
 
@@ -553,7 +555,7 @@ public class GameController : MonoBehaviour
     {
         if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
         {
-            scrollTxt.text = "You will now lose +" + Game.gameState.overtimeCost+ " willpower points for each additional hour!";
+            scrollTxt.text = "You will now lose +" + Game.gameState.TIME_overtimeCost+ " willpower points for each additional hour!";
             StartCoroutine(overtimeCoroutine(3));
         }       
     }
@@ -905,14 +907,14 @@ public void updateGameConsoleText(string message)
         //created all the monsters for Legend 2
         foreach (int gorTile in new int[]{8, 20, 21, 26, 48})
         {
-            Gor g = new Gor(Game.positionGraph.getNode(gorTile));
+            Gor g = new Gor(Game.gameState.positionGraph.getNode(gorTile));
             //Debug.Log("Gor" + g);
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
         }
         foreach (int skralTile in new int[]{19})
         {
-            Skral s = new Skral(Game.positionGraph.getNode(skralTile));
+            Skral s = new Skral(Game.gameState.positionGraph.getNode(skralTile));
             Game.gameState.addMonster(s);
             Game.gameState.addSkral(s);
         }
@@ -960,7 +962,7 @@ public void updateGameConsoleText(string message)
         {
             Debug.Log("Added well at position: " + pos);
             GameObject wellObject = Instantiate(well_front, tiles[pos].getMiddle(), transform.rotation);
-            Well w = new Well(Game.positionGraph.getNode(pos),wellObject);
+            Well w = new Well(Game.gameState.positionGraph.getNode(pos),wellObject);
             Debug.Log(w);
             Debug.Log(w.getLocation());
             Game.gameState.addWell(w);
@@ -972,7 +974,7 @@ public void updateGameConsoleText(string message)
     private void loadPrinceThorald()
     {
         GameObject princeThorald = Instantiate(prince, tiles[72].getMiddle(), transform.rotation);
-        PrinceThorald princeT = new PrinceThorald(Game.positionGraph.getNode(72), princeThorald);
+        PrinceThorald princeT = new PrinceThorald(Game.gameState.positionGraph.getNode(72), princeThorald);
         Game.gameState.addPrince(princeT);
         princeThoraldObject.Add(princeT, princeThorald);
         Debug.Log("Added prince at position: " + princeT.getLocation());
@@ -980,7 +982,7 @@ public void updateGameConsoleText(string message)
 
     public void instantiateEventGor(int location)
     {
-        Gor g = new Gor(Game.positionGraph.getNode(location));
+        Gor g = new Gor(Game.gameState.positionGraph.getNode(location));
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         GameObject tempObj = Instantiate(g.getPrefab(), -transform.position, transform.rotation, monsterContainer);
         tempObj.transform.position = tiles[g.getLocation()].getMiddle();
@@ -994,7 +996,7 @@ public void updateGameConsoleText(string message)
 
     public void instantiateEventSkral(int location)
     {
-        Skral s = new Skral(Game.positionGraph.getNode(location));
+        Skral s = new Skral(Game.gameState.positionGraph.getNode(location));
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         GameObject tempObj = Instantiate(s.getPrefab(), -transform.position, transform.rotation, monsterContainer);
         tempObj.transform.position = tiles[s.getLocation()].getMiddle();
@@ -1025,7 +1027,7 @@ public void updateGameConsoleText(string message)
         Debug.Log("got roll");
         GameObject herb = Instantiate(medicinalHerb3, tiles[loc].getMiddle(), transform.rotation);
         Debug.Log("instantiated");
-        MedicinalHerb mh = new MedicinalHerb(Game.positionGraph.getNode(loc), herb);
+        MedicinalHerb mh = new MedicinalHerb(Game.gameState.positionGraph.getNode(loc), herb);
         Debug.Log("instantiated2");
         Game.gameState.addMedicinalHerb(mh);
         Debug.Log("instantiated3");
@@ -1044,7 +1046,7 @@ public void updateGameConsoleText(string message)
             Debug.Log("Added fog at position: " + pos);
             GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
             //Game.gameState.fogtoken_order[i]
-            FogToken f = new FogToken(Game.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[i]);
+            FogToken f = new FogToken(Game.gameState.positionGraph.getNode(pos), fogToken, Game.gameState.fogtoken_order[i]);
             Game.gameState.addFogToken(f);
             i++;
             //Debug.Log("Added well at position: " + pos);
@@ -1055,7 +1057,7 @@ public void updateGameConsoleText(string message)
     {
         Vector3 boardContainerScaling3 = new Vector3(0.15f / boardSpriteContainer.parent.lossyScale.x, 0.15f / boardSpriteContainer.parent.lossyScale.y, 0.15f / boardSpriteContainer.parent.lossyScale.z);
 
-        List<Node> neighbors = Game.positionGraph.getNode(loc).getAdjacentNodes();
+        List<Node> neighbors = Game.gameState.positionGraph.getNode(loc).getAdjacentNodes();
         foreach (Node n in neighbors)
         {
             int nodeIndex = n.getIndex();
@@ -1108,17 +1110,11 @@ public void updateGameConsoleText(string message)
 
     public void loadFarmers()
     {
-        
-        int i = 0;
         foreach (int pos in new int[] { 24,36 })
         {
             Debug.Log("Added farmer at position: " + pos);
-            GameObject Farmer = Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation);
-            //Game.gameState.fogtoken_order[i]
-            Farmer f = new Farmer(Game.positionGraph.getNode(pos), Farmer);
+            Farmer f = new Farmer(Game.gameState.positionGraph.getNode(pos), Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation));
             Game.gameState.addFarmer(f);
-            i++;
-            //Debug.Log("Added well at position: " + pos);
         }
     }
 
@@ -1365,6 +1361,31 @@ public void updateGameConsoleText(string message)
         //List<Dropdown.OptionData> menuOptions = dropdown.GetComponent<Dropdown>().options;
         //string value = menuOptions[menuIndex].text;
 
+    }
+
+    public void dropPickClick()
+    {
+        // Dropping Item
+        foreach(Interactable interact in Game.gameState.getInteractables(Game.myPlayer.getNetworkID()))
+        {
+            if(interact is PickDrop)
+            {
+                Debug.Log("Dropping ITEM!");
+                Game.sendAction(new Interact(Game.myPlayer.getNetworkID(), interact.getInteractableID(), -1));
+                return;
+            }
+        }
+
+        // Picking up an item
+        foreach (Interactable interact in Game.gameState.positionGraph.getNode(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]).getInteractables())
+        {
+            if (interact is PickDrop)
+            {
+                Debug.Log("Picking up ITEM!");
+                Game.sendAction(new Interact(Game.myPlayer.getNetworkID(), interact.getInteractableID(), Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]));
+                return;
+            }
+        }
     }
 
 
