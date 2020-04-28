@@ -24,6 +24,7 @@ public enum Type
     UseHelm,
     UseWitchBrew,
     UseBow
+    StartFight
 
 }
 
