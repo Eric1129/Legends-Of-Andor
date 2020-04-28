@@ -72,10 +72,58 @@ public class Monster : Fightable, MoveStrategy
     public void setMonsterType(string monsterType)
     {
         this.monsterType = monsterType;
+        
+    }
+
+    public string getMonsterType()
+    {
+        return this.monsterType;
     }
 
     public void setReward(int reward)
     {
         this.reward = reward;
     }
+
+    public int getReward()
+    {
+        return this.reward;
+    }
+
+    public int getNumDice()
+    {
+        if(this.monsterType == "Gor" || this.monsterType == "Skral")
+        {
+            if (this.willpower < 7) return 2;
+            else return 3;
+        }
+        else
+        {
+            if (this.willpower < 7) return 1;
+            else return 2;
+        }
+    }
+
+    public List<int> diceRoll()
+    {
+        System.Random random = new System.Random();
+        List<int> dice = new List<int>();
+        if (this.monsterType == "Gor" || this.monsterType == "Skral")
+        {
+            for(int i =0; i<getNumDice(); i++)
+            {
+                dice.Add(random.Next(1, 7));
+            }
+        }
+        else
+        {
+            int[] blackDice = {6, 8, 10, 12, 6, 10};
+            for (int i = 0; i < getNumDice(); i++)
+            {
+                dice.Add(blackDice[random.Next(1, 7)]);
+            }
+        }
+
+        return dice;
+    }    
 }

@@ -20,6 +20,7 @@ public class FightScreenController : MonoBehaviour
     public Button doneButton;
     public Text rollsLeft;
     public Text battleValue;
+    public Text monsterBattleValueText;
 
     private int fightType; //solo = 0, collab = 1
 
@@ -208,6 +209,8 @@ public class FightScreenController : MonoBehaviour
 
     }
 
+   
+
     public void rollButtonActive(bool active)
     {
         Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
@@ -276,19 +279,101 @@ public class FightScreenController : MonoBehaviour
         flipButton.gameObject.SetActive(false);
         doneButton.gameObject.SetActive(false);
         stopButton.gameObject.SetActive(false);
+
+        
     }
 
+    int heroBattleValue = 0;
     public void displayBattleValue(int final)
     {
+
         Hero h = Game.gameState.getPlayer(involvedPlayers[0]).getHero();
-        battleValue.text = "Battle Value: " + (final + h.getStrength());
+        heroBattleValue = (final + h.getStrength());
+        battleValue.text = "Battle Value: " + heroBattleValue;
+
     }
 
-    public void monsterFight()
+    public void creatureTurn()
     {
+        monsterRoll();
+    }
+    public void monsterRoll()
+    {
+        List<int> monsterDice = fight.monster.diceRoll();
+        string diceText = "";
+        foreach (int dice in monsterDice)
+        {
+            diceText += dice + "\t";
+        }
+        Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
+        int final = monsterRollOutcome(monsterDice);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "MonsterDiceRolls")
+            {
+
+
+                t.GetComponent<Text>().text = diceText;
+            }
+            if (t.name == "MonsterFinalOutcome")
+            {
+                t.GetComponent<Text>().text = "Final Outcome: " + final;
+            }
+        }
+
+        creatureBattleValue(final);
+    }
+
+    public int monsterRollOutcome(List<int> monsterDice)
+    {
+        int max = findMaxValueOfIdenticalDice(monsterDice);
+        foreach (int dice in monsterDice)
+        {
+            if (dice > max)
+            {
+                max = dice;
+            }
+        }
+        return max;
 
     }
 
+    public int findMaxValueOfIdenticalDice(List<int> monsterDice)
+    {
+        Dictionary<int, int> identicalDice = new Dictionary<int, int>(); //<diceRoll, totalValue>
+        int max = 0;
+        foreach (int dice in monsterDice)
+        {
+            if (identicalDice.ContainsKey(dice))
+            {
+                identicalDice[dice] += dice;
+            }
+            else
+            {
+                identicalDice.Add(dice, dice);
+            }
+        }
+
+        foreach (int value in identicalDice.Values)
+        {
+            if (value > max)
+            {
+                max = value;
+            }
+        }
+        return max;
+    }
+
+
+    int monsterBattleValue = 0;
+
+    public void creatureBattleValue(int final)
+    {
+        monsterBattleValue = fight.monster.getStrength() + final;
+        monsterBattleValueText.text = "Battle Value: " + monsterBattleValue;
+    }
+
+ 
     public void startCollabFight()
     {
         fightScreen.gameObject.SetActive(true);
@@ -350,6 +435,17 @@ public class FightScreenController : MonoBehaviour
 
         foreach (Transform attr in trs)
         {
+            if(attr.name == "Name")
+            {
+                attr.GetComponent<Text>().text = m.getMonsterType();
+            }
+
+            if(attr.name == "Image"){
+                Debug.Log("Monster image");
+                Sprite monsterSprite = Resources.Load<Sprite>("Monsters/" + m.getMonsterType());
+                attr.GetComponent<Image>().sprite = monsterSprite;
+                attr.GetComponent<Image>().useSpriteMesh = true;
+            }
             if(attr.name == "Attributes")
             {
                 attr.GetComponent<Text>().text = "Strength: " + m.getStrength() + "\nWill Power: " + m.getWillpower();
