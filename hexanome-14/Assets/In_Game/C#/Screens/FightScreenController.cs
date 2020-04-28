@@ -462,7 +462,7 @@ public class FightScreenController : MonoBehaviour
 
     public void nextRound()
     {
-        Debug.Log("NExt round");
+        
         Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
 
         //increase time tracker
@@ -570,21 +570,39 @@ public class FightScreenController : MonoBehaviour
         battleEndScreen.gameObject.SetActive(false);
     }
 
-    public void startCollabFight()
+    public void startCollabFight(Fight f)
     {
-        fightScreen.gameObject.SetActive(true);
-        Monster monster;
-        int myLocation = Game.gameState.getPlayerLocations()[involvedPlayers[0]];
-        foreach (Monster m in Game.gameState.getMonsters())
-        {
-            int monsterLoc = m.getLocation();
-
-            if (monsterLoc == myLocation)
-            {
-                monster = m;
-            }
-        }
         
+        //Monster monster = Game.gameState.getMonsters()[0];
+        //int myLocation = Game.gameState.getPlayerLocations()[involvedPlayers[0]];
+        //foreach (Monster m in Game.gameState.getMonsters())
+        //{
+        //    int monsterLoc = m.getLocation();
+
+        //    if (monsterLoc == myLocation)
+        //    {
+        //        monster = m;
+        //    }
+        //}
+
+        fight = f;
+        foreach(string p in fight.fighters)
+        {
+            if(Game.myPlayer.getNetworkID() == p)
+            {
+                fightScreen.gameObject.SetActive(true);
+            }
+           
+            
+        }
+        //advance time tracker
+        foreach(Hero h in fight.getHeroes())
+        {
+            h.setHour(1 + h.getHour());
+            GameController.instance.setTime(fight.currentFighter(), h.getHour());
+        }
+
+        Debug.Log("CUrrent fighter " + Game.gameState.getPlayer(fight.currentFighter()).getHeroType());
 
     }
 

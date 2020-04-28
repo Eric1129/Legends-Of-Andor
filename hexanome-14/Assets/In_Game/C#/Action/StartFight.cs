@@ -36,7 +36,19 @@ public class StartFight : Action
         }
         else
         {
-            GameController.instance.fsc.startCollabFight();
+            Monster monster = Game.gameState.getMonsters()[0];
+            int myLocation = Game.gameState.getPlayerLocations()[players[0]];
+            foreach (Monster m in Game.gameState.getMonsters())
+            {
+                int monsterLoc = m.getLocation();
+
+                if (monsterLoc == myLocation)
+                {
+                    monster = m;
+                }
+            }
+            Fight fight = new Fight(players, monster);
+            GameController.instance.fsc.startCollabFight(fight);
         }
 
     }
