@@ -39,7 +39,7 @@ public class FightScreenController : MonoBehaviour
     private Dictionary<string, bool> playerResponded; //keeps track of which players have responded to fight request
 
     private int round;
-    private Fight fight;
+    public Fight fight;
 
     public FightScreenController()
     {
@@ -135,7 +135,7 @@ public class FightScreenController : MonoBehaviour
 
     public void startSoloFight()
     {
-        fightScreen.gameObject.SetActive(true);
+        
         int myLocation = Game.gameState.getPlayerLocations()[involvedPlayers[0]];
         Monster monster = Game.gameState.getMonsters()[0];
         foreach (Monster m in Game.gameState.getMonsters())
@@ -149,7 +149,11 @@ public class FightScreenController : MonoBehaviour
         }
 
         fight = new Fight(involvedPlayers.ToArray(), monster);
-
+        if(Game.myPlayer.getNetworkID() == fight.currentFighter())
+        {
+            fightScreen.gameObject.SetActive(true);
+        }
+        
         displayHero(Game.gameState.getPlayer(fight.currentFighter()));
         displayMonster(monster);
         Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
@@ -546,19 +550,24 @@ public class FightScreenController : MonoBehaviour
         {
             h.increaseWillpower(reward);
         }
-        //end turn
-        Game.gameState.turnManager.passTurn();
-        closeFightScreen();
-        rewardScreen.gameObject.SetActive(false);
+        string[] players = fight.fighters;
+        Game.sendAction(new EndFight(players));
     }
 
     public void okClick()
     {
+        //fightOverAction();
+        string[] players = fight.fighters;
+        Game.sendAction(new EndFight(players));
+    }
+
+    public void fightOverAction()
+    {
         //end turn
         Game.gameState.turnManager.passTurn();
-
-        battleEndScreen.gameObject.SetActive(false);
         closeFightScreen();
+        rewardScreen.gameObject.SetActive(false);
+        battleEndScreen.gameObject.SetActive(false);
     }
 
     public void startCollabFight()

@@ -2,19 +2,18 @@
 using UnityEngine;
 
 [System.Serializable]
-public class StartFight : Action
+public class EndFight : Action
 {
     string[] players;
     Type type;
-    int fightType;
+   
     
 
-    public StartFight(string[] players, int fightType)
+    public EndFight(string[] players)
     {
-        type = Type.StartFight;
+        type = Type.EndFight;
+
         this.players = players;
-        this.fightType = fightType;
-        
         
     }
 
@@ -29,16 +28,8 @@ public class StartFight : Action
 
     public void execute(GameState gs)
     {
-       if(fightType == 0)
-        {
-            GameController.instance.fsc.startSoloFight();
-            //GameController.instance.
-        }
-        else
-        {
-            GameController.instance.fsc.startCollabFight();
-        }
-
+        Array.Clear(players, 0, players.Length);
+        GameController.instance.fsc.fightOverAction();
     }
 
     public bool isLegal(GameState gs)

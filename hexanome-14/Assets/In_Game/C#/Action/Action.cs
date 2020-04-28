@@ -21,7 +21,8 @@ public enum Type
     InviteFighter,
     RespondFight,
     UseWineskin,
-    StartFight
+    StartFight,
+    EndFight
 
 }
 
