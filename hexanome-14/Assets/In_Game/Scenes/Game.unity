@@ -8629,7 +8629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &446442400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22325,6 +22325,7 @@ MonoBehaviour:
   flipButton: {fileID: 32216827}
   doneButton: {fileID: 363065955}
   rollsLeft: {fileID: 1497706656}
+  battleValue: {fileID: 753093259}
 --- !u!1 &1243182464
 GameObject:
   m_ObjectHideFlags: 0

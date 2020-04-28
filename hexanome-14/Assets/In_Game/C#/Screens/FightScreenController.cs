@@ -19,6 +19,7 @@ public class FightScreenController : MonoBehaviour
     public Button flipButton;
     public Button doneButton;
     public Text rollsLeft;
+    public Text battleValue;
 
     private int fightType; //solo = 0, collab = 1
 
@@ -140,6 +141,7 @@ public class FightScreenController : MonoBehaviour
 
         fight = new Fight(involvedPlayers.ToArray(), monster);
         displayHero(Game.gameState.getPlayer(involvedPlayers[0]));
+        displayMonster(monster);
 
     }
     private int archerRound = 1;
@@ -151,7 +153,7 @@ public class FightScreenController : MonoBehaviour
     public void heroRoll()
     {
         rollButtonActive(true);
-        Hero h = Game.myPlayer.getHero();
+        Hero h = Game.gameState.getPlayer(involvedPlayers[0]).getHero();
         if (h.getHeroType().Equals("Female Archer") || h.getHeroType().Equals("Male Archer"))
         {
 
@@ -269,10 +271,22 @@ public class FightScreenController : MonoBehaviour
                 t.GetComponent<Text>().text = "Final Outcome: " + final;
             }
         }
+        displayBattleValue(final);
         rollButtonActive(false);
         flipButton.gameObject.SetActive(false);
         doneButton.gameObject.SetActive(false);
         stopButton.gameObject.SetActive(false);
+    }
+
+    public void displayBattleValue(int final)
+    {
+        Hero h = Game.gameState.getPlayer(involvedPlayers[0]).getHero();
+        battleValue.text = "Battle Value: " + (final + h.getStrength());
+    }
+
+    public void monsterFight()
+    {
+
     }
 
     public void startCollabFight()
@@ -295,7 +309,7 @@ public class FightScreenController : MonoBehaviour
 
     public void displayHero(Andor.Player player)
     {
-        Debug.Log("dispalying");
+        
         GameObject heroGameObject = GameObject.Find("Hero");
         Transform[] trs = heroGameObject.GetComponentsInChildren<Transform>();
         
@@ -325,6 +339,20 @@ public class FightScreenController : MonoBehaviour
                 heroitems.text += "\nWill Power: " + player.getHero().getWillpower() + "\n";
 
 
+            }
+        }
+    }
+
+    public void displayMonster(Monster m)
+    {
+        GameObject monster = GameObject.Find("Monster");
+        Transform[] trs = monster.GetComponentsInChildren<Transform>();
+
+        foreach (Transform attr in trs)
+        {
+            if(attr.name == "Attributes")
+            {
+                attr.GetComponent<Text>().text = "Strength: " + m.getStrength() + "\nWill Power: " + m.getWillpower();
             }
         }
     }
@@ -561,7 +589,7 @@ public class FightScreenController : MonoBehaviour
 
     public void startFightClick()
     {
-        Debug.Log("FIGHT");
+        
         Game.sendAction(new StartFight(involvedPlayers.ToArray(), fightType));
     }
 
