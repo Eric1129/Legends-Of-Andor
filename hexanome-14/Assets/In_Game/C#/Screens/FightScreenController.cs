@@ -11,8 +11,12 @@ public class FightScreenController : MonoBehaviour
 
     public Transform fightLobby;
     public Transform fightScreen;
+    public Transform rewardScreen;
+    public Transform battleEndScreen;
+
+
     public Button nextButton;
-    public Text selectedChoiceText;
+    
     public Transform selectHeroFight;
     public Button startFight;
     public Button stopButton;
@@ -20,6 +24,7 @@ public class FightScreenController : MonoBehaviour
     public Button doneButton;
     public Text rollsLeft;
     public Text battleValue;
+    public Text selectedChoiceText;
     public Text monsterBattleValueText;
     public Text header;
     public Button endBattleButton;
@@ -144,13 +149,14 @@ public class FightScreenController : MonoBehaviour
         }
 
         fight = new Fight(involvedPlayers.ToArray(), monster);
-        displayHero(Game.gameState.getPlayer(fight.fighters[0]));
+
+        displayHero(Game.gameState.getPlayer(fight.currentFighter()));
         displayMonster(monster);
-        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
 
         //increase time tracker
         h.setHour(1 + h.getHour());
-        GameController.instance.setTime(fight.fighters[0], h.getHour());
+        GameController.instance.setTime(fight.currentFighter(), h.getHour());
 
 
     }
@@ -163,7 +169,7 @@ public class FightScreenController : MonoBehaviour
     public void heroRoll()
     {
         rollButtonActive(true);
-        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
         if (h.getHeroType().Equals("Female Archer") || h.getHeroType().Equals("Male Archer"))
         {
 
@@ -246,6 +252,8 @@ public class FightScreenController : MonoBehaviour
     }
     public void stopClick()
     {
+        archerRound = 1;
+        rollsLeft.text = "Rolls Left: ";
         displayFinalOutcome(archerRoll);
     }
 
@@ -273,7 +281,7 @@ public class FightScreenController : MonoBehaviour
 
     public void displayFinalOutcome(int final)
     {
-        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
         Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
         foreach (Transform t in trs)
         {
@@ -297,6 +305,7 @@ public class FightScreenController : MonoBehaviour
         }
         else
         {
+            
             creatureTurn();
         }
 
@@ -341,7 +350,7 @@ public class FightScreenController : MonoBehaviour
         }
 
         creatureBattleValue(final);
-        setWinner();
+        setRoundWinner();
     }
 
     public int monsterRollOutcome(List<int> monsterDice)
@@ -393,7 +402,7 @@ public class FightScreenController : MonoBehaviour
         monsterBattleValueText.text = "Battle Value: " + monsterBattleValue;
     }
 
-    public void setWinner()
+    public void setRoundWinner()
     {
         int difference = heroBattleValue - monsterBattleValue;
         if(difference > 0)
@@ -406,15 +415,15 @@ public class FightScreenController : MonoBehaviour
         else if(difference < 0)
         {
             header.text = "Creature Wins Round.";
-            Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
-            h.increaseWillpower(difference); //since the value will be negative
+            Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+            h.decreaseWillpower(-difference); //since the value will be negative
         }
         else
         {
             header.text = "Draw!";
         }
 
-        displayHero(Game.gameState.getPlayer(fight.fighters[0]));
+        displayHero(Game.gameState.getPlayer(fight.currentFighter()));
         displayMonster(fight.monster);
 
         if (fight.monster.getWillpower() == 0)
@@ -424,50 +433,37 @@ public class FightScreenController : MonoBehaviour
             endBattle(1);
         }
 
-        else if(Game.gameState.getPlayer(fight.fighters[0]).getHero().getHour() + 1
+        else if(Game.gameState.getPlayer(fight.currentFighter()).getHero().getHour() + 1
             == Game.gameState.TIME_endTime)
         {
             //endBattle
             endBattle(0);
         }
 
-        else if(Game.gameState.getPlayer(fight.fighters[0]).getHero().getWillpower() == 0)
+        else if(Game.gameState.getPlayer(fight.currentFighter()).getHero().getWillpower() == 0)
         {
+            header.text = "Battle Over: Creature Wins.";
             endBattle(-1);
         }
         else
         {
             endBattleButton.gameObject.SetActive(true);
             nextRoundButton.gameObject.SetActive(true);
-            
+            fight.nextFighter();
         }
-
-        
+ 
     }
 
-    public void endBattle(int outcome)
-    {
-        if(outcome > 0)
-        {
-            //hero wins
-        }else if(outcome == 0)
-        {
-            //draw or hero clicked end battle
-            fight.monster.recover();
-        }
-        else
-        {
-            //monster wins
-        }
-    }
+    
 
     public void nextRound()
     {
-        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+        Debug.Log("NExt round");
+        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
 
         //increase time tracker
         h.setHour(1 + h.getHour());
-        GameController.instance.setTime(fight.fighters[0], h.getHour());
+        GameController.instance.setTime(fight.currentFighter(), h.getHour());
 
         rollButtonActive(true);
 
@@ -477,8 +473,94 @@ public class FightScreenController : MonoBehaviour
         
 
     }
+    public void endBattle(int outcome)
+    {
+        
+        if (outcome ==1)
+        {
+            //hero wins
+            //get reward
+            rewardScreen.gameObject.SetActive(true);
+            
+            Game.gameState.removeMonster(fight.monster);
+        }else if(outcome == 2)
+        {
+            fight.monster.recover();
+            //end turn
+            Game.gameState.turnManager.passTurn();
 
- 
+            battleEndScreen.gameObject.SetActive(false);
+            closeFightScreen();
+        }
+        else if (outcome == 0)
+        {
+            //draw or hero clicked end battle
+            fight.monster.recover();
+            battleEndScreen.gameObject.SetActive(true);
+            Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
+            foreach(Transform t in trs)
+            {
+                if(t.name == "Body")
+                {
+                    t.GetComponent<Text>().text = "No time left. Draw!";
+                }
+            }
+            
+        }
+        else
+        {
+            //monster wins
+            Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+            if (h.getStrength() > 0)
+            {
+                //lose strength point
+                h.decreaseStrength(1);
+            }
+
+            h.increaseWillpower(3);
+            battleEndScreen.gameObject.SetActive(true);
+            Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
+            foreach (Transform t in trs)
+            {
+                if (t.name == "Body")
+                {
+                    t.GetComponent<Text>().text = "Creature wins. You lose 1 strength point.";
+                }
+            }
+            
+
+        }
+
+    }
+
+    public void getReward(string type)
+    {
+        int reward = fight.monster.getReward();
+        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+        if (type.Equals("gold"))
+        {
+            h.increaseGold(reward);
+        }
+
+        if (type.Equals("willpower"))
+        {
+            h.increaseWillpower(reward);
+        }
+        //end turn
+        Game.gameState.turnManager.passTurn();
+        closeFightScreen();
+        rewardScreen.gameObject.SetActive(false);
+    }
+
+    public void okClick()
+    {
+        //end turn
+        Game.gameState.turnManager.passTurn();
+
+        battleEndScreen.gameObject.SetActive(false);
+        closeFightScreen();
+    }
+
     public void startCollabFight()
     {
         fightScreen.gameObject.SetActive(true);
@@ -688,6 +770,7 @@ public class FightScreenController : MonoBehaviour
 
         }
     }
+    
 
     public void sendFightRequest()
     {
@@ -707,7 +790,7 @@ public class FightScreenController : MonoBehaviour
 
     public void acceptFightRequest(bool accept, string player)
     {
-        Debug.Log("Accepting fight");
+        
         string[] players = new string[1];
         players[0] = player;
         if (accept)
@@ -798,12 +881,24 @@ public class FightScreenController : MonoBehaviour
 
     public void closeFightScreen()
     {
-        //this is not the same as ending a fight
+        
         fightChoice.gameObject.SetActive(false);
         selectHeroFight.gameObject.SetActive(false);
+        fightScreen.gameObject.SetActive(false);
         availablePlayers.Clear();
         invitedPlayers.Clear();
         involvedPlayers.Clear();
+
+        battleValue.text = "Battle Value";
+        heroBattleValue = 0;
+        selectedChoiceText.text = "";
+        monsterBattleValueText.text = "Battle Value: ";
+        monsterBattleValue = 0;
+        header.text = "Fight";
+
+        rollButtonActive(true);
+
+        fight = null;
 
     }
     

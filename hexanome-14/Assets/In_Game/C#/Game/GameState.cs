@@ -167,6 +167,24 @@ public class GameState
         gors.Add(g, g.getLocation());
     }
 
+    public void removeMonster(Monster m)
+    {
+        m.getPrefab().SetActive(false);
+        if(m.getMonsterType() == "Gor")
+        {
+            Gor g = (Gor)m;
+            gors.Remove(g);
+        }
+        if (m.getMonsterType() == "Skral")
+        {
+            Skral s = (Skral)m;
+            skrals.Remove(s);
+        }
+        
+        monsters.Remove(m);
+        
+    }
+
     //////////////////////////////////wells//////////////////////////////////
 
     public void addMerchant(int location, Merchant m)
