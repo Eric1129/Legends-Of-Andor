@@ -26,8 +26,8 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private bool hasThorald;
     private int heroRank;
 
-
-    private int gold = 0;
+    //WILL CHANGE BACK TO 0, USING 10 FOR TESTING
+    private int gold = 10;
     private int strength = 1;
     private int willpower = 7;
 
