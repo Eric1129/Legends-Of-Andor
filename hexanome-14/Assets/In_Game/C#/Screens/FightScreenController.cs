@@ -165,6 +165,7 @@ public class FightScreenController : MonoBehaviour
                 List<int> diceRolls = h.rollDice();
                 archerRoll = diceRolls[0];
                 displayDiceRoll(diceRolls);
+                rollsLeft.gameObject.SetActive(true);
                 rollsLeft.text = "Rolls Left: " + (maxArcherRound-archerRound);
                 stopButton.gameObject.SetActive(true);
                 archerRound++;
@@ -263,7 +264,7 @@ public class FightScreenController : MonoBehaviour
 
     public void displayFinalOutcome(int final)
     {
-        
+        Hero h = Game.gameState.getPlayer(involvedPlayers[0]).getHero();
         Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
         foreach (Transform t in trs)
         {
@@ -276,9 +277,21 @@ public class FightScreenController : MonoBehaviour
         }
         displayBattleValue(final);
         rollButtonActive(false);
+
         flipButton.gameObject.SetActive(false);
         doneButton.gameObject.SetActive(false);
         stopButton.gameObject.SetActive(false);
+
+        if (h.hasArticle("Shield") || h.hasArticle("Helm") || h.hasArticle("WitchBrew"))
+        {
+            //ask user if they would like to use article
+        }
+        else
+        {
+            creatureTurn();
+        }
+
+        
 
         
     }
