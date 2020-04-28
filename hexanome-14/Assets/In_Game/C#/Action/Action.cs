@@ -20,7 +20,8 @@ public enum Type
     UseTelescope,
     InviteFighter,
     RespondFight,
-    UseWineskin
+    UseWineskin,
+    StartFight
 
 }
 

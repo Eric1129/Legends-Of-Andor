@@ -28,8 +28,8 @@ public class Hero // : MonoBehaviour, Movable, Fightable
 
 
     private int gold = 10;
-    private int strength = 0;
-    private int willpower = 0;
+    private int strength = 1;
+    private int willpower = 7;
 
     private int hour = 0;
     //private List<string> articles = new List<string>();
@@ -175,6 +175,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
     public void setHeroType(string hero)
     {
+        Debug.Log("SETTING HERO TYPE " + hero);
         this.heroType = hero;
 
         if (hero.StartsWith("Male"))
@@ -191,68 +192,153 @@ public class Hero // : MonoBehaviour, Movable, Fightable
             pronouns[2] = "her";
         }
 
-        if (hero.Contains("Mage"))
+        if (hero.Equals("Female Wizard") || hero.Equals("Male Wizard") || hero.Equals("wizard"))
         {
-            for(int i = 0; i<=20; i++)
+            Debug.Log("wizard ");
+            for (int i = 0; i<=20; i++)
             {
-                numDice.Add(i, 1);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 1;
+                }
+                else
+                {
+                    numDice.Add(i, 1);
+                }
+                
             }
         }
 
-        if (hero.Contains("Warrior"))
+        if (hero.Equals("Female Warrior") || hero.Equals("Male Warrior") || hero.Equals("warrior"))
         {
+            Debug.Log("WARRIOR ");
             for (int i = 0; i < 7; i++)
             {
-                numDice.Add(i, 2);
+                Debug.Log(i);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 2;
+                }
+                else
+                {
+                    numDice.Add(i, 2);
+                }
+                
             }
 
             for (int i = 7; i < 14; i++)
             {
-                numDice.Add(i, 3);
+                Debug.Log(i);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 3;
+                }
+                else
+                {
+                    numDice.Add(i, 3);
+                }
             }
 
             for (int i = 14; i < 21; i++)
             {
-                numDice.Add(i, 4);
+                Debug.Log(i);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 4;
+                }
+                else
+                {
+                    numDice.Add(i, 4);
+                }
             }
         }
 
-        if (hero.Contains("Dwarf"))
+        if (hero.Equals("Female Dwarf") || hero.Equals("Male Dwarf")|| hero.Equals("dwarf"))
         {
+            Debug.Log("DWARF ");
             for (int i = 0; i < 7; i++)
             {
-                numDice.Add(i, 1);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 1;
+                }
+                else
+                {
+                    numDice.Add(i, 1);
+                }
             }
 
             for (int i = 7; i < 14; i++)
             {
-                numDice.Add(i, 2);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 2;
+                }
+                else
+                {
+                    numDice.Add(i, 2);
+                }
             }
 
             for (int i = 14; i < 21; i++)
             {
-                numDice.Add(i, 3);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 3;
+                }
+                else
+                {
+                    numDice.Add(i, 3);
+                }
             }
         }
 
-        if (hero.Contains("Archer"))
+        if (hero.Equals("Female Archer") || hero.Equals("Male Archer") || hero.Equals("archer"))
         {
+            Debug.Log("ARCHER ");
             for (int i = 0; i < 7; i++)
             {
-                numDice.Add(i, 3);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 3;
+                }
+                else
+                {
+                    numDice.Add(i, 3);
+                }
             }
 
             for (int i = 7; i < 14; i++)
             {
-                numDice.Add(i, 4);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 4;
+                }
+                else
+                {
+                    numDice.Add(i, 4);
+                }
             }
 
             for (int i = 14; i < 21; i++)
             {
-                numDice.Add(i, 5);
+                if (numDice.ContainsKey(i))
+                {
+                    numDice[i] = 5;
+                }
+                else
+                {
+                    numDice.Add(i, 5);
+                }
             }
         }
 
+    }
+
+    public int getNumDice()
+    {
+        Debug.Log("wp" + this.willpower);
+        return numDice[this.willpower];
     }
 
     public int getHeroRank()
@@ -303,30 +389,28 @@ public class Hero // : MonoBehaviour, Movable, Fightable
        
     }
 
-
-    //public string allArticles()
-    //{
-    //    string s_articles = "";
-    //    foreach(string ar in this.articles)
-    //    {
-    //        s_articles += (ar + " ");
-    //    }
-    //    return s_articles;
-    //}
-
-    public void incGold(int amount)
+    public List<int> rollDice()
     {
-        this.gold += amount;
-    }
+        System.Random random = new System.Random();
+        List<int> diceRolls = new List<int>();
 
-    public void decGold(int amount)
-    {
-        this.gold -= amount;
-    }
+        if (!(heroType.Equals("Male Archer") || heroType.Equals("Female Archer")))
+        {
+            Debug.Log("num dice" + getNumDice());
+            for (int i = 0; i < getNumDice(); i++)
+            {
+                diceRolls.Add(random.Next(1, 7));
+            }
+        }
+        else
+        {
+            //Archer only rolls one at a time
+            diceRolls.Add(random.Next(1, 7));
+        }
 
-    public void updateStrength(int numPoints)
-    {
-        this.strength += numPoints;
+        
+
+        return diceRolls;
     }
 
     

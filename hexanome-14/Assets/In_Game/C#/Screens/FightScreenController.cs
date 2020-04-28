@@ -15,6 +15,10 @@ public class FightScreenController : MonoBehaviour
     public Text selectedChoiceText;
     public Transform selectHeroFight;
     public Button startFight;
+    public Button stopButton;
+    public Button flipButton;
+    public Button doneButton;
+    public Text rollsLeft;
 
     private int fightType; //solo = 0, collab = 1
 
@@ -25,6 +29,7 @@ public class FightScreenController : MonoBehaviour
     private Dictionary<string, bool> playerResponded; //keeps track of which players have responded to fight request
 
     private int round;
+    private Fight fight;
 
     public FightScreenController()
     {
@@ -48,7 +53,7 @@ public class FightScreenController : MonoBehaviour
         //collab is 1
 
         fightType = type;
-        if(fightType == 0)
+        if (fightType == 0)
         {
             selectedChoiceText.gameObject.SetActive(true);
             selectedChoiceText.text = "Fight Alone";
@@ -61,7 +66,7 @@ public class FightScreenController : MonoBehaviour
 
         nextButton.interactable = true;
 
-        
+
     }
 
     private bool setAvailablePlayers()
@@ -93,8 +98,8 @@ public class FightScreenController : MonoBehaviour
                             }
                         }
                     }
-                    
-                    
+
+
                 }
             }
         }
@@ -103,12 +108,13 @@ public class FightScreenController : MonoBehaviour
 
     public void nextClick()
     {
-        if(fightType == 0)
+        if (fightType == 0)
         {
             involvedPlayers.Add(Game.myPlayer.getNetworkID());
             //load solo fight scene
+            startFightClick();
         }
-        else{
+        else {
             //invite players
 
             selectHeroFight.gameObject.SetActive(true);
@@ -119,13 +125,208 @@ public class FightScreenController : MonoBehaviour
 
     public void startSoloFight()
     {
-        //display fight screen
+        fightScreen.gameObject.SetActive(true);
+        int myLocation = Game.gameState.getPlayerLocations()[involvedPlayers[0]];
+        Monster monster = Game.gameState.getMonsters()[0];
+        foreach (Monster m in Game.gameState.getMonsters())
+        {
+            int monsterLoc = m.getLocation();
 
-        //send an action
+            if (monsterLoc == myLocation)
+            {
+                monster = m;
+            }
+        }
 
-        //create new fight
+        fight = new Fight(involvedPlayers.ToArray(), monster);
+        displayHero(Game.gameState.getPlayer(involvedPlayers[0]));
 
-       
+    }
+    private int archerRound = 1;
+    private int archerRoll = 0;
+    private int maxArcherRound = 0;
+
+    private int wizardRoll = 0;
+
+    public void heroRoll()
+    {
+        rollButtonActive(true);
+        Hero h = Game.myPlayer.getHero();
+        if (h.getHeroType().Equals("Female Archer") || h.getHeroType().Equals("Male Archer"))
+        {
+
+            maxArcherRound = h.getNumDice();
+            Debug.Log("MAX archer round : " + maxArcherRound);
+            if((maxArcherRound - archerRound) > 0)
+            {
+                List<int> diceRolls = h.rollDice();
+                archerRoll = diceRolls[0];
+                displayDiceRoll(diceRolls);
+                rollsLeft.text = "Rolls Left: " + (maxArcherRound-archerRound);
+                stopButton.gameObject.SetActive(true);
+                archerRound++;
+            }
+            else
+            {
+                
+                displayFinalOutcome(archerRoll);
+                
+            }
+
+            
+            
+
+        }else if (h.getHeroType().Equals("Female Wizard") || h.getHeroType().Equals("Male Wizard"))
+        {
+            List<int> diceRolls = h.rollDice();
+            wizardRoll = diceRolls[0];
+            displayDiceRoll(diceRolls);
+            flipButton.gameObject.SetActive(true);
+            doneButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            List<int> diceRolls = h.rollDice();
+            displayDiceRoll(diceRolls);
+
+            int maxDiceRoll = -1;
+
+            foreach (int dice in diceRolls)
+            {
+
+                if (dice > maxDiceRoll)
+                {
+                    maxDiceRoll = dice;
+                }
+            }
+
+            displayFinalOutcome(maxDiceRoll);
+            
+        }
+
+    }
+
+    public void rollButtonActive(bool active)
+    {
+        Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
+        foreach (Transform t in trs)
+        {
+            if (t.name == "Dice")
+            {
+                t.GetComponent<Button>().interactable = active;
+            }
+
+        }
+    }
+  
+    public void flipButtonClick()
+    {
+        wizardRoll = 7 - wizardRoll;
+        displayFinalOutcome(wizardRoll);
+    }
+
+    public void doneButtonClick()
+    {
+        displayFinalOutcome(wizardRoll);
+    }
+    public void stopClick()
+    {
+        displayFinalOutcome(archerRoll);
+    }
+
+    public void displayDiceRoll(List<int> diceRoll)
+    {
+        
+        string diceText = "";
+        foreach (int dice in diceRoll)
+        {
+            diceText += dice + "\t";
+            
+        }
+        Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
+        foreach(Transform t in trs)
+        {
+            if(t.name == "DiceRolls")
+            {
+                
+
+                t.GetComponent<Text>().text = diceText;
+            }
+
+        }
+    }
+
+    public void displayFinalOutcome(int final)
+    {
+        
+        Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
+        foreach (Transform t in trs)
+        {
+
+
+            if (t.name == "FinalOutcome")
+            {
+                t.GetComponent<Text>().text = "Final Outcome: " + final;
+            }
+        }
+        rollButtonActive(false);
+        flipButton.gameObject.SetActive(false);
+        doneButton.gameObject.SetActive(false);
+        stopButton.gameObject.SetActive(false);
+    }
+
+    public void startCollabFight()
+    {
+        fightScreen.gameObject.SetActive(true);
+        Monster monster;
+        int myLocation = Game.gameState.getPlayerLocations()[involvedPlayers[0]];
+        foreach (Monster m in Game.gameState.getMonsters())
+        {
+            int monsterLoc = m.getLocation();
+
+            if (monsterLoc == myLocation)
+            {
+                monster = m;
+            }
+        }
+        
+
+    }
+
+    public void displayHero(Andor.Player player)
+    {
+        Debug.Log("dispalying");
+        GameObject heroGameObject = GameObject.Find("Hero");
+        Transform[] trs = heroGameObject.GetComponentsInChildren<Transform>();
+        
+        foreach (Transform attr in trs)
+        {
+            Debug.Log("loop");
+            attr.gameObject.SetActive(true);
+            if (attr.name == "Name")
+            {
+
+                Text heroname = attr.GetComponent<Text>();
+                heroname.text = player.getHeroType();
+            }
+            if (attr.name == "Image")
+            {
+                Debug.Log("Image");
+                Sprite herosprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
+                attr.GetComponent<Image>().sprite = herosprite;
+                attr.GetComponent<Image>().useSpriteMesh = true;
+            }
+            if (attr.name == "Attributes")
+            {
+                Debug.Log("Hero items");
+                Text heroitems = attr.GetComponent<Text>();
+
+                heroitems.text = "Strength: " + player.getHero().getStrength();
+                heroitems.text += "\nWill Power: " + player.getHero().getWillpower() + "\n";
+
+
+            }
+        }
     }
 
     public void pickYourFighter()
@@ -361,7 +562,10 @@ public class FightScreenController : MonoBehaviour
     public void startFightClick()
     {
         Debug.Log("FIGHT");
+        Game.sendAction(new StartFight(involvedPlayers.ToArray(), fightType));
     }
+
+   
 
     public void closeFightScreen()
     {
