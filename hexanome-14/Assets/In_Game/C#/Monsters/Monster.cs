@@ -60,6 +60,33 @@ public class Monster : Fightable, MoveStrategy
         this.willpower = willpower;
     }
 
+    public void increaseWillpower(int amount)
+    {
+        this.willpower += amount;
+    }
+    public void decreaseWillpower(int amount)
+    {
+        this.willpower = Mathf.Max(0, this.willpower - amount);
+
+
+    }
+
+    public void recover()
+    {
+        if(monsterType == "Gor")
+        {
+            this.willpower = 4;
+        }
+        else if (monsterType == "Skral")
+        {
+            this.willpower = 5;
+        }
+        else
+        {
+            this.willpower = 7;
+        }
+    }
+
     public int getStrength()
     {
         return strength;

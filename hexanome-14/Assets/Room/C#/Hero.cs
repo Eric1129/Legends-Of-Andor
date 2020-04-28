@@ -158,7 +158,8 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
     public void decreaseWillpower(int willpower)
     {
-        this.willpower -= willpower;
+        this.willpower = Mathf.Max(0, this.willpower - willpower);
+        
     }
     public int getHour()
     {
@@ -166,6 +167,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
     public void setHour(int hour)
     {
+        Debug.Log("setting hour");
         this.hour = hour;
     }
 

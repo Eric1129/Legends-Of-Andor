@@ -21,6 +21,9 @@ public class FightScreenController : MonoBehaviour
     public Text rollsLeft;
     public Text battleValue;
     public Text monsterBattleValueText;
+    public Text header;
+    public Button endBattleButton;
+    public Button nextRoundButton;
 
     private int fightType; //solo = 0, collab = 1
 
@@ -141,8 +144,14 @@ public class FightScreenController : MonoBehaviour
         }
 
         fight = new Fight(involvedPlayers.ToArray(), monster);
-        displayHero(Game.gameState.getPlayer(involvedPlayers[0]));
+        displayHero(Game.gameState.getPlayer(fight.fighters[0]));
         displayMonster(monster);
+        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+
+        //increase time tracker
+        h.setHour(1 + h.getHour());
+        GameController.instance.setTime(fight.fighters[0], h.getHour());
+
 
     }
     private int archerRound = 1;
@@ -154,7 +163,7 @@ public class FightScreenController : MonoBehaviour
     public void heroRoll()
     {
         rollButtonActive(true);
-        Hero h = Game.gameState.getPlayer(involvedPlayers[0]).getHero();
+        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
         if (h.getHeroType().Equals("Female Archer") || h.getHeroType().Equals("Male Archer"))
         {
 
@@ -264,7 +273,7 @@ public class FightScreenController : MonoBehaviour
 
     public void displayFinalOutcome(int final)
     {
-        Hero h = Game.gameState.getPlayer(involvedPlayers[0]).getHero();
+        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
         Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
         foreach (Transform t in trs)
         {
@@ -284,23 +293,20 @@ public class FightScreenController : MonoBehaviour
 
         if (h.hasArticle("Shield") || h.hasArticle("Helm") || h.hasArticle("WitchBrew"))
         {
-            //ask user if they would like to use article
+            //TODO: ask user if they would like to use article
         }
         else
         {
             creatureTurn();
         }
 
-        
-
-        
     }
 
     int heroBattleValue = 0;
     public void displayBattleValue(int final)
     {
 
-        Hero h = Game.gameState.getPlayer(involvedPlayers[0]).getHero();
+        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
         heroBattleValue = (final + h.getStrength());
         battleValue.text = "Battle Value: " + heroBattleValue;
 
@@ -335,6 +341,7 @@ public class FightScreenController : MonoBehaviour
         }
 
         creatureBattleValue(final);
+        setWinner();
     }
 
     public int monsterRollOutcome(List<int> monsterDice)
@@ -384,6 +391,91 @@ public class FightScreenController : MonoBehaviour
     {
         monsterBattleValue = fight.monster.getStrength() + final;
         monsterBattleValueText.text = "Battle Value: " + monsterBattleValue;
+    }
+
+    public void setWinner()
+    {
+        int difference = heroBattleValue - monsterBattleValue;
+        if(difference > 0)
+        {
+            header.text = "Hero Wins Round!";
+            Monster m = fight.monster;
+            m.decreaseWillpower(difference);
+            
+        }
+        else if(difference < 0)
+        {
+            header.text = "Creature Wins Round.";
+            Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+            h.increaseWillpower(difference); //since the value will be negative
+        }
+        else
+        {
+            header.text = "Draw!";
+        }
+
+        displayHero(Game.gameState.getPlayer(fight.fighters[0]));
+        displayMonster(fight.monster);
+
+        if (fight.monster.getWillpower() == 0)
+        {
+            header.text = "Battle Over: Hero Wins!";
+            //game over
+            endBattle(1);
+        }
+
+        else if(Game.gameState.getPlayer(fight.fighters[0]).getHero().getHour() + 1
+            == Game.gameState.TIME_endTime)
+        {
+            //endBattle
+            endBattle(0);
+        }
+
+        else if(Game.gameState.getPlayer(fight.fighters[0]).getHero().getWillpower() == 0)
+        {
+            endBattle(-1);
+        }
+        else
+        {
+            endBattleButton.gameObject.SetActive(true);
+            nextRoundButton.gameObject.SetActive(true);
+            
+        }
+
+        
+    }
+
+    public void endBattle(int outcome)
+    {
+        if(outcome > 0)
+        {
+            //hero wins
+        }else if(outcome == 0)
+        {
+            //draw or hero clicked end battle
+            fight.monster.recover();
+        }
+        else
+        {
+            //monster wins
+        }
+    }
+
+    public void nextRound()
+    {
+        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+
+        //increase time tracker
+        h.setHour(1 + h.getHour());
+        GameController.instance.setTime(fight.fighters[0], h.getHour());
+
+        rollButtonActive(true);
+
+        endBattleButton.gameObject.SetActive(false);
+        nextRoundButton.gameObject.SetActive(false);
+
+        
+
     }
 
  
