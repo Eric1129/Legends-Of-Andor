@@ -175,8 +175,21 @@ public class Move : Action
         checkWells(gs, finalDest);
         checkFogTokens(gs, finalDest);
         //checkFarmers(gs, finalDest);
+        //checkMonsters(gs, finalDest);
 
     }
+
+    //public void checkMonsters(GameState gs, int dest)
+    //{
+    //    foreach(Monster m in gs.getMonsters())
+    //    {
+    //        if (m.getLocation() == dest)
+    //        {
+    //            Object.Destroy(m.getPrefab());//.GetComponent<Renderer>().enabled = false;
+    //            Debug.Log("removed monster!");
+    //        }
+    //    }
+    //}
 
     public void checkWells(GameState gs, int location)
     {

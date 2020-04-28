@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour
     public GameObject wineskinToken;
     public GameObject eventToken;
     public GameObject strengthToken;
-
+    public GameObject tower;
 
 
 
@@ -96,6 +96,8 @@ public class GameController : MonoBehaviour
     public GameObject farmer;
     public GameObject medicinalHerb3;
     public GameObject witch;
+    public GameObject gold1;
+
     public GameObject narrator;
     public Dictionary<int, GameObject> Narrator;
 
@@ -111,6 +113,7 @@ public class GameController : MonoBehaviour
     //public PrinceThorald princeThor;
     public Dictionary<PrinceThorald, GameObject> princeThoraldObject;
     public Dictionary<MedicinalHerb, GameObject> medicinalHerbObject;
+    public GameObject towerSkral;
 
     //private int[] event_cards = { 2, 11, 13, 14, 17, 24, 28, 31, 32, 1 };
     //private string[] fogTokens = {"event", "strength", "willpower3", "willpower2", "brew",
@@ -193,37 +196,9 @@ public class GameController : MonoBehaviour
             Game.Shuffle(randomOrder);
             Game.setTurnManager(randomOrder);
             Debug.Log("SET TURN");
-            //int[] randomEventOrder = event_cards;
-            //randomEventOrder.Shuffle();
-            ////event_cards2 = randomEventOrder;
-            //Debug.Log("STARTING TO SET EVENT CARD ORDER");
-            //Game.setEventCardOrder(randomEventOrder);
-            //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
-
-
-            //string[] randomFogTokenOrder = fogTokens;
-            //randomFogTokenOrder.Shuffle();
-            ////fogTokens2 = randomFogTokenOrder;
-            //Debug.Log("STARTING TO SET FOG ORDER");
-            //Game.setFogTokenOrder(randomFogTokenOrder);
-            //Debug.Log("FINISHING TO SET FOG ORDER");
+           
 
         }
-
-        //int[] randomEventOrder = event_cards;
-        //randomEventOrder.Shuffle();
-        ////event_cards2 = randomEventOrder;
-        //Debug.Log("STARTING TO SET EVENT CARD ORDER");
-        //Game.setEventCardOrder(randomEventOrder);
-        //Debug.Log("FINISHING TO SET EVENT CARD ORDER");
-
-
-        //string[] randomFogTokenOrder = fogTokens;
-        //randomFogTokenOrder.Shuffle();
-        ////fogTokens2 = randomFogTokenOrder;
-        //Debug.Log("STARTING TO SET FOG ORDER");
-        //Game.setFogTokenOrder(randomFogTokenOrder);
-        //Debug.Log("FINISHING TO SET FOG ORDER");
 
 
         GameSetup();
@@ -299,11 +274,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        //if(Game.gameState.fogtoken_order == null && tok != 1)
-        //{
-        //    tok = 1;
-        //    loadFogTokens();
-        //}
+      
         chatText.text = chatMessages;
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -403,8 +374,16 @@ public class GameController : MonoBehaviour
             // Update Player position
             foreach (Monster monster in Game.gameState.getMonsters())
             {
-                monsterObjects[monster].transform.position =
+                if (monster.canMonsterMove())
+                {
+                    monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
+                }
+                if (monster.isMedicinalGor())
+                {
+                     medicinalHerbObject[Game.gameState.getMedicinalHerb()].transform.position = moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
+                }
+                
             }
             //foreach (PrinceThorald princeT in Game.gameState.getPrinceThorald())
             //{
@@ -536,7 +515,6 @@ public class GameController : MonoBehaviour
             }
         }
         fightButton.interactable = canFight;
-
     }
 
     public void moveToNewPos(Andor.Player player)
@@ -899,6 +877,8 @@ public void updateGameConsoleText(string message)
 
             loadNarrator();
 
+            loadSkralOnTower();
+
             setupEquipmentBoard();
 
         Debug.Log("INITIALIZING THE STRENGTH POINTS");
@@ -1118,6 +1098,29 @@ public void updateGameConsoleText(string message)
 
     }
 
+    private void loadSkralOnTower()
+    {
+        int roll = 54;
+        Game.gameState.skralTowerLocation = roll;
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        Skral s = new Skral(Game.gameState.positionGraph.getNode(roll));
+        s.setMonsterType("Skral");
+        s.setStrength(6);
+        s.setWillpower(6);
+        s.setReward(4);
+        s.setCantMove();
+        s.setSkralTower();
+        Game.gameState.addMonster(s);
+        Game.gameState.addSkral(s);
+        GameObject tempObj = Instantiate(s.getPrefab(), -transform.position, transform.rotation, monsterContainer);
+        monsterObjects.Add(s, tempObj);
+        tempObj.transform.position = tiles[s.getLocation()].getMiddle();
+        tempObj.transform.localScale = boardScaling;
+        towerSkral = Instantiate(tower, tiles[roll].getMiddle(), transform.rotation);
+
+
+    }
+
     private void loadMerchants()
     {
         int[] locations = { 18, 57, 71 };
@@ -1131,20 +1134,6 @@ public void updateGameConsoleText(string message)
 
     private void loadWells()
     {
-        //foreach (int pos in new int[] {5, 35, 45, 55})
-        //{
-        //    Debug.Log("Added well at position: " + pos);
-        //    Well w = new Well(Game.positionGraph.getNode(pos));
-        //    Debug.Log(w);
-        //    Debug.Log(w.getLocation());
-        //    Game.gameState.addWell(w);
-        //    //Debug.Log("Added well at position: " + pos);
-        //}
-
-        //foreach(Well well in Game.gameState.getWells().Keys)
-        //{
-        //    GameObject wellObject = Instantiate(well_front, tiles[well.getLocation()].getMiddle(), transform.rotation);
-        //}
         foreach (int pos in new int[] { 5, 35, 45, 55 })
         {
             Debug.Log("Added well at position: " + pos);
@@ -1221,7 +1210,35 @@ public void updateGameConsoleText(string message)
         medicinalHerbObject.Add(mh, herb);
         Debug.Log("Added medicinal herb at position: " + mh.getLocation());
 
+
+        Gor g = new Gor(Game.gameState.positionGraph.getNode(loc));
+        g.setMonsterType("Gor");
+        g.setStrength(2);
+        g.setWillpower(4);
+        g.setReward(2);
+       // g.setCantMove();
+        g.setHerbGor();
+
+        Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
+        GameObject tempObj = Instantiate(g.getPrefab(), -transform.position, transform.rotation, monsterContainer);
+        tempObj.transform.position = tiles[g.getLocation()].getMiddle();
+        tempObj.transform.localScale = boardScaling;
+        monsterObjects.Add(g, tempObj);
+        Game.gameState.addGor(g);
+        Game.gameState.addMonster(g);
+        Debug.Log("Added medicinal herb gor");
+
+        //foreach (Monster monster in Game.gameState.getMonsters())
+        //{
+        //    Debug.Log(monster.getPrefab());
+        //    GameObject tempObj = Instantiate(monster.getPrefab(), -transform.position, transform.rotation, monsterContainer); ;
+        //    monsterObjects.Add(monster, tempObj);
+        //    tempObj.transform.position = tiles[monster.getLocation()].getMiddle();
+        //    tempObj.transform.localScale = boardScaling;
+
+        //}
         //need to instantiate Gor on the same spot
+
     }
 
     public void loadFogTokens()
@@ -1312,6 +1329,18 @@ public void updateGameConsoleText(string message)
             Game.gameState.addFarmer(f);
         }
     }
+
+    public void loadGold()
+    {
+        foreach (Andor.Player p in Game.gameState.getPlayers())
+        {
+            Debug.Log("Added gold at position: ");
+            Gold g = new Gold(Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[(p.getNetworkID())]));
+            g.setGold(2);
+           //Game.gameState.addGold(g);
+        }
+    }
+
 
     public void setTime(string PlayerID, int hour)
     {

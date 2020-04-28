@@ -10,11 +10,17 @@ public class Monster : Fightable, MoveStrategy
     private string monsterType;
     protected GameObject prefab;
     private int reward;
+    private bool canMove;
+    private bool herbGor;
+    private bool skralTower;
 
     public Monster(Node startingPos, GameObject prefab)
     {
         location = startingPos;
         this.prefab = prefab;
+        canMove = true;
+        herbGor = false;
+        skralTower = false;
     }
     private Monster() { }
 
@@ -23,6 +29,30 @@ public class Monster : Fightable, MoveStrategy
         throw new System.NotImplementedException();
     }
 
+    public void setCantMove()
+    {
+        canMove = false;
+    }
+
+    public bool canMonsterMove()
+    {
+        return canMove;
+    }
+
+    public bool isMedicinalGor()
+    {
+        return herbGor;
+    }
+
+    public void setSkralTower()
+    {
+        skralTower = true;
+    }
+
+    public void setHerbGor()
+    {
+        herbGor = true;
+    }
     public void move()
     {
         location = location.toCastleNode();
@@ -32,6 +62,8 @@ public class Monster : Fightable, MoveStrategy
             GameController.instance.monsterAtCastle(this);
         }
     }
+
+
     public int getLocation()
     {
         return location.getIndex();
