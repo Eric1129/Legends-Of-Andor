@@ -19,6 +19,7 @@ public class FightScreenController : MonoBehaviour
     public Button flipButton;
     public Button doneButton;
     public Button helmButton;
+    public Button bowButton;
     public Button noArticleSelected;
     public Button witchBrewButton;
     public Text rollsLeft;
@@ -51,6 +52,10 @@ public class FightScreenController : MonoBehaviour
         {
             witchBrewButton.gameObject.SetActive(true);
         }
+        if (!Game.myPlayer.getHero().usingBow && Game.myPlayer.getHero().getAllArticles().ContainsKey("Bow"))
+        {
+            bowButton.gameObject.SetActive(true);
+        }
         if (Game.myPlayer.getHero().usingHelm)
         {
             helmButton.interactable = false;
@@ -60,6 +65,11 @@ public class FightScreenController : MonoBehaviour
         {
             witchBrewButton.interactable = false;
             helmButton.gameObject.SetActive(false);
+        }
+        if (Game.myPlayer.getHero().usingBow)
+        {
+            bowButton.interactable = false;
+            bowButton.gameObject.SetActive(false);
         }
     }
 
@@ -195,6 +205,7 @@ public class FightScreenController : MonoBehaviour
     {
         rollButtonActive(true);
         Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+        // i think we can add 
         if (h.getHeroType().Equals("Female Archer") || h.getHeroType().Equals("Male Archer"))
         {
 

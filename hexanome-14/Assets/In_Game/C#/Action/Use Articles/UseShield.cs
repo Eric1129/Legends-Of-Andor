@@ -31,10 +31,10 @@ public class UseShield : Action
 	}
 	public bool isLegal(GameState gs)
 	{
-		if (gs.getPlayer(players[0]).getHero().inBattle && (gs.getPlayer(players[0]).getHero().usingWitchBrew || gs.getPlayer(players[0]).getHero().usingHelm))
-		{
-			return false;
-		}
+		//if (gs.getPlayer(players[0]).getHero().usingWitchBrew || gs.getPlayer(players[0]).getHero().usingHelm))
+		//{
+		//	return false;
+		//}
 		return true;
 	}
 

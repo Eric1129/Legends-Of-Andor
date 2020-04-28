@@ -1484,6 +1484,11 @@ public void updateGameConsoleText(string message)
         Game.sendAction(new UseWitchBrew(Game.myPlayer.getNetworkID()));
     
     }
+    public void useBowInFight()
+    {
+        Game.sendAction(new UseBow(Game.myPlayer.getNetworkID()));
+
+    }
 
     public void sendFightRequest(string[] players)
     {
