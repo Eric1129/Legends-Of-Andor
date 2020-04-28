@@ -1474,6 +1474,17 @@ public void updateGameConsoleText(string message)
         ms.displayAvailableItems();
     }
 
+    public void useHelmInFight()
+    {
+        Game.sendAction(new UseHelm(Game.myPlayer.getNetworkID()));
+    }
+
+    public void useWitchBrewInFight()
+    {
+        Game.sendAction(new UseWitchBrew(Game.myPlayer.getNetworkID()));
+    
+    }
+
     public void sendFightRequest(string[] players)
     {
         //invitedFighters = new string[players.Length - 1];

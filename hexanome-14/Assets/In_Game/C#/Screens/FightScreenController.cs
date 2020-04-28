@@ -18,12 +18,16 @@ public class FightScreenController : MonoBehaviour
     public Button stopButton;
     public Button flipButton;
     public Button doneButton;
+    public Button helmButton;
+    public Button noArticleSelected;
+    public Button witchBrewButton;
     public Text rollsLeft;
     public Text battleValue;
     public Text monsterBattleValueText;
     public Text header;
     public Button endBattleButton;
     public Button nextRoundButton;
+    
 
     private int fightType; //solo = 0, collab = 1
 
@@ -35,6 +39,29 @@ public class FightScreenController : MonoBehaviour
 
     private int round;
     private Fight fight;
+
+
+    private void Update()
+    {
+        if (!Game.myPlayer.getHero().usingHelm && Game.myPlayer.getHero().getAllArticles().ContainsKey("Helm"))
+        {
+            helmButton.gameObject.SetActive(true);
+        }
+        if (!Game.myPlayer.getHero().usingWitchBrew && Game.myPlayer.getHero().getAllArticles().ContainsKey("WitchBrew"))
+        {
+            witchBrewButton.gameObject.SetActive(true);
+        }
+        if (Game.myPlayer.getHero().usingHelm)
+        {
+            helmButton.interactable = false;
+            witchBrewButton.gameObject.SetActive(false);
+        }
+        if (Game.myPlayer.getHero().usingWitchBrew)
+        {
+            witchBrewButton.interactable = false;
+            helmButton.gameObject.SetActive(false);
+        }
+    }
 
     public FightScreenController()
     {
@@ -52,6 +79,10 @@ public class FightScreenController : MonoBehaviour
         collabButton.GetComponent<Button>().interactable = setAvailablePlayers();
     }
 
+    public void onClickNoArticle()
+    {
+        Game.myPlayer.getHero().selectedWineskin = true;
+    }
     public void setTypeOfFight(int type)
     {
         //solo is 0
@@ -291,9 +322,30 @@ public class FightScreenController : MonoBehaviour
         doneButton.gameObject.SetActive(false);
         stopButton.gameObject.SetActive(false);
 
-        if (h.hasArticle("Shield") || h.hasArticle("Helm") || h.hasArticle("WitchBrew"))
+        if ( h.hasArticle("Helm") || h.hasArticle("WitchBrew"))
         {
+
+            while (!h.selectedArticle)
+            {
+
+            }
             //TODO: ask user if they would like to use article
+            if (h.usingWitchBrew)
+            {
+                Debug.Log("using witch brew in fight");
+                //double roll
+            }
+            //if (h.usingShield)
+            //{
+                //this should only matter after battle round
+            //}
+            else if (h.usingHelm)
+            {
+                Debug.Log("using helm in fight");
+                //total up identical rolls and update outcome
+            }
+
+            //creatureTurn();
         }
         else
         {

@@ -44,6 +44,8 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public bool usingHelm = false;
     public bool usingBow = false;
     public bool usingShield = false;
+    public bool selectedArticle = false;
+
 
 
     public Dictionary<int, int> numDice; //<wp, numberOfDice>

@@ -23,7 +23,8 @@ public enum Type
     UseWineskin,
     UseHelm,
     UseWitchBrew,
-    UseBow
+    UseBow,
+    UseShield,
     StartFight
 
 }
