@@ -14,11 +14,10 @@ public class UseHelm : Action
     private string[] players;
     private int sides;
 
-    public UseHelm(string playerID, int sides)
+    public UseHelm(string playerID)
     {
         type = Type.UseHelm;
         players = new string[] { playerID };
-        this.sides = sides;
     }
 
     public Type getType()
@@ -41,8 +40,31 @@ public class UseHelm : Action
 
     public void execute(GameState gs)
     {
-        gs.getPlayer(players[0]).getHero().usingHelm = true;
-        Debug.Log("player is using helm!");
+        foreach (Helm h in gs.getPlayer(players[0]).getHero().heroArticles["Helm"])
+        {
+            if (h.getNumUsed() < 2)
+            {
+                h.useArticle();
+                gs.getPlayer(players[0]).getHero().usingHelm = true;
+                gs.getPlayer(players[0]).getHero().selectedArticle = true;
+                Debug.Log("player is using helm!");
+
+                if (h.getNumUsed() == 2)
+                {
+                    //removed once fully used 
+                    gs.getPlayer(players[0]).getHero().removeArticle2("Helm", h);
+                }
+
+                break;
+
+
+                //    gs.getPlayer(players[0]).getHero().removeArticle2("WitchBrew", w);
+                //    gs.addToEquimentBoard("WitchBrew");
+                //}
+                //break;
+            }
+        }
+        
 
     }
 

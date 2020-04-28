@@ -14,11 +14,10 @@ public class UseBow : Action
     private string[] players;
     private Monster monster;
 
-    public UseBow(string playerID, Monster m)
+    public UseBow(string playerID)
     {
         type = Type.UseBow;
         players = new string[] { playerID };
-        monster = m;
     }
 
     public Type getType()
@@ -33,11 +32,7 @@ public class UseBow : Action
 
     public bool isLegal(GameState gs)
     {
-        //if player with bow is on same space as monster then they cannot use the bow
-        if (gs.getPlayerLocations()[players[0]] == monster.getLocation() )
-        {
-            return false;
-        }
+      
         return true;
     }
 

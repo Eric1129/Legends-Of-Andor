@@ -1087,6 +1087,10 @@ public void updateGameConsoleText(string message)
         foreach (int gorTile in new int[]{8, 20, 21, 26, 48})
         {
             Gor g = new Gor(Game.gameState.positionGraph.getNode(gorTile));
+            g.setMonsterType("Gor");
+            g.setStrength(2);
+            g.setWillpower(4);
+            g.setReward(2);
             //Debug.Log("Gor" + g);
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
@@ -1094,6 +1098,10 @@ public void updateGameConsoleText(string message)
         foreach (int skralTile in new int[]{19})
         {
             Skral s = new Skral(Game.gameState.positionGraph.getNode(skralTile));
+            s.setMonsterType("Skral");
+            s.setStrength(6);
+            s.setWillpower(5);
+            s.setReward(4);
             Game.gameState.addMonster(s);
             Game.gameState.addSkral(s);
         }
@@ -1462,6 +1470,22 @@ public void updateGameConsoleText(string message)
     public void merchantClick()
     {
         ms.displayAvailableItems();
+    }
+
+    public void useHelmInFight()
+    {
+        Game.sendAction(new UseHelm(Game.myPlayer.getNetworkID()));
+    }
+
+    public void useWitchBrewInFight()
+    {
+        Game.sendAction(new UseWitchBrew(Game.myPlayer.getNetworkID()));
+    
+    }
+    public void useBowInFight()
+    {
+        Game.sendAction(new UseBow(Game.myPlayer.getNetworkID()));
+
     }
 
     public void sendFightRequest(string[] players)

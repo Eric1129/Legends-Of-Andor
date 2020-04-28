@@ -12,13 +12,13 @@ public class UseWitchBrew : Action
 {
     private Type type;
     private string[] players;
-    private int sides;
+    private int numUsed;
 
-    public UseWitchBrew(string playerID, int sides)
+    public UseWitchBrew(string playerID)
     {
         type = Type.UseWitchBrew;
         players = new string[] { playerID };
-        this.sides = sides;
+        numUsed = 0;
     }
 
     public Type getType()
@@ -39,10 +39,37 @@ public class UseWitchBrew : Action
         return true;
     }
 
+   
+
     public void execute(GameState gs)
     {
-        gs.getPlayer(players[0]).getHero().usingWitchBrew = true;
-        Debug.Log("player is using the witch's brew!");
+        //if
+        foreach(WitchBrew w in gs.getPlayer(players[0]).getHero().heroArticles["WitchBrew"])
+        {
+            if (w.getNumUsed() < 2)
+            {
+                w.useArticle();
+                gs.getPlayer(players[0]).getHero().usingWitchBrew = true;
+                gs.getPlayer(players[0]).getHero().selectedArticle = true;
+                Debug.Log("player is using the witch's brew!");
+
+                if (w.getNumUsed() == 2)
+                {
+                    //removed once fully used 
+                    gs.getPlayer(players[0]).getHero().removeArticle2("WitchBrew", w);
+                }
+
+                break;
+
+                
+                //    gs.getPlayer(players[0]).getHero().removeArticle2("WitchBrew", w);
+                //    gs.addToEquimentBoard("WitchBrew");
+                //}
+                //break;
+            }
+        }
+        
+       
 
     }
 
