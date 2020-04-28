@@ -36,7 +36,8 @@ public class GameState
     public int[] event_cards;
     public string[] fogtoken_order;
     public int day;
-    
+    public int legend;
+
     public int TIME_overtime = 8;
     public int TIME_endTime = 10;
     public int TIME_overtimeCost = 2;
@@ -65,6 +66,7 @@ public class GameState
         fogTokens = new Dictionary<FogToken, int>();
         princeThor = new List<PrinceThorald>();
         day = 1;
+        legend = 1;
         farmers = new List<Farmer>();
         merchants = new Dictionary<int, Merchant>();
         equipmentBoard = new Dictionary<string, List<Article>>();
@@ -206,7 +208,7 @@ public class GameState
 
     public void updateNarrator()
     {
-
+        
     }
 
 
@@ -218,9 +220,6 @@ public class GameState
     {
         farmers.Add(f);
     }
-
-
-
     public List<PrinceThorald> getPrinceThorald()
     {
         return princeThor;
