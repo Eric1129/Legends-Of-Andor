@@ -99,7 +99,7 @@ public class GameController : MonoBehaviour
     public GameObject gold1;
 
     public GameObject narrator;
-
+    public Dictionary<int, GameObject> Narrator;
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
@@ -171,6 +171,7 @@ public class GameController : MonoBehaviour
         tiles = new Dictionary<int, BoardPosition>();
         playerObjects = new Dictionary<string, GameObject>();
         timeObjects = new Dictionary<string, GameObject>();
+        Narrator = new Dictionary<int, GameObject>();
         timeTileBounds = new Dictionary<int, Bounds>();
         legendTiles = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
@@ -402,13 +403,11 @@ public class GameController : MonoBehaviour
 
             updateHeroStats();
 
-
             if (winScenario() && Game.gameState.outcome == "won")
             {
                 Game.gameState.outcome = "wonNotified";
                 winNotify();
             }
-
 
             if (tradeRequestSent)
             {
@@ -528,8 +527,6 @@ public class GameController : MonoBehaviour
 
     private void loadBoard()
     {
-
-
         boardSpriteContainer.gameObject.GetComponent<Image>().color = new UnityEngine.Color(0, 0, 0, 0);
         // load background board
         Vector3 boardContainerPos = new Vector3(boardSpriteContainer.position.x - boardSpriteContainer.parent.position.x,
@@ -827,6 +824,11 @@ public void updateGameConsoleText(string message)
     public void updateDayCount(int day)
     {
         dayCountText.text = "Day: " + day;
+    }
+
+    public void advanceNarrator(int legend)
+    {
+        Narrator[0].transform.position = moveTowards(Narrator[0].transform.position, legendTiles[legend].center, 10);
     }
 
     public void GameSetup()
@@ -1258,7 +1260,9 @@ public void updateGameConsoleText(string message)
     public void loadNarrator()
     {
         Debug.Log("Added Narrator at position: ");
-        GameObject Narrator = Instantiate(narrator, legendTiles[1].center, transform.rotation);
+        GameObject temp = Instantiate(narrator, legendTiles[1].center, transform.rotation);
+        Narrator.Add(0, temp);
+
     }
 
     public void tele(int loc)
@@ -1380,9 +1384,6 @@ public void updateGameConsoleText(string message)
                 closeNotif();
             }
         }
-        
-        
-
     }
 
     public void closeNotif()
