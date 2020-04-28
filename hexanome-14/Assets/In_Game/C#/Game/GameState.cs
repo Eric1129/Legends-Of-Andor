@@ -41,11 +41,13 @@ public class GameState
     public int TIME_endTime = 10;
     public int TIME_overtimeCost = 2;
     public bool skralTowerDefeated;
+    public bool medicinalGorDefeated;
     //public bool eventcard19;
     public bool EVENTCARD_treeOfSongBonusIsActive = false;
     public int brewCost;
     public int witchLocation;
     public bool witchFound;
+    public int skralTowerLocation;
     public Dictionary<string, List<Article>> equipmentBoard;
 
     public GameState()
@@ -75,6 +77,8 @@ public class GameState
         brewCost = 2;
         witchLocation = -1;
         witchFound = false;
+        medicinalGorDefeated = false;
+        skralTowerDefeated = false;
     }
 
     public void addPlayer(Player p)

@@ -8581,6 +8581,7 @@ MonoBehaviour:
     type: 3}
   strengthToken: {fileID: 4753985886975695272, guid: 369e55d5ea7154f3ebed746df99ae088,
     type: 3}
+  tower: {fileID: 1139963217767944659, guid: 80e15e4b2009746a18ac942cf7c31eab, type: 3}
   turnLabel: {fileID: 331014883}
   scrollTxt: {fileID: 115835025}
   gameConsoleText: {fileID: 631885436}
@@ -8606,11 +8607,13 @@ MonoBehaviour:
   medicinalHerb3: {fileID: 1347761391192978578, guid: 14ee528a4a80c480bafa1c889d87a492,
     type: 3}
   witch: {fileID: 4688119426322008919, guid: b1b560e9f71a44815b13a8e7cbbe8f7e, type: 3}
+  gold1: {fileID: 3109603652966310442, guid: 01a8f93eb5b344715870d783421eec7a, type: 3}
   narrator: {fileID: 5938980581296725290, guid: 3d1c324a49fbf4777b268567e1cdeb5f,
     type: 3}
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+  towerSkral: {fileID: 0}
   fsc: {fileID: 0}
   chatMessages: 
   easy: 1
@@ -23185,6 +23188,7 @@ MonoBehaviour:
   flipButton: {fileID: 32216827}
   doneButton: {fileID: 363065955}
   helmButton: {fileID: 33725152}
+  bowButton: {fileID: 0}
   noArticleSelected: {fileID: 1596430974}
   witchBrewButton: {fileID: 921519160}
   rollsLeft: {fileID: 1497706656}
