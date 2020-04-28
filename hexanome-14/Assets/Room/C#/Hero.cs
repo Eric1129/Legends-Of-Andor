@@ -38,6 +38,14 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public bool selectedWineskin;
     public int wineskinsides = 0;
 
+    //for battle and article checks
+    public bool inBattle = false;
+    public bool usingWitchBrew = false;
+    public bool usingHelm = false;
+    public bool usingBow = false;
+    public bool usingShield = false;
+
+
     public Dictionary<int, int> numDice; //<wp, numberOfDice>
 
     public Hero()

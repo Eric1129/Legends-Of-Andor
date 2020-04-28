@@ -61,7 +61,49 @@ public class MerchantScreen : MonoBehaviour
 
     public void updateStatusOfInventory()
     {
+        int small_articles = 0;
+        foreach(String key in Game.myPlayer.getHero().allArticlesAsStringList())
+        {
+            if(key == "Wineskin")
+            {
+                small_articles += Game.myPlayer.getHero().getAllArticles()["Wineskin"].Count;
+            }
+            if (key == "Telescope")
+            {
+                small_articles += Game.myPlayer.getHero().getAllArticles()["Telescope"].Count;
+            }
+            if (key == "WitchBrew")
+            {
+                small_articles += Game.myPlayer.getHero().getAllArticles()["WitchBrew"].Count;
+            }
+        }
 
+        int helm = 0;
+        if (Game.myPlayer.getHero().hasArticle("Helm"))
+        {
+            helm = Game.myPlayer.getHero().getAllArticles()["Helm"].Count;
+        }
+
+        int large_articles = 0;
+        foreach (String key in Game.myPlayer.getHero().allArticlesAsStringList())
+        {
+            if (key == "Shield")
+            {
+                large_articles += Game.myPlayer.getHero().getAllArticles()["Shield"].Count;
+            }
+            if (key == "Falcon")
+            {
+                large_articles += Game.myPlayer.getHero().getAllArticles()["Falcon"].Count;
+            }
+            if (key == "Bow")
+            {
+                large_articles += Game.myPlayer.getHero().getAllArticles()["Bow"].Count;
+            }
+        }
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////fixed trade to fit storage/////////////////////////////
         foreach (string key in Game.gameState.getEquipmentBoard().Keys)
         {
             List<Article> articles = Game.gameState.getArticlesOfType(key);
@@ -75,14 +117,77 @@ public class MerchantScreen : MonoBehaviour
 
                 if(key != "WitchBrew")
                 {
-                    Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
-                    articleBuyButton.interactable = true;
-                }
-        
+                    Debug.Log(large_articles + " " + small_articles);
+                    bool valid = true;
 
-                UnityEngine.Color zm = articleText.color;  //  makes a new color zm
-                zm.a = 1.0f; // makes the color zm transparent
-                articleText.color = zm;
+                    if(key == "Shield")
+                    {
+                        if(large_articles >= 1)
+                        {
+                            valid = false;
+                        }
+                    }
+
+                    if (key == "Falcon")
+                    {
+                        if (large_articles >= 1)
+                        {
+                            valid = false;
+                        }
+                    }
+                    if (key == "Bow")
+                    {
+                        if (large_articles >= 1)
+                        {
+                            valid = false;
+                        }
+                    }
+                    if (key == "Telescope")
+                    {
+                        if (small_articles >= 3)
+                        {
+                            valid = false;
+                        }
+                    }
+                    if (key == "Wineskin")
+                    {
+                        if (small_articles >= 3)
+                        {
+                            valid = false;
+                        }
+                    }
+                    if (key == "Helm")
+                    {
+                        if (helm >= 1)
+                        {
+                            valid = false;
+                        }
+                    }
+                    //if ((large_articles >= 1 && (key != "Shield" && key != "Falcon" && key!="Bow")) || (small_articles >= 3 && (key != "Wineskin" && key != "Telescope" && key != "WitchBrew")) || (helm >=1 && (key != "Helm")) || large_articles < 1 || small_articles <3 || helm < 1){
+
+                    if (valid)
+                    {
+                        Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+                        articleBuyButton.interactable = true;
+                        Debug.Log(key);
+                    }
+                    else
+                    {
+                        Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+                        articleBuyButton.interactable = false;
+                        articleText = GameObject.Find(key).GetComponent<Text>();
+                        articleText.text = quantity + " x " + articleName;
+                        UnityEngine.Color zm = articleText.color;  //  makes a new color zm
+                        zm.a = 0.6f; // makes the color zm transparent
+                        articleText.color = zm;
+                    }
+                        
+
+                    
+                }
+
+
+    
             }
             else
             {

@@ -44,11 +44,18 @@ public class EmptyWell : Action
                 w.emptyWell();
                 int currWillpower = gs.getPlayer(players[0]).getHero().getWillpower();
                 Debug.Log(currWillpower);
-                gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
-                GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() +" has emptied the well!"); Debug.Log("emptied well");
-
-                //well.GetComponent<MeshRenderer>().material.SetColor("_Color", UnityEngine.Color.grey);
-                // w.getPrefab().GetComponent<Renderer>().enabled = false;
+                if(gs.getPlayer(players[0]).getHeroType() == "Male Warrior" || gs.getPlayer(players[0]).getHeroType() == "Female Warrior")
+                {
+                    gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 5);
+                    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has emptied the well! Warrior gets 5 willpower!");
+                }
+                else
+                {
+                    gs.getPlayer(players[0]).getHero().setWillpower(currWillpower + 3);
+                    GameController.instance.updateGameConsoleText(gs.getPlayer(players[0]).getHeroType() + " has emptied the well!");
+                }
+                
+                Debug.Log("emptied well");
 
             }
         }

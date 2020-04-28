@@ -63,8 +63,9 @@ public class InitiateTrade : Action
         //    return true;
         //}
         //return false;
-
-        if (checkPlayersCanUseFalcon(gs))
+        
+        //cannot use falcon in battle
+        if (!Game.gameState.getPlayer(players[0]).getHero().inBattle && Game.gameState.getPlayer(players[1]).getHero().inBattle && checkPlayersCanUseFalcon(gs))
         {
             usingFalcon = true;
             Debug.Log("removing falcon ye");

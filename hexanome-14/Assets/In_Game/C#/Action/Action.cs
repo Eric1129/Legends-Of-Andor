@@ -20,7 +20,10 @@ public enum Type
     UseTelescope,
     InviteFighter,
     RespondFight,
-    UseWineskin
+    UseWineskin,
+    UseHelm,
+    UseWitchBrew,
+    UseBow
 
 }
 
