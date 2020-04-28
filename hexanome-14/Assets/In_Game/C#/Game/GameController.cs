@@ -406,11 +406,11 @@ public class GameController : MonoBehaviour
                 monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
             }
-            foreach (PrinceThorald princeT in Game.gameState.getPrinceThorald())
-            {
-                princeThoraldObject[princeT].transform.position = moveTowards(princeThoraldObject[princeT].transform.position, tiles[princeT.getLocation()].getMiddle(), 0.5f);
+            //foreach (PrinceThorald princeT in Game.gameState.getPrinceThorald())
+            //{
+            //    princeThoraldObject[princeT].transform.position = moveTowards(princeThoraldObject[princeT].transform.position, tiles[princeT.getLocation()].getMiddle(), 0.5f);
 
-            }
+            //}
             // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
             if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
@@ -810,9 +810,20 @@ public void updateGameConsoleText(string message)
         
     }
 
-    public void invalidTradeNotify()
+    public void invalidTradeNotify(Andor.Player player)
     {
-        scrollTxt.text = "Invalid Trade Request!";
+        if (Game.myPlayer == player)
+        {
+            Debug.Log("invalid trade");
+            scrollTxt.text = "Invalid Trade Request!";
+            StartCoroutine(overtimeCoroutine(6));
+        }
+
+    }
+
+    public void invalidTradeNotify(String message)
+    {
+        scrollTxt.text = message;
         StartCoroutine(overtimeCoroutine(10));
 
     }
@@ -1387,7 +1398,7 @@ public void updateGameConsoleText(string message)
                     Debug.Log(tradeType[2]);
                     Debug.Log("invalid!");
                     ts.clear();
-                    invalidTradeNotify();
+                    invalidTradeNotify(Game.gameState.getPlayer(playerFrom));
 
                 }
                 else
