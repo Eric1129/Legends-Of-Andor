@@ -96,7 +96,8 @@ public class EndTurn :Action
 
         refreshFalcons(gs);
 
-        //advance narrator 
+        //advance narrator
+        
     }
     //public void moveGors(GameState gs)
     //{

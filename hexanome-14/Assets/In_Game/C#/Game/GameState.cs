@@ -204,6 +204,11 @@ public class GameState
         fogTokens.Add(f, f.getLocation());
     }
 
+    public void updateNarrator()
+    {
+
+    }
+
 
     public List<Farmer> getFarmers()
     {

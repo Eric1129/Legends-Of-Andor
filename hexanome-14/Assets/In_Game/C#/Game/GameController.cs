@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     public Transform boardSpriteContainer;
     public Transform playerContainer;
     public Transform playerTimeContainer;
+    public Transform legendTrackContainer;
     public Transform monsterContainer;
     public Transform heroInfoContainer;
     public Transform pickDropContainer;
@@ -96,11 +97,15 @@ public class GameController : MonoBehaviour
     public GameObject medicinalHerb3;
     public GameObject witch;
 
+    public GameObject narrator;
+
 
     public Dictionary<int, BoardPosition> tiles;
     public Dictionary<string, GameObject> playerObjects;
     public Dictionary<string, GameObject> timeObjects;
     public Dictionary<int, Bounds> timeTileBounds;
+    public Dictionary<int, Bounds> legendTiles;
+
     public Bounds timeObjectBounds;
     public Dictionary<string, Vector3> rndPosInTimeBox;
     public Dictionary<Monster, GameObject> monsterObjects;
@@ -165,6 +170,7 @@ public class GameController : MonoBehaviour
         playerObjects = new Dictionary<string, GameObject>();
         timeObjects = new Dictionary<string, GameObject>();
         timeTileBounds = new Dictionary<int, Bounds>();
+        legendTiles = new Dictionary<int, Bounds>();
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
         princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
@@ -598,6 +604,22 @@ public class GameController : MonoBehaviour
             Destroy(temp);
         }
 
+        sprites = Resources.LoadAll<Sprite>("LegendTrack");
+        // Requirement: have Resources/Sprites folder under Assets
+        if (sprites == null)
+            print("Could not load Legend Track sprites");
+
+        foreach (Sprite sprite in sprites)
+        {
+            GameObject temp = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, legendTrackContainer);
+            temp.AddComponent<SpriteRenderer>().sprite = sprite;
+
+            TileBounds tb = new TileBounds(temp.AddComponent<PolygonCollider2D>(), boardSpriteContainer);
+            Bounds b = tb.createBounds();
+
+            legendTiles.Add(Int32.Parse(sprite.name.Split('-')[1]), b);
+            Destroy(temp);
+        }
     }
 
     private void createBoardPosition(Sprite sprite, Vector3 pos, Vector3 scaling)
@@ -865,9 +887,9 @@ public void updateGameConsoleText(string message)
 
             loadFarmers();
 
-            setupEquipmentBoard();
+            loadNarrator();
 
-        
+            setupEquipmentBoard();
 
         Debug.Log("INITIALIZING THE STRENGTH POINTS");
             initializeStrengthPoints();
@@ -1200,6 +1222,12 @@ public void updateGameConsoleText(string message)
         }
     }
 
+    public void loadNarrator()
+    {
+        Debug.Log("Added Narrator at position: ");
+        GameObject Narrator = Instantiate(narrator, legendTiles[1].center, transform.rotation);
+    }
+
     public void tele(int loc)
     {
         Vector3 boardContainerScaling3 = new Vector3(0.15f / boardSpriteContainer.parent.lossyScale.x, 0.15f / boardSpriteContainer.parent.lossyScale.y, 0.15f / boardSpriteContainer.parent.lossyScale.z);
@@ -1264,12 +1292,6 @@ public void updateGameConsoleText(string message)
             Game.gameState.addFarmer(f);
         }
     }
-
-    public void loadNarrator()
-    {
-        Debug.Log("Added Narrator at position: " );
-    }
-
 
     public void setTime(string PlayerID, int hour)
     {
