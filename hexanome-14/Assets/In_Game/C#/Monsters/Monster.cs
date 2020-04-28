@@ -62,6 +62,8 @@ public class Monster : Fightable, MoveStrategy
             GameController.instance.monsterAtCastle(this);
         }
     }
+
+
     public int getLocation()
     {
         return location.getIndex();
