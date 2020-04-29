@@ -8,14 +8,16 @@ public class FightTurn : Action
     Type type;
     int fightIndex;
     string currentPlayer;
+    int battleValue;
     
 
-    public FightTurn(string[] players, int fightIndex, string currentPlayer)
+    public FightTurn(string[] players, int fightIndex, string currentPlayer, int battleValue)
     {
         type = Type.FightTurn;
         this.players = players;
         this.fightIndex = fightIndex;
         this.currentPlayer = currentPlayer;
+        this.battleValue = battleValue;
         
         
     }
@@ -40,7 +42,7 @@ public class FightTurn : Action
         }
         else
         {
-            GameController.instance.fsc.nextPlayerTurnToRoll(currentPlayer);
+            GameController.instance.fsc.nextPlayerTurnToRoll(fightIndex, battleValue);
         }
     }
 

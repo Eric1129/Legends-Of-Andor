@@ -190,18 +190,18 @@ public class FightScreenController : MonoBehaviour
         }
 
         fight = new Fight(involvedPlayers.ToArray(), monster);
-        if(Game.myPlayer.getNetworkID() == fight.currentFighter())
+        if(Game.myPlayer.getNetworkID() == fight.getCurrentFighter())
         {
             fightScreen.gameObject.SetActive(true);
         }
         
-        displayHero(Game.gameState.getPlayer(fight.currentFighter()));
+        displayHero(Game.gameState.getPlayer(fight.getCurrentFighter()));
         displayMonster(monster);
-        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+        Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
 
         //increase time tracker
         h.setHour(1 + h.getHour());
-        GameController.instance.setTime(fight.currentFighter(), h.getHour());
+        GameController.instance.setTime(fight.getCurrentFighter(), h.getHour());
 
 
     }
@@ -229,7 +229,7 @@ public class FightScreenController : MonoBehaviour
     public void soloRoll()
     {
         rollButtonActive(true);
-        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+        Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
         if (h.getHeroType().Equals("Female Archer") || h.getHeroType().Equals("Male Archer"))
         {
 
@@ -285,7 +285,7 @@ public class FightScreenController : MonoBehaviour
     public void collabRoll()
     {
         rollButtonActive(true);
-        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+        Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
         if (h.getHeroType().Equals("Female Archer") || h.getHeroType().Equals("Male Archer"))
         {
 
@@ -392,7 +392,7 @@ public class FightScreenController : MonoBehaviour
 
     public void displayFinalOutcome(int final)
     {
-        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+        Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
         Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
         foreach (Transform t in trs)
         {
@@ -434,6 +434,8 @@ public class FightScreenController : MonoBehaviour
             }
 
             //creatureTurn();
+            //fight.nextFighter();
+            //Game.sendAction(new FightTurn(fight.fighters, fight.getIndex(), fight.getCurrentFighter()));
         }
         else
         {
@@ -445,11 +447,11 @@ public class FightScreenController : MonoBehaviour
             else
             {
                 //update battle value
-                displayBattleValue(final);
+                //displayBattleValue(final);
 
                 //pass to next player
                 fight.nextFighter();
-                Game.sendAction(new FightTurn(fight.fighters, fight.getIndex(), fight.currentFighter()));
+                Game.sendAction(new FightTurn(fight.fighters, fight.getIndex(), fight.getCurrentFighter(), fight.getHeroBattleValue()));
             }
             
             
@@ -457,11 +459,14 @@ public class FightScreenController : MonoBehaviour
 
     }
 
-    public void nextPlayerTurnToRoll(string currentFighter)
+    public void nextPlayerTurnToRoll(int index, int battleValue)
     {
         //set the roll dice active and tell player it is their turn
 
-        if (Game.myPlayer.getNetworkID() == currentFighter)
+        //update the attributes of fight which were lost on sending action
+        fight.setCurrentFighter(index);
+        fight.setBattleValue(battleValue);
+        if (Game.myPlayer.getNetworkID() == fight.getCurrentFighter())
         {
             rollButtonActive(true);
             header.text = "Your turn to fight";
@@ -472,7 +477,7 @@ public class FightScreenController : MonoBehaviour
             header.text = fight.currentFighterHero().getHeroType() + " is fighting.";
         }
 
-        displayHero(Game.gameState.getPlayer(fight.currentFighter()));
+        displayHero(Game.gameState.getPlayer(fight.getCurrentFighter()));
         displayBattleValue(0);
     }
 
@@ -592,7 +597,7 @@ public class FightScreenController : MonoBehaviour
             header.text = "Draw!";
         }
 
-        displayHero(Game.gameState.getPlayer(fight.currentFighter()));
+        displayHero(Game.gameState.getPlayer(fight.getCurrentFighter()));
         displayMonster(fight.monster);
 
         if(fightType == 0)
@@ -604,14 +609,14 @@ public class FightScreenController : MonoBehaviour
                 endBattle(1);
             }
 
-            else if (Game.gameState.getPlayer(fight.currentFighter()).getHero().getHour() + 1
+            else if (Game.gameState.getPlayer(fight.getCurrentFighter()).getHero().getHour() + 1
                 == Game.gameState.TIME_endTime)
             {
                 //endBattle
                 endBattle(0);
             }
 
-            else if (Game.gameState.getPlayer(fight.currentFighter()).getHero().getWillpower() == 0)
+            else if (Game.gameState.getPlayer(fight.getCurrentFighter()).getHero().getWillpower() == 0)
             {
                 header.text = "Battle Over: Creature Wins.";
                 endBattle(-1);
@@ -634,11 +639,11 @@ public class FightScreenController : MonoBehaviour
     public void nextRound()
     {
         
-        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+        Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
 
         //increase time tracker
         h.setHour(1 + h.getHour());
-        GameController.instance.setTime(fight.currentFighter(), h.getHour());
+        GameController.instance.setTime(fight.getCurrentFighter(), h.getHour());
 
         rollButtonActive(true);
 
@@ -685,7 +690,7 @@ public class FightScreenController : MonoBehaviour
         else
         {
             //monster wins
-            Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+            Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
             if (h.getStrength() > 0)
             {
                 //lose strength point
@@ -711,7 +716,7 @@ public class FightScreenController : MonoBehaviour
     public void getReward(string type)
     {
         int reward = fight.monster.getReward();
-        Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
+        Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
         if (type.Equals("gold"))
         {
             h.increaseGold(reward);
@@ -769,7 +774,7 @@ public class FightScreenController : MonoBehaviour
         }
         //set the roll dice active and tell player it is their turn
         
-        if (Game.myPlayer.getNetworkID() == fight.currentFighter())
+        if (Game.myPlayer.getNetworkID() == fight.getCurrentFighter())
         {
             rollButtonActive(true);
             header.text = "Your turn to fight";
@@ -784,11 +789,11 @@ public class FightScreenController : MonoBehaviour
         foreach (Hero h in fight.getHeroes())
         {
             h.setHour(1 + h.getHour());
-            GameController.instance.setTime(fight.currentFighter(), h.getHour());
+            GameController.instance.setTime(fight.getCurrentFighter(), h.getHour());
             
         }
 
-        displayHero(Game.gameState.getPlayer(fight.currentFighter()));
+        displayHero(Game.gameState.getPlayer(fight.getCurrentFighter()));
         displayBattleValue(0);
         
        

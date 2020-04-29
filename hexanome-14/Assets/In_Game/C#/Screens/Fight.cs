@@ -9,6 +9,7 @@ public class Fight
     public Monster monster;
     private int index = 0;
     private int heroBattleValue = 0;
+    private string currentFighter;
 
     public Fight(string[] fighters, Monster monster)
     {
@@ -18,24 +19,31 @@ public class Fight
         {
             heroBattleValue += h.getStrength();
         }
+        this.currentFighter = this.fighters[index];
     }
 
     
-    public string currentFighter()
+    public string getCurrentFighter()
     {
-        
-        return fighters[index];
+
+        return this.currentFighter;
+    }
+
+    public void setCurrentFighter(int index)
+    {
+        currentFighter = fighters[index];
     }
 
     public Hero currentFighterHero()
     {
-        return Game.gameState.getPlayer(currentFighter()).getHero();
+        return Game.gameState.getPlayer(getCurrentFighter()).getHero();
     }
 
     public void nextFighter()
     {
         index++;
         index = index % fighters.Length;
+        currentFighter = fighters[index];
     }
 
     public List<Hero> getHeroes()
@@ -52,6 +60,11 @@ public class Fight
     public void addToBattleValue(int amount)
     {
         heroBattleValue += amount;
+    }
+
+    public void setBattleValue(int battleValue)
+    {
+        this.heroBattleValue = battleValue;
     }
 
     public void resetHeroBattleValue()
