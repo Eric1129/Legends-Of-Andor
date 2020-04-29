@@ -13,6 +13,7 @@ public class FightScreenController : MonoBehaviour
     public Transform fightScreen;
     public Transform rewardScreen;
     public Transform battleEndScreen;
+    public Transform distributeReward;
 
 
     public Button nextButton;
@@ -705,13 +706,12 @@ public class FightScreenController : MonoBehaviour
         {
             header.text = "Battle Over: Heroes Wins!";
             //game over
+            if(Game.myPlayer.getNetworkID() == fight.getCurrentFighter())
+            {
+                distributeReward.gameObject.SetActive(true);
+            }
             //display reward screen
         }
-        //else if (Game.gameState.getPlayer(fight.getCurrentFighter()).getHero().getWillpower() == 0)
-        //{
-        //    header.text = "Battle Over: Creature Wins.";
-        //    endBattle_collab(-1);
-        //}
         else
         {
             //No win yet
@@ -720,11 +720,16 @@ public class FightScreenController : MonoBehaviour
             fight.nextFighter();
             fight.resetHeroBattleValue();
         }
+        //else if (Game.gameState.getPlayer(fight.getCurrentFighter()).getHero().getWillpower() == 0)
+        //{
+        //    header.text = "Battle Over: Creature Wins.";
+        //    endBattle_collab(-1);
+        //}
 
-        
+
     }
 
-    
+
 
     public void nextRound()
     {
@@ -898,18 +903,7 @@ public class FightScreenController : MonoBehaviour
     public void startCollabFight(Fight f)
     {
         
-        //Monster monster = Game.gameState.getMonsters()[0];
-        //int myLocation = Game.gameState.getPlayerLocations()[involvedPlayers[0]];
-        //foreach (Monster m in Game.gameState.getMonsters())
-        //{
-        //    int monsterLoc = m.getLocation();
-
-        //    if (monsterLoc == myLocation)
-        //    {
-        //        monster = m;
-        //    }
-        //}
-
+     
         fight = f;
         //set the screen active
         Debug.Log("NUm fighters " + fight.fighters.Length);
