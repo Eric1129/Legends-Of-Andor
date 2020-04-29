@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -10,14 +11,17 @@ public class FightTurn : Action
     string currentPlayer;
     int battleValue;
     
+    
 
     public FightTurn(string[] players, int fightIndex, string currentPlayer, int battleValue)
     {
+        
         type = Type.FightTurn;
         this.players = players;
         this.fightIndex = fightIndex;
         this.currentPlayer = currentPlayer;
         this.battleValue = battleValue;
+        
         
         
     }
@@ -33,15 +37,17 @@ public class FightTurn : Action
 
     public void execute(GameState gs)
     {
-        Debug.Log("sending fight turn");
 
-        
-        if(fightIndex == 0)
+
+        Debug.Log("FIGHT TURN: " + fightIndex);
+        if (fightIndex == 0)
         {
-            GameController.instance.fsc.creatureTurn();
+            Debug.Log("creature turn");
+            GameController.instance.fsc.creatureTurn_collab(battleValue);
         }
         else
         {
+            Debug.Log("sending fight turn");
             GameController.instance.fsc.nextPlayerTurnToRoll(fightIndex, battleValue);
         }
     }

@@ -10,6 +10,7 @@ public class Fight
     private int index = 0;
     private int heroBattleValue = 0;
     private string currentFighter;
+    private int creatureBattleValue;
 
     public Fight(string[] fighters, Monster monster)
     {
@@ -20,6 +21,7 @@ public class Fight
             heroBattleValue += h.getStrength();
         }
         this.currentFighter = this.fighters[index];
+        creatureBattleValue = monster.getStrength();
     }
 
     
@@ -31,6 +33,7 @@ public class Fight
 
     public void setCurrentFighter(int index)
     {
+        this.index = index;
         currentFighter = fighters[index];
     }
 
@@ -41,8 +44,12 @@ public class Fight
 
     public void nextFighter()
     {
+        Debug.Log("NEXT FIGHTER (before) " + index);
         index++;
+        Debug.Log("NEXT FIGHTER (++) " + index);
         index = index % fighters.Length;
+        Debug.Log("NEXT FIGHTER length " + fighters.Length);
+        Debug.Log("NEXT FIGHTER (after)" + index);
         currentFighter = fighters[index];
     }
 
@@ -79,7 +86,16 @@ public class Fight
 
     public int getIndex()
     {
+       
         return this.index;
+    }
+
+    public void leaveFight(string leavingFighter)
+    {
+        List<string> listFighters = new List<string>(fighters);
+        listFighters.Remove(leavingFighter);
+        fighters = listFighters.ToArray();
+        
     }
 
     
