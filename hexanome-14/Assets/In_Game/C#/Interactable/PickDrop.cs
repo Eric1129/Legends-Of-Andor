@@ -58,15 +58,19 @@ public class PickDrop : MonoBehaviour, Interactable, TileObject
 
     public void display()
     {
-        //this.prefab.GetComponent<Renderer>().enabled = true;
+        
         if(this.name == "gold1")
         {
             Instantiate(GameController.instance.gold1, GameController.instance.tiles[Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()]].getMiddle(), transform.rotation);
+        }
+        else
+        {
+            this.prefab.GetComponent<Renderer>().enabled = true;
         }
     }
 
     public void hide()
     {
-        //this.prefab.GetComponent<Renderer>().enabled = false;
+        this.prefab.GetComponent<Renderer>().enabled = false;
     }
 }
