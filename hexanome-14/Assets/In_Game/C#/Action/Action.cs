@@ -30,8 +30,10 @@ public enum Type
     FightTurn,
     ExitFight,
     JoinNextRound,
-    CreatureTurn
-    
+    CreatureTurn,
+    WinBattle,
+    DistributeReward,
+    GetMyReward
 
 }
 

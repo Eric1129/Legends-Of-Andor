@@ -148,11 +148,11 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
     public void increaseStrength(int strength)
     {
-        this.strength += strength;
+        this.strength = Mathf.Min(14, this.strength + strength);
     }
     public bool decreaseStrength(int strength)
     {
-        this.strength -= strength;
+        this.strength = Mathf.Max(0, this.strength- strength);
         return true;
     }
     public int getWillpower()
@@ -165,7 +165,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
     public void increaseWillpower(int willpower)
     {
-        this.willpower += willpower;
+        this.willpower = Mathf.Min(21, this.willpower+ willpower);
     }
     public void decreaseWillpower(int willpower)
     {
