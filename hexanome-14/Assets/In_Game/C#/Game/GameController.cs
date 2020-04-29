@@ -203,7 +203,10 @@ public class GameController : MonoBehaviour
 
         GameSetup();
         int timeout1 = 300;
-        int timeout2 = 1000;
+
+        //I COMMENTED THIS OUT !!!!!!!!!!!!!!!!!********************************************
+
+     //   int timeout2 = 1000;
         int timeout3 = 1000;
         if (Game.gameState != null)
         {
@@ -237,6 +240,9 @@ public class GameController : MonoBehaviour
                 timeout3--;
             }
         }
+
+
+
     }
 
     public void updateHeroStats()

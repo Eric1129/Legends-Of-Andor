@@ -11,7 +11,6 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     int goldToDistribute = 5;
     int wineToDistribute = 2;
-    string selectedHero;
     public string[] players;
     private static List<string> myArticles;
     //the myArticlesList of each player will be changing (Gold/Wineskin)
@@ -22,357 +21,356 @@ public class DistributeArticlesScreen : MonoBehaviour
     public int TotalWineP2;
     public int TotalGoldP3;
     public int TotalWineP3;
-    public int TotalGoldAdmin;
-    public int TotalWineAdmin;
+    public int TotalGoldP4;
+    public int TotalWineP4;
     public Transform DistributeArticlesBoard;
     public Transform WaitingScreenPopup;
+
+
+    public Transform player1Container;
+    public Transform player2Container;
+    public Transform player3Container;
+    public Transform player4Container;
+    public List<Transform> playerContainers;
     //increment this number 
-    int PlayerNumber;
-    public List<Hero> heroes = new List<Hero>(4);
-   
-   
+    //public List<Hero> heroes = new List<Hero>(4);
+    public List<Andor.Player> playersList;
 
-    public void decideWhichScreenToDisplay() { 
+    void Start()
+    {
 
-        client = Game.myPlayer.getNetworkID();
+        playersList = Game.gameState.getPlayers();
+        playerContainers = new List<Transform>();
+        playerContainers.Add(player1Container);
+        playerContainers.Add(player2Container);
+        playerContainers.Add(player3Container);
+        playerContainers.Add(player4Container);
 
-
-        if (client.Equals(PhotonNetwork.IsMasterClient))
+        for (int i = 0; i < 4 - playersList.Count; i++)
         {
-            //set popup with decision display to active 
+            playerContainers[(4 - i) - 1].gameObject.SetActive(false);
+            playerContainers.RemoveAt((4 - i) - 1);
+        }
+
+        for (int i = 0; i < playersList.Count; i++)
+        {
+            playerContainers[i].GetChild(4).GetComponent<Text>().text = playersList[i].getHeroType();
+        }
+
+        decideWhichScreenToDisplay();
+    }
+
+
+    public void decideWhichScreenToDisplay()
+    {
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+
             DistributeArticlesBoard.gameObject.SetActive(true);
 
-            int i = 1;
-            //loop through each player in game and display their hero name on the screen board
-            foreach (Andor.Player p in Game.gameState.getPlayers())
-            {
-
-                if (p.getNetworkID().Equals(client))
-                {
-                    displayPlayerName(p, 4);
-                }
-                else
-                {
-                    displayPlayerName(p, i);
-                    i++;
-                }
-            }
-        }else{
+        }
+        else
+        {
             //set popup with wait display to active
+            Debug.Log("Waiting Screen Case Reached");
             WaitingScreenPopup.gameObject.SetActive(true);
         }
     }
 
-    public void displayPlayerName(Andor.Player p, int i)
+
+    public void incrGold(Transform buttonID)
     {
-
-        GameObject obj1 = GameObject.Find("scrollImage");
-        Transform[] trs = obj1.GetComponentsInChildren<Transform>(true);
-
-        //Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
-        foreach(Transform t in trs)
+        for (int i = 0; i < buttonID.parent.childCount; i++)
         {
-            if(t.name == "Player" + i + "Name")
+            //The text component also needs to be updated somewhere...? 
+
+            if (buttonID.parent.GetChild(i).name.Equals("goldValue"))
             {
-                Debug.Log(t.name);
-                //see if this is being reached ??
-                t.GetComponent<Text>().text = p.getHeroType().ToString();//displays the text
-                heroes[i-1] = p.getHero(); //stores the hero at index i-1 (0->3)
+
+                for (int j = 1; j < 5; j++)
+                {
+                    if (buttonID.parent.name.Equals("Player" + j) && goldToDistribute !=0)
+                    {
+                        goldToDistribute--;
+                        if (j == 1)
+                        {
+                            TotalGoldP1++;
+
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP1.ToString();
+                        
+                    }
+                        else if (j == 2)
+                        {
+                            TotalGoldP2++;
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP2.ToString();
+                        }
+                        else if (j == 3)
+                        {
+                            TotalGoldP3++;
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP3.ToString();
+                        }
+                        else if (j == 4)
+                        {
+                            TotalGoldP4++;
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP4.ToString();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void decrGold(Transform buttonID)
+    {
+        for (int i = 0; i < buttonID.parent.childCount; i++)
+        {
+            //The text component also needs to be updated somewhere...? 
+
+            if (buttonID.parent.GetChild(i).name.Equals("goldValue"))
+            {
+
+                for (int j = 1; j < 5; j++)
+                {
+                    if (buttonID.parent.name.Equals("Player" + j))
+                    {
+                        goldToDistribute++;
+                        if (j == 1)
+                        {
+                            TotalGoldP1--;
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP1.ToString();
+                        }
+                        else if (j == 2)
+                        {
+                            TotalGoldP2--;
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP2.ToString();
+                        }
+                        else if (j == 3)
+                        {
+                            TotalGoldP3--;
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP3.ToString();
+                        }
+                        else if (j == 4)
+                        {
+                            TotalGoldP4--;
+                            buttonID.parent.Find("goldValue").gameObject.GetComponent<Text>().text = TotalGoldP4.ToString();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void incrWine(Transform buttonID)
+    {
+        for (int i = 0; i < buttonID.parent.childCount; i++)
+        {
+            //The text component also needs to be updated somewhere...? 
+
+            if (buttonID.parent.GetChild(i).name.Equals("wineValue"))
+            {
+
+                for (int j = 1; j < 5; j++)
+                {
+                    if (buttonID.parent.name.Equals("Player" + j) && wineToDistribute != 0 )
+                    {
+                        wineToDistribute--;
+                        if (j == 1)
+                        {
+                            TotalWineP1++;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP1.ToString();
+                        }
+                        else if (j == 2)
+                        {
+                            TotalWineP2++;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP2.ToString();
+                        }
+                        else if (j == 3)
+                        {
+                            TotalWineP3++;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP3.ToString();
+                        }
+                        else if (j == 4)
+                        {
+                            TotalWineP4++;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP4.ToString();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void decrWine(Transform buttonID)
+    {
+        for (int i = 0; i < buttonID.parent.childCount; i++)
+        {
+            //The text component also needs to be updated somewhere...? 
+
+            if (buttonID.parent.GetChild(i).name.Equals("wineValue"))
+            {
+
+                for (int j = 1; j < 5; j++)
+                {
+                    if (buttonID.parent.name.Equals("Player" + j))
+                    {
+                        wineToDistribute++;
+                        if (j == 1)
+                        {
+                            TotalWineP1--;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP1.ToString();
+                        }
+                        else if (j == 2)
+                        {
+                            TotalWineP2--;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP2.ToString();
+                        }
+                        else if (j == 3)
+                        {
+                            TotalWineP3--;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP3.ToString();
+                        }
+                        else if (j == 4)
+                        {
+                            TotalWineP4--;
+                            buttonID.parent.Find("wineValue").gameObject.GetComponent<Text>().text = TotalWineP4.ToString();
+                        }
+                    }
+                }
             }
         }
     }
 
 
-    public void incrGold(int buttonID)
-    {
-        GameObject p = GameObject.Find("scrollImage");
-        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in trs)
+    /*
+
+        public void decrWine(Transform buttonID)
         {
-            if (t.name == "p" + buttonID + "valuegold")
+            GameObject p = GameObject.Find("scrollImage");
+            Transform[] trs = p.GetComponentsInChildren<Transform>(true);
+            //Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trs)
             {
-
-                if (goldToDistribute != 0) { 
-
-                goldToDistribute--;
-                TotalGoldP1++;
-                //CHANGE THIS FOR ALL 
-                t.GetComponent<Text>().text = TotalGoldP1.ToString();
-            }
-            }
-            else if (t.name == "p" + buttonID + "valuegold")
-            {
-                if (goldToDistribute != 0)
+                if (t.name == "p" + buttonID + "valuewine")
                 {
-                    goldToDistribute--;
-                    TotalGoldP2++;
-                    t.GetComponent<Text>().text = TotalGoldP2.ToString();
+                    if (TotalWineP1 != 0)
+                    {
+                        wineToDistribute++;
+                        TotalWineP1--;
+                        t.GetComponent<Text>().text = TotalWineP1.ToString();
+                        //increment gold
+                        //t.game
+                    }
                 }
-            }
-            else if (t.name == "p" + buttonID + "valuegold")
-            {
-                if (goldToDistribute != 0)
+                else if (t.name == "p" + buttonID + "valuewine")
                 {
-
-                    goldToDistribute--;
-                    TotalGoldP3++;
-                    t.GetComponent<Text>().text = TotalGoldP3.ToString();
+                    if (TotalWineP2 != 0)
+                    {
+                        wineToDistribute++;
+                        TotalWineP2--;
+                        t.GetComponent<Text>().text = TotalWineP2.ToString();
+                    }
                 }
-
-            }
-            else if (t.name == "adminvaluegold" + buttonID)
-            {
-                if (goldToDistribute != 0)
+                else if (t.name == "p" + buttonID + "valuewine")
                 {
+                    if (TotalWineP3 != 0)
+                    {
 
-                    goldToDistribute--;
-                    TotalGoldAdmin++;
-                    t.GetComponent<Text>().text = TotalGoldAdmin.ToString();
+                        wineToDistribute++;
+                        TotalWineP3--;
+                        t.GetComponent<Text>().text = TotalWineP3.ToString();
+                    }
+
                 }
-            }
+                else if (t.name == "adminvaluewine" + buttonID)
+                {
+                    if (TotalWineP4 != 0)
+                    {
 
+                        wineToDistribute++;
+                        TotalWineP4--;
+                        t.GetComponent<Text>().text = TotalWineP4.ToString();
+                    }
+                }
+
+            }
         }
-    }
+        */
 
-
-    public void decrGold(int buttonID)
-    {
-        GameObject p = GameObject.Find("scrollImage");
-        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
-        //Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in trs)
-        {
-            if (t.name == "p" + buttonID + "valuegold")
-            {
-                if (TotalGoldP1 != 0)
-                {
-
-                    goldToDistribute++;
-                    TotalGoldP1--;
-                    t.GetComponent<Text>().text = TotalGoldP1.ToString();
-                    //increment gold
-                    //t.game
-                }
-            }
-            else if (t.name == "p" + buttonID + "valuegold")
-            {
-                if (TotalGoldP2 != 0)
-                {
-                    goldToDistribute++;
-                    TotalGoldP2--;
-                    t.GetComponent<Text>().text = TotalGoldP2.ToString();
-                }
-            }
-            else if (t.name == "p" + buttonID + "valuegold")
-            {
-                if (TotalGoldP3 != 0)
-                {
-
-                    goldToDistribute++;
-                    TotalGoldP3--;
-                    t.GetComponent<Text>().text = TotalGoldP3.ToString();
-                }
-
-            }
-            else if (t.name == "adminvaluegold" + buttonID)
-            {
-                if (TotalGoldAdmin != 0)
-                {
-
-                    goldToDistribute++;
-                    TotalGoldAdmin--;
-                    t.GetComponent<Text>().text = TotalGoldAdmin.ToString();
-                }
-            }
-
-        }
-    }
-
-    public void incrWine(int buttonID)
-    {
-        GameObject p = GameObject.Find("scrollImage");
-        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in trs)
-        {
-            if (t.name == "p" + buttonID + "valuewine")
-            {
-                if (wineToDistribute != 0)
-                {
-                    wineToDistribute--;
-                    TotalWineP1++;
-                    t.GetComponent<Text>().text = TotalWineP1.ToString();
-                    //increment gold
-                    //t.game
-                }
-            }
-            else if (t.name == "p" + buttonID + "valuewine")
-            {
-                if (wineToDistribute != 0)
-                {
-                    wineToDistribute--;
-                    TotalWineP2++;
-                    t.GetComponent<Text>().text = TotalWineP2.ToString();
-                }
-            }
-            else if (t.name == "p" + buttonID + "valuewine")
-            {
-                if (wineToDistribute != 0)
-                {
-                    wineToDistribute--;
-                    TotalWineP3++;
-                    t.GetComponent<Text>().text = TotalWineP3.ToString();
-                }
-
-            }
-            else if (t.name == "adminvaluewine" + buttonID)
-            {
-                if (wineToDistribute != 0)
-                {
-                    wineToDistribute--;
-                    TotalWineAdmin++;
-                    t.GetComponent<Text>().text = TotalWineAdmin.ToString();
-                }
-            }
-
-        }
-    }
-
-    public void decrWine(int buttonID)
-    {
-        GameObject p = GameObject.Find("scrollImage");
-        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
-        //Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in trs)
-        {
-            if (t.name == "p" + buttonID + "valuewine")
-            {
-                if (TotalWineP1 != 0)
-                {
-                    wineToDistribute++;
-                    TotalWineP1--;
-                    t.GetComponent<Text>().text = TotalWineP1.ToString();
-                    //increment gold
-                    //t.game
-                }
-            }
-            else if (t.name == "p" + buttonID + "valuewine")
-            {
-                if (TotalWineP2 != 0)
-                {
-                    wineToDistribute++;
-                    TotalWineP2--;
-                    t.GetComponent<Text>().text = TotalWineP2.ToString();
-                }
-            }
-            else if (t.name == "p" + buttonID + "valuewine")
-            {
-                if (TotalWineP3 != 0)
-                {
-
-                    wineToDistribute++;
-                    TotalWineP3--;
-                    t.GetComponent<Text>().text = TotalWineP3.ToString();
-                }
-
-            }
-            else if (t.name == "adminvaluewine" + buttonID)
-            {
-                if (TotalWineAdmin != 0)
-                {
-
-                    wineToDistribute++;
-                    TotalWineAdmin--;
-                    t.GetComponent<Text>().text = TotalWineAdmin.ToString();
-                }
-            }
-
-        }
-    }
 
 
     public void doneButton()
     {
 
 
-                if (goldToDistribute == 0 && wineToDistribute == 0)
+        if (goldToDistribute == 0 && wineToDistribute == 0)
+        {
+            //ALLOW EXIT OUT OF POP-UP AND UPDATE HERO ATTRIBUTES 
+            DistributeArticlesBoard.gameObject.SetActive(false);
+            WaitingScreenPopup.gameObject.SetActive(false);
+
+
+            for(int i = 0; i < playersList.Count; i++)
+            {
+
+                if (i == 0)
                 {
-                    //ALLOW EXIT OUT OF POP-UP AND UPDATE HERO ATTRIBUTES 
-                    DistributeArticlesBoard.gameObject.SetActive(false);
-                    WaitingScreenPopup.gameObject.SetActive(false);
+                    //P1
+                    playersList[i].getHero().setGold(TotalGoldP1);
 
-
-                    for (int i = 0; i < heroes.Count; i++)
+                    for(int j = 0; j < TotalWineP1; j++)
                     {
-                        if (i == 0)
-                        {
+                        Article wine = new Wineskin();
+                        playersList[i].getHero().addArticle(wine); 
 
-                            heroes[i].setGold(TotalGoldP1);
-                            for (int j = 0; j < TotalWineP1; j++)
-                            {
-                                Article wine = new Wineskin();
-                                heroes[i].addArticle(wine);
-                            }
-                        }
-                        else if (i == 1)
-                        {
-
-                            heroes[i].setGold(TotalGoldP2);
-                            //every player starts off w 2 willpower points
-
-                            for (int j = 0; j < TotalWineP2; j++)
-                            {
-                                Article wine = new Wineskin();
-                                heroes[i].addArticle(wine);
-                            }
-
-                        }
-                        else if (i == 2)
-                        {
-
-                            heroes[i].setGold(TotalGoldP3);
-
-                            for (int j = 0; j < TotalWineP3; j++)
-                            {
-                                Article wine = new Wineskin();
-                                heroes[i].addArticle(wine);
-                            }
+                    }
 
 
-                        }
-                        else if (i == 3)
-                        {
 
-                            heroes[i].setGold(TotalGoldAdmin);
-                            //every player starts off w 2 willpower points
+                }else if (i == 1)
+                {
 
-                            for (int j = 0; j < TotalWineAdmin; j++)
-                            {
-                                Article wine = new Wineskin();
-                                heroes[i].addArticle(wine);
-                            }
+                    playersList[i].getHero().setGold(TotalGoldP2);
+                    for (int j = 0; j < TotalWineP2; j++)
+                    {
+                        Article wine = new Wineskin();
+                        playersList[i].getHero().addArticle(wine);
 
-                        }
                     }
 
                 }
-                else
+                else if (i == 2)
                 {
 
-                    //Don't let player exit out 
+                    playersList[i].getHero().setGold(TotalGoldP3);
+                    for (int j = 0; j < TotalWineP3; j++)
+                    {
+                        Article wine = new Wineskin();
+                        playersList[i].getHero().addArticle(wine);
 
-                    DistributeArticlesBoard.gameObject.SetActive(true);
-                    WaitingScreenPopup.gameObject.SetActive(true);
+                    }
+
+                }
+                else if (i == 3)
+                {
+                    playersList[i].getHero().setGold(TotalGoldP4);
+                    for (int j = 0; j < TotalWineP4; j++)
+                    {
+                        Article wine = new Wineskin();
+                        playersList[i].getHero().addArticle(wine);
+
+                    }
 
                 }
 
 
-      
+            }
 
-
+            GameController.instance.updateHeroStats();
         }
 
-
-        }
+    }
+}
 
 
 
