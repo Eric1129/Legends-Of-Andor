@@ -676,8 +676,15 @@ IEnumerator articleroutine(int sleep)
         }
         foreach (string player in involvedPlayers)
         {
-
-            playerRespondNextRound.Add(player, false);
+            if (!playerRespondNextRound.ContainsKey(player))
+            {
+                playerRespondNextRound.Add(player, false);
+            }
+            else
+            {
+                playerRespondNextRound[player] = false;
+            }
+            
 
         }
         displayCreatureBattleValue(final);
@@ -895,36 +902,37 @@ IEnumerator articleroutine(int sleep)
 
     public void checkBattleWinner_collab()
     {
-        endBattle_collab(1);
+
+        
+        
+
+        //=================COMMENT BACK IN==========================
         //kick out players who have no more time left or no more WP
-        //foreach(string f in fight.fighters)
-        //{
-        //    if (Game.gameState.getPlayer(f).getHero().getHour() + 1
-        //    == Game.gameState.TIME_endTime)
-        //    {
-        //        //fight.leaveFight(f);
-        //    }
-        //}
+        foreach (string f in fight.fighters)
+        {
+            if (Game.gameState.getPlayer(f).getHero().getHour() + 1
+            == Game.gameState.TIME_endTime || Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
+            {
+                //fight.leaveFight(f);
+            }
+        }
 
-        //if (fight.monster.getWillpower() == 0)
-        //{
-        //    header.text = "Battle Over: Heroes Wins!";
-        //    //game over
-        //    endBattle_collab(1);
-        //    //if(Game.myPlayer.getNetworkID() == fight.getCurrentFighter())
-        //    //{//display reward screen
-        //    //    distributeReward.gameObject.SetActive(true);
-        //    //}
+        if (fight.monster.getWillpower() == 0)
+        {
+            header.text = "Battle Over: Heroes Wins!";
+            //game over
+            endBattle_collab(1);
 
-        //}
-        //else
-        //{
-        //    //No win yet
-        //    endBattleButton.gameObject.SetActive(true);
-        //    nextRoundButton.gameObject.SetActive(true);
-        //    fight.nextFighter();
-        //    fight.resetHeroBattleValue();
-        //}
+        }
+        else
+        {
+            //No win yet
+            //No win yet
+            endBattleButton.gameObject.SetActive(true);
+            nextRoundButton.gameObject.SetActive(true);
+            //fight.nextFighter();
+            fight.resetHeroBattleValue();
+        }
 
 
 
@@ -954,7 +962,7 @@ IEnumerator articleroutine(int sleep)
             
             Game.sendAction(new JoinNextRound(players, true));
             fightLobby2.gameObject.SetActive(true);
-            updateFightLobby2();
+            
            // Game.sendAction(new RespondFight(players, true, false));
         }
        
@@ -972,7 +980,11 @@ IEnumerator articleroutine(int sleep)
 
             
             Game.gameState.removeMonster(fight.monster);
-        }else if(outcome == 2)
+
+            Game.gameState.legend += 1;
+            GameController.instance.advanceNarrator(Game.gameState.legend);
+        }
+        else if(outcome == 2)
         {
             if(fightType == 0)
             {
@@ -1239,68 +1251,64 @@ IEnumerator articleroutine(int sleep)
     public void endBattle_collab(int outcome)
     {
 
-        Game.gameState.removeMonster(fight.monster);
-        Game.sendAction(new WinBattle(fight.fighters, fight.fighters[0])); //calls distributeOrWait
-
-        //====================COMMENT BACK IN===============================//
-
-        //if (outcome == 1)
-        //{
-        //    //hero wins
-        //    //get reward
+        
+        if (outcome == 1)
+        {
+            //hero wins
+            //get reward
 
 
-        //    Game.gameState.removeMonster(fight.monster);
-        //    Game.sendAction(new WinBattle(fight.fighters, fight.getCurrentFighter())); //calls distributeOrWait
+            Game.gameState.removeMonster(fight.monster);
+            Game.sendAction(new WinBattle(fight.fighters, fight.fighters[0])); //calls distributeOrWait
 
-        //}
-        //else if (outcome == 2)
-        //{
-        //    fight.monster.recover();
-        //    //end turn
-        //    Game.gameState.turnManager.passTurn();
+        }
+        else if (outcome == 2)
+        {
+            fight.monster.recover();
+            //end turn
+            Game.gameState.turnManager.passTurn();
 
-        //    battleEndScreen.gameObject.SetActive(false);
-        //    closeFightScreen();
-        //}
-        //else if (outcome == 0)
-        //{
-        //    //draw or hero clicked end battle
-        //    fight.monster.recover();
-        //    battleEndScreen.gameObject.SetActive(true);
-        //    Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
-        //    foreach (Transform t in trs)
-        //    {
-        //        if (t.name == "Body")
-        //        {
-        //            t.GetComponent<Text>().text = "No time left. Draw!";
-        //        }
-        //    }
+            battleEndScreen.gameObject.SetActive(false);
+            closeFightScreen();
+        }
+        else if (outcome == 0)
+        {
+            //draw or hero clicked end battle
+            fight.monster.recover();
+            battleEndScreen.gameObject.SetActive(true);
+            Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
+            foreach (Transform t in trs)
+            {
+                if (t.name == "Body")
+                {
+                    t.GetComponent<Text>().text = "No time left. Draw!";
+                }
+            }
 
-        //}
-        //else
-        //{
-        //    //monster wins
-        //    Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
-        //    if (h.getStrength() > 0)
-        //    {
-        //        //lose strength point
-        //        h.decreaseStrength(1);
-        //    }
+        }
+        else
+        {
+            //monster wins
+            Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
+            if (h.getStrength() > 0)
+            {
+                //lose strength point
+                h.decreaseStrength(1);
+            }
 
-        //    h.increaseWillpower(3);
-        //    battleEndScreen.gameObject.SetActive(true);
-        //    Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
-        //    foreach (Transform t in trs)
-        //    {
-        //        if (t.name == "Body")
-        //        {
-        //            t.GetComponent<Text>().text = "Creature wins. You lose 1 strength point.";
-        //        }
-        //    }
+            h.increaseWillpower(3);
+            battleEndScreen.gameObject.SetActive(true);
+            Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
+            foreach (Transform t in trs)
+            {
+                if (t.name == "Body")
+                {
+                    t.GetComponent<Text>().text = "Creature wins. You lose 1 strength point.";
+                }
+            }
 
 
-        //}
+        }
     }
 
     public void getReward(string type)
@@ -1370,18 +1378,38 @@ IEnumerator articleroutine(int sleep)
         fight = f;
         //set the screen active
         Debug.Log("NUm fighters " + fight.fighters.Length);
-        foreach(string p in fight.fighters)
+        //clear fight screen contents
+        battleValue.text = "Battle Value";
+        fightLobby2.gameObject.SetActive(false);
+        selectedChoiceText.text = "";
+        monsterBattleValueText.text = "Battle Value: ";
+        monsterBattleValue = 0;
+        header.text = "Fight";
+        Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
+        foreach (Transform t in trs)
+        {
+            if (t.name == "MonsterDiceRolls")
+            {
+
+
+                t.GetComponent<Text>().text = "";
+            }
+            if (t.name == "MonsterFinalOutcome")
+            {
+                t.GetComponent<Text>().text = "";
+            }
+        }
+
+        nextRoundPlayers.Clear();
+        Debug.Log("involved players " + involvedPlayers.Count);
+        Debug.Log("nextround players " + nextRoundPlayers.Count);
+        nextRoundButton.gameObject.SetActive(false);
+        endBattleButton.gameObject.SetActive(false);
+
+        foreach (string p in fight.fighters)
         {
             if(Game.myPlayer.getNetworkID() == p)
             {
-                //clear fight screen contents
-                battleValue.text = "Battle Value";
-
-                selectedChoiceText.text = "";
-                monsterBattleValueText.text = "Battle Value: ";
-                monsterBattleValue = 0;
-                header.text = "Fight";
-
                 //display fight screen
                 fightScreen.gameObject.SetActive(true);
             }
@@ -1465,7 +1493,7 @@ IEnumerator articleroutine(int sleep)
             }
 
             if(attr.name == "Image"){
-                Debug.Log("Monster image");
+                
                 Sprite monsterSprite = Resources.Load<Sprite>("UI/" + m.getMonsterType());
                 attr.GetComponent<Image>().sprite = monsterSprite;
                 attr.GetComponent<Image>().useSpriteMesh = true;
@@ -1670,16 +1698,23 @@ IEnumerator articleroutine(int sleep)
         
     }
 
+    List<string> nextRoundPlayers = new List<string>();
+
     public void joinFightLobby2(string fighter)
     {
-        respondToFight2(fighter);
+        respondToNextRound(fighter);
         Debug.Log(Game.gameState.getPlayer(fighter).getHeroType() + " joining fight lobby");
+        nextRoundPlayers.Add(fighter);
+        updateFightLobby2();
         //fightLobby2.gameObject.SetActive(true);
         //updateFightLobby();
         if (allResponded2())
         {
             
-            Game.sendAction(new StartFight(involvedPlayers.ToArray(), 1));
+            //fightLobby2.gameObject.SetActive(false);
+            //make sure to reset all the fight UI
+            Game.sendAction(new StartFight(nextRoundPlayers.ToArray(), 1));
+            involvedPlayers = nextRoundPlayers;
 
         }
         
@@ -1694,15 +1729,19 @@ IEnumerator articleroutine(int sleep)
     {
         string[] players = new string[1];
         players[0] = Game.myPlayer.getNetworkID();
-        Game.sendAction(new JoinNextRound(players, false));
+        Game.sendAction(new JoinNextRound(players, false));//calls leave battle execute
         
         closeFightScreen();
     }
 
     public void leaveBattleExecute(string player)
     {
-        respondToFight2(player);
+        respondToNextRound(player);
         involvedPlayers.Remove(player);
+        if(involvedPlayers.Count == 0)
+        {
+            Game.sendAction(new EndFight(fight.fighters));
+        }
     }
 
     private void updateFightLobby()
@@ -1718,7 +1757,7 @@ IEnumerator articleroutine(int sleep)
     private void updateFightLobby2()
     {
         int i = 1;
-        foreach (string fighter in involvedPlayers)
+        foreach (string fighter in nextRoundPlayers)
         {
             displayPlayerInFightLobby2(fighter, i);
             i++;
@@ -1730,7 +1769,7 @@ IEnumerator articleroutine(int sleep)
         playerResponded[player] = true;
     }
 
-    public void respondToFight2(string player)
+    public void respondToNextRound(string player)
     {
         playerRespondNextRound[player] = true;
     }
