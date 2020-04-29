@@ -4,6 +4,7 @@ public class Helm : Article
 {
     private ArticleType article;
     private string description;
+    private int numUsed;
 
     public Helm()
     {
@@ -16,11 +17,23 @@ public class Helm : Article
             "one die.But these heroes can still purchase and carry a helm and later " +
             "give it to a warrior or dwarf, for whom a helm is very valuable. " +
             "A helm cannot be combined with the witch’s brew.";
+        numUsed = 0;
     }
 
     public void useArticle()
     {
+        this.numUsed += 1;
+    }
 
+    public void reset()
+    {
+        this.numUsed = 0;
+    }
+
+
+    public int getNumUsed()
+    {
+        return this.numUsed;
     }
 
     public string articleToString()

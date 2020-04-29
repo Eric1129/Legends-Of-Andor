@@ -42,11 +42,13 @@ public class GameState
     public int TIME_endTime = 10;
     public int TIME_overtimeCost = 2;
     public bool skralTowerDefeated;
+    public bool medicinalGorDefeated;
     //public bool eventcard19;
     public bool EVENTCARD_treeOfSongBonusIsActive = false;
     public int brewCost;
     public int witchLocation;
     public bool witchFound;
+    public int skralTowerLocation;
     public Dictionary<string, List<Article>> equipmentBoard;
 
     public GameState()
@@ -77,6 +79,8 @@ public class GameState
         brewCost = 2;
         witchLocation = -1;
         witchFound = false;
+        medicinalGorDefeated = false;
+        skralTowerDefeated = false;
     }
 
     public void addPlayer(Player p)
@@ -167,6 +171,24 @@ public class GameState
     public void addGor(Gor g)
     {
         gors.Add(g, g.getLocation());
+    }
+
+    public void removeMonster(Monster m)
+    {
+        m.getPrefab().SetActive(false);
+        if(m.getMonsterType() == "Gor")
+        {
+            Gor g = (Gor)m;
+            gors.Remove(g);
+        }
+        if (m.getMonsterType() == "Skral")
+        {
+            Skral s = (Skral)m;
+            skrals.Remove(s);
+        }
+        
+        monsters.Remove(m);
+        
     }
 
     //////////////////////////////////wells//////////////////////////////////
