@@ -36,7 +36,13 @@ public class FightScreenController : MonoBehaviour
     public Button endBattleButton;
     public Button nextRoundButton;
     
+ public GameObject updateRollArticle;
 
+ public Text updateRollText;
+
+   public bool creatureTurnCheck = false;
+
+    public GameObject chooseArticleScroll;
     private int fightType; //solo = 0, collab = 1
 
     private List<string> availablePlayers; //players that are eligible to fight
@@ -67,6 +73,7 @@ public class FightScreenController : MonoBehaviour
         }
         if (Game.myPlayer.getHero().usingHelm)
         {
+            Debug.Log("still using brew");
             helmButton.interactable = false;
             witchBrewButton.gameObject.SetActive(false);
         }
@@ -75,12 +82,15 @@ public class FightScreenController : MonoBehaviour
             witchBrewButton.interactable = false;
             helmButton.gameObject.SetActive(false);
         }
-        if (Game.myPlayer.getHero().usingBow)
-        {
-            bowButton.interactable = false;
-            bowButton.gameObject.SetActive(false);
-        }
+        //if (Game.myPlayer.getHero().usingBow)
+        // {
+        //     bowButton.interactable = false;
+        //     bowButton.gameObject.SetActive(false);
+        // }
     }
+
+
+
 
     public FightScreenController()
     {
@@ -98,10 +108,6 @@ public class FightScreenController : MonoBehaviour
         collabButton.GetComponent<Button>().interactable = setAvailablePlayers();
     }
 
-    public void onClickNoArticle()
-    {
-        Game.myPlayer.getHero().selectedWineskin = true;
-    }
     public void setTypeOfFight(int type)
     {
         //solo is 0
@@ -215,6 +221,15 @@ public class FightScreenController : MonoBehaviour
 
     private int wizardRoll = 0;
 
+    private int rolledDiceHelm;
+
+     private int rolledDiceBrew;
+
+    private int heroFinalRoll;
+
+    private int wizardRollBrew;
+
+    private int archerRollBrew;
     public void heroRoll()
     {
         if(fightType == 0)
@@ -243,6 +258,7 @@ public class FightScreenController : MonoBehaviour
             {
                 List<int> diceRolls = h.rollDice();
                 archerRoll = diceRolls[0];
+                archerRollBrew = (2*diceRolls[0]);
                 displayDiceRoll(diceRolls);
                 rollsLeft.gameObject.SetActive(true);
                 rollsLeft.text = "Rolls Left: " + (maxArcherRound - archerRound);
@@ -260,6 +276,7 @@ public class FightScreenController : MonoBehaviour
         {
             List<int> diceRolls = h.rollDice();
             wizardRoll = diceRolls[0];
+            wizardRollBrew = (2*diceRolls[0]);
             displayDiceRoll(diceRolls);
             flipButton.gameObject.SetActive(true);
             doneButton.gameObject.SetActive(true);
@@ -279,12 +296,36 @@ public class FightScreenController : MonoBehaviour
                     maxDiceRoll = dice;
                 }
             }
+            rolledDiceHelm = calculateHelm(diceRolls);
+            rolledDiceBrew = (2 * maxDiceRoll);
 
             displayFinalOutcome(maxDiceRoll);
 
         }
     }
 
+public int calculateHelm(List<int> rolls)
+    {
+        int maxHelm = 0;
+        foreach(int i in rolls)
+        {
+            int key = i;
+            int max = 0;
+            foreach (int j in rolls)
+            {
+                if(j == key)
+                {
+                    max += i;
+                }
+            }
+            if(max >= maxHelm)
+            {
+                maxHelm = max;
+            }
+        }
+        return maxHelm;
+        //return 8;
+    }
    
     public void collabRoll()
     {
@@ -414,36 +455,79 @@ public class FightScreenController : MonoBehaviour
         doneButton.gameObject.SetActive(false);
         stopButton.gameObject.SetActive(false);
 
-        if ( h.hasArticle("Helm") || h.hasArticle("WitchBrew"))
+         if ((h.hasArticle("Helm" )&& !Game.myPlayer.getHero().usingHelm) || (h.hasArticle("WitchBrew") && !Game.myPlayer.getHero().usingWitchBrew))
         {
 
-            while (!h.selectedArticle)
-            {
+            // while (!h.selectedArticle)
+            // {
 
-            }
-            //TODO: ask user if they would like to use article
-            if (h.usingWitchBrew)
-            {
-                Debug.Log("using witch brew in fight");
-                //double roll
-            }
-            //if (h.usingShield)
-            //{
-                //this should only matter after battle round
-            //}
-            else if (h.usingHelm)
-            {
-                Debug.Log("using helm in fight");
-                //total up identical rolls and update outcome
-            }
+            // }
+            // //TODO: ask user if they would like to use article
+            // if (h.usingWitchBrew)
+            // {
+            //     Debug.Log("using witch brew in fight");
+            //     //double roll
+            // }
+            // //if (h.usingShield)
+            // //{
+            //     //this should only matter after battle round
+            // //}
+            // else if (h.usingHelm)
+            // {
+            //     Debug.Log("using helm in fight");
+            //     //total up identical rolls and update outcome
+            // }
 
             //creatureTurn();
             //fight.nextFighter();
             //Game.sendAction(new FightTurn(fight.fighters, fight.getIndex(), fight.getCurrentFighter()));
+         creatureTurnCheck = false;
+            heroFinalRoll = final;
+            useArticleNotify();
+        
         }
         else
         {
-            if(fightType == 0)
+            creatureTurnCheck = true;
+            heroFinalRoll = final;
+            rollCreature();
+            // if(fightType == 0)
+            // {
+            //     creatureTurn();
+
+            // }
+            // else
+            // {
+            //     //update battle value
+            //     //displayBattleValue(final);
+
+            //     //pass to next player
+            //     fight.nextFighter();
+            //     Debug.Log("from displayFinalOutcome()" + fight.getIndex()); 
+            //     Game.sendAction(new FightTurn(fight.fighters, fight.getIndex(), fight.getCurrentFighter(), fight.getHeroBattleValue()));
+            // }
+            
+            
+        }
+
+    }
+
+      public void useArticleNotify()
+    {
+        StartCoroutine(articleroutine(5));
+        chooseArticleScroll.SetActive(true);
+    }
+
+IEnumerator articleroutine(int sleep)
+    {
+        yield return new WaitForSeconds(sleep);
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    }
+
+
+    public void rollCreature(){
+        if(fightType == 0)
             {
                 creatureTurn();
 
@@ -458,10 +542,6 @@ public class FightScreenController : MonoBehaviour
                 Debug.Log("from displayFinalOutcome()" + fight.getIndex()); 
                 Game.sendAction(new FightTurn(fight.fighters, fight.getIndex(), fight.getCurrentFighter(), fight.getHeroBattleValue()));
             }
-            
-            
-        }
-
     }
 
     public void nextPlayerTurnToRoll(int index, int battleValue)
@@ -501,7 +581,7 @@ public class FightScreenController : MonoBehaviour
 
     public void creatureTurn()
     {
-        
+
         monsterRoll();
         if(fightType == 0)
         {
@@ -648,6 +728,13 @@ public class FightScreenController : MonoBehaviour
 
     public void setRoundWinner()
     {
+       foreach(Hero h in fight.getHeroes()){
+            foreach(Andor.Player p in Game.gameState.getPlayers()){
+                if(p.getHero() == h){
+                    Game.sendAction(new ExitFight(p.getNetworkID()));
+                }
+            }
+        }
         int difference = fight.getHeroBattleValue() - monsterBattleValue;
         if(difference > 0)
         {
@@ -792,6 +879,7 @@ public class FightScreenController : MonoBehaviour
             //hero wins
             //get reward
             rewardScreen.gameObject.SetActive(true);
+
             
             Game.gameState.removeMonster(fight.monster);
         }else if(outcome == 2)
@@ -816,7 +904,7 @@ public class FightScreenController : MonoBehaviour
                     t.GetComponent<Text>().text = "No time left. Draw!";
                 }
             }
-            
+
         }
         else
         {
@@ -838,7 +926,7 @@ public class FightScreenController : MonoBehaviour
                     t.GetComponent<Text>().text = "Creature wins. You lose 1 strength point.";
                 }
             }
-            
+
 
         }
 
@@ -1393,6 +1481,99 @@ public class FightScreenController : MonoBehaviour
         fight = null;
 
     }
+
+    /////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+
+   
+
+    IEnumerator articleroutine(string message,int sleep)
+    {
+        updateRollText.GetComponent<Text>().text = message;
+        updateRollArticle.SetActive(true);
+        yield return new WaitForSeconds(sleep);
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+         updateRollArticle.SetActive(false);
+    }
     
+
+     public void useHelmInFight()
+    {
+        Game.sendAction(new UseHelm(Game.myPlayer.getNetworkID()));
+        chooseArticleScroll.SetActive(false);
+        if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
+        {
+            //does nothing
+        }
+        if (Game.myPlayer.getHeroType() == "Male Dwarf" || Game.myPlayer.getHeroType() == "Female Dward")
+        {
+            string update = "You have used the helm! Your roll has been updated from: " + heroFinalRoll + " to " + rolledDiceHelm;
+            //displayUpdatedRoll(update);
+            StartCoroutine(articleroutine(update,4));
+            displayFinalOutcome(rolledDiceHelm);
+        }
+        if (Game.myPlayer.getHeroType() == "Male Warrior" || Game.myPlayer.getHeroType() == "Female Warrior")
+        {
+            string update = "You have used the helm! Your roll has been updated from: " + heroFinalRoll + " to " + rolledDiceHelm;
+            //displayUpdatedRoll(update);
+            StartCoroutine(articleroutine(update,4));
+            displayFinalOutcome(rolledDiceHelm);
+        }
+        if (Game.myPlayer.getHeroType() == "Male Wizard" || Game.myPlayer.getHeroType() == "Female Wizard")
+        {
+            //does nothing
+        }
+        rollCreature();
+    }
+
+    public void useWitchBrewInFight()
+    {
+
+        Game.sendAction(new UseWitchBrew(Game.myPlayer.getNetworkID()));
+        chooseArticleScroll.SetActive(false);
+        if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
+        {
+            string update = "You have used the witch's brew! Your roll has been updated from: " + archerRoll + " to " + archerRollBrew;
+            StartCoroutine(articleroutine(update,4));
+            displayFinalOutcome(archerRollBrew);
+        }
+        if (Game.myPlayer.getHeroType() == "Male Dwarf" || Game.myPlayer.getHeroType() == "Female Dward")
+        {
+            string update = "You have used the witch's brew! Your roll has been updated from: " + heroFinalRoll + " to " + rolledDiceBrew;
+            //displayUpdatedRoll(update);
+            StartCoroutine(articleroutine(update,4));
+            displayFinalOutcome(rolledDiceBrew);
+        }
+        if (Game.myPlayer.getHeroType() == "Male Warrior" || Game.myPlayer.getHeroType() == "Female Warrior")
+        {
+            string update = "You have used the witch's brew! Your roll has been updated from: " + heroFinalRoll + " to " + rolledDiceBrew;
+            //displayUpdatedRoll(update);
+            StartCoroutine(articleroutine(update,4));
+            displayFinalOutcome(rolledDiceBrew);
+        }
+        if (Game.myPlayer.getHeroType() == "Male Wizard" || Game.myPlayer.getHeroType() == "Female Wizard")
+        {
+            string update = "You have used the witch's brew! Your roll has been updated from: " + heroFinalRoll + " to " + wizardRollBrew;
+            StartCoroutine(articleroutine(update,4));
+            displayFinalOutcome(wizardRollBrew);
+            //does nothing
+        }
+        rollCreature();
+    }
+    public void useBowInFight()
+    {
+        Game.sendAction(new UseBow(Game.myPlayer.getNetworkID()));
+        chooseArticleScroll.SetActive(false);
+        rollCreature();
+    }
+    public void onClickNoArticle()
+    {
+        Game.myPlayer.getHero().selectedArticle = true;
+        chooseArticleScroll.SetActive(false);
+        rollCreature();
+    }
+
+
 }
 

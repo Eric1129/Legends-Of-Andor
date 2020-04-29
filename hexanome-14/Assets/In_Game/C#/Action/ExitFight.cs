@@ -1,20 +1,19 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 [System.Serializable]
-public class EndFight : Action
+public class ExitFight : Action
 {
     string[] players;
     Type type;
    
     
 
-    public EndFight(string[] players)
+    public ExitFight(string playerId)
     {
-        type = Type.EndFight;
+        type = Type.ExitFight;
 
-        this.players = players;
-        
+       players = new string[] { playerId };        
     }
 
     public string[] playersInvolved()
@@ -34,10 +33,9 @@ public class EndFight : Action
             gs.getPlayer(playerId).getHero().usingBow = false;
             gs.getPlayer(playerId).getHero().usingWitchBrew = false;
             gs.getPlayer(playerId).getHero().usingShield= false;
+            gs.getPlayer(playerId).getHero().selectedArticle= false;
 
         }
-        Array.Clear(players, 0, players.Length);
-        GameController.instance.fsc.fightOverAction();
 
     }
 
