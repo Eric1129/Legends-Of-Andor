@@ -14,6 +14,8 @@ public class MerchantScreen : MonoBehaviour
     public Transform merchantBoard;
     public Transform equipBoard;
 
+    
+
     public MerchantScreen()
     {
         //client = Game.myPlayer.getNetworkID();
