@@ -17,7 +17,24 @@ public enum Type
     EmptyWell,
     BuyBrew,
     SendChat,
-    UseTelescope
+    UseTelescope,
+    InviteFighter,
+    RespondFight,
+    UseWineskin,
+    StartFight,
+    EndFight,
+    UseHelm,
+    UseWitchBrew,
+    UseBow,
+    UseShield,
+    FightTurn,
+    ExitFight,
+    JoinNextRound,
+    CreatureTurn,
+    WinBattle,
+    DistributeReward,
+    GetMyReward
+
 }
 
 public interface Action

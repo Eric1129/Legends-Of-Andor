@@ -36,8 +36,12 @@ public class DistributeArticlesScreen : MonoBehaviour
     //public List<Hero> heroes = new List<Hero>(4);
     public List<Andor.Player> playersList;
 
-    void Start()
+
+
+    public void startDist()
     {
+
+        Debug.Log("reached"); 
 
         playersList = Game.gameState.getPlayers();
         playerContainers = new List<Transform>();
@@ -54,7 +58,7 @@ public class DistributeArticlesScreen : MonoBehaviour
 
         for (int i = 0; i < playersList.Count; i++)
         {
-            playerContainers[i].GetChild(4).GetComponent<Text>().text = playersList[i].getHeroType();
+            playerContainers[i].GetChild(6).GetComponent<Text>().text = playersList[i].getHeroType();
         }
 
         decideWhichScreenToDisplay();

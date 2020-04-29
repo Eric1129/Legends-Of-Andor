@@ -60,6 +60,16 @@ public class eventCards : MonoBehaviour
 
     public static void execute(int num)
     {
+        // Reset everything before going to event card
+        Game.gameState.TIME_endTime = 10;
+        Game.gameState.TIME_overtimeCost = 2;
+        Game.gameState.TIME_overtime = 8;
+
+
+
+
+
+        // Apply event card
         if (num == 1)
         {
             eventCard1();
@@ -194,7 +204,7 @@ public class eventCards : MonoBehaviour
         }
 
         //else
-        Game.gameState.eventcard3 = true;
+        //Game.gameState.eventcard3 = true;
 
     }
 
@@ -237,7 +247,7 @@ public class eventCards : MonoBehaviour
     public static void eventCard9()
     {
         GameController.instance.updateGameConsoleText("On this day, no hero is allowed to use a 10th hour.");
-        Game.gameState.endtime = 9;
+        Game.gameState.TIME_endTime = 9;
     }
 
     //     //EVENT CARD - 10
@@ -340,9 +350,9 @@ public class eventCards : MonoBehaviour
     //     //EVENT CARD - 19
     public static void eventCard19()
     {
-        Game.gameState.eventcard19 = true;
+        //Game.gameState.eventcard19 = true;
         GameController.instance.updateGameConsoleText("19 - On this day, the 9th and 10th hours will each cost 3 willpower points instead of two");
-        Game.gameState.overtimeCost = 3;
+        Game.gameState.TIME_overtimeCost = 3;
     
     }
 
@@ -386,7 +396,7 @@ public class eventCards : MonoBehaviour
     {
         GameController.instance.updateGameConsoleText("26-  The ministrels sing a ballad about the deeds of the heroes, strengthening their determination.");
         GameController.instance.updateGameConsoleText("26-  On this, day the 8th hour costs no willpower points.");
-        Game.gameState.overtime = 9;
+        Game.gameState.TIME_overtime = 9;
     }
 
     //EVENT CARD - 24

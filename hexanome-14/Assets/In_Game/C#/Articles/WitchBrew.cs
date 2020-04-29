@@ -5,8 +5,10 @@ public class WitchBrew : Article
 {
 	private ArticleType article;
 	private string description;
+    private int numUsed;
 
-	public WitchBrew()
+
+    public WitchBrew()
 	{
 
 		this.article = ArticleType.WitchBrew;
@@ -20,14 +22,26 @@ public class WitchBrew : Article
 			"not for that of another hero. The witch’s brew cannot be " +
 			"used in combination with a helm. So if the hero has both the " +
 			"brew and the helm at his disposal, he must pick one or the other.";
-	}
+        numUsed = 0;
+    }
 
 	public void useArticle()
 	{
-
+        this.numUsed += 1;
 	}
 
-	public string articleToString()
+    public void reset()
+    {
+        this.numUsed = 0;
+    }
+
+
+    public int getNumUsed()
+    {
+        return this.numUsed;
+    }
+
+        public string articleToString()
 	{
 		return "Witch's Brew";
 	}

@@ -14,6 +14,8 @@ public class TradeScreen : MonoBehaviour
     public Transform selectHeroGive;
     public Transform unavailable;
 
+    public GameObject dropdowns;
+
     public Transform nextButton;
     public Transform actionText;
     public Transform tradeActionButton;
@@ -24,7 +26,7 @@ public class TradeScreen : MonoBehaviour
     private bool selectHeroTradeActive;
     private bool selectHeroGiveActive;
     int tradeTypeIndex;
-    //string[] e;
+ 
     List<string> eligibleTrade;
     List<string> eligibleGold;
     List<string> eligibleGemstone;
@@ -37,6 +39,7 @@ public class TradeScreen : MonoBehaviour
 
     public string[] players;
     public string[] tradeType;
+    public bool usingFalcon;
 
     public TradeScreen()
     {
@@ -50,6 +53,7 @@ public class TradeScreen : MonoBehaviour
         eligibleTrade = new List<string>();
         eligibleGold = new List<string>();
         eligibleGemstone = new List<string>();
+        usingFalcon = false;
     }
 
 
@@ -73,6 +77,22 @@ public class TradeScreen : MonoBehaviour
         Debug.Log("trade " + eligibleTrade.Count);
         Debug.Log("gold " + eligibleGold.Count);
         Debug.Log("gemstone " + eligibleGemstone.Count);
+
+    }
+
+    public void clear()
+    {
+        
+        selectTradeType.gameObject.SetActive(false);
+        selectHeroGive.gameObject.SetActive(false);
+        selectHeroTrade.gameObject.SetActive(false);
+        unavailable.gameObject.SetActive(false);
+        eligibleGemstone.Clear();
+        eligibleGold.Clear();
+        eligibleTrade.Clear();
+        usingFalcon = false;
+        tradeTypeIndex = -1;
+        clearDropdown();
 
     }
 
@@ -256,133 +276,6 @@ public class TradeScreen : MonoBehaviour
 
 
 
-    //public void displayHeroTrade()
-    //{
-
-
-    //    if (tradeTypeIndex == 0)
-    //    {
-    //        selectHeroTrade.gameObject.SetActive(true);
-    //        selectHeroTradeActive = true;
-    //    }
-    //    else
-    //    {
-
-    //        selectHeroGive.gameObject.SetActive(true);
-    //        selectHeroGiveActive = true;
-    //        GameObject parentObj = GameObject.Find("SelectHero");
-    //        Transform[] trs = parentObj.GetComponentsInChildren<Transform>();
-    //        foreach(Transform t in trs)
-    //        {
-    //            if(t.name == "HeaderText")
-    //            {
-    //                Text giveText = t.gameObject.GetComponent<Text>();
-    //                string type = "";
-    //                if(tradeTypeIndex == 1)
-    //                {
-    //                    type = "gold";
-    //                }
-
-    //                if(tradeTypeIndex == 2)
-    //                {
-    //                    type = "a gemstone";
-    //                }
-    //                giveText.text = "Select a hero to give " +type +" to:";
-    //            }
-    //        }
-    //    }
-
-    //    //get all players on the same location
-    //    //get the player that clicked on trade button
-    //    if (!displayPlayers())
-    //    {
-    //        displayUnavailable("No available players", "There are no players available to trade wtih. You may trade if you are on the same tile as another player or if you or another player has a falcon.");
-    //    }
-
-    //    if(tradeTypeIndex == 1 && Game.myPlayer.getHero().getGold() < 1)
-    //    {
-    //        displayUnavailable("No Gold", "You do not have any gold to give.");
-    //    }
-
-    //    if (tradeTypeIndex == 2 && Game.myPlayer.getHero().getGemstone() < 1)
-    //    {
-    //        displayUnavailable("No gemstones", "You do not have any gemstones to give.");
-    //    }
-    //}
-
-    //public bool displayPlayers()
-    //{
-
-    //    eligiblePlayers = new string[4];
-    //    int i = 1;
-    //    eligiblePlayers[0] = Game.myPlayer.getNetworkID();
-    //    bool playersAvail = false;
-    //    if (Game.myPlayer.getHero().hasArticle("Falcon"))
-    //    {
-    //        //if myPlayer has a falcon then all players are available
-    //        foreach (Andor.Player p in Game.gameState.getPlayers())
-    //        {
-    //            eligiblePlayers[i] = p.getNetworkID();
-    //            displayPlayerInfo(p, i);
-    //            i++;
-    //        }
-    //        return true;
-    //    }
-    //    else
-    //    {
-    //        //otherwise need to check if they are on the same space or if anoother player has a falcon
-    //        foreach (Andor.Player p in Game.gameState.getPlayers())
-    //        {
-    //            if (!Game.myPlayer.Equals(p))
-    //            {
-    //                if ((Game.gameState.playerLocations[p.getNetworkID()]
-    //                == Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]))
-    //                {
-    //                    //check on the same tile
-    //                    eligiblePlayers[i] = p.getNetworkID();
-    //                    displayPlayerInfo(p, i);
-    //                    i++;
-    //                    playersAvail = true;
-    //                }
-    //                else if (p.getHero().hasArticle("Falcon"))
-    //                {
-    //                    //check if the player has a falcon
-    //                    eligiblePlayers[i] = p.getNetworkID();
-    //                    i++;
-    //                    playersAvail = true;
-
-    //                }
-    //            }
-
-    //        }
-
-    //    }
-
-
-    //    //if (Game.gameState.playerLocations.TryGetValue(Game.myPlayer.getNetworkID(), out myLocation))
-    //    //{
-    //    //    foreach (Andor.Player p in Game.gameState.getPlayers())
-    //    //    {
-    //    //        int playerLocation = 0;
-    //    //        if (Game.gameState.playerLocations.TryGetValue(p.getNetworkID(), out playerLocation))
-    //    //        {
-    //    //            if (playerLocation == myLocation && !Game.myPlayer.Equals(p))
-    //    //            {
-    //    //                eligiblePlayers[i] = p.getNetworkID();
-    //    //                displayPlayerInfo(p, i);
-    //    //                i++;
-    //    //                playersAvail = true;
-
-
-    //    //            }
-
-    //    //        }
-    //    //    }
-
-    //    //}
-
-    //    return playersAvail;
-    //}
 
     public void displayPlayerInfo(Andor.Player player, int i)
     {
@@ -453,11 +346,12 @@ public class TradeScreen : MonoBehaviour
     public void back()
     {
 
-        selectHeroTrade.gameObject.SetActive(false);
-        selectHeroTradeActive = false;
+        //selectHeroTrade.gameObject.SetActive(false);
+        //selectHeroTradeActive = false;
 
-        selectHeroGive.gameObject.SetActive(false);
-        selectHeroGiveActive = false;
+        //selectHeroGive.gameObject.SetActive(false);
+        //selectHeroGiveActive = false;
+        clear();
 
     }
 
@@ -567,6 +461,35 @@ public class TradeScreen : MonoBehaviour
 
     }
 
+    public void clearDropdown()
+    {
+        
+        Transform[] trs = dropdowns.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "myArticles")
+            {
+
+                Dropdown myArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+                myArticlesMenu.ClearOptions();
+                Debug.Log("cleared");
+
+            }
+            if (t.name == "heroArticles")
+            {
+               Dropdown heroArticlesMenu = t.gameObject.GetComponent<Dropdown>();
+                heroArticlesMenu.ClearOptions();
+                Debug.Log("cleared");
+            }
+
+            if (t.name == "HeroArText")
+            {
+             Text heroArText = t.gameObject.GetComponent<Text>();
+                heroArText.text = " articles: ";
+            }
+        }
+    }
+
     //add to myArticles dropdown obj
     public void setGiveItem(int val)
     {
@@ -615,7 +538,16 @@ public class TradeScreen : MonoBehaviour
         selectHeroGive.gameObject.SetActive(false);
         selectHeroTrade.gameObject.SetActive(false);
         unavailable.gameObject.SetActive(false);
-        Game.sendAction(new InitiateTrade(players, tradeType));
+
+        if(tradeType[1] == "Shield" || tradeType[2] == "Shield" || tradeType[1] == "Bow" || tradeType[1] == "Bow")
+        {
+            //GameController.instance.notify("Invalid Trade! Cannot trade shield or bow with falcon!",);
+        }
+        else
+        {
+            Game.sendAction(new InitiateTrade(players, tradeType));
+
+        }
 
     }
 
@@ -648,7 +580,8 @@ public class TradeScreen : MonoBehaviour
         eligibleGemstone.Clear();
         eligibleGold.Clear();
         eligibleTrade.Clear();
-
+        usingFalcon = false;
+        clearDropdown();
         tradeTypeIndex = -1;
     }
 }

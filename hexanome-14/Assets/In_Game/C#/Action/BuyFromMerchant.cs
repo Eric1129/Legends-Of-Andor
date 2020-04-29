@@ -35,6 +35,8 @@ public class BuyFromMerchant : Action
     public void execute(GameState gs)
     {
         Hero client = Game.gameState.getPlayer(players[0]).getHero();
+        String herotype = Game.gameState.getPlayer(players[0]).getHeroType();
+        
         //decrement gold
         if (client.getGold() - 2 >= 0)
         {
@@ -48,13 +50,22 @@ public class BuyFromMerchant : Action
                 //add item to heroes articles
                 client.addArticle(saleItem);
                 Debug.Log(client.allArticlesAsString());
+                client.decreaseGold(2);
             }
             else
             {
-                client.updateStrength(1);
+                client.increaseStrength(1);
                 Debug.Log(client.getStrength());
+                if ((herotype == "Male Dwarf" || herotype == "Female Dwarf") && gs.getPlayerLocations()[(players[0])] == 71)
+                {
+                    client.decreaseGold(1);
+                }
+                else
+                {
+                    client.decreaseGold(2);
+                }
             }
-            client.decGold(2);
+            
         }
         else
         {

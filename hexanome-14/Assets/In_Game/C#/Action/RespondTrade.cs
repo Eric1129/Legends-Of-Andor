@@ -50,8 +50,8 @@ public class RespondTrade : Action
 
             if (tradeType[0].Equals("Gold"))
             {
-                playerFrom.getHero().decGold(1);
-                playerTo.getHero().incGold(1);
+                playerFrom.getHero().decreaseGold(1);
+                playerTo.getHero().increaseGold(1);
                 msg = playerTo.getHeroType() + " has accepted your gold.";
 
             }
@@ -62,6 +62,11 @@ public class RespondTrade : Action
             else
             {
                 Debug.Log("responde trade TRADE");
+                if (GameController.instance.checkFalconUse())
+                {
+                    //mark falcon as used
+                    useFalcon(gs);
+                }
                 //trade
                 Article playerTosArticle = playerTo.getHero().removeArticle(tradeType[2]);
                 playerFrom.getHero().addArticle(playerTosArticle);
@@ -80,6 +85,7 @@ public class RespondTrade : Action
         string[] playersToNotify = new string[1];
         playersToNotify[0] = players[0];
         GameController.instance.updateGameConsoleText(msg, playersToNotify);
+        GameController.instance.clearTrade();
 
 
     }
@@ -87,5 +93,36 @@ public class RespondTrade : Action
     public bool isLegal(GameState gs)
     {
         return true;
+    }
+
+    //check valid use of falcon
+    public bool useFalcon(GameState gs)
+    {
+        if (Game.gameState.getPlayer(players[0]).getHero().hasArticle("Falcon"))
+        {
+            foreach (Falcon f in gs.getPlayer(players[0]).getHero().heroArticles["Falcon"])
+            {
+                if (!f.checkUsedToday())
+                {
+                    f.useArticle();
+                    Debug.Log("falcon is valid: " + f.checkUsedToday());
+                    return true;
+                }
+            }
+        }
+        else if (Game.gameState.getPlayer(players[1]).getHero().hasArticle("Falcon"))
+        {
+            foreach (Falcon f in gs.getPlayer(players[1]).getHero().heroArticles["Falcon"])
+            {
+                if (!f.checkUsedToday())
+                {
+                    f.useArticle();
+                    Debug.Log("falcon is valid: " + f.checkUsedToday());
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
 }
