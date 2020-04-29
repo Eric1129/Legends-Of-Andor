@@ -29,7 +29,8 @@ public enum Type
     UseShield,
     FightTurn,
     ExitFight,
-    JoinNextRound
+    JoinNextRound,
+    CreatureTurn
     
 
 }

@@ -10,6 +10,7 @@ public class FightTurn : Action
     int fightIndex;
     string currentPlayer;
     int battleValue;
+    List<int> monsterDiceRoll;
     
     
 
@@ -21,7 +22,8 @@ public class FightTurn : Action
         this.fightIndex = fightIndex;
         this.currentPlayer = currentPlayer;
         this.battleValue = battleValue;
-        
+
+        monsterDiceRoll = GameController.instance.fsc.fight.monster.diceRoll();
         
         
     }
@@ -48,7 +50,7 @@ public class FightTurn : Action
 
             //GameController.instance.fsc.fight.monster.diceRoll(); 
             //GameController.instance.fsc.setRoundWinner();
-            GameController.instance.fsc.creatureTurn_collab(battleValue);
+            GameController.instance.fsc.creatureTurn_collab(battleValue, monsterDiceRoll);
         }
         else
         {

@@ -596,17 +596,62 @@ IEnumerator articleroutine(int sleep)
 
     List<int> mDiceRoll = new List<int>();
 
-    public void creatureTurn_collab(int heroBV)
+    public void creatureTurn_collab(int heroBV, List<int> monsterDiceRoll)
     {
 
         fight.setBattleValue(heroBV);
         displayBattleValue(0);
-        if (Game.myPlayer.getNetworkID()== fight.getCurrentFighter())
+        header.text = "Creature Turn.";
+        mDiceRoll = monsterDiceRoll;
+        
+        string diceText = "";
+        foreach (int dice in mDiceRoll)
         {
-            mDiceRoll = fight.monster.diceRoll();
-            //SEND THIs over the network and then display it for both players
+            diceText += dice + "\t";
         }
         
+        int final = monsterRollOutcome(mDiceRoll);
+        Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
+        foreach (Transform t in trs)
+        {
+            if (t.name == "MonsterDiceRolls")
+            {
+
+
+                t.GetComponent<Text>().text = diceText;
+            }
+            if (t.name == "MonsterFinalOutcome")
+            {
+                t.GetComponent<Text>().text = "Final Outcome: " + final;
+            }
+        }
+
+        displayCreatureBattleValue(final);
+        setRoundWinner();
+
+        //Game.sendAction(new CreatureTurn(involvedPlayers.ToArray(), mDiceRoll));
+        //if (Game.myPlayer.getNetworkID()== fight.getCurrentFighter())
+        //{
+
+        //    //SEND THIs over the network and then display it for both players
+        //}
+
+
+
+        ////monsterRoll(); //working displays for all
+        ////setRoundWinner();
+
+        //send the creature value across network
+        //Game.sendAction(new CreatureFight(
+        //this should update the screens of all players with creature bv and with hero win/lose
+        //handle lose/draw scenario
+        //display screen for distributing reward
+        //display the next round/end battle buttons
+    }
+
+    public void creatureTurnResponse(List<int> creatureRolls)
+    {
+        mDiceRoll = creatureRolls;
         string diceText = "";
         foreach (int dice in mDiceRoll)
         {
@@ -621,20 +666,10 @@ IEnumerator articleroutine(int sleep)
 
                 t.GetComponent<Text>().text = diceText;
             }
-            
+
         }
-        ////monsterRoll(); //working displays for all
-        ////setRoundWinner();
 
-        //send the creature value across network
-        //Game.sendAction(new CreatureFight(
-        //this should update the screens of all players with creature bv and with hero win/lose
-        //handle lose/draw scenario
-        //display screen for distributing reward
-        //display the next round/end battle buttons
     }
-
-    
 
     public void displayMonsterRollOutcome(int heroBattleValue, int monsterBV)
     {

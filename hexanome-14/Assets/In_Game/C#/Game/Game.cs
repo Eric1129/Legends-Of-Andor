@@ -64,6 +64,7 @@ public static class Game
 
         // ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(MovePrinceThorald), 9, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(JoinNextRound), 27, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(CreatureTurn), 28, NetworkHandler.SerializeThis, NetworkHandler.Deserialize);
 
         // MUST HAVE PV
         gameState.addPlayer(myPlayer);
