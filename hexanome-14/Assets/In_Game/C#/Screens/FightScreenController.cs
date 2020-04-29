@@ -449,7 +449,7 @@ public class FightScreenController : MonoBehaviour
 
                 //pass to next player
                 fight.nextFighter();
-                Game.sendAction(new FightTurn(fight.fighters, fight.getIndex()));
+                Game.sendAction(new FightTurn(fight.fighters, fight.getIndex(), fight.currentFighter()));
             }
             
             
@@ -457,11 +457,11 @@ public class FightScreenController : MonoBehaviour
 
     }
 
-    public void nextPlayerTurnToRoll()
+    public void nextPlayerTurnToRoll(string currentFighter)
     {
         //set the roll dice active and tell player it is their turn
 
-        if (Game.myPlayer.getNetworkID() == fight.currentFighter())
+        if (Game.myPlayer.getNetworkID() == currentFighter)
         {
             rollButtonActive(true);
             header.text = "Your turn to fight";
