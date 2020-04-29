@@ -10,6 +10,7 @@ public class FightScreenController : MonoBehaviour
     public Transform collabButton;
 
     public Transform fightLobby;
+    public Transform fightLobby2;
     public Transform fightScreen;
     public Transform rewardScreen;
     public Transform battleEndScreen;
@@ -43,6 +44,8 @@ public class FightScreenController : MonoBehaviour
     private List<string> involvedPlayers; //players that have accepted the fight invite
 
     private Dictionary<string, bool> playerResponded; //keeps track of which players have responded to fight request
+    private Dictionary<string, bool> playerRespondNextRound;
+
 
     private int round;
     public Fight fight;
@@ -85,7 +88,7 @@ public class FightScreenController : MonoBehaviour
         invitedPlayers = new List<string>();
         involvedPlayers = new List<string>();
         playerResponded = new Dictionary<string, bool>();
-
+        playerRespondNextRound = new Dictionary<string, bool>();
     }
 
     public void displayTypeOfFight()
@@ -511,13 +514,37 @@ public class FightScreenController : MonoBehaviour
         
     }
 
+    List<int> mDiceRoll = new List<int>();
+
     public void creatureTurn_collab(int heroBV)
     {
-        
+
         fight.setBattleValue(heroBV);
         displayBattleValue(0);
-        monsterRoll(); //working displays for all
-        setRoundWinner();
+        if (Game.myPlayer.getNetworkID()== fight.getCurrentFighter())
+        {
+            mDiceRoll = fight.monster.diceRoll();
+            //SEND THIs over the network and then display it for both players
+        }
+        
+        string diceText = "";
+        foreach (int dice in mDiceRoll)
+        {
+            diceText += dice + "\t";
+        }
+        Transform[] trs = fightScreen.GetComponentsInChildren<Transform>();
+        foreach (Transform t in trs)
+        {
+            if (t.name == "MonsterDiceRolls")
+            {
+
+
+                t.GetComponent<Text>().text = diceText;
+            }
+            
+        }
+        ////monsterRoll(); //working displays for all
+        ////setRoundWinner();
 
         //send the creature value across network
         //Game.sendAction(new CreatureFight(
@@ -707,10 +734,10 @@ public class FightScreenController : MonoBehaviour
             header.text = "Battle Over: Heroes Wins!";
             //game over
             if(Game.myPlayer.getNetworkID() == fight.getCurrentFighter())
-            {
+            {//display reward screen
                 distributeReward.gameObject.SetActive(true);
             }
-            //display reward screen
+            
         }
         else
         {
@@ -733,21 +760,30 @@ public class FightScreenController : MonoBehaviour
 
     public void nextRound()
     {
-        
-        Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
+        if(fightType == 0)
+        {
+            Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
 
-        //increase time tracker
-        h.setHour(1 + h.getHour());
-        GameController.instance.setTime(fight.getCurrentFighter(), h.getHour());
+            //increase time tracker
+            h.setHour(1 + h.getHour());
+            GameController.instance.setTime(fight.getCurrentFighter(), h.getHour());
 
-        rollButtonActive(true);
+            rollButtonActive(true);
 
-        endBattleButton.gameObject.SetActive(false);
-        nextRoundButton.gameObject.SetActive(false);
-
-        
-
+            endBattleButton.gameObject.SetActive(false);
+            nextRoundButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            string[] players = new string[1];
+            players[0] = Game.myPlayer.getNetworkID();
+            Game.sendAction(new JoinNextRound(players, true));
+           // Game.sendAction(new RespondFight(players, true, false));
+        }
+       
     }
+
+
     public void endBattle(int outcome)
     {
         
@@ -911,6 +947,15 @@ public class FightScreenController : MonoBehaviour
         {
             if(Game.myPlayer.getNetworkID() == p)
             {
+                //clear fight screen contents
+                battleValue.text = "Battle Value";
+
+                selectedChoiceText.text = "";
+                monsterBattleValueText.text = "Battle Value: ";
+                monsterBattleValue = 0;
+                header.text = "Fight";
+
+                //display fight screen
                 fightScreen.gameObject.SetActive(true);
             }
             
@@ -1135,7 +1180,13 @@ public class FightScreenController : MonoBehaviour
 
         }
     }
-    
+
+
+    public void nextRound_collab()
+    {
+        
+    }
+
 
     public void sendFightRequest()
     {
@@ -1192,6 +1243,39 @@ public class FightScreenController : MonoBehaviour
         
     }
 
+    public void joinFightLobby2(string fighter)
+    {
+        respondToFight2(fighter);
+        fightLobby2.gameObject.SetActive(true);
+        updateFightLobby();
+        if (allResponded2())
+        {
+            
+            Game.sendAction(new StartFight(involvedPlayers.ToArray(), 1));
+
+        }
+        Debug.Log(Game.gameState.getPlayer(fighter).getHeroType() + " joining fight lobby");
+        
+        //involvedPlayers.Add(fighter);
+        
+        
+
+    }
+
+    public void leaveBattleClick()
+    {
+        string[] players = new string[1];
+        players[0] = Game.myPlayer.getNetworkID();
+        Game.sendAction(new JoinNextRound(players, true));
+        closeFightScreen();
+    }
+
+    public void leaveBattleExecute(string player)
+    {
+        respondToFight2(player);
+        involvedPlayers.Remove(player);
+    }
+
     private void updateFightLobby()
     {
         int i = 1;
@@ -1202,9 +1286,24 @@ public class FightScreenController : MonoBehaviour
         }
     }
 
+    private void updateFightLobby2()
+    {
+        int i = 1;
+        foreach (string fighter in involvedPlayers)
+        {
+            displayPlayerInFightLobby2(fighter, i);
+            i++;
+        }
+    }
+
     public void respondToFight(string player)
     {
         playerResponded[player] = true;
+    }
+
+    public void respondToFight2(string player)
+    {
+        playerRespondNextRound[player] = true;
     }
 
     public bool allResponded()
@@ -1221,6 +1320,20 @@ public class FightScreenController : MonoBehaviour
         return playerResponded.Values.Count > 0;
     }
 
+    public bool allResponded2()
+    {
+
+        foreach (bool r in playerRespondNextRound.Values)
+        {
+            if (r == false)
+            {
+                return false;
+            }
+        }
+
+        return playerRespondNextRound.Values.Count > 0;
+    }
+
     public void fightReady()
     {
         startFight.interactable = true;
@@ -1229,6 +1342,18 @@ public class FightScreenController : MonoBehaviour
     private void displayPlayerInFightLobby(string player, int i)
     {
         Transform[] trs = fightLobby.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "Hero" + i)
+            {
+                t.gameObject.GetComponent<Text>().text = Game.gameState.getPlayer(player).getHeroType();
+            }
+        }
+    }
+
+    private void displayPlayerInFightLobby2(string player, int i)
+    {
+        Transform[] trs = fightLobby2.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
             if (t.name == "Hero" + i)

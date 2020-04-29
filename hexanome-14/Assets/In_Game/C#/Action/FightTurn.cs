@@ -42,7 +42,12 @@ public class FightTurn : Action
         Debug.Log("FIGHT TURN: " + fightIndex);
         if (fightIndex == 0)
         {
-            Debug.Log("creature turn");
+            //Debug.Log("creature turn");
+            //GameController.instance.fsc.fight.setBattleValue(battleValue);
+            //GameController.instance.fsc.displayBattleValue(0);
+
+            //GameController.instance.fsc.fight.monster.diceRoll(); 
+            //GameController.instance.fsc.setRoundWinner();
             GameController.instance.fsc.creatureTurn_collab(battleValue);
         }
         else
