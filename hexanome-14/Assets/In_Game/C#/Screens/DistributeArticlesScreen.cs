@@ -68,13 +68,14 @@ public class DistributeArticlesScreen : MonoBehaviour
         {
 
             DistributeArticlesBoard.gameObject.SetActive(true);
-
+            WaitingScreenPopup.gameObject.SetActive(false); 
         }
         else
         {
             //set popup with wait display to active
             Debug.Log("Waiting Screen Case Reached");
             WaitingScreenPopup.gameObject.SetActive(true);
+            DistributeArticlesBoard.gameObject.SetActive(false);
         }
     }
 
