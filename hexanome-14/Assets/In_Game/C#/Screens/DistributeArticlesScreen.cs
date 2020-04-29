@@ -65,12 +65,18 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void displayPlayerName(Andor.Player p, int i)
     {
-        Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
+
+        GameObject obj1 = GameObject.Find("scrollImage");
+        Transform[] trs = obj1.GetComponentsInChildren<Transform>(true);
+
+        //Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
         foreach(Transform t in trs)
         {
             if(t.name == "Player" + i + "Name")
             {
-                t.GetComponent<Text>().text = p.getHeroType();//displays the text
+                Debug.Log(t.name);
+                //see if this is being reached ??
+                t.GetComponent<Text>().text = p.getHeroType().ToString();//displays the text
                 heroes[i-1] = p.getHero(); //stores the hero at index i-1 (0->3)
             }
         }
@@ -79,10 +85,11 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void incrGold(int buttonID)
     {
-        Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
+        GameObject p = GameObject.Find("scrollImage");
+        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
-            if (t.name == "p1valuegold" + buttonID)
+            if (t.name == "p" + buttonID + "valuegold")
             {
 
                 if (goldToDistribute != 0) { 
@@ -93,7 +100,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                 t.GetComponent<Text>().text = TotalGoldP1.ToString();
             }
             }
-            else if (t.name == "p2valuegold" + buttonID)
+            else if (t.name == "p" + buttonID + "valuegold")
             {
                 if (goldToDistribute != 0)
                 {
@@ -102,7 +109,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                     t.GetComponent<Text>().text = TotalGoldP2.ToString();
                 }
             }
-            else if (t.name == "p3valuegold" + buttonID)
+            else if (t.name == "p" + buttonID + "valuegold")
             {
                 if (goldToDistribute != 0)
                 {
@@ -130,10 +137,12 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void decrGold(int buttonID)
     {
-        Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
+        GameObject p = GameObject.Find("scrollImage");
+        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
+        //Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
-            if (t.name == "p1valuegold" + buttonID)
+            if (t.name == "p" + buttonID + "valuegold")
             {
                 if (TotalGoldP1 != 0)
                 {
@@ -145,7 +154,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                     //t.game
                 }
             }
-            else if (t.name == "p2valuegold" + buttonID)
+            else if (t.name == "p" + buttonID + "valuegold")
             {
                 if (TotalGoldP2 != 0)
                 {
@@ -154,7 +163,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                     t.GetComponent<Text>().text = TotalGoldP2.ToString();
                 }
             }
-            else if (t.name == "p3valuegold" + buttonID)
+            else if (t.name == "p" + buttonID + "valuegold")
             {
                 if (TotalGoldP3 != 0)
                 {
@@ -181,10 +190,11 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void incrWine(int buttonID)
     {
-        Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
+        GameObject p = GameObject.Find("scrollImage");
+        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
-            if (t.name == "p1valuewine" + buttonID)
+            if (t.name == "p" + buttonID + "valuewine")
             {
                 if (wineToDistribute != 0)
                 {
@@ -195,7 +205,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                     //t.game
                 }
             }
-            else if (t.name == "p2valuewine" + buttonID)
+            else if (t.name == "p" + buttonID + "valuewine")
             {
                 if (wineToDistribute != 0)
                 {
@@ -204,7 +214,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                     t.GetComponent<Text>().text = TotalWineP2.ToString();
                 }
             }
-            else if (t.name == "p3valuewine" + buttonID)
+            else if (t.name == "p" + buttonID + "valuewine")
             {
                 if (wineToDistribute != 0)
                 {
@@ -229,10 +239,12 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void decrWine(int buttonID)
     {
-        Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
+        GameObject p = GameObject.Find("scrollImage");
+        Transform[] trs = p.GetComponentsInChildren<Transform>(true);
+        //Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
-            if (t.name == "p1valuewine" + buttonID)
+            if (t.name == "p" + buttonID + "valuewine")
             {
                 if (TotalWineP1 != 0)
                 {
@@ -243,7 +255,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                     //t.game
                 }
             }
-            else if (t.name == "p2valuewine" + buttonID)
+            else if (t.name == "p" + buttonID + "valuewine")
             {
                 if (TotalWineP2 != 0)
                 {
@@ -252,7 +264,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                     t.GetComponent<Text>().text = TotalWineP2.ToString();
                 }
             }
-            else if (t.name == "p3valuewine" + buttonID)
+            else if (t.name == "p" + buttonID + "valuewine")
             {
                 if (TotalWineP3 != 0)
                 {
@@ -263,7 +275,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                 }
 
             }
-            else if (t.name == "adminvaluegold" + buttonID)
+            else if (t.name == "adminvaluewine" + buttonID)
             {
                 if (TotalWineAdmin != 0)
                 {
@@ -280,83 +292,90 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void doneButton()
     {
-        if (goldToDistribute == 0 && wineToDistribute == 0)
-        {
-            //ALLOW EXIT OUT OF POP-UP AND UPDATE HERO ATTRIBUTES 
-            DistributeArticlesBoard.gameObject.SetActive(false);
-            WaitingScreenPopup.gameObject.SetActive(false);
 
 
-            for(int i = 0; i < heroes.Count; i++)
-            {
-                if (i == 0)
+                if (goldToDistribute == 0 && wineToDistribute == 0)
                 {
-                    //player 1
-                    
-                    heroes[i].setWillpower(2); 
-                    //every player starts off w 2 willpower points
+                    //ALLOW EXIT OUT OF POP-UP AND UPDATE HERO ATTRIBUTES 
+                    DistributeArticlesBoard.gameObject.SetActive(false);
+                    WaitingScreenPopup.gameObject.SetActive(false);
 
-                    for(int j = 0; j < TotalWineP1; j++)
+
+                    for (int i = 0; i < heroes.Count; i++)
                     {
-                        Article wine = new Wineskin();
-                        heroes[i].addArticle(wine); 
-                    }
-                }else if (i == 1)
-                {
-                    
-                    heroes[i].setGold(TotalGoldP2);
-                    //every player starts off w 2 willpower points
+                        if (i == 0)
+                        {
 
-                    for (int j = 0; j < TotalWineP2; j++)
-                    {
-                        Article wine = new Wineskin();
-                        heroes[i].addArticle(wine);
-                    }
+                            heroes[i].setGold(TotalGoldP1);
+                            for (int j = 0; j < TotalWineP1; j++)
+                            {
+                                Article wine = new Wineskin();
+                                heroes[i].addArticle(wine);
+                            }
+                        }
+                        else if (i == 1)
+                        {
+
+                            heroes[i].setGold(TotalGoldP2);
+                            //every player starts off w 2 willpower points
+
+                            for (int j = 0; j < TotalWineP2; j++)
+                            {
+                                Article wine = new Wineskin();
+                                heroes[i].addArticle(wine);
+                            }
+
+                        }
+                        else if (i == 2)
+                        {
+
+                            heroes[i].setGold(TotalGoldP3);
+
+                            for (int j = 0; j < TotalWineP3; j++)
+                            {
+                                Article wine = new Wineskin();
+                                heroes[i].addArticle(wine);
+                            }
 
 
+                        }
+                        else if (i == 3)
+                        {
 
+                            heroes[i].setGold(TotalGoldAdmin);
+                            //every player starts off w 2 willpower points
 
+                            for (int j = 0; j < TotalWineAdmin; j++)
+                            {
+                                Article wine = new Wineskin();
+                                heroes[i].addArticle(wine);
+                            }
 
-                }
-                else if (i == 2)
-                {
-                    
-                    heroes[i].setGold(TotalGoldP3);
-                    //every player starts off w 2 willpower points
-
-                    for (int j = 0; j < TotalWineP3; j++)
-                    {
-                        Article wine = new Wineskin();
-                        heroes[i].addArticle(wine);
-                    }
-
-
-                }
-                else if (i == 3)
-                {
-                    
-                    heroes[i].setGold(TotalGoldAdmin);
-                    //every player starts off w 2 willpower points
-
-                    for (int j = 0; j < TotalWineAdmin; j++)
-                    {
-                        Article wine = new Wineskin();
-                        heroes[i].addArticle(wine);
+                        }
                     }
 
                 }
-            }
-          
-        }else{
+                else
+                {
 
-            //Display message that not all WINESKINS/GOLD were distributed ????
+                    //Don't let player exit out 
 
-            DistributeArticlesBoard.gameObject.SetActive(true);
-            WaitingScreenPopup.gameObject.SetActive(true);
+                    DistributeArticlesBoard.gameObject.SetActive(true);
+                    WaitingScreenPopup.gameObject.SetActive(true);
+
+                }
+
+
+      
+
 
         }
 
 
-    }
+        }
 
-}
+
+
+           
+
+

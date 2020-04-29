@@ -377,7 +377,9 @@ public class GameController : MonoBehaviour
 
         bool onMerchant = false;
 
-        foreach (int merchantLoc in Game.gameState.getMerchants().Keys)
+        //COMMENT BACK IN AFTER
+
+     /* foreach (int merchantLoc in Game.gameState.getMerchants().Keys)
         {
             if (Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()] == merchantLoc)
             {
@@ -385,8 +387,10 @@ public class GameController : MonoBehaviour
                 updateGameConsoleText("You've landed on the same space as a merchant. Click the merchatn button to buy articles");
 
             }
-        }
-        merchantButton.gameObject.SetActive(onMerchant);
+        } */
+
+
+        merchantButton.gameObject.SetActive(onMerchant);  
 
         //if(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()])
         foreach (string player in playersToNotify)
