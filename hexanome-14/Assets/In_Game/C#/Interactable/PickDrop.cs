@@ -2,7 +2,7 @@
 using Andor;
 using UnityEngine;
 
-public class PickDrop : Interactable, TileObject
+public class PickDrop : MonoBehaviour, Interactable, TileObject
 {
     private bool pickedUp = false;
     private Node location = null;
@@ -14,6 +14,13 @@ public class PickDrop : Interactable, TileObject
     {
         this.location = location;
         this.prefab = prefab;
+        this.pickedUp = pickedUp;
+        this.name = name;
+    }
+
+    public PickDrop(Node location, bool pickedUp, string name)
+    {
+        this.location = location;
         this.pickedUp = pickedUp;
         this.name = name;
     }
@@ -51,11 +58,15 @@ public class PickDrop : Interactable, TileObject
 
     public void display()
     {
-        this.prefab.GetComponent<Renderer>().enabled = true;
+        //this.prefab.GetComponent<Renderer>().enabled = true;
+        if(this.name == "gold1")
+        {
+            Instantiate(GameController.instance.gold1, GameController.instance.tiles[Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()]].getMiddle(), transform.rotation);
+        }
     }
 
     public void hide()
     {
-        this.prefab.GetComponent<Renderer>().enabled = false;
+        //this.prefab.GetComponent<Renderer>().enabled = false;
     }
 }

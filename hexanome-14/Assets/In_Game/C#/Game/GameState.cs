@@ -36,16 +36,19 @@ public class GameState
     public int[] event_cards;
     public string[] fogtoken_order;
     public int day;
-    
+    public int legend;
+
     public int TIME_overtime = 8;
     public int TIME_endTime = 10;
     public int TIME_overtimeCost = 2;
     public bool skralTowerDefeated;
+    public bool medicinalGorDefeated;
     //public bool eventcard19;
     public bool EVENTCARD_treeOfSongBonusIsActive = false;
     public int brewCost;
     public int witchLocation;
     public bool witchFound;
+    public int skralTowerLocation;
     public Dictionary<string, List<Article>> equipmentBoard;
 
     public GameState()
@@ -65,6 +68,7 @@ public class GameState
         fogTokens = new Dictionary<FogToken, int>();
         princeThor = new List<PrinceThorald>();
         day = 1;
+        legend = 1;
         farmers = new List<Farmer>();
         merchants = new Dictionary<int, Merchant>();
         equipmentBoard = new Dictionary<string, List<Article>>();
@@ -75,6 +79,8 @@ public class GameState
         brewCost = 2;
         witchLocation = -1;
         witchFound = false;
+        medicinalGorDefeated = false;
+        skralTowerDefeated = false;
     }
 
     public void addPlayer(Player p)
@@ -226,6 +232,11 @@ public class GameState
         fogTokens.Add(f, f.getLocation());
     }
 
+    public void updateNarrator()
+    {
+        
+    }
+
 
     public List<Farmer> getFarmers()
     {
@@ -235,9 +246,6 @@ public class GameState
     {
         farmers.Add(f);
     }
-
-
-
     public List<PrinceThorald> getPrinceThorald()
     {
         return princeThor;

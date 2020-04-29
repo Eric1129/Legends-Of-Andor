@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LegendCard : MonoBehaviour
+public class LegendCard: MonoBehaviour
 {
     
     public Text currentText;

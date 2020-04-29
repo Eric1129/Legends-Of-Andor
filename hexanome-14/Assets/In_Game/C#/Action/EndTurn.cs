@@ -41,8 +41,9 @@ public class EndTurn :Action
         {
             gs.turnManager.reset();
             gs.day += 1;
+            gs.legend += 1;
             GameController.instance.updateDayCount(Game.gameState.day);
-
+            GameController.instance.advanceNarrator(Game.gameState.legend);
            
             foreach (Andor.Player player in gs.getPlayers())
             {
@@ -96,7 +97,8 @@ public class EndTurn :Action
 
         refreshFalcons(gs);
 
-        //advance narrator 
+        //advance narrator
+        
     }
     //public void moveGors(GameState gs)
     //{

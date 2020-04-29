@@ -5,6 +5,7 @@ public class Shield: Article
 {
     private ArticleType article;
     private string description;
+    private int numUsed;
 
     public Shield()
     {
@@ -21,11 +22,23 @@ public class Shield: Article
             "being returned to the bottom of the stack. \n\n After a shield is used for the " +
             "first time, turn it over so its opposite, damaged, side is up. After the " +
             "second use, it is returned to the equipment board.";
+        numUsed = 0;
     }
 
     public void useArticle()
     {
+        this.numUsed += 1;
+    }
 
+    public void reset()
+    {
+        this.numUsed = 0;
+    }
+
+
+    public int getNumUsed()
+    {
+        return this.numUsed;
     }
 
     public string articleToString()

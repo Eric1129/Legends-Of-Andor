@@ -27,7 +27,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int heroRank;
 
 
-    private int gold = 10;
+    private int gold = 0;
     private int strength = 1;
     private int willpower = 7;
 
@@ -38,6 +38,16 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     public bool selectedWineskin;
     public int wineskinsides = 0;
 
+    //for battle and article checks
+    public bool inBattle = false;
+    public bool usingWitchBrew = false;
+    public bool usingHelm = false;
+    public bool usingBow = false;
+    public bool usingShield = false;
+    public bool selectedArticle = false;
+    public List<Interactable> playerInteractables;
+
+
     public Dictionary<int, int> numDice; //<wp, numberOfDice>
 
     public Hero()
@@ -46,6 +56,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
         pronouns = new string[3];
         heroArticles = new Dictionary<string, List<Article>>();
         numDice = new Dictionary<int, int>();
+        playerInteractables = new List<Interactable>();
     }
 
     public string allArticlesAsString()

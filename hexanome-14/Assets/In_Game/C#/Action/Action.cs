@@ -22,7 +22,13 @@ public enum Type
     RespondFight,
     UseWineskin,
     StartFight,
-    EndFight
+    EndFight,
+    UseHelm,
+    UseWitchBrew,
+    UseBow,
+    UseShield,
+    FightTurn
+    
 
 }
 
