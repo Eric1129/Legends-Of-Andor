@@ -28,8 +28,12 @@ public enum Type
     UseBow,
     UseShield,
     FightTurn,
-    ExitFight
-    
+    ExitFight,
+    JoinNextRound,
+    CreatureTurn,
+    WinBattle,
+    DistributeReward,
+    GetMyReward
 
 }
 

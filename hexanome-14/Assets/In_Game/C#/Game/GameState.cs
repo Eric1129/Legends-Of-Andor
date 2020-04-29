@@ -50,6 +50,7 @@ public class GameState
     public bool witchFound;
     public int skralTowerLocation;
     public Dictionary<string, List<Article>> equipmentBoard;
+    public List<int> monsterDiceRolls = new List<int>();
 
     public GameState()
 	{
