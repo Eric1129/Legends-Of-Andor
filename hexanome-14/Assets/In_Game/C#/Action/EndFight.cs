@@ -11,10 +11,12 @@ public class EndFight : Action
 
     public EndFight(string[] players)
     {
+        Debug.Log("ending fight");
         type = Type.EndFight;
 
         this.players = players;
         
+
     }
 
     public string[] playersInvolved()
@@ -38,6 +40,7 @@ public class EndFight : Action
         }
         Array.Clear(players, 0, players.Length);
         GameController.instance.fsc.fightOverAction();
+        gs.turnManager.passTurn();
 
     }
 

@@ -45,6 +45,8 @@ public class GetMyReward : Action
             Debug.Log("GETTING MY willpower");
             h.increaseWillpower(rewards[players[0]]);
         }
+
+        GameController.instance.fsc.fighterRewards.Remove(players[0]);
     }
 
     public bool isLegal(GameState gs)

@@ -39,8 +39,9 @@ public class FightScreenController : MonoBehaviour
     public string hostPlayer;
 
     public GameObject updateRollArticle;
+    public List<string> nextRoundPlayers = new List<string>();
 
- public Text updateRollText;
+    public Text updateRollText;
 
    public bool creatureTurnCheck = false;
 
@@ -49,7 +50,7 @@ public class FightScreenController : MonoBehaviour
 
     private List<string> availablePlayers; //players that are eligible to fight
     private List<string> invitedPlayers; //players that are invited to the fight
-    private List<string> involvedPlayers; //players that have accepted the fight invite
+    public List<string> involvedPlayers; //players that have accepted the fight invite
 
     private Dictionary<string, bool> playerResponded; //keeps track of which players have responded to fight request
     private Dictionary<string, bool> playerRespondNextRound;
@@ -1244,9 +1245,10 @@ IEnumerator articleroutine(int sleep)
         distributeReward.gameObject.SetActive(false);
         //rewardScreen.gameObject.SetActive(true);
         //Game.sendAction(
-        Game.sendAction(new DistributeReward(fight.fighters, fighterRewards));
+        Game.sendAction(new DistributeReward(fight.fighters, fighterRewards));//calls distribute response
 
     }
+
 
     public void endBattle_collab(int outcome)
     {
@@ -1311,6 +1313,8 @@ IEnumerator articleroutine(int sleep)
         }
     }
 
+    public Dictionary<string, bool> heroGotReward = new Dictionary<string, bool>();
+
     public void getReward(string type)
     {
         if(fightType == 0)
@@ -1334,23 +1338,31 @@ IEnumerator articleroutine(int sleep)
             distributeReward.gameObject.SetActive(false);
             string[] players = new string[1];
             players[0] = Game.myPlayer.getNetworkID();
+            involvedPlayers.Remove(players[0]);
             Debug.Log(Game.gameState.getPlayer(players[0]).getHeroType() + " is getting reward " + type);
-            Hero h = Game.gameState.getPlayer(players[0]).getHero();
-            if (type == "gold")
-            {
-                Debug.Log("GETTING MY gold");
-                h.increaseGold(fighterRewards[players[0]]);
-            }
+            //Hero h = Game.gameState.getPlayer(players[0]).getHero();
+            //if (type == "gold")
+            //{
+            //    Debug.Log("GETTING MY gold");
+            //    h.increaseGold(fighterRewards[players[0]]);
+            //}
 
-            if (type == "willpower")
-            {
-                Debug.Log("GETTING MY willpower");
-                h.increaseWillpower(fighterRewards[players[0]]);
-            }
+            //if (type == "willpower")
+            //{
+            //    Debug.Log("GETTING MY willpower");
+            //    h.increaseWillpower(fighterRewards[players[0]]);
+            //}
+            //Debug.Log("Before removing from fighter rewards" + fighterRewards.Count);
+            //fighterRewards.Remove(players[0]);
+            //Debug.Log("After removing from fighter rewards" + fighterRewards.Count);
+            Game.sendAction(new GetMyReward(players, fighterRewards, type));
 
-            //Game.sendAction(new GetMyReward(players, fighterRewards, type));
+            if (fighterRewards.Count == 0)
+            {
+                Game.sendAction(new EndFight(involvedPlayers.ToArray()));
+            }
             closeFightScreen();
-            Game.sendAction(new EndFight(fight.fighters));
+
         }
         
     }
@@ -1365,7 +1377,7 @@ IEnumerator articleroutine(int sleep)
     public void fightOverAction()
     {
         //end turn
-        Game.gameState.turnManager.passTurn();
+        
         closeFightScreen();
         rewardScreen.gameObject.SetActive(false);
         battleEndScreen.gameObject.SetActive(false);
@@ -1698,7 +1710,7 @@ IEnumerator articleroutine(int sleep)
         
     }
 
-    List<string> nextRoundPlayers = new List<string>();
+    
 
     public void joinFightLobby2(string fighter)
     {
@@ -1714,7 +1726,7 @@ IEnumerator articleroutine(int sleep)
             //fightLobby2.gameObject.SetActive(false);
             //make sure to reset all the fight UI
             Game.sendAction(new StartFight(nextRoundPlayers.ToArray(), 1));
-            involvedPlayers = nextRoundPlayers;
+            //involvedPlayers = nextRoundPlayers;
 
         }
         
@@ -1848,9 +1860,11 @@ IEnumerator articleroutine(int sleep)
         availablePlayers.Clear();
         invitedPlayers.Clear();
         involvedPlayers.Clear();
-
+        playerResponded.Clear();
         battleValue.text = "Battle Value";
-        
+        playerRespondNextRound.Clear();
+
+
         selectedChoiceText.text = "";
         monsterBattleValueText.text = "Battle Value: ";
         monsterBattleValue = 0;
