@@ -175,7 +175,11 @@ public class GameState
 
     public void removeMonster(Monster m)
     {
-        m.getPrefab().SetActive(false);
+
+        Node monsterLoc = positionGraph.getNode(80);
+        m.setLocationNode(monsterLoc);
+        m.move();
+        
         if(m.getMonsterType() == "Gor")
         {
             Gor g = (Gor)m;

@@ -154,6 +154,7 @@ public class GameController : MonoBehaviour
 
     private string[] invitedFighters;
     private bool fightRequestSent;
+    private bool fightActive;
 
     // Start is called before the first frame update
     void Start()
@@ -471,6 +472,24 @@ public class GameController : MonoBehaviour
                 }
 
             }
+
+            //bool currentlyFighting = true;
+
+            if (fightActive)
+            {
+                if (fsc.fight != null)
+                {
+                    foreach(Andor.Player p in Game.gameState.getPlayers())
+                    {
+                        if(!Array.Exists(fsc.fight.fighters, element => element == p.getNetworkID()))
+                        {
+                            fsc.fightScreen.gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
+
+            
         }
 
         if (invitedFighters != null)
@@ -1519,11 +1538,7 @@ public void updateGameConsoleText(string message)
 
     public void sendFightRequest(string[] players)
     {
-        //invitedFighters = new string[players.Length - 1];
-        //for(int i=1; i<players.Length; i++)
-        //{
-        //    invitedFighters[i - 1] = players[i];
-        //}
+       
         invitedFighters = players;
        
         fightRequestSent = true;
@@ -1534,8 +1549,7 @@ public void updateGameConsoleText(string message)
     {
         fightRequestSent = false;
         
-        Debug.Log("processing fight request");
-
+        
         if (otherPlayers)
         {
 
@@ -1570,6 +1584,11 @@ public void updateGameConsoleText(string message)
         fightRequest.gameObject.SetActive(false);
         fsc.acceptFightRequest(accept, Game.myPlayer.getNetworkID());
 
+    }
+
+    public void setActiveFight()
+    {
+        fightActive = true;
     }
 
     #region buttonClicks
