@@ -27,7 +27,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int heroRank;
 
 
-    private int gold = 0;
+    private int gold = 10;
     private int strength = 1;
     private int willpower = 7;
 
