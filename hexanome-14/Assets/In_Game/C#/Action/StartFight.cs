@@ -14,6 +14,12 @@ public class StartFight : Action
         type = Type.StartFight;
         this.players = players;
         this.fightType = fightType;
+        //GameController.instance.fsc.involvedPlayers.Clear();
+        for (int i = 0; i< players.Length; i++)
+        {
+            GameController.instance.fsc.involvedPlayers[i] = players[i];
+        }
+        GameController.instance.fsc.nextRoundPlayers.Clear();
         
         
     }

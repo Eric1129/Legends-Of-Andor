@@ -49,18 +49,26 @@ public class Monster : Fightable, MoveStrategy
         skralTower = true;
     }
 
+     public bool getSkralTower()
+    {
+        return skralTower;
+    }
+
+
     public void setHerbGor()
     {
         herbGor = true;
     }
     public void move()
     {
-        location = location.toCastleNode();
+        if(location.getIndex() != 80){
+            location = location.toCastleNode();
 
-        if (location.getIndex() == 0)
-        {
-            GameController.instance.monsterAtCastle(this);
-        }
+             if (location.getIndex() == 0)
+            {
+                GameController.instance.monsterAtCastle(this);
+            }
+        }    
     }
 
 
@@ -94,7 +102,8 @@ public class Monster : Fightable, MoveStrategy
 
     public void increaseWillpower(int amount)
     {
-        this.willpower += amount;
+        this.willpower = Mathf.Min(20, this.willpower + amount);
+        
     }
     public void decreaseWillpower(int amount)
     {

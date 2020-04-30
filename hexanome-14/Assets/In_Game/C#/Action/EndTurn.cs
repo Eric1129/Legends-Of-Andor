@@ -44,6 +44,7 @@ public class EndTurn :Action
             gs.legend += 1;
             GameController.instance.updateDayCount(Game.gameState.day);
             GameController.instance.advanceNarrator(Game.gameState.legend);
+            LegendCard.instance.advanceLegendCard(Game.gameState.legend);
            
             foreach (Andor.Player player in gs.getPlayers())
             {
@@ -143,7 +144,7 @@ public class EndTurn :Action
                 break;
             }
             //if the monster is not in the castle, we move it towards the castle
-            if (g.Key.getLocation() != 0 && gs.outcome != "lost")
+            if (g.Key.getLocation() != 0 && g.Key.getLocation() != 80 && gs.outcome != "lost")
             {
                 moveMonster(g.Key, gs);
                 gs.updateGorLocations();
@@ -167,7 +168,7 @@ public class EndTurn :Action
                 break;
             }
             //if the monster is not in the castle, we move it towards the castle
-            if (s.Key.getLocation() != 0)
+            if (s.Key.getLocation() != 0 && s.Key.getLocation() != 80)
             {
                 moveMonster(s.Key, gs);
                 gs.updateSkralLocations();

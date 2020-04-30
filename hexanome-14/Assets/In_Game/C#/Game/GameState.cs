@@ -51,6 +51,7 @@ public class GameState
     public int skralTowerLocation;
     public Dictionary<string, List<Article>> equipmentBoard;
     public List<int> monsterDiceRolls = new List<int>();
+    public int runestoneLegend = -1;
 
     public GameState()
 	{
@@ -91,7 +92,6 @@ public class GameState
             players.Add(p.getNetworkID(), p);
             playerInteractables.Add(p.getNetworkID(), new List<Interactable>());
             Debug.Log("Added player " + p);
-
         }
         else
         {
@@ -176,23 +176,39 @@ public class GameState
 
     public void removeMonster(Monster m)
     {
-
+        if(m.isMedicinalGor()){
+            //medicinalHerb is separated from Gor --> should be interactable now
+            medicinalGorDefeated = true;
+            GameController.instance.medGorDefeatedNotify();
+        }
+        if(m.getSkralTower()){
+            //trigger skralTower scenario
+            //move narrator to N
+            //need a check in gameController for this
+            skralTowerDefeated = true;
+            //GameController.instance.update
+        }
         Node monsterLoc = positionGraph.getNode(80);
         m.setLocationNode(monsterLoc);
-        m.move();
+       // GameController.instance.deadMonsterMove(m);
+       // m.getPrefab().SetActive(false);
+
+       // m.move();
         
         if(m.getMonsterType() == "Gor")
         {
             Gor g = (Gor)m;
-            gors.Remove(g);
+            //gors.Remove(g);
         }
         if (m.getMonsterType() == "Skral")
         {
             Skral s = (Skral)m;
-            skrals.Remove(s);
+            //skrals.Remove(s);
         }
         
-        monsters.Remove(m);
+        //monsters.Remove(m);
+        Game.gameState.legend += 1;
+        GameController.instance.advanceNarrator(Game.gameState.legend);
         
     }
 
@@ -232,12 +248,6 @@ public class GameState
     {
         fogTokens.Add(f, f.getLocation());
     }
-
-    public void updateNarrator()
-    {
-        
-    }
-
 
     public List<Farmer> getFarmers()
     {
@@ -402,8 +412,14 @@ public class GameState
         int num = event_cards[0];
         eventCards.execute(num);
         //event_cards = RemoveAt(event_cards,0);
-        int[] e = new int[event_cards.Length - 1];
+        // int[] e = new int[event_cards.Length - 1];
+        // Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
+        // event_cards = e;
+        Debug.Log(event_cards);
+        int[] e = new int[event_cards.Length ];
         Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
+        Array.Copy(event_cards, 0, e, event_cards.Length-1, 1);
+        Debug.Log(e);
         event_cards = e;
     }
 

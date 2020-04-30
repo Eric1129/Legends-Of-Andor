@@ -52,6 +52,25 @@ public class GameController : MonoBehaviour
 
     public Transform merchantButton;
 
+    public GameObject rollDieForMedicinalHerb;
+    public GameObject rollDieForMedicinalHerbDice;
+    public GameObject rollDieForMedicinalHerbOutcome;
+    public GameObject rollDieForMedicinalHerbDone;
+
+    public GameObject rollDieForRunestoneLegend;
+    public GameObject rollDieForRunestoneLegendDice;
+    public GameObject rollDieForRunestoneLegendOutcome;
+    public GameObject rollDieForRunestoneLegendDone;
+
+    public GameObject rollDieForSkralStronghold;
+    public GameObject rollDieForSkralStrongholdDice;
+    public GameObject rollDieForSkralStrongholdOutcome;
+    public GameObject rollDieForSkralStrongholdDone;
+
+    public GameObject rollDieRunestone;
+    public GameObject rollDieRunestoneRedDice;
+    public GameObject rollDieRunestoneOutcome;
+    public GameObject rollDieRunestoneDone;
 
     public GameObject distributeArticleController;
 
@@ -142,6 +161,7 @@ public class GameController : MonoBehaviour
     public static MerchantScreen ms;
 
     public FightScreenController fsc;
+    public DistributeArticlesScreen das;
 
     private Transform initTransform;
     //private string[] tradeType;
@@ -164,6 +184,7 @@ public class GameController : MonoBehaviour
     {
         ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
         fsc = fightScreenController.gameObject.GetComponent<FightScreenController>();
+        das = distributeArticleController.GetComponent<DistributeArticlesScreen>();
         //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         playersToNotify = new string[4];
         //ts = new TradeScreen();
@@ -200,8 +221,14 @@ public class GameController : MonoBehaviour
             Game.Shuffle(randomOrder);
             Game.setTurnManager(randomOrder);
             Debug.Log("SET TURN");
+            das.decideWhichScreenToDisplay(true);
 
 
+        }
+        else
+        {
+            //das.WaitingScreenPopup.gameObject.SetActive(true);
+            das.decideWhichScreenToDisplay(false);
         }
 
 
@@ -377,15 +404,20 @@ public class GameController : MonoBehaviour
             }
 
 
-            // Update Player position
+            // Update Monster position
             foreach (Monster monster in Game.gameState.getMonsters())
             {
-                if (monster.canMonsterMove())
+                if (monster.getLocation() == 80)
+                {
+                    monsterObjects[monster].transform.position =
+                    moveTowards(monsterObjects[monster].transform.position, tiles[80].getMiddle(), 5.5f);
+                }
+                else if (monster.canMonsterMove())
                 {
                     monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
                 }
-                if (monster.isMedicinalGor())
+                else if (monster.isMedicinalGor() && !Game.gameState.medicinalGorDefeated)
                 {
                     medicinalHerbObject[Game.gameState.getMedicinalHerb()].transform.position = moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
                 }
@@ -409,11 +441,12 @@ public class GameController : MonoBehaviour
 
             updateHeroStats();
 
-            if (winScenario() && Game.gameState.outcome == "won")
+            if (/*winScenario() && */Game.gameState.outcome == "won")
             {
                 Game.gameState.outcome = "wonNotified";
                 winNotify();
             }
+
 
             if (tradeRequestSent)
             {
@@ -547,6 +580,16 @@ public class GameController : MonoBehaviour
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
         Vector3 cellPos = tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle();
         playerObjects[player.getNetworkID()].transform.position = moveTowards(playerPos, cellPos, 0.5f);
+    }
+
+    public void deadMonsterMove(Monster monster){
+        for(int i= 0; i < 100; i++){
+
+            monsterObjects[monster].transform.position =
+                    moveTowards(monsterObjects[monster].transform.position, tiles[80].getMiddle(), 4.5f);
+              Debug.Log("remove monster reach");
+        }
+
     }
 
 
@@ -744,28 +787,146 @@ public class GameController : MonoBehaviour
         //Debug.Log("sent the data");
         //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
     }
+
+//////////////////////////////RUNESTONE LEGENDS//////////////////////////  
+
+///////when you want to set the skral stronghold, you need to make
+/////// rollDieForSkralStronghold.SetActive(true) for one player
+
+  public void rolledRunestoneLegend(){
+        System.Random rnd = new System.Random();
+        int roll = rnd.Next(1, 7);   // creates a number between 1 and 6
+        rollDieForRunestoneLegendOutcome.SetActive(true);
+        rollDieForRunestoneLegendOutcome.GetComponent<Text>().text = "You rolled a " + roll;
+        rollDieForRunestoneLegendDice.SetActive(false);
+        rollDieForRunestoneLegendDone.SetActive(true);
+        // string [] player = {Game.myPlayer.getNetworkID()};
+        Game.sendAction(new SetRunestoneLegend(Game.myPlayer.getNetworkID(), roll));           
+    }
+
+    public void rolledRunestoneLegendDone(){
+            rollDieForRunestoneLegend.SetActive(false);
+    }
+////////////////////////////SKRAL STRONGHOLD/////////////////////////////
+
+///////when you want to set the skral stronghold, you need to make
+/////// rollDieForSkralStronghold.SetActive(true) for one player
+
+public void rolledSkralStronghold(){
+        System.Random rnd = new System.Random();
+        int roll = rnd.Next(1, 7);   // creates a number between 1 and 6
+        //foreach(Andor.Player p in Game.gameState.getPlayers()){
+        rollDieForSkralStrongholdDice.SetActive(false);
+        //System.Random rnd = new System.Random();
+        //Game.gameState.medRoll = dice;
+        int loc = roll + 50;
+        rollDieForSkralStrongholdOutcome.GetComponent<Text>().text = "You rolled a " + roll +"! The Skral stronghold will be located at position: " + loc + "!";
+        rollDieForSkralStrongholdOutcome.SetActive(true);
+        rollDieForSkralStrongholdDice.SetActive(false);
+        rollDieForSkralStrongholdDone.SetActive(true);
+        //string [] player = {Game.myPlayer.getNetworkID()};
+        Game.sendAction(new SetSkralStronghold(Game.myPlayer.getNetworkID(), roll));           
+    }
+
+    public void rolledSkralStrongholdDone(){
+            rollDieForSkralStronghold.SetActive(false);
+    }
+    ////////////////////////////SKRAL STRONGHOLD//////////////////////////////
+
+    public void rolledRunestoneLocations()
+    {
+        System.Random rnd = new System.Random();
+        
+        for (int i = 0; i < 5; i++)
+        {
+            int rollx = rnd.Next(1, 6);   // creates a number between 1 and 6
+            int rolly = rnd.Next(1, 6);   // creates a number between 1 and 6
+            rollDieRunestoneRedDice.SetActive(false);
+            rollDieRunestoneOutcome.GetComponent<Text>().text = "You rolled a " + rollx + ""+rolly;
+            rollDieRunestoneOutcome.SetActive(true);
+        }
+
+        string[] player = { Game.myPlayer.getNetworkID() };
+        
+        rollDieRunestoneDone.SetActive(true);
+    }
+
+    public void rolledRunestoneLocationsDone()
+    {
+        rollDieRunestone.SetActive(false);
+    }
+
+
+
+    public int medicinalHerbRoll(int roll){
+        //int loc = 0;
+            if (roll == 1 || roll == 2)
+            {
+                return 37;
+            }
+            else if (roll == 3 || roll == 4)
+            {
+                return 67;
+            }
+            else if (roll == 5 || roll == 6)
+            {
+                return 61;
+            }
+            else{
+                return 37;
+            }
+          //  return loc;
+    }
+
+
+
+    public void rolledMedicinalHerb(){
+        System.Random rnd = new System.Random();
+        int roll   = rnd.Next(1, 7);   // creates a number between 1 and 6
+        //foreach(Andor.Player p in Game.gameState.getPlayers()){
+    
+        //System.Random rnd = new System.Random();
+        //Game.gameState.medRoll = dice;
+        int loc = medicinalHerbRoll(roll);
+        rollDieForMedicinalHerbOutcome.GetComponent<Text>().text = "You rolled a " + roll +". The medicinal Herb will be located on space " + loc + "!";
+        rollDieForMedicinalHerbOutcome.SetActive(true);
+        rollDieForMedicinalHerbDice.SetActive(false);
+        rollDieForMedicinalHerbDone.SetActive(true);
+        string [] player = {Game.myPlayer.getNetworkID()};
+        Game.sendAction(new InstantiateMedicinalHerb(player, roll));           
+        //}
+    }
+
+    public void rolledMedicinalHerbDone(){
+            rollDieForMedicinalHerb.SetActive(false);
+    }
+
     public void foundWitch(int loc)
     {
+         Game.gameState.witchFound = true;
+                            GameObject witchReka = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+                         Debug.Log("Added witch at position: " + loc);
+
         //instantiateTheWitch here
-        scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
-        StartCoroutine(overtimeCoroutine(5));
-        //instantiate witch
-        Debug.Log("Added witch at position: " + loc);
-        //ned to make this true everywhere
-        Game.gameState.witchFound = true;
-        //
-        GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
-        //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
-        //Debug.Log(w);
-        //Debug.Log(w.getLocation());
-        //Game.gameState.addWell(w);
+        // scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
+        // StartCoroutine(overtimeCoroutine(5));
+        // //instantiate witch
+        // Debug.Log("Added witch at position: " + loc);
+        // //ned to make this true everywhere
+        // Game.gameState.witchFound = true;
+        // //
+        // GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+        // //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
+        // //Debug.Log(w);
+        // //Debug.Log(w.getLocation());
+        // //Game.gameState.addWell(w);
 
 
-        //if it is my player, then get roll
-        //instantiateMedicinalHerb(roll)
-        //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
-        //Game.gameState.foundWitch
-        //Game.gameState.brewCost
+        // //if it is my player, then get roll
+        // //instantiateMedicinalHerb(roll)
+        // //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
+        // //Game.gameState.foundWitch
+        // //Game.gameState.brewCost
     }
     IEnumerator overtimeCoroutine(int sleep)
     {
@@ -803,6 +964,13 @@ public class GameController : MonoBehaviour
     public void winNotify()
     {
         scrollTxt.text = "Congratulations, you have successfully completed the legend!";
+        StartCoroutine(overtimeCoroutine(10));
+
+    }
+
+     public void medGorDefeatedNotify()
+    {
+        scrollTxt.text = "You have defeated the Medicinal Herb Gor!";
         StartCoroutine(overtimeCoroutine(10));
 
     }
@@ -896,13 +1064,11 @@ public class GameController : MonoBehaviour
             loadFogTokens();
             //Debug.Log("Finished loading fog tokens");
 
-            loadPrinceThorald();
-
             loadFarmers();
 
             loadNarrator();
 
-            loadSkralOnTower();
+            //loadSkralOnTower();
 
             setupEquipmentBoard();
 
@@ -913,7 +1079,7 @@ public class GameController : MonoBehaviour
             initializeWineskin();
 
             Debug.Log("INITIALIZING THE MED HERB");
-            instantiateMedicinalHerb(3);
+           // instantiateMedicinalHerb(3);
 
         }
 
@@ -1124,9 +1290,9 @@ public class GameController : MonoBehaviour
 
     }
 
-    private void loadSkralOnTower()
+    public void loadSkralOnTower(int roll)
     {
-        int roll = 54;
+        //int roll = 54;
         Game.gameState.skralTowerLocation = roll;
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         Skral s = new Skral(Game.gameState.positionGraph.getNode(roll));
@@ -1172,8 +1338,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-
-    private void loadPrinceThorald()
+    public void loadPrinceThorald()
     {
         GameObject princeThorald = Instantiate(prince, tiles[72].getMiddle(), transform.rotation);
         PrinceThorald princeT = new PrinceThorald(Game.gameState.positionGraph.getNode(72), princeThorald);
@@ -1210,8 +1375,7 @@ public class GameController : MonoBehaviour
 
     }
 
-
-    private void instantiateMedicinalHerb(int roll)
+    public void instantiateMedicinalHerb(int roll)
     {
         int loc = 0;
         if (roll == 1 || roll == 2)
@@ -1361,9 +1525,9 @@ public class GameController : MonoBehaviour
         foreach (Andor.Player p in Game.gameState.getPlayers())
         {
             Debug.Log("Added gold at position: ");
-            Gold g = new Gold(Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[(p.getNetworkID())]));
-            g.setGold(2);
-            //Game.gameState.addGold(g);
+            Gold g = new Gold(Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[(p.getNetworkID())]), 2);
+            // g.setGold(2);
+           //Game.gameState.addGold(g);
         }
     }
 
@@ -1898,42 +2062,42 @@ public class GameController : MonoBehaviour
     }
 
 
-    public bool winScenario()
-    {
-        //checks that herb is in castle, castle defended
-        if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
-        {
-            Game.gameState.outcome = "won";
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    // public bool winScenario()
+    // {
+    //     //checks that herb is in castle, castle defended
+    //     if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
+    //     {
+    //         Game.gameState.outcome = "won";
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         return false;
+    //     }
 
-    }
+    // }
 
-    public bool checkMedicinalHerbAtCastle()
-    {
-        //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
-        //{
-        //    if (mh.getLocation() == 0)
-        //    {
-        //        return true;
-        //    }
-        //}
-        //return false;
-        if (Game.gameState.getMedicinalHerb() != null)
-        {
-            return false;
-        }
+    // public bool checkMedicinalHerbAtCastle()
+    // {
+    //     //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
+    //     //{
+    //     //    if (mh.getLocation() == 0)
+    //     //    {
+    //     //        return true;
+    //     //    }
+    //     //}
+    //     //return false;
+    //     if (Game.gameState.getMedicinalHerb() != null)
+    //     {
+    //         return false;
+    //     }
 
-        if (Game.gameState.getMedicinalHerb().getLocation() == 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    //     if (Game.gameState.getMedicinalHerb().getLocation() == 0)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     public void initializeStrengthPoints()
     {

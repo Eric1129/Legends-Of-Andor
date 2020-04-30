@@ -165,7 +165,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
     public void increaseWillpower(int willpower)
     {
-        this.willpower = Mathf.Min(21, this.willpower+ willpower);
+        this.willpower = Mathf.Min(20, this.willpower+ willpower);
     }
     public void decreaseWillpower(int willpower)
     {

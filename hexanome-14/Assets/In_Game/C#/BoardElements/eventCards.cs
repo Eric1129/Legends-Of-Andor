@@ -161,8 +161,8 @@ public class eventCards : MonoBehaviour
             int location = players[player.getNetworkID()];
             if (location <= 20 && location >= 0)
             {
-                int currWillpower = player.getHero().getWillpower();
-                player.getHero().setWillpower(currWillpower - 3);
+                //int currWillpower = player.getHero().getWillpower();
+                player.getHero().decreaseWillpower(3);
             }
         }
     }
@@ -266,7 +266,7 @@ public class eventCards : MonoBehaviour
         foreach (Monster m in monsters)
         {
             int currStrength = m.getStrength();
-            m.setStrength(currStrength + 1);
+            //m.increaseStrength(1);
         }
     }
 
@@ -294,17 +294,11 @@ public class eventCards : MonoBehaviour
     {
         GameController.instance.updateGameConsoleText("14 - A fragment of a very old sculpture has been found. Not all of the heroes are able to appreciate that kind of handiwork...");
         GameController.instance.updateGameConsoleText("14 - The Dwarf and Warrior immediately get 3 willpower points each.");
-        if (instance.hasDwarf)
-        {
-            int currWillpower = dwarf.getHero().getWillpower();
-            Debug.Log("14");
-            dwarf.getHero().setWillpower(currWillpower + 3);
-        }
 
-        if (instance.hasWarrior)
-        {
-            int currWillpower = warrior.getHero().getWillpower();
-            warrior.getHero().setWillpower(currWillpower + 3);
+        foreach(Andor.Player player in Game.gameState.getPlayers()){
+            if(player.getHeroType() == "Male Dwarf" || player.getHeroType() == "Female Dwarf" || player.getHeroType() == "Male Warrior" || player.getHeroType() == "Female Warrior"){
+                player.getHero().increaseWillpower(3);
+            }
         }
     }
 
@@ -413,8 +407,8 @@ public class eventCards : MonoBehaviour
             int location = players[player.getNetworkID()];
             if (location == 71 || location == 72 || location == 0)
             {
-                int currWillpower = player.getHero().getWillpower();
-                player.getHero().setWillpower(currWillpower - 2);
+                //int currWillpower = player.getHero().getWillpower();
+                player.getHero().decreaseWillpower(2);
             }
         }
     }
@@ -428,8 +422,8 @@ public class eventCards : MonoBehaviour
         {
             if (player.getHero().getHour() == 0)
             {
-                int currWillpower = player.getHero().getWillpower();
-                player.getHero().setWillpower(currWillpower + 2);
+               //int currWillpower = player.getHero().getWillpower();
+                player.getHero().increaseWillpower(2);
             }
         }
     }
@@ -449,8 +443,8 @@ public class eventCards : MonoBehaviour
             int location = players[player.getNetworkID()];
             if (location == 71 || location == 72 || location == 0)
             {
-                int currWillpower = player.getHero().getWillpower();
-                player.getHero().setWillpower(currWillpower - 2);
+                //int currWillpower = player.getHero().getWillpower();
+                player.getHero().decreaseWillpower(2);
             }
         }
     }
@@ -466,7 +460,7 @@ public class eventCards : MonoBehaviour
             if (player.getHero().getHour() == 0)
             {
                 int currWillpower = player.getHero().getWillpower();
-                player.getHero().setWillpower(currWillpower - 2);
+                player.getHero().decreaseWillpower(2);
             }
         }
     }
@@ -475,7 +469,7 @@ public class eventCards : MonoBehaviour
     //EVENT CARD - RANDOM
     public static void eventCard1()
     {
-        GameController.instance.updateGameConsoleText("Not Sure 3 -  Each hero standing on a space with a number between 37 and 70 now loses 3 willpower points.");
+        GameController.instance.updateGameConsoleText("Each hero standing on a space with a number between 37 and 70 now loses 3 willpower points.");
         foreach (Andor.Player player in Game.gameState.getPlayers())
         {
             player.getNetworkID();
@@ -485,8 +479,8 @@ public class eventCards : MonoBehaviour
             int location = players[player.getNetworkID()];
             if (location >= 37 || location <= 70)
             {
-                int currWillpower = player.getHero().getWillpower();
-                player.getHero().setWillpower(currWillpower - 3);
+                //int currWillpower = player.getHero().getWillpower();
+                player.getHero().decreaseWillpower(3);
             }
         }
     }
@@ -502,8 +496,8 @@ public class eventCards : MonoBehaviour
         }
         if (instance.hasArcher)
         {
-            int willpower = archer.getHero().getWillpower();
-            archer.getHero().setWillpower(willpower + 3);
+            //int willpower = archer.getHero().getWillpower();
+            archer.getHero().increaseWillpower(3);
         }
     }
 

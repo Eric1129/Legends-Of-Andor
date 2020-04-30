@@ -61,14 +61,174 @@ public class DistributeArticlesScreen : MonoBehaviour
             playerContainers[i].GetChild(6).GetComponent<Text>().text = playersList[i].getHeroType();
         }
 
-        decideWhichScreenToDisplay();
+
+    }
+
+    //===================AILISH REFACTOR===========================
+    Dictionary<string, int> playerGold = new Dictionary<string, int>();
+    Dictionary<string, int> playerWineskin = new Dictionary<string, int>();
+
+    public void incrementGold(int buttonID)
+    {
+        if(goldToDistribute > 0)
+        {
+            Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>();
+            foreach (Transform t in trs)
+            {
+                if (t.name == "Player" + buttonID)
+                {
+                    string playerID = playersList[buttonID - 1].getNetworkID();
+                    Transform[] attrs = t.GetComponentsInChildren<Transform>();
+                    foreach (Transform attr in attrs)
+                    {
+                        if (attr.name == "goldValue")
+                        {
+                            if (playerGold.ContainsKey(playerID))
+                            {
+                                playerGold[playerID] = playerGold[playerID] + 1;
+                                
+                            }
+                            else
+                            {
+                                playerGold.Add(playerID, 1);
+                            }
+
+                            attr.GetComponent<Text>().text = playerGold[playerID].ToString();
+
+                        }
+                    }
+                }
+            }
+            goldToDistribute--;
+        }
+        
+    }
+
+    public void incrementWineskin(int buttonID)
+    {
+        if (wineToDistribute > 0)
+        {
+            Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>();
+            foreach (Transform t in trs)
+            {
+                if (t.name == "Player" + buttonID)
+                {
+                    string playerID = playersList[buttonID - 1].getNetworkID();
+                    Transform[] attrs = t.GetComponentsInChildren<Transform>();
+                    foreach (Transform attr in attrs)
+                    {
+                        if (attr.name == "wineValue")
+                        {
+                            if (playerWineskin.ContainsKey(playerID))
+                            {
+                                playerWineskin[playerID] = playerWineskin[playerID] + 1;
+
+                            }
+                            else
+                            {
+                                playerWineskin.Add(playerID, 1);
+                            }
+
+                            attr.GetComponent<Text>().text = playerWineskin[playerID].ToString();
+
+                        }
+                    }
+                }
+            }
+            wineToDistribute--;
+        }
+
     }
 
 
-    public void decideWhichScreenToDisplay()
+    public void decrementGold(int buttonID)
+    {
+        string playerID = playersList[buttonID - 1].getNetworkID();
+        if (playerGold.ContainsKey(playerID))
+        {
+            if(playerGold[playerID] > 0)
+            {
+                Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>();
+                foreach (Transform t in trs)
+                {
+                    if (t.name == "Player" + buttonID)
+                    {
+                        Transform[] attrs = t.GetComponentsInChildren<Transform>();
+                        foreach (Transform attr in attrs)
+                        {
+                            if (attr.name == "goldValue")
+                            {
+                                
+                                playerGold[playerID] = playerGold[playerID] - 1;
+
+                                
+
+                                attr.GetComponent<Text>().text = playerGold[playerID].ToString();
+
+                            }
+                        }
+                    }
+                }
+                goldToDistribute++;
+
+            }
+        }
+    }
+
+    public void decrementWineskin(int buttonID)
+    {
+        string playerID = playersList[buttonID - 1].getNetworkID();
+        if (playerWineskin.ContainsKey(playerID))
+        {
+            if (playerWineskin[playerID] > 0)
+            {
+                Transform[] trs = DistributeArticlesBoard.GetComponentsInChildren<Transform>();
+                foreach (Transform t in trs)
+                {
+                    if (t.name == "Player" + buttonID)
+                    {
+                        Transform[] attrs = t.GetComponentsInChildren<Transform>();
+                        foreach (Transform attr in attrs)
+                        {
+                            if (attr.name == "winValue")
+                            {
+
+                                playerWineskin[playerID] = playerWineskin[playerID] - 1;
+
+
+
+                                attr.GetComponent<Text>().text = playerWineskin[playerID].ToString();
+
+                            }
+                        }
+                    }
+                }
+                wineToDistribute++;
+
+            }
+        }
+    }
+
+    public void doneClick()
+    {
+        string[] players = new string[playersList.Count];
+        for(int i=0; i< playersList.Count; i++)
+        {
+            players[i] = playersList[i].getNetworkID();
+        }
+        Game.sendAction(new DistributeBoard(players, playerGold, playerWineskin));
+    }
+
+    public void closeScreens()
+    {
+        DistributeArticlesBoard.gameObject.SetActive(false);
+        WaitingScreenPopup.gameObject.SetActive(false);
+    }
+
+    public void decideWhichScreenToDisplay(bool host)
     {
 
-        if (PhotonNetwork.IsMasterClient)
+        if (host)
         {
 
             DistributeArticlesBoard.gameObject.SetActive(true);
@@ -375,6 +535,9 @@ public class DistributeArticlesScreen : MonoBehaviour
         }
 
     }
+
+
+    
 }
 
 
