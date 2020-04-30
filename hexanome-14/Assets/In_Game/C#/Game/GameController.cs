@@ -570,6 +570,7 @@ public class GameController : MonoBehaviour
             }
         }
         fightButton.interactable = canFight;
+        updateTurnText();
     }
 
     public void moveToNewPos(Andor.Player player)
