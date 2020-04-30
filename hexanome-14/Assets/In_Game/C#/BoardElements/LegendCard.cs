@@ -88,8 +88,9 @@ public class LegendCard: MonoBehaviour
                 
             }
             currentText.text = textR;
-
+           if(PhotonNetwork.IsMasterClient){
             GameController.instance.rollDieRunestone.SetActive(true);
+           }
           
             return;
         }
@@ -127,8 +128,9 @@ public class LegendCard: MonoBehaviour
                     "Now continue to Legend card C2.";
 
                 currentText.text = textC1;
-
-                GameController.instance.rollDieForSkralStronghold.SetActive(true);
+                 if(PhotonNetwork.IsMasterClient){
+                         GameController.instance.rollDieForSkralStronghold.SetActive(true);
+                 }
                 break;
 
             case 7:
