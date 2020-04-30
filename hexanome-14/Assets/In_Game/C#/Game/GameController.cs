@@ -67,6 +67,10 @@ public class GameController : MonoBehaviour
     public GameObject rollDieForSkralStrongholdOutcome;
     public GameObject rollDieForSkralStrongholdDone;
 
+    public GameObject rollDieRunestone;
+    public GameObject rollDieRunestoneRedDice;
+    public GameObject rollDieRunestoneOutcome;
+    public GameObject rollDieRunestoneDone;
 
     public GameObject distributeArticleController;
 
@@ -827,30 +831,30 @@ public void rolledSkralStronghold(){
     public void rolledSkralStrongholdDone(){
             rollDieForSkralStronghold.SetActive(false);
     }
-////////////////////////////SKRAL STRONGHOLD//////////////////////////////
+    ////////////////////////////SKRAL STRONGHOLD//////////////////////////////
 
-// public void rolledRunestoneLocations(){
-//         System.Random rnd = new System.Random();
-//         int [] runestoneLocations = int [5];
-//         for(int i =0; i < 5; i ++){
-//            int roll = rnd.Next(1, 5);   // creates a number between 1 and 6
-//            rollDieForRunestoneLegendRedDice.SetActive(false);
-//            rollDieForRunestoneLegendRedDice.SetActive(false);
-//            int loc = dice;
-//            rollDieForRunestoneLocationsOutcome.GetComponent<Text>().text = "You rolled a " + roll +";
-//            rollDieForRunestoneLocationsOutcome.SetActive(true);
-
-//         }
+    public void rolledRunestoneLocations()
+    {
+        System.Random rnd = new System.Random();
         
-//            string [] player = {Game.myPlayer.getNetworkID()};
-//            Game.sendAction(new SetRunestoneLocations(player, roll)); 
-//         rollDieForRunestoneLocationsDone.SetActive(true);
-          
-//     }
+        for (int i = 0; i < 5; i++)
+        {
+            int rollx = rnd.Next(1, 6);   // creates a number between 1 and 6
+            int rolly = rnd.Next(1, 6);   // creates a number between 1 and 6
+            rollDieRunestoneRedDice.SetActive(false);
+            rollDieRunestoneOutcome.GetComponent<Text>().text = "You rolled a " + rollx + ""+rolly;
+            rollDieRunestoneOutcome.SetActive(true);
+        }
 
-//     public void rolledRunestoneLocationsDone(){
-//             rollDieForRunestoneLocations.SetActive(false);
-//     }
+        string[] player = { Game.myPlayer.getNetworkID() };
+        
+        rollDieRunestoneDone.SetActive(true);
+    }
+
+    public void rolledRunestoneLocationsDone()
+    {
+        rollDieRunestone.SetActive(false);
+    }
 
 
 

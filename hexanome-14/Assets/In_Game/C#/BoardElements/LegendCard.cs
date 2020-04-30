@@ -89,6 +89,7 @@ public class LegendCard: MonoBehaviour
             }
             currentText.text = textR;
 
+            GameController.instance.rollDieRunestone.SetActive(true);
           
             return;
         }
