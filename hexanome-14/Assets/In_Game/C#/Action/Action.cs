@@ -36,7 +36,10 @@ public enum Type
     GetMyReward,
     InstantiateMedicinalHerb,
     RemoveMonster,
-    DistributeBoard
+    DistributeBoard,
+    SetRunestoneLegend,
+    SetSkralStronghold,
+    
 
 
 }
