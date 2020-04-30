@@ -16,6 +16,7 @@ public class Farmer : PickDrop
         if(this.location.getIndex() == 0)
         {
             Game.gameState.maxMonstersAllowedInCastle++;
+            GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle-1);
         }
         Debug.Log("Max Monsters: " + Game.gameState.maxMonstersAllowedInCastle);
     }
@@ -25,7 +26,10 @@ public class Farmer : PickDrop
         if (this.location.getIndex() == 0)
         {
             Game.gameState.maxMonstersAllowedInCastle--;
+            GameController.instance.updateShieldCount(Game.gameState.maxMonstersAllowedInCastle - 1);
+
         }
         Debug.Log("Max Monsters: " + Game.gameState.maxMonstersAllowedInCastle);
+
     }
 }
