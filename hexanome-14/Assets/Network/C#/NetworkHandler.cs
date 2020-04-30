@@ -72,6 +72,7 @@ public class NetworkHandler : MonoBehaviour
     public void setTurnManager(List<string> order)
     {
         Game.gameState.turnManager = new TurnManager(order.ToArray());
+        GameController.instance.updateTurnText();
     }
 
     [PunRPC]
