@@ -422,11 +422,11 @@ public class GameController : MonoBehaviour
 
             updateHeroStats();
 
-            if (winScenario() && Game.gameState.outcome == "won")
-            {
-                Game.gameState.outcome = "wonNotified";
-                winNotify();
-            }
+            //if (winScenario() && Game.gameState.outcome == "won")
+            //{
+            //    Game.gameState.outcome = "wonNotified";
+            //    winNotify();
+            //}
 
             if (tradeRequestSent)
             {
