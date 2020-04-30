@@ -85,6 +85,7 @@ public class LegendCard: MonoBehaviour
                     "If a hero has 3 different - colored rune stones on his hero board, he gets one black die, which has higher values than the hero dice. " +
                     "As long as the rune stones are on his board, he is allowed to use this black die in battle instead of his own dice. " +
                     "Note: The wizard can also use his special ability on the black die.";
+                
             }
             currentText.text = textR;
             return;
@@ -142,6 +143,7 @@ public class LegendCard: MonoBehaviour
                     "calculate your collective strength points and place a star on a game board space with a number matching your total collective strength points.";
                 currentText.text = textG;
 
+                GameController.instance.loadPrinceThorald();
                 break;
 
             case 14:

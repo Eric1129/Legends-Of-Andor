@@ -963,8 +963,6 @@ public class GameController : MonoBehaviour
             loadFogTokens();
             //Debug.Log("Finished loading fog tokens");
 
-            loadPrinceThorald();
-
             loadFarmers();
 
             loadNarrator();
@@ -1239,8 +1237,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-
-    private void loadPrinceThorald()
+    public void loadPrinceThorald()
     {
         GameObject princeThorald = Instantiate(prince, tiles[72].getMiddle(), transform.rotation);
         PrinceThorald princeT = new PrinceThorald(Game.gameState.positionGraph.getNode(72), princeThorald);
@@ -1276,7 +1273,6 @@ public class GameController : MonoBehaviour
         Debug.Log("Added skral");
 
     }
-
 
     public void instantiateMedicinalHerb(int roll)
     {
