@@ -91,7 +91,6 @@ public class GameState
             players.Add(p.getNetworkID(), p);
             playerInteractables.Add(p.getNetworkID(), new List<Interactable>());
             Debug.Log("Added player " + p);
-
         }
         else
         {
@@ -232,12 +231,6 @@ public class GameState
     {
         fogTokens.Add(f, f.getLocation());
     }
-
-    public void updateNarrator()
-    {
-        
-    }
-
 
     public List<Farmer> getFarmers()
     {

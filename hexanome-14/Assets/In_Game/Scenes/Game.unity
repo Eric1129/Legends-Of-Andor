@@ -23057,7 +23057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa73ee8e777447c08c1c2bb127b29bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentText: {fileID: 0}
+  currentText: {fileID: 482310443}
   easy: 1
   currentLegend: 65
   LegendNumber: 1
@@ -43859,7 +43859,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1049460709}
         m_MethodName: nextLegend
         m_Mode: 1
         m_Arguments:

@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class LegendCard: MonoBehaviour
 {
-    
+    public static LegendCard instance;
+
     public Text currentText;
     public bool easy;
     public char currentLegend;
     public int LegendNumber;
-    
+
     // Start is called before the first frame update
     //void Start()
     //{
@@ -33,6 +34,11 @@ public class LegendCard: MonoBehaviour
     //        "A hero cannot perform them, however, if he has already ended his day.\n" +
     //        "Now continue to Legend card A2.";
     //}
+
+    void Start()
+    {
+        instance = this;
+    }
 
     // Update is called once per frame
     void Update()
@@ -177,7 +183,7 @@ public class LegendCard: MonoBehaviour
 
     public void nextLegend()
     {
-        if(currentLegend == 'A')
+        if(Game.gameState.legend ==1)
         {
             LegendNumber++;
             if(LegendNumber == 2)
@@ -260,7 +266,7 @@ public class LegendCard: MonoBehaviour
                 currentText.text = textA5;
             }
         }
-        if (currentLegend == 'C')
+        if (Game.gameState.legend == 3)
         {
             LegendNumber++;
             if (LegendNumber == 2)
@@ -285,8 +291,6 @@ public class LegendCard: MonoBehaviour
 
                 currentText.text = textC2;
             }
-
         }
     }
-
 }
