@@ -15,7 +15,7 @@ public class RemoveMonster : Action
         type = Type.RemoveMonster;
         this.players = players;
         this.monster = m;
-        
+        Game.gameState.removeMonster(monster);
         
     }
 
