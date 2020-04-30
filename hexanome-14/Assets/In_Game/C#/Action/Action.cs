@@ -35,7 +35,9 @@ public enum Type
     DistributeReward,
     GetMyReward,
     InstantiateMedicinalHerb,
-    RemoveMonster
+    RemoveMonster,
+    DistributeBoard
+
 
 }
 
