@@ -554,7 +554,8 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    if (Game.myPlayer.getHero().hasArticle("Bow"))
+                    if (Game.myPlayer.getHero().hasArticle("Bow") || Game.myPlayer.getHeroType() == "Male Archer" ||
+                        Game.myPlayer.getHeroType() == "Female Archer")
                     {
                         List<Node> neighbours = Game.gameState.positionGraph.getNode(myLocation).getAdjacentNodes();
                         foreach (Node n in neighbours)
@@ -1758,7 +1759,7 @@ public void rolledSkralStronghold(){
             //string[] fightPlayers = new string[1];
             //fightPlayers[0] = invitedFighters[0];
             //Game.sendAction(new RespondFight(fightPlayers, true));
-            fsc.openFightLobby(invitedFighters[0]);
+            fsc.openFightLobby(invitedFighters[0]); //calls add host player
         }
 
 
