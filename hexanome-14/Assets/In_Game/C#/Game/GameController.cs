@@ -428,6 +428,7 @@ public class GameController : MonoBehaviour
                 winNotify();
             }
 
+
             if (tradeRequestSent)
             {
 
