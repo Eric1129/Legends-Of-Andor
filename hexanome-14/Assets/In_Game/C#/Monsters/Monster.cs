@@ -49,6 +49,12 @@ public class Monster : Fightable, MoveStrategy
         skralTower = true;
     }
 
+     public bool getSkralTower()
+    {
+        return skralTower;
+    }
+
+
     public void setHerbGor()
     {
         herbGor = true;
