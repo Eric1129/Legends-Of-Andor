@@ -2,12 +2,12 @@
 using Andor;
 using UnityEngine;
 
-public class PickDrop : MonoBehaviour, Interactable, TileObject
+public abstract class PickDrop : MonoBehaviour, Interactable, TileObject
 {
     private bool pickedUp = false;
-    private Node location = null;
+    protected Node location = null;
     private int interactID;
-    private GameObject prefab;
+    protected GameObject prefab;
     public string name;
 
     public PickDrop(Node location, GameObject prefab, bool pickedUp, string name)
@@ -35,9 +35,11 @@ public class PickDrop : MonoBehaviour, Interactable, TileObject
             location = Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[player.getNetworkID()]);
             prefab.transform.position = GameController.instance.tiles[location.getIndex()].getMiddle();
             location.addInteractable(this);
+            DroppedSpecial();
         }
         else            // Picking up the object
         {
+            pickedUpSpecial();
             hide();
             Game.gameState.addPlayerInteractable(player.getNetworkID(), this);
             location.removeInteractable(this);
@@ -45,6 +47,8 @@ public class PickDrop : MonoBehaviour, Interactable, TileObject
 
         pickedUp = !pickedUp;
     }
+    public abstract void pickedUpSpecial();
+    public abstract void DroppedSpecial();
 
     public int getInteractableID()
     {
