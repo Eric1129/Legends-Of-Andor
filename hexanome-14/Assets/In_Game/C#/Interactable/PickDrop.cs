@@ -16,13 +16,8 @@ public abstract class PickDrop : MonoBehaviour, Interactable, TileObject
         this.prefab = prefab;
         this.pickedUp = pickedUp;
         this.name = name;
-    }
 
-    public PickDrop(Node location, bool pickedUp, string name)
-    {
-        this.location = location;
-        this.pickedUp = pickedUp;
-        this.name = name;
+        location.addInteractable(this);
     }
 
 

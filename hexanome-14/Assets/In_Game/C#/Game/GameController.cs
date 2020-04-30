@@ -1400,7 +1400,6 @@ public void rolledSkralStronghold(){
         Debug.Log("instantiated3");
         medicinalHerbObject.Add(mh, herb);
         Debug.Log("Added medicinal herb at position: " + mh.getLocation());
-        Game.gameState.positionGraph.getNode(loc).addInteractable(mh);
 
 
         Gor g = new Gor(Game.gameState.positionGraph.getNode(loc));
