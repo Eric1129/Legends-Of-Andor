@@ -15,7 +15,27 @@ public class SetRunestoneLegend : Action
 
        players = new string[] { playerId };
 
-       roll = dice;        
+        if(dice == 1)
+        {
+            roll = 2;
+        }
+        if(dice == 2)
+        {
+            roll = 4;
+        }
+        if(dice == 3)
+        {
+            roll = 5;
+        }
+        if(dice == 4 || dice == 5)
+        {
+            roll = 6;
+        }
+        if(dice == 6)
+        {
+            roll = 8;
+        }
+       
     }
 
     public string[] playersInvolved()
@@ -30,15 +50,12 @@ public class SetRunestoneLegend : Action
     public void execute(GameState gs)
     {
         
-        gs.runestoneLegend = roll;   
-
+        gs.runestoneLegend = roll;
+        LegendCard.instance.runestone = roll;
     }
 
     public bool isLegal(GameState gs)
     {
         return true;
     }
-
-   
-   
 }

@@ -776,15 +776,13 @@ public class GameController : MonoBehaviour
 
   public void rolledRunestoneLegend(){
         System.Random rnd = new System.Random();
-        int roll   = rnd.Next(3, 6);   // creates a number between 1 and 6
-           rollDieForRunestoneLegendDice.SetActive(false);
-
-           int loc = roll;
-           rollDieForRunestoneLegendOutcome.GetComponent<Text>().text = "You rolled a " + roll;
-           rollDieForRunestoneLegendOutcome.SetActive(true);
-           rollDieForRunestoneLegendDone.SetActive(true);
-          // string [] player = {Game.myPlayer.getNetworkID()};
-           Game.sendAction(new SetRunestoneLegend(Game.myPlayer.getNetworkID(), roll));           
+        int roll = rnd.Next(1, 7);   // creates a number between 1 and 6
+        rollDieForRunestoneLegendOutcome.SetActive(true);
+        rollDieForRunestoneLegendOutcome.GetComponent<Text>().text = "You rolled a " + roll;
+        rollDieForRunestoneLegendDice.SetActive(false);
+        rollDieForRunestoneLegendDone.SetActive(true);
+        // string [] player = {Game.myPlayer.getNetworkID()};
+        Game.sendAction(new SetRunestoneLegend(Game.myPlayer.getNetworkID(), roll));           
     }
 
     public void rolledRunestoneLegendDone(){
