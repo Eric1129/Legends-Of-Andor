@@ -45,7 +45,7 @@ public class GetMyReward : Action
             Debug.Log("GETTING MY willpower");
             h.increaseWillpower(rewards[players[0]]);
         }
-
+        GameController.instance.updateHeroStats();
         GameController.instance.fsc.fighterRewards.Remove(players[0]);
     }
 

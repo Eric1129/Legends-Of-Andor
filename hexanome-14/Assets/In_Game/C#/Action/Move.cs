@@ -298,10 +298,24 @@ public class Move : Action
                     else if (token_type == "brew")
                     {
                         //GameController.instance.updateGameConsoleText("You have uncovered the witch Fog Token! You will be given a brew for free!");
-                        GameController.instance.foundWitch(location);
+                        // GameController.instance.foundWitch(location);
+                        // gs.getPlayer(players[0]).getHero().addArticle(new WitchBrew());
+                        // Game.gameState.removeFromEquimentBoard("WitchBrew");
+                        // gs.witchLocation = location;
+
+
                         gs.getPlayer(players[0]).getHero().addArticle(new WitchBrew());
                         Game.gameState.removeFromEquimentBoard("WitchBrew");
                         gs.witchLocation = location;
+                        GameController.instance.foundWitch(location);
+                        //gs.advanceWitch 
+
+                        if(Game.myPlayer.getNetworkID() == players[0]){
+                            GameController.instance.rollDieForMedicinalHerb.SetActive(true);
+                            GameController.instance.rollDieForMedicinalHerbDice.SetActive(true);        
+                        }
+
+
                         //GameController.instance.instantiateWitch();
                         //GameController.instance.foundWitch();
 

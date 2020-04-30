@@ -876,6 +876,9 @@ IEnumerator articleroutine(int sleep)
         {
             header.text = "Battle Over: Hero Wins!";
             //game over
+             string [] player = {Game.myPlayer.getNetworkID()};
+            //Game.sendAction(new RemoveMonster(player, fight.monster));
+            Game.gameState.removeMonster(fight.monster);
             endBattle(1);
         }
 
@@ -922,6 +925,19 @@ IEnumerator articleroutine(int sleep)
         {
             header.text = "Battle Over: Heroes Wins!";
             //game over
+
+        string [] players = new string[fight.getHeroes().Count];
+        int i = 0;
+        foreach(Hero h in fight.getHeroes()){
+            foreach(Andor.Player p in Game.gameState.getPlayers()){
+                if(p.getHero() == h){
+                    players[i] = p.getNetworkID();
+                    i++;
+                }
+            }
+        }
+            Game.gameState.removeMonster(fight.monster);
+            //Game.sendAction(new RemoveMonster(players, fight.monster));
             endBattle_collab(1);
 
         }
@@ -977,13 +993,14 @@ IEnumerator articleroutine(int sleep)
         {
             //hero wins
             //get reward
+            //fight.monster.setCantMove();
             rewardScreen.gameObject.SetActive(true);
+            // string [] player = {Game.myPlayer.getNetworkID()};
+            // Game.sendAction(new RemoveMonster(player, fight.monster));
+            //Game.gameState.removeMonster(fight.monster);
 
-            
-            Game.gameState.removeMonster(fight.monster);
-
-            Game.gameState.legend += 1;
-            GameController.instance.advanceNarrator(Game.gameState.legend);
+            //Game.gameState.legend += 1;
+            // GameController.instance.advanceNarrator(Game.gameState.legend);
         }
         else if(outcome == 2)
         {
@@ -1258,9 +1275,19 @@ IEnumerator articleroutine(int sleep)
         {
             //hero wins
             //get reward
-
-
-            Game.gameState.removeMonster(fight.monster);
+        // string [] players = new string[fight.getHeroes().Count];
+        // int i = 0;
+        // foreach(Hero h in fight.getHeroes()){
+        //     foreach(Andor.Player p in Game.gameState.getPlayers()){
+        //         if(p.getHero() == h){
+        //             players[i] = p.getNetworkID();
+        //             i++;
+        //         }
+        //     }
+        // }
+        //     //Game.gameState.removeMonster(fight.monster);
+        //     Game.sendAction(new RemoveMonster(players, fight.monster));
+            // fight.monster.setCantMove();
             Game.sendAction(new WinBattle(fight.fighters, fight.fighters[0])); //calls distributeOrWait
 
         }
@@ -1319,6 +1346,7 @@ IEnumerator articleroutine(int sleep)
     {
         if(fightType == 0)
         {
+            fight.monster.setCantMove();
             int reward = fight.monster.getReward();
             Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
             if (type.Equals("gold"))
@@ -1331,10 +1359,12 @@ IEnumerator articleroutine(int sleep)
                 h.increaseWillpower(reward);
             }
             string[] players = fight.fighters;
+
             Game.sendAction(new EndFight(players));
         }
         else
         {
+            fight.monster.setCantMove();
             distributeReward.gameObject.SetActive(false);
             string[] players = new string[1];
             players[0] = Game.myPlayer.getNetworkID();
@@ -1925,7 +1955,6 @@ IEnumerator articleroutine(int sleep)
 
     public void useWitchBrewInFight()
     {
-
         Game.sendAction(new UseWitchBrew(Game.myPlayer.getNetworkID()));
         chooseArticleScroll.SetActive(false);
         if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
@@ -1957,6 +1986,7 @@ IEnumerator articleroutine(int sleep)
         }
         rollCreature();
     }
+
     public void useBowInFight()
     {
         Game.sendAction(new UseBow(Game.myPlayer.getNetworkID()));

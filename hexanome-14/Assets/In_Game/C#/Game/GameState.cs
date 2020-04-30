@@ -175,23 +175,36 @@ public class GameState
 
     public void removeMonster(Monster m)
     {
-
+        if(m.isMedicinalGor()){
+            //medicinalHerb is separated from Gor --> should be interactable now
+            medicinalGorDefeated = true;
+            GameController.instance.medGorDefeatedNotify();
+        }
+        if(m.getSkralTower()){
+            //trigger skralTower scenario
+            //move narrator to N
+            //need a check in gameController for this
+            skralTowerDefeated = true;
+            //GameController.instance.update
+        }
         Node monsterLoc = positionGraph.getNode(80);
         m.setLocationNode(monsterLoc);
-        m.move();
+       // m.move();
         
         if(m.getMonsterType() == "Gor")
         {
             Gor g = (Gor)m;
-            gors.Remove(g);
+            //gors.Remove(g);
         }
         if (m.getMonsterType() == "Skral")
         {
             Skral s = (Skral)m;
-            skrals.Remove(s);
+            //skrals.Remove(s);
         }
         
-        monsters.Remove(m);
+        //monsters.Remove(m);
+        Game.gameState.legend += 1;
+        GameController.instance.advanceNarrator(Game.gameState.legend);
         
     }
 
