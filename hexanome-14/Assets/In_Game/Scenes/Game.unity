@@ -629,7 +629,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19940780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -472.5}
+  m_LocalPosition: {x: 0, y: 0, z: -1000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 622434361}
@@ -10561,8 +10561,8 @@ MonoBehaviour:
   tradeScreenController: {fileID: 338503482}
   notification: {fileID: 2128502219}
   merchantScreenController: {fileID: 1252210673}
-  fightScreenController: {fileID: 0}
-  fightRequest: {fileID: 0}
+  fightScreenController: {fileID: 1239323457}
+  fightRequest: {fileID: 1506968699}
   heroInfoScreen: {fileID: 887215165}
   boardSpriteContainer: {fileID: 618814503}
   playerContainer: {fileID: 1512963889}
@@ -10604,7 +10604,7 @@ MonoBehaviour:
     type: 3}
   strengthToken: {fileID: 4753985886975695272, guid: 369e55d5ea7154f3ebed746df99ae088,
     type: 3}
-  tower: {fileID: 0}
+  tower: {fileID: 1139963217767944659, guid: 80e15e4b2009746a18ac942cf7c31eab, type: 3}
   turnLabel: {fileID: 331014883}
   scrollTxt: {fileID: 115835025}
   gameConsoleText: {fileID: 631885436}
@@ -10630,8 +10630,9 @@ MonoBehaviour:
   medicinalHerb3: {fileID: 1347761391192978578, guid: 14ee528a4a80c480bafa1c889d87a492,
     type: 3}
   witch: {fileID: 4688119426322008919, guid: b1b560e9f71a44815b13a8e7cbbe8f7e, type: 3}
-  gold1: {fileID: 0}
-  narrator: {fileID: 0}
+  gold1: {fileID: 3109603652966310442, guid: 01a8f93eb5b344715870d783421eec7a, type: 3}
+  narrator: {fileID: 5938980581296725290, guid: 3d1c324a49fbf4777b268567e1cdeb5f,
+    type: 3}
   timeObjectBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
