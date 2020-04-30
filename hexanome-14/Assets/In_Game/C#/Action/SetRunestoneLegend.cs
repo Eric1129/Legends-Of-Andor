@@ -35,7 +35,6 @@ public class SetRunestoneLegend : Action
         {
             roll = 8;
         }
-       
     }
 
     public string[] playersInvolved()
@@ -49,9 +48,10 @@ public class SetRunestoneLegend : Action
 
     public void execute(GameState gs)
     {
-        
+
         gs.runestoneLegend = roll;
         LegendCard.instance.runestone = roll;
+        GameController.instance.setStar(roll);
     }
 
     public bool isLegal(GameState gs)
