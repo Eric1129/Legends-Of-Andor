@@ -11,7 +11,7 @@ public class LegendCard: MonoBehaviour
     public bool easy;
     public char currentLegend;
     public int LegendNumber;
-    public int runestone;
+    public int runestone = 2;
 
     // Start is called before the first frame update
     //void Start()
