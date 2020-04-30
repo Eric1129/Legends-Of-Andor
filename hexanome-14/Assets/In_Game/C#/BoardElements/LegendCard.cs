@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+
 
 public class LegendCard: MonoBehaviour
 {
@@ -88,8 +90,9 @@ public class LegendCard: MonoBehaviour
                 
             }
             currentText.text = textR;
-
+           if(PhotonNetwork.IsMasterClient){
             GameController.instance.rollDieRunestone.SetActive(true);
+           }
           
             return;
         }
@@ -127,8 +130,9 @@ public class LegendCard: MonoBehaviour
                     "Now continue to Legend card C2.";
 
                 currentText.text = textC1;
-
-                GameController.instance.rollDieForSkralStronghold.SetActive(true);
+                 if(PhotonNetwork.IsMasterClient){
+                         GameController.instance.rollDieForSkralStronghold.SetActive(true);
+                 }
                 break;
 
             case 7:
@@ -175,7 +179,7 @@ public class LegendCard: MonoBehaviour
 
     public void nextLegend()
     {
-        if(Game.gameState.legend ==1)
+        if(Game.gameState.legend == 1)
         {
             LegendNumber++;
             if(LegendNumber == 2)

@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour
     public Transform playerTimeContainer;
     public Transform legendTrackContainer;
     public Transform monsterContainer;
+
+
     public Transform heroInfoContainer;
     public Transform pickDropContainer;
 
@@ -283,19 +285,19 @@ public class GameController : MonoBehaviour
         //    + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
 
         //heroStatsText.text = update;
-        string update = "";
-        foreach (Andor.Player p in Game.gameState.getPlayers())
-        {
-            string text = p.getHeroType() + " hour: " + p.getHero().getHour() + " , gold: " + p.getHero().getGold() + " , will: " + p.getHero().getWillpower() + " ,strength: " + p.getHero().getStrength() + " " + p.getHero().allArticlesAsString() + "\n" + "\n";
-            update += text;
+        // string update = "";
+        // foreach (Andor.Player p in Game.gameState.getPlayers())
+        // {
+        //     string text = p.getHeroType() + " hour: " + p.getHero().getHour() + " , gold: " + p.getHero().getGold() + " , will: " + p.getHero().getWillpower() + " ,strength: " + p.getHero().getStrength() + " " + p.getHero().allArticlesAsString() + "\n" + "\n";
+        //     update += text;
 
-        }
-        //string update = Game.myPlayer.getHeroType()
-        //   + "\nG: " + Game.myPlayer.getHero().getGold().ToString()
-        //   + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
-        //   + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
-        //   + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
-        //   + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
+        // }
+        string update = Game.myPlayer.getHeroType()
+          + "\nG: " + Game.myPlayer.getHero().getGold().ToString()
+          + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+          + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+          + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+          + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
 
         heroStatsText.text = update;
     }
@@ -431,14 +433,7 @@ public class GameController : MonoBehaviour
             //}
             // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-            if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
-            {
-                turnLabel.color = Game.myPlayer.getColor(130);
-            }
-            else
-            {
-                turnLabel.color = UnityEngine.Color.black;
-            }
+            
 
             updateHeroStats();
 
@@ -809,6 +804,13 @@ public class GameController : MonoBehaviour
     public void rolledRunestoneLegendDone(){
             rollDieForRunestoneLegend.SetActive(false);
     }
+
+    public void setStar(int p)
+    {
+        GameObject star1 = Instantiate(star, legendTiles[p].center, transform.rotation);
+    }
+
+
 ////////////////////////////SKRAL STRONGHOLD/////////////////////////////
 
 ///////when you want to set the skral stronghold, you need to make
@@ -901,6 +903,20 @@ public void rolledSkralStronghold(){
 
     public void rolledMedicinalHerbDone(){
             rollDieForMedicinalHerb.SetActive(false);
+    }
+
+    internal void updateTurnText()
+    {
+        this.turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+
+        if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
+        {
+            turnLabel.color = Game.myPlayer.getColor(130);
+        }
+        else
+        {
+            turnLabel.color = UnityEngine.Color.black;
+        }
     }
 
     public void foundWitch(int loc)
@@ -1454,10 +1470,6 @@ public void rolledSkralStronghold(){
         Debug.Log("Added Narrator at position: ");
         GameObject temp = Instantiate(narrator, legendTiles[1].center, transform.rotation);
         Narrator.Add(0, temp);
-        // GameObject star1 = Instantiate(star,legendTiles[3].center, transform.rotation );
-        // GameObject star2 = Instantiate(star,legendTiles[7].center, transform.rotation );
-        //GameObject star3 = Instantiate(star,legendTiles[1].center, transform.rotation );
-
     }
 
     public void tele(int loc)
@@ -1872,10 +1884,7 @@ public void rolledSkralStronghold(){
     public void passClick()
     {
         Debug.Log("pass clicked");
-        //Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
-        //updateWineskin();
-
-
+        Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
 
     }
     public void updateWineskin2()
