@@ -177,7 +177,7 @@ public class LegendCard: MonoBehaviour
 
     public void nextLegend()
     {
-        if(Game.gameState.legend ==1)
+        if(Game.gameState.legend == 1)
         {
             LegendNumber++;
             if(LegendNumber == 2)
