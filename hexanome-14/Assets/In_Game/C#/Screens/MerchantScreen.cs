@@ -45,14 +45,24 @@ public class MerchantScreen : MonoBehaviour
         {
             foreach (string key in Game.gameState.getEquipmentBoard().Keys)
             {
+                Debug.Log("Merchant buying " + key);
+                Transform[] trs = merchantBoard.GetComponentsInChildren<Transform>();
+                foreach(Transform t in trs)
+                {
+                    if(t.name == "Buy" + key)
+                    {
+                        Button articleBuyButton = t.gameObject.GetComponent<Button>();
+                        //Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
+                        articleBuyButton.interactable = false;
 
-                Button articleBuyButton = GameObject.Find("Buy" + key).GetComponent<Button>();
-                articleBuyButton.interactable = false;
+                        Text articleText = GameObject.Find(key).GetComponent<Text>();
+                        UnityEngine.Color zm = articleText.color;  //  makes a new color zm
+                        zm.a = 0.6f; // makes the color zm transparent
+                        articleText.color = zm;
 
-                Text articleText = GameObject.Find(key).GetComponent<Text>();
-                UnityEngine.Color zm = articleText.color;  //  makes a new color zm
-                zm.a = 0.6f; // makes the color zm transparent
-                articleText.color = zm;
+                    }
+                }
+                
 
 
             }
