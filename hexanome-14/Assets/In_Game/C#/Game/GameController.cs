@@ -808,6 +808,11 @@ public class GameController : MonoBehaviour
     public void rolledRunestoneLegendDone(){
             rollDieForRunestoneLegend.SetActive(false);
     }
+
+    public void setStar(int p)
+    {
+        GameObject star1 = Instantiate(star, legendTiles[p].center, transform.rotation);
+    }
 ////////////////////////////SKRAL STRONGHOLD/////////////////////////////
 
 ///////when you want to set the skral stronghold, you need to make
@@ -1453,10 +1458,6 @@ public void rolledSkralStronghold(){
         Debug.Log("Added Narrator at position: ");
         GameObject temp = Instantiate(narrator, legendTiles[1].center, transform.rotation);
         Narrator.Add(0, temp);
-        GameObject star1 = Instantiate(star,legendTiles[3].center, transform.rotation );
-        GameObject star2 = Instantiate(star,legendTiles[7].center, transform.rotation );
-        //GameObject star3 = Instantiate(star,legendTiles[1].center, transform.rotation );
-
     }
 
     public void tele(int loc)
