@@ -11130,6 +11130,10 @@ MonoBehaviour:
   rollDieForSkralStrongholdDice: {fileID: 1809075255}
   rollDieForSkralStrongholdOutcome: {fileID: 1476136904}
   rollDieForSkralStrongholdDone: {fileID: 1453149143}
+  rollDieRunestone: {fileID: 316274410}
+  rollDieRunestoneDice: {fileID: 608718422}
+  rollDieRunestoneOutcome: {fileID: 1114087685}
+  rollDieRunestoneDone: {fileID: 440882005}
   distributeArticleController: {fileID: 1859129896}
   chatText: {fileID: 931771261}
   chat: {fileID: 292996775}
