@@ -813,6 +813,8 @@ public class GameController : MonoBehaviour
     {
         GameObject star1 = Instantiate(star, legendTiles[p].center, transform.rotation);
     }
+
+
 ////////////////////////////SKRAL STRONGHOLD/////////////////////////////
 
 ///////when you want to set the skral stronghold, you need to make
