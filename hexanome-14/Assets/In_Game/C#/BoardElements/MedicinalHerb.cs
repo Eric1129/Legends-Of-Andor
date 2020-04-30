@@ -18,7 +18,7 @@ public class MedicinalHerb : PickDrop, Article
         this.article = ArticleType.MedicinalHerb;
     }
 
-	private MedicinalHerb() : base(null, false, "NULL") { }
+	private MedicinalHerb() : base(null, null, false, "NULL") { }
 
 	public int getLocation()
 	{
