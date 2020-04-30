@@ -90,9 +90,9 @@ public class LegendCard: MonoBehaviour
                 
             }
             currentText.text = textR;
-           if(PhotonNetwork.IsMasterClient){
-            GameController.instance.rollDieRunestone.SetActive(true);
-           }
+           //if(PhotonNetwork.IsMasterClient){
+           // GameController.instance.rollDieRunestone.SetActive(true);
+           //}
           
             return;
         }
