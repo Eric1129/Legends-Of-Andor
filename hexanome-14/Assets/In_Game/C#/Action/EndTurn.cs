@@ -44,6 +44,7 @@ public class EndTurn :Action
             gs.legend += 1;
             GameController.instance.updateDayCount(Game.gameState.day);
             GameController.instance.advanceNarrator(Game.gameState.legend);
+            LegendCard.instance.advanceLegendCard(Game.gameState.legend);
            
             foreach (Andor.Player player in gs.getPlayers())
             {
