@@ -21,10 +21,10 @@ public class GameController : MonoBehaviour
     public Transform notification;
     public Transform merchantScreenController;
     public Transform fightScreenController;
-    
+
 
     public Transform fightRequest;
-   
+
     //public Transform merchantScreenController;
 
     public Transform heroInfoScreen;
@@ -51,6 +51,9 @@ public class GameController : MonoBehaviour
     public GameObject useFalcon;
 
     public Transform merchantButton;
+
+
+    public GameObject distributeArticleController;
 
 
     public Text chatText;
@@ -178,7 +181,7 @@ public class GameController : MonoBehaviour
         rndPosInTimeBox = new Dictionary<string, Vector3>();
         monsterObjects = new Dictionary<Monster, GameObject>();
         princeThoraldObject = new Dictionary<PrinceThorald, GameObject>();
-        medicinalHerbObject = new Dictionary<MedicinalHerb,GameObject>();
+        medicinalHerbObject = new Dictionary<MedicinalHerb, GameObject>();
         initTransform = transform;
 
         instance = this;
@@ -197,7 +200,7 @@ public class GameController : MonoBehaviour
             Game.Shuffle(randomOrder);
             Game.setTurnManager(randomOrder);
             Debug.Log("SET TURN");
-           
+
 
         }
 
@@ -238,6 +241,8 @@ public class GameController : MonoBehaviour
                 timeout3--;
             }
         }
+        
+        distributeArticleController.GetComponent<DistributeArticlesScreen>().startDist();
     }
 
     public void updateHeroStats()
@@ -271,17 +276,17 @@ public class GameController : MonoBehaviour
     {
         return ts.usingFalcon;
     }
-   
+
 
     void Update()
     {
-      
+
         chatText.text = chatMessages;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuActive)
-            { 
+            {
                 this.removePauseMenu();
             }
             else
@@ -382,9 +387,9 @@ public class GameController : MonoBehaviour
                 }
                 if (monster.isMedicinalGor())
                 {
-                     medicinalHerbObject[Game.gameState.getMedicinalHerb()].transform.position = moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
+                    medicinalHerbObject[Game.gameState.getMedicinalHerb()].transform.position = moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
                 }
-                
+
             }
             //foreach (PrinceThorald princeT in Game.gameState.getPrinceThorald())
             //{
@@ -466,9 +471,9 @@ public class GameController : MonoBehaviour
                     else
                     {
                         processFightRequest(false);
-                       
+
                     }
-                    
+
                 }
 
             }
@@ -479,9 +484,9 @@ public class GameController : MonoBehaviour
             {
                 if (fsc.fight != null)
                 {
-                    foreach(Andor.Player p in Game.gameState.getPlayers())
+                    foreach (Andor.Player p in Game.gameState.getPlayers())
                     {
-                        if(!Array.Exists(fsc.fight.fighters, element => element == p.getNetworkID()))
+                        if (!Array.Exists(fsc.fight.fighters, element => element == p.getNetworkID()))
                         {
                             fsc.fightScreen.gameObject.SetActive(false);
                         }
@@ -489,7 +494,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            
+
         }
 
         if (invitedFighters != null)
@@ -500,19 +505,20 @@ public class GameController : MonoBehaviour
                 fsc.fightReady();
             }
         }
-        
+
 
         bool canFight = false;
-        if (Game.myPlayer.getNetworkID().Equals(Game.gameState.turnManager.currentPlayerTurn())){
+        if (Game.myPlayer.getNetworkID().Equals(Game.gameState.turnManager.currentPlayerTurn()))
+        {
             //check if player is on the same space as a monster
-            
+
             int myLocation = Game.gameState.getPlayerLocations()[Game.myPlayer.getNetworkID()];
-            
+
             foreach (Monster m in Game.gameState.getMonsters())
             {
-                
+
                 int monsterLoc = m.getLocation();
-                
+
                 if (monsterLoc == myLocation)
                 {
                     canFight = true;
@@ -549,7 +555,7 @@ public class GameController : MonoBehaviour
         boardSpriteContainer.gameObject.GetComponent<Image>().color = new UnityEngine.Color(0, 0, 0, 0);
         // load background board
         Vector3 boardContainerPos = new Vector3(boardSpriteContainer.position.x - boardSpriteContainer.parent.position.x,
-            boardSpriteContainer.position.y - boardSpriteContainer.parent.position.y, 35- boardSpriteContainer.parent.lossyScale.z);
+            boardSpriteContainer.position.y - boardSpriteContainer.parent.position.y, 35 - boardSpriteContainer.parent.lossyScale.z);
         Vector3 boardContainerScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
 
         GameObject fullBoard = Instantiate(emptyPrefab, boardContainerPos, boardSpriteContainer.transform.rotation, boardSpriteContainer);
@@ -637,7 +643,7 @@ public class GameController : MonoBehaviour
         BoardPosition boardPosition = cellObject.GetComponent<BoardPosition>();
         boardPosition.init(cellNumber);
         tiles.Add(cellNumber, boardPosition);
-        
+
     }
 
     public void sendChat()
@@ -666,7 +672,7 @@ public class GameController : MonoBehaviour
         closeChatButton.gameObject.SetActive(true);
     }
 
-    public void  clickTelescope()
+    public void clickTelescope()
     {
         Game.sendAction(new UseTelescope(Game.myPlayer.getNetworkID()));
     }
@@ -690,21 +696,21 @@ public class GameController : MonoBehaviour
 
     public void archerBuysBrew()
     {
-        if(Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
+        if (Game.myPlayer.getHeroType() == "Male Archer" || Game.myPlayer.getHeroType() == "Female Archer")
         {
             scrollTxt.text = "Archer pays 1 less gold for brew!";
             StartCoroutine(overtimeCoroutine(3));
         }
-        
+
     }
 
     public void overtime()
     {
-        if(Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
+        if (Game.myPlayer.ToString() == Game.gameState.turnManager.currentPlayerTurn())
         {
-            scrollTxt.text = "You will now lose +" + Game.gameState.TIME_overtimeCost+ " willpower points for each additional hour!";
+            scrollTxt.text = "You will now lose +" + Game.gameState.TIME_overtimeCost + " willpower points for each additional hour!";
             StartCoroutine(overtimeCoroutine(3));
-        }       
+        }
     }
 
     public void cannotFinishMove()
@@ -775,9 +781,9 @@ public class GameController : MonoBehaviour
         Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 
-public void updateGameConsoleText(string message)
+    public void updateGameConsoleText(string message)
     {
-           gameConsoleText.text = message;
+        gameConsoleText.text = message;
     }
 
     public void updateGameConsoleText(string message, string[] players)
@@ -798,7 +804,7 @@ public void updateGameConsoleText(string message)
     {
         scrollTxt.text = "Congratulations, you have successfully completed the legend!";
         StartCoroutine(overtimeCoroutine(10));
-        
+
     }
 
     public void invalidTradeNotify(Andor.Player player)
@@ -900,7 +906,7 @@ public void updateGameConsoleText(string message)
 
             setupEquipmentBoard();
 
-        Debug.Log("INITIALIZING THE STRENGTH POINTS");
+            Debug.Log("INITIALIZING THE STRENGTH POINTS");
             initializeStrengthPoints();
 
             Debug.Log("INITIALIZING THE STRENGTH POINTS");
@@ -976,8 +982,8 @@ public void updateGameConsoleText(string message)
         }
     }
 
-   
-   
+
+
 
     public void monsterAtCastle(Monster monster)
     {
@@ -995,7 +1001,7 @@ public void updateGameConsoleText(string message)
 
     private void loadPlayers()
     {
-        Vector3 boardContainerScaling1 = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1/ boardSpriteContainer.parent.lossyScale.z);
+        Vector3 boardContainerScaling1 = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         Vector3 boardContainerScaling2 = new Vector3(2 / boardSpriteContainer.parent.lossyScale.x, 2 / boardSpriteContainer.parent.lossyScale.y, 2 / boardSpriteContainer.parent.lossyScale.z);
         Vector3 boardContainerScaling3 = new Vector3(3 / boardSpriteContainer.parent.lossyScale.x, 3 / boardSpriteContainer.parent.lossyScale.y, 3 / boardSpriteContainer.parent.lossyScale.z);
         Vector3 boardContainerScaling4 = new Vector3(1.5f / boardSpriteContainer.parent.lossyScale.x, 1.5f / boardSpriteContainer.parent.lossyScale.y, 1.5f / boardSpriteContainer.parent.lossyScale.z);
@@ -1006,9 +1012,9 @@ public void updateGameConsoleText(string message)
             GameObject playerObject = Instantiate(playerPrefab, playerContainer);
             playerObjects.Add(player.getNetworkID(), playerObject);
             SpriteRenderer spriteRenderer = playerObject.GetComponent<SpriteRenderer>();
-            
+
             spriteRenderer.sprite = Resources.Load<Sprite>("PlayerSprites/" + player.getHeroType());
-            if(player.getHeroType() ==  "Male Archer")
+            if (player.getHeroType() == "Male Archer")
             {
                 playerObject.transform.localScale = boardContainerScaling2;
             }
@@ -1041,7 +1047,8 @@ public void updateGameConsoleText(string message)
                 playerObject.transform.localScale = boardContainerScaling2;
             }
 
-            if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID())){
+            if (!Game.getGame().playerLocations.ContainsKey(player.getNetworkID()))
+            {
                 // Give a random position
                 Debug.Log(player.getHeroType());
                 //int startingTile = Game.RANDOM.Next(20, 40);
@@ -1062,7 +1069,7 @@ public void updateGameConsoleText(string message)
             SpriteRenderer sr = timeObject.GetComponent<SpriteRenderer>();
             sr.color = player.getColor();
 
-            if(timeObjectBounds == null)
+            if (timeObjectBounds == null)
             {
                 timeObjectBounds = sr.bounds;
             }
@@ -1083,7 +1090,7 @@ public void updateGameConsoleText(string message)
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
 
         //created all the monsters for Legend 2
-        foreach (int gorTile in new int[]{8, 20, 21, 26, 48})
+        foreach (int gorTile in new int[] { 8, 20, 21, 26, 48 })
         {
             Gor g = new Gor(Game.gameState.positionGraph.getNode(gorTile));
             g.setMonsterType("Gor");
@@ -1094,7 +1101,7 @@ public void updateGameConsoleText(string message)
             Game.gameState.addMonster(g);
             Game.gameState.addGor(g);
         }
-        foreach (int skralTile in new int[]{19})
+        foreach (int skralTile in new int[] { 19 })
         {
             Skral s = new Skral(Game.gameState.positionGraph.getNode(skralTile));
             s.setMonsterType("Skral");
@@ -1143,7 +1150,7 @@ public void updateGameConsoleText(string message)
     private void loadMerchants()
     {
         int[] locations = { 18, 57, 71 };
-        foreach(int loc in locations)
+        foreach (int loc in locations)
         {
             Merchant m = new Merchant(loc);
             Game.gameState.addMerchant(loc, m);
@@ -1157,7 +1164,7 @@ public void updateGameConsoleText(string message)
         {
             Debug.Log("Added well at position: " + pos);
             GameObject wellObject = Instantiate(well_front, tiles[pos].getMiddle(), transform.rotation);
-            Well w = new Well(Game.gameState.positionGraph.getNode(pos),wellObject);
+            Well w = new Well(Game.gameState.positionGraph.getNode(pos), wellObject);
             Debug.Log(w);
             Debug.Log(w.getLocation());
             Game.gameState.addWell(w);
@@ -1186,7 +1193,7 @@ public void updateGameConsoleText(string message)
         Game.gameState.addGor(g);
         Game.gameState.addMonster(g);
         Debug.Log("Added event gor");
-        
+
     }
 
     public void instantiateEventSkral(int location)
@@ -1235,7 +1242,7 @@ public void updateGameConsoleText(string message)
         g.setStrength(2);
         g.setWillpower(4);
         g.setReward(2);
-       // g.setCantMove();
+        // g.setCantMove();
         g.setHerbGor();
 
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
@@ -1264,7 +1271,7 @@ public void updateGameConsoleText(string message)
     {
 
         int i = 0;
-        foreach (int pos in new int[] { 8,11,12,13,16,32,42,44,46,47,48,49,56,64,63})
+        foreach (int pos in new int[] { 8, 11, 12, 13, 16, 32, 42, 44, 46, 47, 48, 49, 56, 64, 63 })
         {
             Debug.Log("Added fog at position: " + pos);
             GameObject fogToken = Instantiate(fog, tiles[pos].getMiddle(), transform.rotation);
@@ -1300,7 +1307,7 @@ public void updateGameConsoleText(string message)
                     UnityEngine.Object.Destroy(f.Key.getPrefab());
                     if (f.Key.type == "brew")
                     {
-                        fogToken = Instantiate(brewToken,tiles[nodeIndex].getMiddle(), transform.rotation);
+                        fogToken = Instantiate(brewToken, tiles[nodeIndex].getMiddle(), transform.rotation);
                     }
                     if (f.Key.type == "gor")
                     {
@@ -1332,7 +1339,7 @@ public void updateGameConsoleText(string message)
                     }
                     fogToken.transform.localScale = boardContainerScaling3;
                     f.Key.setPrefab(fogToken);
-                    
+
                 }
             }
 
@@ -1341,7 +1348,7 @@ public void updateGameConsoleText(string message)
 
     public void loadFarmers()
     {
-        foreach (int pos in new int[] { 24,36 })
+        foreach (int pos in new int[] { 24, 36 })
         {
             Debug.Log("Added farmer at position: " + pos);
             Farmer f = new Farmer(Game.gameState.positionGraph.getNode(pos), Instantiate(farmer, tiles[pos].getMiddle(), transform.rotation));
@@ -1356,7 +1363,7 @@ public void updateGameConsoleText(string message)
             Debug.Log("Added gold at position: ");
             Gold g = new Gold(Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[(p.getNetworkID())]));
             g.setGold(2);
-           //Game.gameState.addGold(g);
+            //Game.gameState.addGold(g);
         }
     }
 
@@ -1366,7 +1373,7 @@ public void updateGameConsoleText(string message)
         rndPosInTimeBox[PlayerID] = getRandomPositionInBounds(timeTileBounds[hour], timeObjectBounds, new Vector3());
     }
 
-    
+
     public void setTradeRequest(bool tradeReq)
     {
         tradeRequestSent = tradeReq;
@@ -1378,12 +1385,12 @@ public void updateGameConsoleText(string message)
         notificationOn = true;
         notifMsg = msg;
         notifUser = notifyUser;
-        
+
     }
 
     public void notify()
     {
-        if(notifUser == Game.myPlayer.getNetworkID())
+        if (notifUser == Game.myPlayer.getNetworkID())
         {
             if (notifTime > 0)
             {
@@ -1465,7 +1472,8 @@ public void updateGameConsoleText(string message)
                 }
 
             }
-            else {
+            else
+            {
                 Debug.Log(tradeType[1]);
                 Debug.Log(tradeType[2]);
 
@@ -1478,7 +1486,7 @@ public void updateGameConsoleText(string message)
         }
 
         tradeMsg = msg;
-        
+
     }
 
     public void processTradeRequest()
@@ -1487,14 +1495,15 @@ public void updateGameConsoleText(string message)
 
         tradeRequest.gameObject.SetActive(true);
         Transform[] trs = tradeRequest.gameObject.GetComponentsInChildren<Transform>(true);
-        foreach(Transform t in trs)
+        foreach (Transform t in trs)
         {
-            if (t.name == "Title") {
+            if (t.name == "Title")
+            {
                 Text title = t.gameObject.GetComponent<Text>();
                 title.text = Game.gameState.getPlayer(playerTradeFrom).getHeroType() + " would like to trade!";
 
             }
-            if(t.name == "Body")
+            if (t.name == "Body")
             {
                 Text body = t.gameObject.GetComponent<Text>();
                 body.text = tradeMsg;
@@ -1528,7 +1537,7 @@ public void updateGameConsoleText(string message)
     public void useWitchBrewInFight()
     {
         Game.sendAction(new UseWitchBrew(Game.myPlayer.getNetworkID()));
-    
+
     }
     public void useBowInFight()
     {
@@ -1538,18 +1547,18 @@ public void updateGameConsoleText(string message)
 
     public void sendFightRequest(string[] players)
     {
-       
+
         invitedFighters = players;
-       
+
         fightRequestSent = true;
-        
+
     }
 
     public void processFightRequest(bool otherPlayers)
     {
         fightRequestSent = false;
-        
-        
+
+
         if (otherPlayers)
         {
 
@@ -1571,10 +1580,10 @@ public void updateGameConsoleText(string message)
             //Game.sendAction(new RespondFight(fightPlayers, true));
             fsc.openFightLobby(invitedFighters[0]);
         }
-            
-        
-        
-        
+
+
+
+
 
     }
 
@@ -1597,12 +1606,12 @@ public void updateGameConsoleText(string message)
     {
         if (moveSelected)
         {
-            
+
             // if(Game.myPlayer.getHero().selectedWineskin == true)
             //{
             Game.sendAction(new Move(Game.myPlayer.getNetworkID(), Game.getGame().playerLocations[Game.myPlayer.getNetworkID()], tile.tileID));
 
-           // }
+            // }
 
             ColorBlock cb = moveButton.colors;
             cb.normalColor = new Color32(229, 175, 81, 255);
@@ -1696,7 +1705,7 @@ public void updateGameConsoleText(string message)
         Debug.Log("pass clicked");
         //Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
         //updateWineskin();
-        
+
 
 
     }
@@ -1812,7 +1821,7 @@ public void updateGameConsoleText(string message)
     public void tradeClick()
     {
         ts.displayTradeType();
-        
+
         //List<Dropdown.OptionData> menuOptions = dropdown.GetComponent<Dropdown>().options;
         //string value = menuOptions[menuIndex].text;
 
@@ -1833,7 +1842,6 @@ public void updateGameConsoleText(string message)
                 return;
             }
         }
-
         // Picking up an item
         foreach (Interactable interact in Game.gameState.positionGraph.getNode(Game.gameState.playerLocations[Game.myPlayer.getNetworkID()]).getInteractables())
         {
@@ -1920,7 +1928,7 @@ public void updateGameConsoleText(string message)
             return false;
         }
 
-        if(Game.gameState.getMedicinalHerb().getLocation() == 0)
+        if (Game.gameState.getMedicinalHerb().getLocation() == 0)
         {
             return true;
         }
@@ -1929,7 +1937,7 @@ public void updateGameConsoleText(string message)
 
     public void initializeStrengthPoints()
     {
-        foreach(Andor.Player p in Game.gameState.getPlayers())
+        foreach (Andor.Player p in Game.gameState.getPlayers())
         {
             p.getHero().increaseStrength(2);
             //will comment out
