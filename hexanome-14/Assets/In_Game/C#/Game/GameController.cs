@@ -1361,9 +1361,9 @@ public class GameController : MonoBehaviour
         foreach (Andor.Player p in Game.gameState.getPlayers())
         {
             Debug.Log("Added gold at position: ");
-            Gold g = new Gold(Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[(p.getNetworkID())]));
-            g.setGold(2);
-            //Game.gameState.addGold(g);
+            Gold g = new Gold(Game.gameState.positionGraph.getNode(Game.gameState.getPlayerLocations()[(p.getNetworkID())]), 2);
+            // g.setGold(2);
+           //Game.gameState.addGold(g);
         }
     }
 

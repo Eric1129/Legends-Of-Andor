@@ -37,6 +37,7 @@ public class Wineskin : Article
     {
         return this.numUsed;
     }
+
     public string articleToString()
     {
         return this.article.ToString();
