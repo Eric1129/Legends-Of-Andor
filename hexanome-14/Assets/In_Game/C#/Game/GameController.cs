@@ -398,7 +398,7 @@ public class GameController : MonoBehaviour
                     monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
                 }
-                if (monster.isMedicinalGor())
+                if (monster.isMedicinalGor() && !Game.gameState.medicinalGorDefeated)
                 {
                     medicinalHerbObject[Game.gameState.getMedicinalHerb()].transform.position = moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
                 }
@@ -863,6 +863,13 @@ public class GameController : MonoBehaviour
     public void winNotify()
     {
         scrollTxt.text = "Congratulations, you have successfully completed the legend!";
+        StartCoroutine(overtimeCoroutine(10));
+
+    }
+
+     public void medGorDefeatedNotify()
+    {
+        scrollTxt.text = "You have defeated the Medicinal Herb Gor!";
         StartCoroutine(overtimeCoroutine(10));
 
     }
