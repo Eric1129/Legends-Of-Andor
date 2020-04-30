@@ -11117,6 +11117,7 @@ MonoBehaviour:
   wineskinDropdown: {fileID: 1923916655}
   wineskin: {fileID: 2136160813}
   useFalcon: {fileID: 148027204}
+  star: {fileID: 4206964685205544410, guid: e95848b5a42994b299bc2fa21b707aa8, type: 3}
   merchantButton: {fileID: 467138535}
   rollDieForMedicinalHerb: {fileID: 508521175}
   rollDieForMedicinalHerbDice: {fileID: 800851413}
@@ -36875,7 +36876,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7e971f4f626e44655bb6ef4f7ce41947, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76dd8c4d8e2f84c9b97aadddcc2639cd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -1385,10 +1385,12 @@ IEnumerator articleroutine(int sleep)
         //         }
         //     }
         // }
-            Game.gameState.removeMonster(fight.monster);
             
+           
+            //Game.sendAction(new RemoveMonster(fight.fighters, fight.monster));
             // fight.monster.setCantMove();
             Game.sendAction(new WinBattle(fight.fighters, fight.fighters[0])); //calls distributeOrWait
+             Game.gameState.removeMonster(fight.monster);
             //Game.sendAction(new RemoveMonster(fight.fighters, fight.monster));
         }
         else if (outcome == 2)
