@@ -512,7 +512,7 @@ public int calculateHelm(List<int> rolls)
         doneButton.gameObject.SetActive(false);
         stopButton.gameObject.SetActive(false);
 
-         if ((h.hasArticle("Helm" )&& !Game.myPlayer.getHero().usingHelm) || (h.hasArticle("WitchBrew") && !Game.myPlayer.getHero().usingWitchBrew))
+         if ((h.hasArticle("Helm" )&& !Game.myPlayer.getHero().usingHelm) || (h.hasArticle("WitchBrew") && !Game.myPlayer.getHero().usingWitchBrew)||(h.hasArticle("Shield") && !Game.myPlayer.getHero().usingShield))
         {
 
             // while (!h.selectedArticle)

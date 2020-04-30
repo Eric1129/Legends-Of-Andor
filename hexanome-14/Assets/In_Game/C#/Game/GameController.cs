@@ -49,6 +49,7 @@ public class GameController : MonoBehaviour
     public GameObject wineskinDropdown;
     public GameObject wineskin;
     public GameObject useFalcon;
+    public GameObject star;
 
     public Transform merchantButton;
 
@@ -1448,6 +1449,9 @@ public void rolledSkralStronghold(){
         Debug.Log("Added Narrator at position: ");
         GameObject temp = Instantiate(narrator, legendTiles[1].center, transform.rotation);
         Narrator.Add(0, temp);
+        GameObject star1 = Instantiate(star,legendTiles[3].center, transform.rotation );
+        GameObject star2 = Instantiate(star,legendTiles[7].center, transform.rotation );
+        //GameObject star3 = Instantiate(star,legendTiles[1].center, transform.rotation );
 
     }
 
