@@ -11,6 +11,7 @@ public class LegendCard: MonoBehaviour
     public bool easy;
     public char currentLegend;
     public int LegendNumber;
+    public int runestone;
 
     // Start is called before the first frame update
     //void Start()
@@ -48,6 +49,46 @@ public class LegendCard: MonoBehaviour
 
     public void advanceLegendCard(int currentday)
     {
+        if(currentday == runestone)
+        {
+            string textR;
+            if (!easy)
+            {
+                textR = "Runestones_hard:\n" +
+                    "Place gors on 32 and 43 and one skral on 39. " +
+                    "Important: Only continue reading this card if the witch has already been found.Otherwise, the card is removed from the game. " +
+                    "Now let a roll of the dice determine the positions of 5 of the 6 hidden rune stones. " +
+                    "One hero rolls one red die and one hero die. The red die indicates the “tens” place of the number and the hero die indicates the “ones” place. " +
+                    "Example: red 4, green 2 = a rune stone is placed face - down on space 42.Note: " +
+                    "More than one rune stone may be on a single space. " +
+                    "The witch Reka tells the heroes about au ancient magic that still holds power: rune stones! " +
+                    "The rune stones can be collected in the small storage spaces of the hero boards. " +
+                    "Just like fog tokens, they can be uncovered with the help of the telescope(but not when just passing through a space). " +
+                    "Note: Rune stones can also be uncovered and collected when a creature is on the same space as the rune stone. " +
+                    "1.1 a hero has 3 different - colored rune stones on his hero board, he gets one black die, which has higher values than the hero dice. " +
+                    "As long as the rune stones are on his board, he is allowed to use this black die in battle instead of his own dice. " +
+                    "Note: The wizard can also use his special ability on the black die.";
+            }
+            else
+            {
+                textR = "Runestones_easy:\n" +
+                    "Place a gor on 43 and a skral on 39. " +
+                    "Now let a roll of the dice determine the positions of 5 of the 6 hidden rune stones.One hero rolls one red die and one hero die. " +
+                    "The red die indicates the “tens” place of the number and the hero die indicates the “ones” place. " +
+                    "Example: red 4, green 2 = a rune stone is placed face -do wit on space 42. " +
+                    "Note: " +
+                    "More than one rune stone may be on a single space. " +
+                    "The heroes learn about an ancient magic that still holds power: rune stones! " +
+                    "The rune stones can be collected in the small storage spaces of the hero boards. " +
+                    "Just like fog tokens, they can be uncovered with the help of the telescope(but not when just passing through a space). " +
+                    "Note: Rune stones can also be uncovered and collected when a creature is on the same space as the rune stone. " +
+                    "If a hero has 3 different - colored rune stones on his hero board, he gets one black die, which has higher values than the hero dice. " +
+                    "As long as the rune stones are on his board, he is allowed to use this black die in battle instead of his own dice. " +
+                    "Note: The wizard can also use his special ability on the black die.";
+            }
+            currentText.text = textR;
+            return;
+        }
 
         switch (currentday)
         {
@@ -104,79 +145,23 @@ public class LegendCard: MonoBehaviour
                 break;
 
             case 14:
-                string textS = "You win！With their combined powers, the heroes were able to take the skral’s stronghold. " +
-                    "The medicinal herb did its work as well, and King Brandur soon felt better. " +
-                    "And yet, the heroes still felt troubled. The king’s son, Prince Thorald, had not yet returned. " +
-                    "What was keeping him so long? In next Legend, you will find out.";
-                currentText.text = textS;
-
-                break;
-
-            case 15:
-                string textL = "You lose! Tips for next time: 1.Articles such as falcon and telescope can be very helpful. " +
+                if (true)
+                {
+                    string textL = "You lose! Tips for next time: 1.Articles such as falcon and telescope can be very helpful. " +
                     "2.Prince Thorald’s extra strength can help in a battle against skrals. " +
                     "3.It is very important to find witch quickly. " +
                     "4.To save time, it is sometimes better for one hero to get the entire reward in gold. Then just one hero has to get to the merchant.";
-                currentText.text = textL;
-                break;
-
-            // Runestone legend card, really complicated, need to be fixed later
-            case 16:
-                string textR;
-                if (!easy)
-                {
-                    textR = "Runestones_hard:\n" +
-                        "Place gors on 32 and 43 and one skral on 39. " +
-                        "Important: Only continue reading this card if the witch has already been found.Otherwise, the card is removed from the game. " +
-                        "Now let a roll of the dice determine the positions of 5 of the 6 hidden rune stones. " +
-                        "One hero rolls one red die and one hero die. The red die indicates the “tens” place of the number and the hero die indicates the “ones” place. " +
-                        "Example: red 4, green 2 = a rune stone is placed face - down on space 42.Note: " +
-                        "More than one rune stone may be on a single space. " +
-                        "The witch Reka tells the heroes about au ancient magic that still holds power: rune stones! " +
-                        "The rune stones can be collected in the small storage spaces of the hero boards. " +
-                        "Just like fog tokens, they can be uncovered with the help of the telescope(but not when just passing through a space). " +
-                        "Note: Rune stones can also be uncovered and collected when a creature is on the same space as the rune stone. " +
-                        "1.1 a hero has 3 different - colored rune stones on his hero board, he gets one black die, which has higher values than the hero dice. " +
-                        "As long as the rune stones are on his board, he is allowed to use this black die in battle instead of his own dice. " +
-                        "Note: The wizard can also use his special ability on the black die.";
+                    currentText.text = textL;
                 }
                 else
                 {
-                    textR = "Runestones_easy:\n" +
-                        "Place a gor on 43 and a skral on 39. " +
-                        "Now let a roll of the dice determine the positions of 5 of the 6 hidden rune stones.One hero rolls one red die and one hero die. " +
-                        "The red die indicates the “tens” place of the number and the hero die indicates the “ones” place. " +
-                        "Example: red 4, green 2 = a rune stone is placed face -do wit on space 42. " +
-                        "Note: " +
-                        "More than one rune stone may be on a single space. " +
-                        "The heroes learn about an ancient magic that still holds power: rune stones! " +
-                        "The rune stones can be collected in the small storage spaces of the hero boards. " +
-                        "Just like fog tokens, they can be uncovered with the help of the telescope(but not when just passing through a space). " +
-                        "Note: Rune stones can also be uncovered and collected when a creature is on the same space as the rune stone. " +
-                        "If a hero has 3 different - colored rune stones on his hero board, he gets one black die, which has higher values than the hero dice. " +
-                        "As long as the rune stones are on his board, he is allowed to use this black die in battle instead of his own dice. " +
-                        "Note: The wizard can also use his special ability on the black die.";
+                    string textS = "You win！With their combined powers, the heroes were able to take the skral’s stronghold. " +
+                    "The medicinal herb did its work as well, and King Brandur soon felt better. " +
+                    "And yet, the heroes still felt troubled. The king’s son, Prince Thorald, had not yet returned. " +
+                    "What was keeping him so long? In next Legend, you will find out.";
+                    currentText.text = textS;
                 }
-                currentText.text = textR;
-                break;
-
-            case 17:
-                string textW = "Witch\n" +
-                                "Finally! There’s in the fog, one of the heroes discovers the witch named Reka." +
-                                "The hero standing on the witch’s space activates the fog token and gets her magic potion for free. " +
-                                "Place the witch on this space.From now on, a hero standing on the same space as the witch can buy her brew. " +
-                                "The price depends on the number of heroes(see equipment board). Important: The archer always pays 1 gold less than the others. " +
-                                "In a battle, the witch’s brew doubles the value of one die, and it can be used twice(front and rear side of the token). " +
-                                "Reka knows where to find the medicinal herb to heal the king. " +
-                                "One player rolls to determine the position of the medicinal herb: roll of 1 or 2 = medicinal herb on space 37. " +
-                                "roll of 3 or 4 = medicinal herb on space 67. " +
-                                "roll of 5 or 6 = medicinal herb on space 61. " +
-                                "Place the medicinal herb on the space determined by the roll, and add a gor to the same space. " +
-                                "The gor must be defeated before a hero can collect the herb. " +
-                                "The gor takes the herb with him when he moves at sunrise. " +
-                                "Task: When the Narrator reaches the letter “N” on the Legend track, the medicinal herb must be in space 0(the castle).";
-
-                currentText.text = textW;
+                
                 break;
         }
     }
@@ -292,5 +277,25 @@ public class LegendCard: MonoBehaviour
                 currentText.text = textC2;
             }
         }
+    }
+
+    public void advanceWitcCard()
+    {
+        string textW = "Witch\n" +
+                "Finally! There’s in the fog, one of the heroes discovers the witch named Reka." +
+                "The hero standing on the witch’s space activates the fog token and gets her magic potion for free. " +
+                "Place the witch on this space.From now on, a hero standing on the same space as the witch can buy her brew. " +
+                "The price depends on the number of heroes(see equipment board). Important: The archer always pays 1 gold less than the others. " +
+                "In a battle, the witch’s brew doubles the value of one die, and it can be used twice(front and rear side of the token). " +
+                "Reka knows where to find the medicinal herb to heal the king. " +
+                "One player rolls to determine the position of the medicinal herb: roll of 1 or 2 = medicinal herb on space 37. " +
+                "roll of 3 or 4 = medicinal herb on space 67. " +
+                "roll of 5 or 6 = medicinal herb on space 61. " +
+                "Place the medicinal herb on the space determined by the roll, and add a gor to the same space. " +
+                "The gor must be defeated before a hero can collect the herb. " +
+                "The gor takes the herb with him when he moves at sunrise. " +
+                "Task: When the Narrator reaches the letter “N” on the Legend track, the medicinal herb must be in space 0(the castle).";
+
+        currentText.text = textW;
     }
 }
