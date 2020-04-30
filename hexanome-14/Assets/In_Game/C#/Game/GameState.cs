@@ -190,22 +190,23 @@ public class GameState
         }
         Node monsterLoc = positionGraph.getNode(80);
         m.setLocationNode(monsterLoc);
-        m.getPrefab().SetActive(false);
+       // GameController.instance.deadMonsterMove(m);
+       // m.getPrefab().SetActive(false);
 
        // m.move();
         
         if(m.getMonsterType() == "Gor")
         {
             Gor g = (Gor)m;
-            gors.Remove(g);
+            //gors.Remove(g);
         }
         if (m.getMonsterType() == "Skral")
         {
             Skral s = (Skral)m;
-            skrals.Remove(s);
+            //skrals.Remove(s);
         }
         
-        monsters.Remove(m);
+        //monsters.Remove(m);
         Game.gameState.legend += 1;
         GameController.instance.advanceNarrator(Game.gameState.legend);
         
