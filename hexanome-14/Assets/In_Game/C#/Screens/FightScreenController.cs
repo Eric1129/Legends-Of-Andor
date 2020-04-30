@@ -27,6 +27,9 @@ public class FightScreenController : MonoBehaviour
     public Button doneButton;
     public Button helmButton;
     public Button bowButton;
+
+    public Button shieldButton;
+
     public Button noArticleSelected;
     public Button witchBrewButton;
     public Text rollsLeft;
@@ -72,9 +75,13 @@ public class FightScreenController : MonoBehaviour
         {
             witchBrewButton.gameObject.SetActive(true);
         }
-        if (!Game.myPlayer.getHero().usingBow && Game.myPlayer.getHero().getAllArticles().ContainsKey("Bow"))
-        {
-            bowButton.gameObject.SetActive(true);
+        // if (!Game.myPlayer.getHero().usingBow && Game.myPlayer.getHero().getAllArticles().ContainsKey("Bow"))
+        // {
+        //     bowButton.gameObject.SetActive(true);
+        // }
+        if(!Game.myPlayer.getHero().usingShield && Game.myPlayer.getHero().getAllArticles().ContainsKey("Shield")){
+
+            shieldButton.gameObject.SetActive(true);
         }
         if (Game.myPlayer.getHero().usingHelm)
         {
@@ -825,13 +832,7 @@ IEnumerator articleroutine(int sleep)
 
     public void setRoundWinner()
     {
-       foreach(Hero h in fight.getHeroes()){
-            foreach(Andor.Player p in Game.gameState.getPlayers()){
-                if(p.getHero() == h){
-                    Game.sendAction(new ExitFight(p.getNetworkID()));
-                }
-            }
-        }
+ 
         int difference = fight.getHeroBattleValue() - monsterBattleValue;
         if(difference > 0)
         {
@@ -845,7 +846,12 @@ IEnumerator articleroutine(int sleep)
             header.text = "Creature Wins Round.";
             foreach(Hero h in fight.getHeroes())
             {
-                h.decreaseWillpower(-difference); //since the value will be negative
+                if(h.usingShield){
+                    StartCoroutine(articleroutine(h.getHeroType() + " has not lost any willpower points because of the shield!", 3));
+                } else{
+                    h.decreaseWillpower(-difference); //since the value will be negative
+                }       
+                
             }
             //Hero h = Game.gameState.getPlayer(fight.currentFighter()).getHero();
            
@@ -857,6 +863,14 @@ IEnumerator articleroutine(int sleep)
 
         displayHero(Game.gameState.getPlayer(fight.getCurrentFighter()));
         displayMonster(fight.monster);
+        //clear any article usages
+            foreach(Hero h in fight.getHeroes()){
+             foreach(Andor.Player p in Game.gameState.getPlayers()){
+                 if(p.getHero() == h){
+                     Game.sendAction(new ExitFight(p.getNetworkID()));
+                 }
+             }
+       }
 
         if(fightType == 0)
         {
@@ -865,8 +879,7 @@ IEnumerator articleroutine(int sleep)
         else
         {
             checkBattleWinner_collab();
-        }
-        
+        }     
  
     }
 
@@ -2082,6 +2095,13 @@ IEnumerator articleroutine(int sleep)
             displayFinalOutcome(wizardRollBrew);
             //does nothing
         }
+        rollCreature();
+    }
+
+    public void useShieldInFight()
+    {
+        Game.sendAction(new UseShield(Game.myPlayer.getNetworkID()));
+        chooseArticleScroll.SetActive(false);
         rollCreature();
     }
 
