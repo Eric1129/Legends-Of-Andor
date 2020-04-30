@@ -433,7 +433,8 @@ public class GameController : MonoBehaviour
             //}
             // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-            
+            GameController.instance.updateTurnText();
+
 
             updateHeroStats();
 
@@ -829,7 +830,7 @@ public void rolledSkralStronghold(){
         rollDieForSkralStrongholdDice.SetActive(false);
         rollDieForSkralStrongholdDone.SetActive(true);
         //string [] player = {Game.myPlayer.getNetworkID()};
-        Game.sendAction(new SetSkralStronghold(Game.myPlayer.getNetworkID(), roll));           
+        Game.sendAction(new SetSkralStronghold(Game.myPlayer.getNetworkID(), loc));           
     }
 
     public void rolledSkralStrongholdDone(){

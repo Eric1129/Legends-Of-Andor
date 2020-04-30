@@ -20,7 +20,6 @@ public class TurnManager
             turnQueue.Enqueue(player);
         }
 
-        //GameController.instance.updateTurnText();
 
     }
 
