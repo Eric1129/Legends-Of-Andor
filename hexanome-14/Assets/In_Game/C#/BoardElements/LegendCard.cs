@@ -133,6 +133,9 @@ public class LegendCard: MonoBehaviour
                  if(PhotonNetwork.IsMasterClient){
                          GameController.instance.rollDieForSkralStronghold.SetActive(true);
                  }
+
+                GameController.instance.loadPrinceThorald();
+                GameController.instance.movePrinceButton.interactable = true;
                 break;
 
             case 7:
@@ -152,7 +155,7 @@ public class LegendCard: MonoBehaviour
                     "calculate your collective strength points and place a star on a game board space with a number matching your total collective strength points.";
                 currentText.text = textG;
 
-                GameController.instance.loadPrinceThorald();
+                
                 break;
 
             case 14:
