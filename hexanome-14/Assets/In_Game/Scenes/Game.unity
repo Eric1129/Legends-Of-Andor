@@ -11105,7 +11105,7 @@ MonoBehaviour:
   legendTrackContainer: {fileID: 1777473337}
   monsterContainer: {fileID: 1001365816}
   heroInfoContainer: {fileID: 1450666353}
-  pickDropContainer: {fileID: 1629113086}
+  pickDropContainer: {fileID: 1237054739}
   moveButton: {fileID: 1467345021}
   fightButton: {fileID: 386303935}
   movePrinceButton: {fileID: 1599828453}

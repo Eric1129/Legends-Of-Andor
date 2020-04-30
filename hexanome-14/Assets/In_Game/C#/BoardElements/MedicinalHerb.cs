@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedicinalHerb : Article
+public class MedicinalHerb : PickDrop, Article
 {
 
-	private Node location;
 	public bool used;
-	protected GameObject prefab;
+	//protected GameObject prefab;
     private ArticleType article;
     private string description;
 
-    public MedicinalHerb(Node startingPos, GameObject prefab)
+    public MedicinalHerb(Node startingPos, GameObject prefab) : base(startingPos, prefab, false, "Medical Herb")
 	{
 		location = startingPos;
 		this.prefab = prefab;
@@ -19,7 +18,7 @@ public class MedicinalHerb : Article
         this.article = ArticleType.MedicinalHerb;
     }
 
-	private MedicinalHerb() { }
+	private MedicinalHerb() : base(null, false, "NULL") { }
 
 	public int getLocation()
 	{
@@ -50,21 +49,31 @@ public class MedicinalHerb : Article
 
     void Article.useArticle()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     ArticleType Article.getArticle()
     {
-        throw new System.NotImplementedException();
+        return ArticleType.MedicinalHerb;
     }
 
     string Article.articleToString()
     {
-        throw new System.NotImplementedException();
+        return "Medical Herb";
     }
 
     string Article.getDescription()
     {
-        throw new System.NotImplementedException();
+        return "Medical Herb Description";
+    }
+
+    public override void pickedUpSpecial()
+    {
+        
+    }
+
+    public override void DroppedSpecial()
+    {
+        
     }
 }
