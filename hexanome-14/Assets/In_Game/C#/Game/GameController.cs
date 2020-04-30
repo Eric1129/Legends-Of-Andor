@@ -904,7 +904,7 @@ public void rolledSkralStronghold(){
             rollDieForMedicinalHerb.SetActive(false);
     }
 
-    internal void updateTurnText()
+    public void updateTurnText()
     {
         this.turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
 
