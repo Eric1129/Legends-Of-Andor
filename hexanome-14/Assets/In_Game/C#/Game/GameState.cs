@@ -51,6 +51,7 @@ public class GameState
     public int skralTowerLocation;
     public Dictionary<string, List<Article>> equipmentBoard;
     public List<int> monsterDiceRolls = new List<int>();
+    public int runestoneLegend = -1;
 
     public GameState()
 	{

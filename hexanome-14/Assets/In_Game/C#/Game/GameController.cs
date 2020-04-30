@@ -57,6 +57,16 @@ public class GameController : MonoBehaviour
     public GameObject rollDieForMedicinalHerbOutcome;
     public GameObject rollDieForMedicinalHerbDone;
 
+    public GameObject rollDieForRunestoneLegend;
+    public GameObject rollDieForRunestoneLegendDice;
+    public GameObject rollDieForRunestoneLegendOutcome;
+    public GameObject rollDieForRunestoneLegendDone;
+
+    public GameObject rollDieForSkralStronghold;
+    public GameObject rollDieForSkralStrongholdDice;
+    public GameObject rollDieForSkralStrongholdOutcome;
+    public GameObject rollDieForSkralStrongholdDone;
+
 
     public GameObject distributeArticleController;
 
@@ -759,6 +769,77 @@ public class GameController : MonoBehaviour
         //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
     }
 
+//////////////////////////////RUNESTONE LEGENDS//////////////////////////  
+
+///////when you want to set the skral stronghold, you need to make
+/////// rollDieForSkralStronghold.SetActive(true) for one player
+
+  public void rolledRunestoneLegend(){
+        System.Random rnd = new System.Random();
+        int roll   = rnd.Next(3, 6);   // creates a number between 1 and 6
+           rollDieForRunestoneLegendDice.SetActive(false);
+
+           int loc = roll;
+           rollDieForRunestoneLegendOutcome.GetComponent<Text>().text = "You rolled a " + roll;
+           rollDieForRunestoneLegendOutcome.SetActive(true);
+           rollDieForRunestoneLegendDone.SetActive(true);
+          // string [] player = {Game.myPlayer.getNetworkID()};
+           Game.sendAction(new SetRunestoneLegend(Game.myPlayer.getNetworkID(), roll));           
+    }
+
+    public void rolledRunestoneLegendDone(){
+            rollDieForRunestoneLegend.SetActive(false);
+    }
+////////////////////////////SKRAL STRONGHOLD/////////////////////////////
+
+///////when you want to set the skral stronghold, you need to make
+/////// rollDieForSkralStronghold.SetActive(true) for one player
+
+public void rolledSkralStronghold(){
+        System.Random rnd = new System.Random();
+        int roll = rnd.Next(1, 6);   // creates a number between 1 and 6
+        //foreach(Andor.Player p in Game.gameState.getPlayers()){
+           rollDieForSkralStrongholdDice.SetActive(false);
+          //System.Random rnd = new System.Random();
+          //Game.gameState.medRoll = dice;
+           int loc = roll + 50;
+           rollDieForSkralStrongholdOutcome.GetComponent<Text>().text = "You rolled a " + roll +"! The Skral stronghold will be located at position: " + loc + "!";
+           rollDieForSkralStrongholdOutcome.SetActive(true);
+           rollDieForSkralStrongholdDone.SetActive(true);
+           //string [] player = {Game.myPlayer.getNetworkID()};
+           Game.sendAction(new SetSkralStronghold(Game.myPlayer.getNetworkID(), roll));           
+    }
+
+    public void rolledSkralStrongholdDone(){
+            rollDieForSkralStronghold.SetActive(false);
+    }
+////////////////////////////SKRAL STRONGHOLD//////////////////////////////
+
+// public void rolledRunestoneLocations(){
+//         System.Random rnd = new System.Random();
+//         int [] runestoneLocations = int [5];
+//         for(int i =0; i < 5; i ++){
+//            int roll = rnd.Next(1, 5);   // creates a number between 1 and 6
+//            rollDieForRunestoneLegendRedDice.SetActive(false);
+//            rollDieForRunestoneLegendRedDice.SetActive(false);
+//            int loc = dice;
+//            rollDieForRunestoneLocationsOutcome.GetComponent<Text>().text = "You rolled a " + roll +";
+//            rollDieForRunestoneLocationsOutcome.SetActive(true);
+
+//         }
+        
+//            string [] player = {Game.myPlayer.getNetworkID()};
+//            Game.sendAction(new SetRunestoneLocations(player, roll)); 
+//         rollDieForRunestoneLocationsDone.SetActive(true);
+          
+//     }
+
+//     public void rolledRunestoneLocationsDone(){
+//             rollDieForRunestoneLocations.SetActive(false);
+//     }
+
+
+
     public int medicinalHerbRoll(int roll){
         //int loc = 0;
             if (roll == 1 || roll == 2)
@@ -970,7 +1051,7 @@ public class GameController : MonoBehaviour
 
             loadNarrator();
 
-            loadSkralOnTower();
+            //loadSkralOnTower();
 
             setupEquipmentBoard();
 
@@ -1192,9 +1273,9 @@ public class GameController : MonoBehaviour
 
     }
 
-    private void loadSkralOnTower()
+    public void loadSkralOnTower(int roll)
     {
-        int roll = 54;
+        //int roll = 54;
         Game.gameState.skralTowerLocation = roll;
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         Skral s = new Skral(Game.gameState.positionGraph.getNode(roll));
