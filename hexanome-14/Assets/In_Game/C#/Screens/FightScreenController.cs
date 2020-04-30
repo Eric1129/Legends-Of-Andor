@@ -912,17 +912,56 @@ IEnumerator articleroutine(int sleep)
         foreach (string f in fight.fighters)
         {
             if (Game.gameState.getPlayer(f).getHero().getHour() + 1
-            == Game.gameState.TIME_endTime || Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
+            > Game.gameState.TIME_endTime || Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
             {
+                battleEndScreen.gameObject.SetActive(true);
+                Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
+                foreach(Transform t in trs)
+                {
+                    
+
+                    if(t.name == "Header")
+                    {
+                        if (Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
+                        {
+                            t.GetComponent<Text>().text = "No More willpower";
+                        }
+
+                        if(Game.gameState.getPlayer(f).getHero().getHour() + 1
+            == Game.gameState.TIME_endTime)
+                        {
+                            t.GetComponent<Text>().text = "Out of time.";
+                        }
+                    }
+                    if (t.name == "Body")
+                    {
+                        t.GetComponent<Text>().text = "You cannot continue to the next round.";
+                    }
+
+
+                }
+                
+                
+
+                //leaveBattleClick();
                 //fight.leaveFight(f);
             }
         }
 
         if (fight.monster.getWillpower() == 0)
         {
-            header.text = "Battle Over: Heroes Wins!";
+            header.text = "Battle Over: Heroes Win!";
             //game over
+            //claimButton.gameObject.SetActive(true)
+            fightScreen.gameObject.SetActive(false);
+            //Time t = 5.0f;
+            //t-= deltaTime.
+            StartCoroutine(Wait(3.0f));
             endBattle_collab(1);
+            
+            fightLobby.gameObject.SetActive(false);
+            fightLobby2.gameObject.SetActive(false);
+            //closeFightScreen();
 
         }
         else
@@ -939,7 +978,45 @@ IEnumerator articleroutine(int sleep)
 
     }
 
+    IEnumerator Wait(float duration)
+    {
+        //This is a coroutine
+        Debug.Log("Start Wait() function. The time is: " + Time.time);
+        Debug.Log("Float duration = " + duration);
+        yield return new WaitForSeconds(duration);   //Wait
+        Debug.Log("End Wait() function and the time is: " + Time.time);
+    }
 
+    public void clearDistributeScreen()
+    {
+        Transform[] trs = distributeReward.GetComponentsInChildren<Transform>();
+        int i = 1;
+        foreach (Transform t in trs)
+        {
+            if (t.name == "f" + i)
+            {
+                Transform[] attrs = t.GetComponentsInChildren<Transform>();
+                foreach (Transform attr in attrs)
+                {
+                    if (attr.name == "Add")
+                    {
+                        attr.GetComponent<Button>().interactable = true;
+                    }
+                    if (attr.name == "qty")
+                    {
+                        attr.GetComponent<Text>().text = "0";
+                    }
+                }
+                i++;
+            }
+
+            if (t.name == "RewardText")
+            {
+                t.GetComponent<Text>().text = "Rewards Left: ";
+            }
+        }
+
+    }
 
     public void nextRound()
     {
@@ -1095,7 +1172,7 @@ IEnumerator articleroutine(int sleep)
             if(t.name == "RewardText")
             {
                 rewardLeft = fight.monster.getReward();
-                t.GetComponent<Text>().text = fight.monster.getReward().ToString();
+                t.GetComponent<Text>().text = "Rewards Left: " + fight.monster.getReward().ToString();
             }
             
         }
@@ -1164,7 +1241,7 @@ IEnumerator articleroutine(int sleep)
             if (t.name == "RewardText")
             {
                 
-                t.GetComponent<Text>().text = rewardLeft.ToString();
+                t.GetComponent<Text>().text = "Rewards Left: " + rewardLeft.ToString();
             }
 
         }
@@ -1233,7 +1310,7 @@ IEnumerator articleroutine(int sleep)
             if (t.name == "RewardText")
             {
 
-                t.GetComponent<Text>().text = rewardLeft.ToString();
+                t.GetComponent<Text>().text = "Rewards Left: " + rewardLeft.ToString();
             }
 
         }
@@ -1371,7 +1448,15 @@ IEnumerator articleroutine(int sleep)
     {
         //fightOverAction();
         string[] players = fight.fighters;
-        Game.sendAction(new EndFight(players));
+        if(fightType == 0)
+        {
+            Game.sendAction(new EndFight(players));
+        }
+        else
+        {
+            leaveBattleClick();
+        }
+        
     }
 
     public void fightOverAction()
@@ -1863,12 +1948,15 @@ IEnumerator articleroutine(int sleep)
         playerResponded.Clear();
         battleValue.text = "Battle Value";
         playerRespondNextRound.Clear();
-
+        startFight.gameObject.SetActive(false);
+        clearDistributeScreen();
 
         selectedChoiceText.text = "";
         monsterBattleValueText.text = "Battle Value: ";
         monsterBattleValue = 0;
         header.text = "Fight";
+
+       
 
         rollButtonActive(true);
         fightLobby.gameObject.SetActive(false);
