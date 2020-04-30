@@ -34,7 +34,10 @@ public enum Type
     WinBattle,
     DistributeReward,
     GetMyReward,
-    DistributeBoard
+
+    DistributeBoard,
+    InstantiateMedicinalHerb 
+
 
 }
 

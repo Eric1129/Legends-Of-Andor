@@ -52,6 +52,11 @@ public class GameController : MonoBehaviour
 
     public Transform merchantButton;
 
+    public GameObject rollDieForMedicinalHerb;
+    public GameObject rollDieForMedicinalHerbDice;
+    public GameObject rollDieForMedicinalHerbOutcome;
+    public GameObject rollDieForMedicinalHerbDone;
+
 
     public GameObject distributeArticleController;
 
@@ -752,28 +757,75 @@ public class GameController : MonoBehaviour
         //Debug.Log("sent the data");
         //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
     }
+
+    public int medicinalHerbRoll(int roll){
+        //int loc = 0;
+            if (roll == 1 || roll == 2)
+            {
+                return 37;
+            }
+            else if (roll == 3 || roll == 4)
+            {
+                return 67;
+            }
+            else if (roll == 5 || roll == 6)
+            {
+                return 61;
+            }
+            else{
+                return 37;
+            }
+          //  return loc;
+    }
+
+
+
+    public void rolledMedicinalHerb(){
+        System.Random rnd = new System.Random();
+        int roll   = rnd.Next(1, 6);   // creates a number between 1 and 6
+        //foreach(Andor.Player p in Game.gameState.getPlayers()){
+           rollDieForMedicinalHerbDice.SetActive(false);
+          //System.Random rnd = new System.Random();
+          //Game.gameState.medRoll = dice;
+           int loc = medicinalHerbRoll(roll);
+           rollDieForMedicinalHerbOutcome.GetComponent<Text>().text = "You rolled a " + roll +". The medicinal Herb will be located on space " + loc + "!";
+           rollDieForMedicinalHerbOutcome.SetActive(true);
+           rollDieForMedicinalHerbDone.SetActive(true);
+           string [] player = {Game.myPlayer.getNetworkID()};
+           Game.sendAction(new InstantiateMedicinalHerb(player, roll));           
+        //}
+    }
+
+    public void rolledMedicinalHerbDone(){
+            rollDieForMedicinalHerb.SetActive(false);
+    }
+
     public void foundWitch(int loc)
     {
+         Game.gameState.witchFound = true;
+                            GameObject witchReka = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+                         Debug.Log("Added witch at position: " + loc);
+
         //instantiateTheWitch here
-        scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
-        StartCoroutine(overtimeCoroutine(5));
-        //instantiate witch
-        Debug.Log("Added witch at position: " + loc);
-        //ned to make this true everywhere
-        Game.gameState.witchFound = true;
-        //
-        GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
-        //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
-        //Debug.Log(w);
-        //Debug.Log(w.getLocation());
-        //Game.gameState.addWell(w);
+        // scrollTxt.text = "You have found Reka the witch! " + Game.gameState.turnManager.currentPlayerTurn() + " will recieve a free brew!";
+        // StartCoroutine(overtimeCoroutine(5));
+        // //instantiate witch
+        // Debug.Log("Added witch at position: " + loc);
+        // //ned to make this true everywhere
+        // Game.gameState.witchFound = true;
+        // //
+        // GameObject wellObject = Instantiate(witch, tiles[loc].getMiddle(), transform.rotation);
+        // //Well w = new Well(Game.positionGraph.getNode(pos), wellObject);
+        // //Debug.Log(w);
+        // //Debug.Log(w.getLocation());
+        // //Game.gameState.addWell(w);
 
 
-        //if it is my player, then get roll
-        //instantiateMedicinalHerb(roll)
-        //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
-        //Game.gameState.foundWitch
-        //Game.gameState.brewCost
+        // //if it is my player, then get roll
+        // //instantiateMedicinalHerb(roll)
+        // //scrollTxt.text = "The medicinal herb is on location " + medicinalHerb.getLocation() + "!");
+        // //Game.gameState.foundWitch
+        // //Game.gameState.brewCost
     }
     IEnumerator overtimeCoroutine(int sleep)
     {
@@ -921,7 +973,7 @@ public class GameController : MonoBehaviour
             initializeWineskin();
 
             Debug.Log("INITIALIZING THE MED HERB");
-            instantiateMedicinalHerb(3);
+           // instantiateMedicinalHerb(3);
 
         }
 
@@ -1219,7 +1271,7 @@ public class GameController : MonoBehaviour
     }
 
 
-    private void instantiateMedicinalHerb(int roll)
+    public void instantiateMedicinalHerb(int roll)
     {
         int loc = 0;
         if (roll == 1 || roll == 2)
