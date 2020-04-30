@@ -221,11 +221,8 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void closeScreens()
     {
-        if (goldToDistribute == 0 && wineToDistribute == 0)
-        {
             DistributeArticlesBoard.gameObject.SetActive(false);
             WaitingScreenPopup.gameObject.SetActive(false);
-        }
     }
 
     public void decideWhichScreenToDisplay(bool host)
