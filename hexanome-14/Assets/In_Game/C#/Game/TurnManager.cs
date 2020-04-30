@@ -40,7 +40,6 @@ public class TurnManager
     public void endTurn()
     {
         turnQueue.Dequeue();
-        GameController.instance.updateTurnText();
 
     }
 
