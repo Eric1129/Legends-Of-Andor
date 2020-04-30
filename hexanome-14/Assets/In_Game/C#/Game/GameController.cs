@@ -433,7 +433,6 @@ public class GameController : MonoBehaviour
             //}
             // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-            GameController.instance.updateTurnText();
 
 
             updateHeroStats();
