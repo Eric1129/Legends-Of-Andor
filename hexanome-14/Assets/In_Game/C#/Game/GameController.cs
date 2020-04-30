@@ -283,19 +283,19 @@ public class GameController : MonoBehaviour
         //    + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
 
         //heroStatsText.text = update;
-        string update = "";
-        foreach (Andor.Player p in Game.gameState.getPlayers())
-        {
-            string text = p.getHeroType() + " hour: " + p.getHero().getHour() + " , gold: " + p.getHero().getGold() + " , will: " + p.getHero().getWillpower() + " ,strength: " + p.getHero().getStrength() + " " + p.getHero().allArticlesAsString() + "\n" + "\n";
-            update += text;
+        // string update = "";
+        // foreach (Andor.Player p in Game.gameState.getPlayers())
+        // {
+        //     string text = p.getHeroType() + " hour: " + p.getHero().getHour() + " , gold: " + p.getHero().getGold() + " , will: " + p.getHero().getWillpower() + " ,strength: " + p.getHero().getStrength() + " " + p.getHero().allArticlesAsString() + "\n" + "\n";
+        //     update += text;
 
-        }
-        //string update = Game.myPlayer.getHeroType()
-        //   + "\nG: " + Game.myPlayer.getHero().getGold().ToString()
-        //   + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
-        //   + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
-        //   + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
-        //   + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
+        // }
+        string update = Game.myPlayer.getHeroType()
+          + "\nG: " + Game.myPlayer.getHero().getGold().ToString()
+          + "\nStrength: " + Game.myPlayer.getHero().getStrength().ToString()
+          + "\nWillpower: " + Game.myPlayer.getHero().getWillpower().ToString()
+          + "\nHour: " + Game.myPlayer.getHero().getHour().ToString()
+          + "\nArticles: " + Game.myPlayer.getHero().allArticlesAsString();
 
         heroStatsText.text = update;
     }
