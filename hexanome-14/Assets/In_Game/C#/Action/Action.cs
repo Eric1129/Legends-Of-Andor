@@ -34,7 +34,8 @@ public enum Type
     WinBattle,
     DistributeReward,
     GetMyReward,
-    InstantiateMedicinalHerb 
+    InstantiateMedicinalHerb,
+    RemoveMonster
 
 }
 

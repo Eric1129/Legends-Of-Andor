@@ -294,17 +294,11 @@ public class eventCards : MonoBehaviour
     {
         GameController.instance.updateGameConsoleText("14 - A fragment of a very old sculpture has been found. Not all of the heroes are able to appreciate that kind of handiwork...");
         GameController.instance.updateGameConsoleText("14 - The Dwarf and Warrior immediately get 3 willpower points each.");
-        if (instance.hasDwarf)
-        {
-            //int currWillpower = dwarf.getHero().getWillpower();
-            Debug.Log("14");
-            dwarf.getHero().increaseWillpower(3);
-        }
 
-        if (instance.hasWarrior)
-        {
-           // int currWillpower = warrior.getHero().getWillpower();
-            warrior.getHero().increaseWillpower(3);
+        foreach(Andor.Player player in Game.gameState.getPlayers()){
+            if(player.getHeroType() == "Male Dwarf" || player.getHeroType() == "Female Dwarf" || player.getHeroType() == "Male Warrior" || player.getHeroType() == "Female Warrior"){
+                player.getHero().increaseWillpower(3);
+            }
         }
     }
 
