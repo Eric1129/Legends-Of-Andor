@@ -400,15 +400,20 @@ public class GameController : MonoBehaviour
             }
 
 
-            // Update Player position
+            // Update Monster position
             foreach (Monster monster in Game.gameState.getMonsters())
             {
-                if (monster.canMonsterMove())
+                if (monster.getLocation() == 80)
+                {
+                    monsterObjects[monster].transform.position =
+                    moveTowards(monsterObjects[monster].transform.position, tiles[80].getMiddle(), 5.5f);
+                }
+                else if (monster.canMonsterMove())
                 {
                     monsterObjects[monster].transform.position =
                     moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
                 }
-                if (monster.isMedicinalGor() && !Game.gameState.medicinalGorDefeated)
+                else if (monster.isMedicinalGor() && !Game.gameState.medicinalGorDefeated)
                 {
                     medicinalHerbObject[Game.gameState.getMedicinalHerb()].transform.position = moveTowards(monsterObjects[monster].transform.position, tiles[monster.getLocation()].getMiddle(), 0.5f);
                 }
@@ -571,6 +576,16 @@ public class GameController : MonoBehaviour
         Vector3 playerPos = playerObjects[player.getNetworkID()].transform.position;
         Vector3 cellPos = tiles[Game.gameState.playerLocations[player.getNetworkID()]].getMiddle();
         playerObjects[player.getNetworkID()].transform.position = moveTowards(playerPos, cellPos, 0.5f);
+    }
+
+    public void deadMonsterMove(Monster monster){
+        for(int i= 0; i < 100; i++){
+
+            monsterObjects[monster].transform.position =
+                    moveTowards(monsterObjects[monster].transform.position, tiles[80].getMiddle(), 4.5f);
+              Debug.Log("remove monster reach");
+        }
+
     }
 
 

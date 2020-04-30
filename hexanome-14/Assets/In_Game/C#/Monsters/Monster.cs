@@ -61,12 +61,14 @@ public class Monster : Fightable, MoveStrategy
     }
     public void move()
     {
-        location = location.toCastleNode();
+        if(location.getIndex() != 80){
+            location = location.toCastleNode();
 
-        if (location.getIndex() == 0)
-        {
-            GameController.instance.monsterAtCastle(this);
-        }
+             if (location.getIndex() == 0)
+            {
+                GameController.instance.monsterAtCastle(this);
+            }
+        }    
     }
 
 

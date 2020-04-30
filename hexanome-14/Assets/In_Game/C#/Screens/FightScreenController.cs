@@ -878,7 +878,8 @@ IEnumerator articleroutine(int sleep)
             //game over
              string [] player = {Game.myPlayer.getNetworkID()};
             //Game.sendAction(new RemoveMonster(player, fight.monster));
-            Game.gameState.removeMonster(fight.monster);
+        // Game.gameState.removeMonster(fight.monster);
+           // Game.gameState.deadMonsterMove(fight.monster);
             endBattle(1);
         }
 
@@ -971,7 +972,7 @@ IEnumerator articleroutine(int sleep)
                 }
             }
         }
-            Game.gameState.removeMonster(fight.monster);
+           // Game.gameState.removeMonster(fight.monster);
             //Game.sendAction(new RemoveMonster(players, fight.monster));
             endBattle_collab(1);
             
@@ -1071,10 +1072,17 @@ IEnumerator articleroutine(int sleep)
             //hero wins
             //get reward
             //fight.monster.setCantMove();
+            //Game.gameState.deadMonsterMove(fight.monster);
+           // GameController.instance.deadMonsterMove(fight.monster);
+           //fight.monster.setLocationNode(80);
+
+            
+           //string [] player = {Game.myPlayer.getNetworkID()};
             rewardScreen.gameObject.SetActive(true);
-            // string [] player = {Game.myPlayer.getNetworkID()};
-            // Game.sendAction(new RemoveMonster(player, fight.monster));
-            //Game.gameState.removeMonster(fight.monster);
+            //Game.sendAction(new RemoveMonster(player, fight.monster));
+
+            Debug.Log("removing monster....");
+            Game.gameState.removeMonster(fight.monster);
 
             //Game.gameState.legend += 1;
             // GameController.instance.advanceNarrator(Game.gameState.legend);
@@ -1350,6 +1358,8 @@ IEnumerator articleroutine(int sleep)
         
         if (outcome == 1)
         {
+            //GameController.instance.deadMonsterMove(fight.monster);
+
             //hero wins
             //get reward
         // string [] players = new string[fight.getHeroes().Count];
@@ -1362,11 +1372,11 @@ IEnumerator articleroutine(int sleep)
         //         }
         //     }
         // }
-        //     //Game.gameState.removeMonster(fight.monster);
-        //     Game.sendAction(new RemoveMonster(players, fight.monster));
+            Game.gameState.removeMonster(fight.monster);
+            
             // fight.monster.setCantMove();
             Game.sendAction(new WinBattle(fight.fighters, fight.fighters[0])); //calls distributeOrWait
-
+            //Game.sendAction(new RemoveMonster(fight.fighters, fight.monster));
         }
         else if (outcome == 2)
         {
@@ -1423,7 +1433,7 @@ IEnumerator articleroutine(int sleep)
     {
         if(fightType == 0)
         {
-            fight.monster.setCantMove();
+            //fight.monster.setCantMove();
             int reward = fight.monster.getReward();
             Hero h = Game.gameState.getPlayer(fight.getCurrentFighter()).getHero();
             if (type.Equals("gold"))
@@ -1441,7 +1451,7 @@ IEnumerator articleroutine(int sleep)
         }
         else
         {
-            fight.monster.setCantMove();
+            //fight.monster.setCantMove();
             distributeReward.gameObject.SetActive(false);
             string[] players = new string[1];
             players[0] = Game.myPlayer.getNetworkID();
