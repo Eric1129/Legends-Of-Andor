@@ -147,6 +147,7 @@ public class GameController : MonoBehaviour
     public static MerchantScreen ms;
 
     public FightScreenController fsc;
+    public DistributeArticlesScreen das;
 
     private Transform initTransform;
     //private string[] tradeType;
@@ -169,6 +170,7 @@ public class GameController : MonoBehaviour
     {
         ts = tradeScreenController.gameObject.GetComponent<TradeScreen>();
         fsc = fightScreenController.gameObject.GetComponent<FightScreenController>();
+        das = distributeArticleController.GetComponent<DistributeArticlesScreen>();
         //ms = merchantScreenController.gameObject.GetComponent<MerchantScreen>();
         playersToNotify = new string[4];
         //ts = new TradeScreen();
@@ -205,8 +207,14 @@ public class GameController : MonoBehaviour
             Game.Shuffle(randomOrder);
             Game.setTurnManager(randomOrder);
             Debug.Log("SET TURN");
+            das.decideWhichScreenToDisplay(true);
 
 
+        }
+        else
+        {
+            //das.WaitingScreenPopup.gameObject.SetActive(true);
+            das.decideWhichScreenToDisplay(false);
         }
 
 
