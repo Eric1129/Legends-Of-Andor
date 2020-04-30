@@ -189,20 +189,22 @@ public class GameState
         }
         Node monsterLoc = positionGraph.getNode(80);
         m.setLocationNode(monsterLoc);
+        m.getPrefab().SetActive(false);
+
        // m.move();
         
         if(m.getMonsterType() == "Gor")
         {
             Gor g = (Gor)m;
-            //gors.Remove(g);
+            gors.Remove(g);
         }
         if (m.getMonsterType() == "Skral")
         {
             Skral s = (Skral)m;
-            //skrals.Remove(s);
+            skrals.Remove(s);
         }
         
-        //monsters.Remove(m);
+        monsters.Remove(m);
         Game.gameState.legend += 1;
         GameController.instance.advanceNarrator(Game.gameState.legend);
         
@@ -408,8 +410,14 @@ public class GameState
         int num = event_cards[0];
         eventCards.execute(num);
         //event_cards = RemoveAt(event_cards,0);
-        int[] e = new int[event_cards.Length - 1];
+        // int[] e = new int[event_cards.Length - 1];
+        // Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
+        // event_cards = e;
+        Debug.Log(event_cards);
+        int[] e = new int[event_cards.Length ];
         Array.Copy(event_cards, 1, e, 0, event_cards.Length - 1);
+        Array.Copy(event_cards, 0, e, event_cards.Length-1, 1);
+        Debug.Log(e);
         event_cards = e;
     }
 

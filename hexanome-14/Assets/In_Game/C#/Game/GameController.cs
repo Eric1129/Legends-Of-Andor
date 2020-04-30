@@ -422,7 +422,7 @@ public class GameController : MonoBehaviour
 
             updateHeroStats();
 
-            if (winScenario() && Game.gameState.outcome == "won")
+            if (/*winScenario() && */Game.gameState.outcome == "won")
             {
                 Game.gameState.outcome = "wonNotified";
                 winNotify();
@@ -1965,42 +1965,42 @@ public class GameController : MonoBehaviour
     }
 
 
-    public bool winScenario()
-    {
-        //checks that herb is in castle, castle defended
-        if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
-        {
-            Game.gameState.outcome = "won";
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    // public bool winScenario()
+    // {
+    //     //checks that herb is in castle, castle defended
+    //     if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
+    //     {
+    //         Game.gameState.outcome = "won";
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         return false;
+    //     }
 
-    }
+    // }
 
-    public bool checkMedicinalHerbAtCastle()
-    {
-        //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
-        //{
-        //    if (mh.getLocation() == 0)
-        //    {
-        //        return true;
-        //    }
-        //}
-        //return false;
-        if (Game.gameState.getMedicinalHerb() != null)
-        {
-            return false;
-        }
+    // public bool checkMedicinalHerbAtCastle()
+    // {
+    //     //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
+    //     //{
+    //     //    if (mh.getLocation() == 0)
+    //     //    {
+    //     //        return true;
+    //     //    }
+    //     //}
+    //     //return false;
+    //     if (Game.gameState.getMedicinalHerb() != null)
+    //     {
+    //         return false;
+    //     }
 
-        if (Game.gameState.getMedicinalHerb().getLocation() == 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    //     if (Game.gameState.getMedicinalHerb().getLocation() == 0)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     public void initializeStrengthPoints()
     {
