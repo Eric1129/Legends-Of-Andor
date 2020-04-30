@@ -1871,10 +1871,7 @@ public void rolledSkralStronghold(){
     public void passClick()
     {
         Debug.Log("pass clicked");
-        //Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
-        //updateWineskin();
-
-
+        Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
 
     }
     public void updateWineskin2()

@@ -18,11 +18,14 @@ public class TurnManager
         foreach(string player in order)
         {
             turnQueue.Enqueue(player);
+            Debug.Log("order: " + player);
+
         }
     }
 
     public string currentPlayerTurn()
     {
+        Debug.Log("Get Player: " + turnQueue.Peek());
         return turnQueue.Peek();
     }
     // cycle queue (go to next player)
@@ -31,12 +34,16 @@ public class TurnManager
         turnQueue.Enqueue(turnQueue.Dequeue());
 
         // Maybe do some call here to let the others know
+        Debug.Log("pass turn: " + turnQueue.Peek());
+
     }
 
     // remove from queue and go to the next player
     public void endTurn()
     {
         turnQueue.Dequeue();
+        Debug.Log("end turn: " + turnQueue.Peek());
+
     }
 
     public bool roundDone()
