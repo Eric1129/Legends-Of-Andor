@@ -100,7 +100,8 @@ public class Monster : Fightable, MoveStrategy
 
     public void increaseWillpower(int amount)
     {
-        this.willpower += amount;
+        this.willpower = Mathf.Min(20, this.willpower + amount);
+        
     }
     public void decreaseWillpower(int amount)
     {
