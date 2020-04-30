@@ -864,13 +864,13 @@ IEnumerator articleroutine(int sleep)
         displayHero(Game.gameState.getPlayer(fight.getCurrentFighter()));
         displayMonster(fight.monster);
         //clear any article usages
-            foreach(Hero h in fight.getHeroes()){
-             foreach(Andor.Player p in Game.gameState.getPlayers()){
-                 if(p.getHero() == h){
-                     Game.sendAction(new ExitFight(p.getNetworkID()));
-                 }
-             }
-       }
+        foreach(Hero h in fight.getHeroes()){
+            foreach(Andor.Player p in Game.gameState.getPlayers()){
+                if(p.getHero() == h){
+                    Game.sendAction(new ExitFight(p.getNetworkID()));
+                }
+            }
+        }
 
         if(fightType == 0)
         {
@@ -921,52 +921,14 @@ IEnumerator articleroutine(int sleep)
     public void checkBattleWinner_collab()
     {
 
-        
+        bool noWinner = true;
         
 
         //=================COMMENT BACK IN==========================
-        //kick out players who have no more time left or no more WP
-        foreach (string f in fight.fighters)
-        {
-            if (Game.gameState.getPlayer(f).getHero().getHour() + 1
-            > Game.gameState.TIME_endTime || Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
-            {
-                battleEndScreen.gameObject.SetActive(true);
-                Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
-                foreach(Transform t in trs)
-                {
-                    
-
-                    if(t.name == "Header")
-                    {
-                        if (Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
-                        {
-                            t.GetComponent<Text>().text = "No More willpower";
-                        }
-
-                        if(Game.gameState.getPlayer(f).getHero().getHour() + 1
-            == Game.gameState.TIME_endTime)
-                        {
-                            t.GetComponent<Text>().text = "Out of time.";
-                        }
-                    }
-                    if (t.name == "Body")
-                    {
-                        t.GetComponent<Text>().text = "You cannot continue to the next round.";
-                    }
-
-
-                }
-                
-                
-
-                //leaveBattleClick();
-                //fight.leaveFight(f);
-            }
-        }
-
+        
         if (fight.monster.getWillpower() == 0)
         {
+            noWinner = false;
             header.text = "Battle Over: Heroes Win!";
             //game over
 
@@ -975,16 +937,16 @@ IEnumerator articleroutine(int sleep)
             
 
 
-        string [] players = new string[fight.getHeroes().Count];
-        int i = 0;
-        foreach(Hero h in fight.getHeroes()){
-            foreach(Andor.Player p in Game.gameState.getPlayers()){
-                if(p.getHero() == h){
-                    players[i] = p.getNetworkID();
-                    i++;
+            string [] players = new string[fight.getHeroes().Count];
+            int i = 0;
+            foreach(Hero h in fight.getHeroes()){
+                foreach(Andor.Player p in Game.gameState.getPlayers()){
+                    if(p.getHero() == h){
+                        players[i] = p.getNetworkID();
+                        i++;
+                    }
                 }
             }
-        }
            // Game.gameState.removeMonster(fight.monster);
             //Game.sendAction(new RemoveMonster(players, fight.monster));
             endBattle_collab(1);
@@ -995,6 +957,45 @@ IEnumerator articleroutine(int sleep)
 
         }
         else
+        {
+            //kick out players who have no more time left or no more WP
+
+            foreach (string f in fight.fighters)
+            {
+                if (Game.gameState.getPlayer(f).getHero().getHour() + 1
+                > Game.gameState.TIME_endTime || Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
+                {
+                    battleEndScreen.gameObject.SetActive(true);
+                    Transform[] trs = battleEndScreen.GetComponentsInChildren<Transform>();
+                    foreach (Transform t in trs)
+                    {
+
+                        if (t.name == "Header")
+                        {
+                            if (Game.gameState.getPlayer(f).getHero().getWillpower() == 0)
+                            {
+                                t.GetComponent<Text>().text = "No More willpower";
+                            }
+
+                            if (Game.gameState.getPlayer(f).getHero().getHour() + 1
+                                == Game.gameState.TIME_endTime)
+                            {
+                                t.GetComponent<Text>().text = "Out of time.";
+                            }
+                        }
+                        if (t.name == "Body")
+                        {
+                            t.GetComponent<Text>().text = "You cannot continue to the next round.";
+                        }
+
+                    }
+
+                    //leaveBattleClick();
+                    //fight.leaveFight(f);
+                }
+            }
+        }
+        if(noWinner)
         {
             //No win yet
             //No win yet
@@ -1008,14 +1009,7 @@ IEnumerator articleroutine(int sleep)
 
     }
 
-    IEnumerator Wait(float duration)
-    {
-        //This is a coroutine
-        Debug.Log("Start Wait() function. The time is: " + Time.time);
-        Debug.Log("Float duration = " + duration);
-        yield return new WaitForSeconds(duration);   //Wait
-        Debug.Log("End Wait() function and the time is: " + Time.time);
-    }
+   
 
     public void clearDistributeScreen()
     {
@@ -1803,11 +1797,15 @@ IEnumerator articleroutine(int sleep)
         int i = 1;
         foreach(string p in invitedPlayers)
         {
+            //maybe change this to players^^^
             playerResponded.Add(p, false);
             players[i] = p;
             i++;
         }
-        closeFightScreen();
+        fightChoice.gameObject.SetActive(false);
+        selectHeroFight.gameObject.SetActive(false);
+
+        //closeFightScreen();
         Game.sendAction(new InviteFighter(players));
     }
 
@@ -1816,10 +1814,9 @@ IEnumerator articleroutine(int sleep)
         
         string[] players = new string[1];
         players[0] = player;
-        if (accept)
-        {
-            Game.sendAction(new RespondFight(players, accept, false));
-        }
+        Game.sendAction(new RespondFight(players, accept, false));
+        //if accept is true => calls joinFightLobby, otherwise calls respond fight
+        
     }
 
     public void openFightLobby(string fighter)
