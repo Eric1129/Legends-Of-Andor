@@ -18,9 +18,6 @@ public class DistributeBoard : Action
         this.players = players;
         this.playerGold = playerGold;
         this.playerWineskin = playerWineskin;
-
-
-
     }
 
     public string[] playersInvolved()
@@ -54,6 +51,7 @@ public class DistributeBoard : Action
         }
         GameController.instance.updateHeroStats();
         GameController.instance.das.closeScreens();
+        GameController.instance.rollDieForRunestoneLegend.SetActive(true);
     }
 
     public bool isLegal(GameState gs)

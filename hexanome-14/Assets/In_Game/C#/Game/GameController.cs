@@ -57,6 +57,16 @@ public class GameController : MonoBehaviour
     public GameObject rollDieForMedicinalHerbOutcome;
     public GameObject rollDieForMedicinalHerbDone;
 
+    public GameObject rollDieForRunestoneLegend;
+    public GameObject rollDieForRunestoneLegendDice;
+    public GameObject rollDieForRunestoneLegendOutcome;
+    public GameObject rollDieForRunestoneLegendDone;
+
+    public GameObject rollDieForSkralStronghold;
+    public GameObject rollDieForSkralStrongholdDice;
+    public GameObject rollDieForSkralStrongholdOutcome;
+    public GameObject rollDieForSkralStrongholdDone;
+
 
     public GameObject distributeArticleController;
 
@@ -422,11 +432,12 @@ public class GameController : MonoBehaviour
 
             updateHeroStats();
 
-            //if (winScenario() && Game.gameState.outcome == "won")
-            //{
-            //    Game.gameState.outcome = "wonNotified";
-            //    winNotify();
-            //}
+            if (/*winScenario() && */Game.gameState.outcome == "won")
+            {
+                Game.gameState.outcome = "wonNotified";
+                winNotify();
+            }
+
 
             if (tradeRequestSent)
             {
@@ -758,6 +769,75 @@ public class GameController : MonoBehaviour
         //PhotonNetwork.RaiseEvent((byte)53, data, sendToAllOptions, SendOptions.SendReliable);
     }
 
+//////////////////////////////RUNESTONE LEGENDS//////////////////////////  
+
+///////when you want to set the skral stronghold, you need to make
+/////// rollDieForSkralStronghold.SetActive(true) for one player
+
+  public void rolledRunestoneLegend(){
+        System.Random rnd = new System.Random();
+        int roll = rnd.Next(1, 7);   // creates a number between 1 and 6
+        rollDieForRunestoneLegendOutcome.SetActive(true);
+        rollDieForRunestoneLegendOutcome.GetComponent<Text>().text = "You rolled a " + roll;
+        rollDieForRunestoneLegendDice.SetActive(false);
+        rollDieForRunestoneLegendDone.SetActive(true);
+        // string [] player = {Game.myPlayer.getNetworkID()};
+        Game.sendAction(new SetRunestoneLegend(Game.myPlayer.getNetworkID(), roll));           
+    }
+
+    public void rolledRunestoneLegendDone(){
+            rollDieForRunestoneLegend.SetActive(false);
+    }
+////////////////////////////SKRAL STRONGHOLD/////////////////////////////
+
+///////when you want to set the skral stronghold, you need to make
+/////// rollDieForSkralStronghold.SetActive(true) for one player
+
+public void rolledSkralStronghold(){
+        System.Random rnd = new System.Random();
+        int roll = rnd.Next(1, 6);   // creates a number between 1 and 6
+        //foreach(Andor.Player p in Game.gameState.getPlayers()){
+           rollDieForSkralStrongholdDice.SetActive(false);
+          //System.Random rnd = new System.Random();
+          //Game.gameState.medRoll = dice;
+           int loc = roll + 50;
+           rollDieForSkralStrongholdOutcome.GetComponent<Text>().text = "You rolled a " + roll +"! The Skral stronghold will be located at position: " + loc + "!";
+           rollDieForSkralStrongholdOutcome.SetActive(true);
+           rollDieForSkralStrongholdDone.SetActive(true);
+           //string [] player = {Game.myPlayer.getNetworkID()};
+           Game.sendAction(new SetSkralStronghold(Game.myPlayer.getNetworkID(), roll));           
+    }
+
+    public void rolledSkralStrongholdDone(){
+            rollDieForSkralStronghold.SetActive(false);
+    }
+////////////////////////////SKRAL STRONGHOLD//////////////////////////////
+
+// public void rolledRunestoneLocations(){
+//         System.Random rnd = new System.Random();
+//         int [] runestoneLocations = int [5];
+//         for(int i =0; i < 5; i ++){
+//            int roll = rnd.Next(1, 5);   // creates a number between 1 and 6
+//            rollDieForRunestoneLegendRedDice.SetActive(false);
+//            rollDieForRunestoneLegendRedDice.SetActive(false);
+//            int loc = dice;
+//            rollDieForRunestoneLocationsOutcome.GetComponent<Text>().text = "You rolled a " + roll +";
+//            rollDieForRunestoneLocationsOutcome.SetActive(true);
+
+//         }
+        
+//            string [] player = {Game.myPlayer.getNetworkID()};
+//            Game.sendAction(new SetRunestoneLocations(player, roll)); 
+//         rollDieForRunestoneLocationsDone.SetActive(true);
+          
+//     }
+
+//     public void rolledRunestoneLocationsDone(){
+//             rollDieForRunestoneLocations.SetActive(false);
+//     }
+
+
+
     public int medicinalHerbRoll(int roll){
         //int loc = 0;
             if (roll == 1 || roll == 2)
@@ -963,13 +1043,11 @@ public class GameController : MonoBehaviour
             loadFogTokens();
             //Debug.Log("Finished loading fog tokens");
 
-            loadPrinceThorald();
-
             loadFarmers();
 
             loadNarrator();
 
-            loadSkralOnTower();
+            //loadSkralOnTower();
 
             setupEquipmentBoard();
 
@@ -1191,9 +1269,9 @@ public class GameController : MonoBehaviour
 
     }
 
-    private void loadSkralOnTower()
+    public void loadSkralOnTower(int roll)
     {
-        int roll = 54;
+        //int roll = 54;
         Game.gameState.skralTowerLocation = roll;
         Vector3 boardScaling = new Vector3(1 / boardSpriteContainer.parent.lossyScale.x, 1 / boardSpriteContainer.parent.lossyScale.y, 1 / boardSpriteContainer.parent.lossyScale.z);
         Skral s = new Skral(Game.gameState.positionGraph.getNode(roll));
@@ -1239,8 +1317,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-
-    private void loadPrinceThorald()
+    public void loadPrinceThorald()
     {
         GameObject princeThorald = Instantiate(prince, tiles[72].getMiddle(), transform.rotation);
         PrinceThorald princeT = new PrinceThorald(Game.gameState.positionGraph.getNode(72), princeThorald);
@@ -1276,7 +1353,6 @@ public class GameController : MonoBehaviour
         Debug.Log("Added skral");
 
     }
-
 
     public void instantiateMedicinalHerb(int roll)
     {
@@ -1965,42 +2041,42 @@ public class GameController : MonoBehaviour
     }
 
 
-    public bool winScenario()
-    {
-        //checks that herb is in castle, castle defended
-        if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
-        {
-            Game.gameState.outcome = "won";
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    // public bool winScenario()
+    // {
+    //     //checks that herb is in castle, castle defended
+    //     if (checkMedicinalHerbAtCastle() && (Game.gameState.outcome == "undetermined") && Game.gameState.skralTowerDefeated)
+    //     {
+    //         Game.gameState.outcome = "won";
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         return false;
+    //     }
 
-    }
+    // }
 
-    public bool checkMedicinalHerbAtCastle()
-    {
-        //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
-        //{
-        //    if (mh.getLocation() == 0)
-        //    {
-        //        return true;
-        //    }
-        //}
-        //return false;
-        if (Game.gameState.getMedicinalHerb() != null)
-        {
-            return false;
-        }
+    // public bool checkMedicinalHerbAtCastle()
+    // {
+    //     //foreach (MedicinalHerb mh in Game.gameState.getMedicinalHerb())
+    //     //{
+    //     //    if (mh.getLocation() == 0)
+    //     //    {
+    //     //        return true;
+    //     //    }
+    //     //}
+    //     //return false;
+    //     if (Game.gameState.getMedicinalHerb() != null)
+    //     {
+    //         return false;
+    //     }
 
-        if (Game.gameState.getMedicinalHerb().getLocation() == 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    //     if (Game.gameState.getMedicinalHerb().getLocation() == 0)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     public void initializeStrengthPoints()
     {
