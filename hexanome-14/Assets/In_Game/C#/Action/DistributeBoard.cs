@@ -51,7 +51,9 @@ public class DistributeBoard : Action
         }
         GameController.instance.updateHeroStats();
         GameController.instance.das.closeScreens();
-        GameController.instance.rollDieForRunestoneLegend.SetActive(true);
+        if(PhotonNetwork.IsMasterClient){
+            GameController.instance.rollDieForRunestoneLegend.SetActive(true);
+        }  
     }
 
     public bool isLegal(GameState gs)
