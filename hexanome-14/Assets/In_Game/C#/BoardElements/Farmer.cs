@@ -13,4 +13,21 @@ public class Farmer : PickDrop
 
     private Farmer() : base(null, null, false, "NULL") { }
 
+    public override void DroppedSpecial()
+    {
+        if(this.location.getIndex() == 0)
+        {
+            Game.gameState.maxMonstersAllowedInCastle++;
+        }
+        Debug.Log("Max Monsters: " + Game.gameState.maxMonstersAllowedInCastle);
+    }
+
+    public override void pickedUpSpecial()
+    {
+        if (this.location.getIndex() == 0)
+        {
+            Game.gameState.maxMonstersAllowedInCastle--;
+        }
+        Debug.Log("Max Monsters: " + Game.gameState.maxMonstersAllowedInCastle);
+    }
 }

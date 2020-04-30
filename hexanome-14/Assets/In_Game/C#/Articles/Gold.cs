@@ -65,4 +65,12 @@ public class Gold : PickDrop, Article
     {
         return description;
     }
+
+    public override void pickedUpSpecial()
+    {
+    }
+
+    public override void DroppedSpecial()
+    {
+    }
 }

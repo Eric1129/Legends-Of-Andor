@@ -266,7 +266,7 @@ public class eventCards : MonoBehaviour
         foreach (Monster m in monsters)
         {
             int currStrength = m.getStrength();
-            //m.increaseStrength(1);
+           // m.increaseStrength(1);
         }
     }
 
