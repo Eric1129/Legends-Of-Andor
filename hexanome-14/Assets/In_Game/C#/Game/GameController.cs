@@ -433,7 +433,7 @@ public class GameController : MonoBehaviour
             //}
             // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-            
+
 
             updateHeroStats();
 
@@ -570,6 +570,7 @@ public class GameController : MonoBehaviour
             }
         }
         fightButton.interactable = canFight;
+        updateTurnText();
     }
 
     public void moveToNewPos(Andor.Player player)
