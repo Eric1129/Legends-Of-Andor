@@ -795,17 +795,18 @@ public class GameController : MonoBehaviour
 
 public void rolledSkralStronghold(){
         System.Random rnd = new System.Random();
-        int roll = rnd.Next(1, 6);   // creates a number between 1 and 6
+        int roll = rnd.Next(1, 7);   // creates a number between 1 and 6
         //foreach(Andor.Player p in Game.gameState.getPlayers()){
-           rollDieForSkralStrongholdDice.SetActive(false);
-          //System.Random rnd = new System.Random();
-          //Game.gameState.medRoll = dice;
-           int loc = roll + 50;
-           rollDieForSkralStrongholdOutcome.GetComponent<Text>().text = "You rolled a " + roll +"! The Skral stronghold will be located at position: " + loc + "!";
-           rollDieForSkralStrongholdOutcome.SetActive(true);
-           rollDieForSkralStrongholdDone.SetActive(true);
-           //string [] player = {Game.myPlayer.getNetworkID()};
-           Game.sendAction(new SetSkralStronghold(Game.myPlayer.getNetworkID(), roll));           
+        rollDieForSkralStrongholdDice.SetActive(false);
+        //System.Random rnd = new System.Random();
+        //Game.gameState.medRoll = dice;
+        int loc = roll + 50;
+        rollDieForSkralStrongholdOutcome.GetComponent<Text>().text = "You rolled a " + roll +"! The Skral stronghold will be located at position: " + loc + "!";
+        rollDieForSkralStrongholdOutcome.SetActive(true);
+        rollDieForSkralStrongholdDice.SetActive(false);
+        rollDieForSkralStrongholdDone.SetActive(true);
+        //string [] player = {Game.myPlayer.getNetworkID()};
+        Game.sendAction(new SetSkralStronghold(Game.myPlayer.getNetworkID(), roll));           
     }
 
     public void rolledSkralStrongholdDone(){
@@ -862,17 +863,18 @@ public void rolledSkralStronghold(){
 
     public void rolledMedicinalHerb(){
         System.Random rnd = new System.Random();
-        int roll   = rnd.Next(1, 6);   // creates a number between 1 and 6
+        int roll   = rnd.Next(1, 7);   // creates a number between 1 and 6
         //foreach(Andor.Player p in Game.gameState.getPlayers()){
-           rollDieForMedicinalHerbDice.SetActive(false);
-          //System.Random rnd = new System.Random();
-          //Game.gameState.medRoll = dice;
-           int loc = medicinalHerbRoll(roll);
-           rollDieForMedicinalHerbOutcome.GetComponent<Text>().text = "You rolled a " + roll +". The medicinal Herb will be located on space " + loc + "!";
-           rollDieForMedicinalHerbOutcome.SetActive(true);
-           rollDieForMedicinalHerbDone.SetActive(true);
-           string [] player = {Game.myPlayer.getNetworkID()};
-           Game.sendAction(new InstantiateMedicinalHerb(player, roll));           
+    
+        //System.Random rnd = new System.Random();
+        //Game.gameState.medRoll = dice;
+        int loc = medicinalHerbRoll(roll);
+        rollDieForMedicinalHerbOutcome.GetComponent<Text>().text = "You rolled a " + roll +". The medicinal Herb will be located on space " + loc + "!";
+        rollDieForMedicinalHerbOutcome.SetActive(true);
+        rollDieForMedicinalHerbDice.SetActive(false);
+        rollDieForMedicinalHerbDone.SetActive(true);
+        string [] player = {Game.myPlayer.getNetworkID()};
+        Game.sendAction(new InstantiateMedicinalHerb(player, roll));           
         //}
     }
 

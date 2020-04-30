@@ -11,7 +11,7 @@ public class LegendCard: MonoBehaviour
     public bool easy;
     public char currentLegend;
     public int LegendNumber;
-    public int runestone = 2;
+    public int runestone;
 
     // Start is called before the first frame update
     //void Start()
@@ -88,6 +88,8 @@ public class LegendCard: MonoBehaviour
                 
             }
             currentText.text = textR;
+
+          
             return;
         }
 
@@ -124,6 +126,8 @@ public class LegendCard: MonoBehaviour
                     "Now continue to Legend card C2.";
 
                 currentText.text = textC1;
+
+                GameController.instance.rollDieForSkralStronghold.SetActive(true);
                 break;
 
             case 7:
@@ -299,5 +303,7 @@ public class LegendCard: MonoBehaviour
                 "Task: When the Narrator reaches the letter “N” on the Legend track, the medicinal herb must be in space 0(the castle).";
 
         currentText.text = textW;
+
+        GameController.instance.rollDieForMedicinalHerb.SetActive(true);
     }
 }
