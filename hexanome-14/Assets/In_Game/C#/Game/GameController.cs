@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour
     public Transform playerTimeContainer;
     public Transform legendTrackContainer;
     public Transform monsterContainer;
+
+
     public Transform heroInfoContainer;
     public Transform pickDropContainer;
 
@@ -431,14 +433,7 @@ public class GameController : MonoBehaviour
             //}
             // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-            if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
-            {
-                turnLabel.color = Game.myPlayer.getColor(130);
-            }
-            else
-            {
-                turnLabel.color = UnityEngine.Color.black;
-            }
+            
 
             updateHeroStats();
 
@@ -907,6 +902,20 @@ public void rolledSkralStronghold(){
 
     public void rolledMedicinalHerbDone(){
             rollDieForMedicinalHerb.SetActive(false);
+    }
+
+    internal void updateTurnText()
+    {
+        this.turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+
+        if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
+        {
+            turnLabel.color = Game.myPlayer.getColor(130);
+        }
+        else
+        {
+            turnLabel.color = UnityEngine.Color.black;
+        }
     }
 
     public void foundWitch(int loc)
@@ -1874,10 +1883,7 @@ public void rolledSkralStronghold(){
     public void passClick()
     {
         Debug.Log("pass clicked");
-        //Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
-        //updateWineskin();
-
-
+        Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
 
     }
     public void updateWineskin2()
