@@ -10567,21 +10567,21 @@ MonoBehaviour:
   boardSpriteContainer: {fileID: 618814503}
   playerContainer: {fileID: 1512963889}
   playerTimeContainer: {fileID: 1426874172}
-  legendTrackContainer: {fileID: 0}
+  legendTrackContainer: {fileID: 1777473337}
   monsterContainer: {fileID: 1001365816}
   heroInfoContainer: {fileID: 1450666353}
-  pickDropContainer: {fileID: 0}
+  pickDropContainer: {fileID: 1629113086}
   moveButton: {fileID: 1467345021}
-  fightButton: {fileID: 0}
+  fightButton: {fileID: 386303935}
   movePrinceButton: {fileID: 1599828453}
   emptyWellButton: {fileID: 1067051926}
   buyBrewButton: {fileID: 746757033}
   chatButton: {fileID: 419121213}
   closeChatButton: {fileID: 45180415}
-  dropPickButton: {fileID: 0}
-  wineskinDropdown: {fileID: 0}
-  wineskin: {fileID: 0}
-  useFalcon: {fileID: 0}
+  dropPickButton: {fileID: 1545343501}
+  wineskinDropdown: {fileID: 1923916655}
+  wineskin: {fileID: 2136160813}
+  useFalcon: {fileID: 148027204}
   merchantButton: {fileID: 467138535}
   distributeArticleController: {fileID: 1859129896}
   chatText: {fileID: 931771261}
@@ -15667,6 +15667,7 @@ RectTransform:
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 1426874172}
+  - {fileID: 1777473337}
   m_Father: {fileID: 1783100913}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41967,6 +41968,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775844978}
   m_CullTransparentMesh: 0
+--- !u!1 &1777473336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1777473337}
+  m_Layer: 0
+  m_Name: LegendTrackContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1777473337
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777473336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 618814503}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1781516620
 GameObject:
   m_ObjectHideFlags: 0
