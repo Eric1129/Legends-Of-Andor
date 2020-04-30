@@ -106,7 +106,7 @@ public class RoomLobbyController : MonoBehaviour
         if(Game.gameState.getPlayers().Count < 2)
         {
             // NOTE: UNCOMMENT FOR REAL GAME
-            allReady = false;
+            //allReady = false;
         }
 
         if (PhotonNetwork.IsMasterClient)
