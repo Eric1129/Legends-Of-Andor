@@ -190,7 +190,7 @@ public class DistributeArticlesScreen : MonoBehaviour
                         Transform[] attrs = t.GetComponentsInChildren<Transform>();
                         foreach (Transform attr in attrs)
                         {
-                            if (attr.name == "winValue")
+                            if (attr.name == "wineValue")
                             {
 
                                 playerWineskin[playerID] = playerWineskin[playerID] - 1;
@@ -221,8 +221,11 @@ public class DistributeArticlesScreen : MonoBehaviour
 
     public void closeScreens()
     {
-        DistributeArticlesBoard.gameObject.SetActive(false);
-        WaitingScreenPopup.gameObject.SetActive(false);
+        if (goldToDistribute == 0 && wineToDistribute == 0)
+        {
+            DistributeArticlesBoard.gameObject.SetActive(false);
+            WaitingScreenPopup.gameObject.SetActive(false);
+        }
     }
 
     public void decideWhichScreenToDisplay(bool host)
