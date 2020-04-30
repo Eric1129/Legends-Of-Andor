@@ -27,7 +27,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     private int heroRank;
 
     //WILL CHANGE BACK TO 0, USING 10 FOR TESTING
-    private int gold = 0;
+    private int gold = 10;
     private int strength = 1;
     private int willpower = 7;
 
@@ -165,7 +165,7 @@ public class Hero // : MonoBehaviour, Movable, Fightable
     }
     public void increaseWillpower(int willpower)
     {
-        this.willpower = Mathf.Min(21, this.willpower+ willpower);
+        this.willpower = Mathf.Min(20, this.willpower+ willpower);
     }
     public void decreaseWillpower(int willpower)
     {
