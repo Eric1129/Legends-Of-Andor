@@ -629,9 +629,25 @@ IEnumerator articleroutine(int sleep)
     //int heroBattleValue = 0;
     public void displayBattleValue(int final)
     {
+        Debug.Log("Disp bv:" + final);
+        int bv = final;
+        foreach(Hero h in fight.getHeroes())
+        {
+            bv += h.getStrength();
+        }
 
-        Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
-        fight.addToBattleValue(final);
+        if(fightType == 0)
+        {
+            fight.setBattleValue(bv);
+        }
+        else
+        {
+            fight.addToBattleValue(final);
+        }
+        
+
+        //Hero h = Game.gameState.getPlayer(fight.fighters[0]).getHero();
+        //fight.addToBattleValue(final);
         battleValue.text = "Battle Value: " + fight.getHeroBattleValue();
 
     }
@@ -1496,15 +1512,23 @@ IEnumerator articleroutine(int sleep)
     public void okClick()
     {
         //fightOverAction();
-        string[] players = fight.fighters;
-        if(fightType == 0)
+        if (fight != null)
         {
-            Game.sendAction(new EndFight(players));
+            string[] players = fight.fighters;
+            if (fightType == 0)
+            {
+                Game.sendAction(new EndFight(players));
+            }
+            else
+            {
+                leaveBattleClick();
+            }
         }
         else
         {
-            leaveBattleClick();
+            closeFightScreen();
         }
+        
         
     }
 
