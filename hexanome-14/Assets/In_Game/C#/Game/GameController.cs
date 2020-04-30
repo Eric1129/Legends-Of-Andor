@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour
     public Transform playerTimeContainer;
     public Transform legendTrackContainer;
     public Transform monsterContainer;
+
+
     public Transform heroInfoContainer;
     public Transform pickDropContainer;
 
@@ -431,14 +433,7 @@ public class GameController : MonoBehaviour
             //}
             // Update player turn
             //turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
-            if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
-            {
-                turnLabel.color = Game.myPlayer.getColor(130);
-            }
-            else
-            {
-                turnLabel.color = UnityEngine.Color.black;
-            }
+            
 
             updateHeroStats();
 
@@ -559,7 +554,8 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    if (Game.myPlayer.getHero().hasArticle("Bow"))
+                    if (Game.myPlayer.getHero().hasArticle("Bow") || Game.myPlayer.getHeroType() == "Male Archer" ||
+                        Game.myPlayer.getHeroType() == "Female Archer")
                     {
                         List<Node> neighbours = Game.gameState.positionGraph.getNode(myLocation).getAdjacentNodes();
                         foreach (Node n in neighbours)
@@ -907,6 +903,20 @@ public void rolledSkralStronghold(){
 
     public void rolledMedicinalHerbDone(){
             rollDieForMedicinalHerb.SetActive(false);
+    }
+
+    public void updateTurnText()
+    {
+        this.turnLabel.text = Game.gameState.turnManager.currentPlayerTurn();
+
+        if (Game.gameState.turnManager.currentPlayerTurn().Equals(Game.myPlayer.getNetworkID()))
+        {
+            turnLabel.color = Game.myPlayer.getColor(130);
+        }
+        else
+        {
+            turnLabel.color = UnityEngine.Color.black;
+        }
     }
 
     public void foundWitch(int loc)
@@ -1749,7 +1759,7 @@ public void rolledSkralStronghold(){
             //string[] fightPlayers = new string[1];
             //fightPlayers[0] = invitedFighters[0];
             //Game.sendAction(new RespondFight(fightPlayers, true));
-            fsc.openFightLobby(invitedFighters[0]);
+            fsc.openFightLobby(invitedFighters[0]); //calls add host player
         }
 
 
@@ -1874,10 +1884,7 @@ public void rolledSkralStronghold(){
     public void passClick()
     {
         Debug.Log("pass clicked");
-        //Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
-        //updateWineskin();
-
-
+        Game.sendAction(new PassTurn(Game.myPlayer.getNetworkID()));
 
     }
     public void updateWineskin2()

@@ -19,6 +19,9 @@ public class TurnManager
         {
             turnQueue.Enqueue(player);
         }
+
+        GameController.instance.updateTurnText();
+
     }
 
     public string currentPlayerTurn()
@@ -31,12 +34,15 @@ public class TurnManager
         turnQueue.Enqueue(turnQueue.Dequeue());
 
         // Maybe do some call here to let the others know
+        GameController.instance.updateTurnText();
     }
 
     // remove from queue and go to the next player
     public void endTurn()
     {
         turnQueue.Dequeue();
+        GameController.instance.updateTurnText();
+
     }
 
     public bool roundDone()
