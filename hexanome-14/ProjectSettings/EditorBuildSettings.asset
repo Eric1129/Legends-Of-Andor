@@ -6,33 +6,33 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Log_In/Scenes/Startup_Screen.unity
+    path: Assets/Game/Log_In/Scenes/Startup_Screen.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Log_In/Scenes/Create_Account.unity
+    path: Assets/Game/Log_In/Scenes/Create_Account.unity
     guid: 06ea687a316844651b332af11fe937c3
   - enabled: 1
-    path: Assets/Log_In/Scenes/Log_In.unity
+    path: Assets/Game/Log_In/Scenes/Log_In.unity
     guid: 004b29bb4736d4020aeacaf1cb415184
   - enabled: 1
-    path: Assets/Log_In/Scenes/Loading_Screen.unity
+    path: Assets/Game/Log_In/Scenes/Loading_Screen.unity
     guid: ca321fdb008734563bd39ea311ed84f2
   - enabled: 1
-    path: Assets/Main_Menu/Scenes/Main_Menu.unity
+    path: Assets/Game/Main_Menu/Scenes/Main_Menu.unity
     guid: d0acff5deaeb6480cb4ee21e8de5b6db
   - enabled: 1
-    path: Assets/Main_Menu/Scenes/CreateNewGame.unity
+    path: Assets/Game/Main_Menu/Scenes/CreateNewGame.unity
     guid: b17e57b1aca054a4c8ce42f6f6377df4
   - enabled: 1
-    path: Assets/Main_Menu/Scenes/Open_Saved_Game.unity
+    path: Assets/Game/Main_Menu/Scenes/Open_Saved_Game.unity
     guid: 6fdac3b0bd1f242f783126810035cdab
   - enabled: 1
-    path: Assets/Main_Menu/Scenes/GameLobby.unity
+    path: Assets/Game/Main_Menu/Scenes/GameLobby.unity
     guid: 08c5c1c14bd6a4b969b7132fd2005436
   - enabled: 1
-    path: Assets/Room/Scenes/RoomLobby.unity
+    path: Assets/Game/Room/Scenes/RoomLobby.unity
     guid: 4fc28ba34cb364d129a5422746b7fb19
   - enabled: 1
-    path: Assets/In_Game/Scenes/Game.unity
+    path: Assets/Game/In_Game/Scenes/Game.unity
     guid: 7c6b1dde7e85293689c288a9f9d1d11e
   m_configObjects: {}
