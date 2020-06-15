@@ -5,8 +5,9 @@ It creates a PC version of a popular board game [Legends Of Andor](http://legend
 
 ## Background
 This is a multiplayer online game and follows all original game rules.
-
-The game manual can be viewed [here](AndorAssets/Andor_Manual.pdf).
+Game rules can be found here: 
+-[Game Manual](AndorAssets/Andor_Manual.pdf)
+-[Quick Start Guide](AndorAssets/Andor_QuickStart.pdf).
 
 ## Installation
 This software builds on Unity version 2019.2.11f1.
