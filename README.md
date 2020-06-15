@@ -11,6 +11,17 @@ Game rules can be found here:
 - [Game Manual](AndorAssets/Andor_Manual.pdf)
 - [Quick Start Guide](AndorAssets/Andor_QuickStart.pdf).
 
+The whole development follows waterfall model. It's been through 7 phases:
+
+- [User Interface Sketch]
+- [Requirement Elicitation with Use Cases]()
+- [Requirements Specification Models]
+-- ARchi
+- Pre-Demo
+- [Design Models]
+- Testing
+- Maintainace
+
 ## Installation
 This software builds on Unity version 2019.2.11f1.
 
