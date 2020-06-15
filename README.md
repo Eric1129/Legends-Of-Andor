@@ -13,10 +13,9 @@ Game rules can be found here:
 
 The whole development follows waterfall model. It's been through 7 phases:
 
-- [User Interface Sketch]
+- [User Interface Sketch]()
 - [Requirement Elicitation with Use Cases]()
-- [Requirements Specification Models]
--- ARchi
+- [Requirements Specification Models]()
 - Pre-Demo
 - [Design Models]
 - Testing
