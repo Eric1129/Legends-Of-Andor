@@ -11,7 +11,6 @@ The game manual can be viewed [here](AndorAssets/Andor_Manual.pdf).
 ## Installation
 This software builds on Unity version 2019.2.11f1.
 
-
 ## Contributors
 - [@Eric1129](https://github.com/Eric1129) 
 - [@anahita-m](https://github.com/anahita-m)
@@ -21,4 +20,4 @@ This software builds on Unity version 2019.2.11f1.
 - [@CWright44](https://github.com/CWright44)
 - [@IanXTs](https://github.com/IanXTs)
 
-## 
+## Features
