@@ -5,7 +5,7 @@ It creates a PC version of a popular board game [Legends Of Andor](http://legend
 
 ## Background
 This is a multiplayer online game and follows all original game rules.
-The game manual can be viewed [here]()
+The game manual can be viewed [here](AndorAssets/Andor_Manual.pdf)
 
 ## Installation
 
