@@ -1,2 +1,11 @@
 # Legends-Of-Andor
-This a one-year group project from COMP 361 Software Engineering Project course.
+This is a one-year group project from COMP 361 Software Engineering Project course.
+
+## Background
+
+## Contributors
+
+
+## Installation
+
+## 
