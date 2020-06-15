@@ -13,6 +13,7 @@ This software builds on Unity version 2019.2.11f1.
 
 
 ## Contributors
+- [@Eric1129]() 
 - [@anahita-m](https://github.com/anahita-m)
 - [@MaxMB15](https://github.com/MaxMB15)
 - [@ailishm](https://github.com/ailishm)
