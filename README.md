@@ -11,7 +11,7 @@ Game rules can be found here:
 - [Game Manual](AndorAssets/Andor_Manual.pdf)
 - [Quick Start Guide](AndorAssets/Andor_QuickStart.pdf).
 
-The whole development follows waterfall model. It's been through 7 phases:
+The whole development follows waterfall model. It's been through 8 phases:
 
 - [User Interface Sketch](Milestones/M1_UI_Sketch.pdf)
 - [Requirement Elicitation with Use Cases](Milestones/M2_Use_Cases.pdf)
