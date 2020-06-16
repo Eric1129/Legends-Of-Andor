@@ -1,7 +1,7 @@
 # Legends-Of-Andor
 This is a one-year group project from COMP 361 Software Engineering Project course.
 
-It creates a PC version of a popular board game [Legends Of Andor](http://legendsofandor.com). 
+It creates a PC version of a board game [Legends Of Andor](http://legendsofandor.com). 
 
 ## Background
 This is a multiplayer online game and follows all original game rules.
@@ -13,12 +13,13 @@ Game rules can be found here:
 
 The whole development follows waterfall model. It's been through 7 phases:
 
-- [User Interface Sketch]()
-- [Requirement Elicitation with Use Cases]()
-- [Requirements Specification Models]()
+- [User Interface Sketch](Milestones/M1_UI_Sketch.pdf)
+- [Requirement Elicitation with Use Cases](Milestones/M2_Use_Cases.pdf)
+- Requirements Specification Models[Environment Model](Milestones/M3_Environment_Model.pdf)
 - Pre-Demo
-- [Design Models]
-- Testing
+- [Design Models](Milestones/M5_Design_Models.zip)
+- Demo
+- Acceptance Test
 - Maintainace
 
 ## Installation
