@@ -1,6 +1,6 @@
 # Legends-Of-Andor
 
-![](AndorAssets/StartupScene.png)
+![Startup](AndorAssets/StartupScene.png)
 This is a one-year group project from COMP 361 Software Engineering Project course.
 
 It creates a PC version of a board game [Legends Of Andor](http://legendsofandor.com). 
@@ -42,4 +42,19 @@ The online function is based on Photon PUN. You may need an wizzard id to play t
 - [@CWright44](https://github.com/CWright44)
 - [@IanXTs](https://github.com/IanXTs)
 
-## Features
+## Important Features
+
+### Menu
+
+![Menu](AndorAssets/MenuScene.png)
+
+### Create Game Room
+
+![Create Room](AndorAssets/CreateRoomScene.png)
+
+### Room
+
+![Room](AndorAssets/RoomScene.png)
+
+### In Game
+
