@@ -1,4 +1,6 @@
 # Legends-Of-Andor
+
+![](AndorAssets/StartupScene.png)
 This is a one-year group project from COMP 361 Software Engineering Project course.
 
 It creates a PC version of a board game [Legends Of Andor](http://legendsofandor.com). 
