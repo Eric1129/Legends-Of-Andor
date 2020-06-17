@@ -52,7 +52,7 @@ The online function is based on Photon PUN. You may need an wizzard id to play t
 
 ![Create Room](AndorAssets/CreateRoomScene.png)
 
-### Room
+### In Room
 
 ![Room](AndorAssets/RoomScene.png)
 
