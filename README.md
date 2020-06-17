@@ -6,10 +6,10 @@ This is a one-year group project from COMP 361 Software Engineering Project cour
 It creates a PC version of a board game [Legends Of Andor](http://legendsofandor.com). 
 
 ## Contents
-[Background](#background)
-[Installation](#installation)
-[Contributors](#contributors)
-[Important Features](#important-feactures)
+* [Background](#background)
+* [Installation](#installation)
+* [Contributors](#contributors)
+* [Important Features](#important-feactures)
 
 ## Background
 This is a multiplayer online game and follows all original game rules.
