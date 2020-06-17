@@ -29,7 +29,7 @@ The whole development follows waterfall model. It's been through 8 phases:
 ## Installation
 This software builds on Unity version 2019.2.11f1.
 
-
+The online function is based on Photon PUN. You may need an wizzard id to play this game. 
 
 ## Contributors
 - [@Eric1129](https://github.com/Eric1129) 
