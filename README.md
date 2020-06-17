@@ -19,7 +19,7 @@ The whole development follows waterfall model. It's been through 8 phases:
   - [Environment Model](Milestones/M3_Environment_Model.pdf)
   - [Operation Model](Milestones/M3_Operation_Model.pdf)
   - [Concept Model](Milestones/M3_Concept_Model.pdf)
-  - [Protocal Model](Milestones/M3 Protocol Model.jucm)
+  - [Protocol Model](Milestones/M3_Protocol_Model.jucm)
 - Pre-Demo
 - [Design Models](Milestones/M5_Design_Models.zip)
 - Demo
