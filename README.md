@@ -17,6 +17,9 @@ The whole development follows waterfall model. It's been through 8 phases:
 - [Requirement Elicitation with Use Cases](Milestones/M2_Use_Cases.pdf)
 - Requirements Specification Models 
   - [Environment Model](Milestones/M3_Environment_Model.pdf)
+  - [Operation Model](Milestones/M3_Operation_Model.pdf)
+  - [Concept Model](Milestones/M3_Concept_Model.pdf)
+  - [Protocal Model](Milestones/M3 Protocol Model.jucm)
 - Pre-Demo
 - [Design Models](Milestones/M5_Design_Models.zip)
 - Demo
@@ -25,6 +28,8 @@ The whole development follows waterfall model. It's been through 8 phases:
 
 ## Installation
 This software builds on Unity version 2019.2.11f1.
+
+
 
 ## Contributors
 - [@Eric1129](https://github.com/Eric1129) 
