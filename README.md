@@ -1,6 +1,6 @@
 # Legends-Of-Andor
 
-<img src="https://github.com/Eric1129/Legends-Of-Andor/blob/Re-format/AndorAssets/Andor_HP_Art_07_01.jpg" width="400" height="300">
+<img src="https://github.com/Eric1129/Legends-Of-Andor/raw/Re-format/AndorAssets/Andor_HP_Art_07_01.jpg" width="400" height="300">
 
 ## Overview
 This is an one-year group project from COMP 361 Software Engineering Project course.
@@ -54,7 +54,7 @@ The online function is based on Photon PUN. You may need an wizzard id to play t
 
 ### Menu
 
-![Menu](AndorAssets/MenuScene.png)
+![Menu](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/MenuScene.png)
 
 ### Create Game Room
 
@@ -62,7 +62,7 @@ You need to name your room, choose room type as private or public, and choose di
 
 Once click play room, the room is created and will display in the lobby for other players to join.
 
-![Create Room](AndorAssets/CreateRoomScene.png)
+![Create Room](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/CreateRoomScene.png)
 
 ### In Room
 
@@ -70,13 +70,13 @@ You'll need 2 to 4 people to start a new game. You have to wait until other play
 
 You may start if all other players are ready.
 
-![InRoom](AndorAssets/InRoom.png)
+![InRoom](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/InRoom.png)
 
 ### In Game
 
 You can move, fight, chat and trade 
 
-![InGame](AndorAssets/InGame.png)
+![InGame](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/InGame.png)
 
 #### move
 
