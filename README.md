@@ -1,6 +1,6 @@
 # Legends-Of-Andor
 
-![Andor = 400x300](AndorAssets/Andor_HP_Art_07_01.jpg)
+![Andor|800x600,50%](AndorAssets/Andor_HP_Art_07_01.jpg)
 
 ## Overview
 This is a one-year group project from COMP 361 Software Engineering Project course.
