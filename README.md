@@ -91,7 +91,5 @@ If more than one heroes stand on same region. They can fight collabratively.
 
 There is a pop-up chat window on the side which you can chat with other users freely no matter it's your turn or not. 
 
-![Chat](AndorAssets/Chat.png)
-
 #### trade
 
