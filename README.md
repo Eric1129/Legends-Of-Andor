@@ -1,7 +1,15 @@
 # Legends-Of-Andor
+
+![Andor](AndorAssets/Header-image_EN.png)
 This is a one-year group project from COMP 361 Software Engineering Project course.
 
 It creates a PC version of a board game [Legends Of Andor](http://legendsofandor.com). 
+
+## Contents
+* [Background](#background)
+* [Installation](#installation)
+* [Contributors](#contributors)
+* [Important Features](#important-feactures)
 
 ## Background
 This is a multiplayer online game and follows all original game rules.
@@ -17,6 +25,9 @@ The whole development follows waterfall model. It's been through 8 phases:
 - [Requirement Elicitation with Use Cases](Milestones/M2_Use_Cases.pdf)
 - Requirements Specification Models 
   - [Environment Model](Milestones/M3_Environment_Model.pdf)
+  - [Operation Model](Milestones/M3_Operation_Model.pdf)
+  - [Concept Model](Milestones/M3_Concept_Model.pdf)
+  - [Protocol Model](Milestones/M3_Protocol_Model.jucm)
 - Pre-Demo
 - [Design Models](Milestones/M5_Design_Models.zip)
 - Demo
@@ -25,6 +36,8 @@ The whole development follows waterfall model. It's been through 8 phases:
 
 ## Installation
 This software builds on Unity version 2019.2.11f1.
+
+The online function is based on Photon PUN. You may need an wizzard id to play this game. 
 
 ## Contributors
 - [@Eric1129](https://github.com/Eric1129) 
@@ -35,4 +48,19 @@ This software builds on Unity version 2019.2.11f1.
 - [@CWright44](https://github.com/CWright44)
 - [@IanXTs](https://github.com/IanXTs)
 
-## Features
+## Important Features
+
+### Menu
+
+![Menu](AndorAssets/MenuScene.png)
+
+### Create Game Room
+
+![Create Room](AndorAssets/CreateRoomScene.png)
+
+### In Room
+
+![Room](AndorAssets/RoomScene.png)
+
+### In Game
+
