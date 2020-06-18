@@ -70,7 +70,7 @@ You'll need 2 to 4 people to start a new game. You have to wait until other play
 
 You may start if all other players are ready.
 
-![Room](AndorAssets/RoomScene.png)
+![InRoom](AndorAssets/InRoom.png)
 
 ### In Game
 
