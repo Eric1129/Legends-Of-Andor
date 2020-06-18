@@ -74,7 +74,12 @@ You may start if all other players are ready.
 
 You can move, fight, chat and trade 
 
+![InGame](AndorAssets/InGame.png)
+
 #### move
+
+You can only move your hero when it's your turn, and only onve move per turn. Each move will consume your hours left at the sunrise box on the top.
+As long as you have enough hours, you can continue move when it's your turn again. 
 
 #### fight
 
@@ -85,6 +90,8 @@ If more than one heroes stand on same region. They can fight collabratively.
 #### chat
 
 There is a pop-up chat window on the side which you can chat with other users freely no matter it's your turn or not. 
+
+![Chat](AndorAssets/Chat.png)
 
 #### trade
 
