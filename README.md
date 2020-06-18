@@ -1,6 +1,6 @@
 # Legends-Of-Andor
 
-![Andor](AndorAssets/Andor_HP_Art_07_01.jpg)
+![Andor | 50%](AndorAssets/Andor_HP_Art_07_01.jpg)
 
 ## Overview
 This is a one-year group project from COMP 361 Software Engineering Project course.
@@ -8,10 +8,10 @@ This is a one-year group project from COMP 361 Software Engineering Project cour
 It creates a PC version of a board game [Legends Of Andor](http://legendsofandor.com). 
 
 ## Table of contents
-* [Background](#background)
-* [Installation](#installation)
-* [Contributors](#contributors)
-* [Important Features](#important-Feactures)
+1. [Background](#background)
+2. [Installation](#installation)
+3. [Contributors](#contributors)
+4. [Important Features](#important-features)
 
 ## Background
 This is a multiplayer online game and follows all original game rules.
