@@ -56,11 +56,35 @@ The online function is based on Photon PUN. You may need an wizzard id to play t
 
 ### Create Game Room
 
+You need to name your room, choose room type as private or public, and choose difficulty. 
+
+Once click play room, the room is created and will display in the lobby for other players to join.
+
 ![Create Room](AndorAssets/CreateRoomScene.png)
 
 ### In Room
 
+You'll need 2 to 4 people to start a new game. You have to wait until other player join the room. Every player need to choose a hero, different hero has different ability.
+
+You may start if all other players are ready.
+
 ![Room](AndorAssets/RoomScene.png)
 
 ### In Game
+
+You can move, fight, chat and trade 
+
+#### move
+
+#### fight
+
+You can fight to a monster if your hero stand on same region as the monster's. 
+
+If more than one heroes stand on same region. They can fight collabratively.
+
+#### chat
+
+There is a pop-up chat window on the side which you can chat with other users freely no matter it's your turn or not. 
+
+#### trade
 
