@@ -1,6 +1,8 @@
 # Legends-Of-Andor
 
-![Andor|800x600,50%](AndorAssets/Andor_HP_Art_07_01.jpg)
+![Andor](https://github.com/Eric1129/Legends-Of-Andor/blob/Re-format/AndorAssets/Andor_HP_Art_07_01.jpg)
+
+<img src="https://github.com/Eric1129/Legends-Of-Andor/blob/Re-format/AndorAssets/Andor_HP_Art_07_01.jpg" width="400" height="300">
 
 ## Overview
 This is a one-year group project from COMP 361 Software Engineering Project course.
