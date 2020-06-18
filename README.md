@@ -62,7 +62,7 @@ You need to name your room, choose room type as private or public, and choose di
 
 Once click play room, the room is created and will display in the lobby for other players to join.
 
-![Create Room](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/CreateRoomScene.png)
+![Create Room](./AndorAssets/CreateRoomScene.png)
 
 ### In Room
 
