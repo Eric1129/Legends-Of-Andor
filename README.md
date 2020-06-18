@@ -3,7 +3,7 @@
 <img src="https://github.com/Eric1129/Legends-Of-Andor/blob/Re-format/AndorAssets/Andor_HP_Art_07_01.jpg" width="400" height="300">
 
 ## Overview
-This is a one-year group project from COMP 361 Software Engineering Project course.
+This is an one-year group project from COMP 361 Software Engineering Project course.
 
 It creates a PC version of a board game [Legends Of Andor](http://legendsofandor.com). 
 
