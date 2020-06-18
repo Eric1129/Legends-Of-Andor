@@ -1,7 +1,5 @@
 # Legends-Of-Andor
 
-![Andor](https://github.com/Eric1129/Legends-Of-Andor/blob/Re-format/AndorAssets/Andor_HP_Art_07_01.jpg)
-
 <img src="https://github.com/Eric1129/Legends-Of-Andor/blob/Re-format/AndorAssets/Andor_HP_Art_07_01.jpg" width="400" height="300">
 
 ## Overview
