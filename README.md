@@ -64,6 +64,10 @@ Once click play room, the room is created and will display in the lobby for othe
 
 ![Create Room](./AndorAssets/CreateRoomScene.png)
 
+### Game Lobby
+
+![GameLobby](AndorAssets/GameLobby.png)
+
 ### In Room
 
 You'll need 2 to 4 people to start a new game. You have to wait until other player join the room. Every player need to choose a hero, different hero has different ability.
