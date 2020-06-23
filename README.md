@@ -76,11 +76,22 @@ You may start if all other players are ready.
 
 You can move, fight, chat and trade 
 
-![InGame](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/InGame.png)
+Legend task shows all tasks players have to finish. 
+
+Up-right corner shows all hero stats. 
+
+
+![InGame](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
+
+#### Time Mark
+
+On the top of the game map there are sunrise box and time track. 
+
+Each player has its own color, every time player performes a time-consumed action, players time mark will move accordingly.
 
 #### move
 
-You can only move your hero when it's your turn, and only onve move per turn. Each move will consume your hours left at the sunrise box on the top.
+You can only move your hero when it's your turn, and only one move per turn. Each region will consume one hour.
 As long as you have enough hours, you can continue move when it's your turn again. 
 
 #### fight
@@ -89,9 +100,17 @@ You can fight to a monster if your hero stand on same region as the monster's.
 
 If more than one heroes stand on same region. They can fight collabratively.
 
+![InFight](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
+
 #### chat
 
 There is a pop-up chat window on the side which you can chat with other users freely no matter it's your turn or not. 
 
 #### trade
 
+![InFight](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
+
+#### buy
+
+When player moves to a region where there is a merchant legend on it. There will be a merchant button on the side which allows player buy stuff.
+![Merchant](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
