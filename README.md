@@ -80,7 +80,6 @@ Legend task shows all tasks players have to finish.
 
 Up-right corner shows all hero stats. 
 
-
 ![InGame](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
 
 #### Time Mark
@@ -100,7 +99,12 @@ You can fight to a monster if your hero stand on same region as the monster's.
 
 If more than one heroes stand on same region. They can fight collabratively.
 
-![InFight](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
+Player can choose fight alone or fight 
+
+![InviteFight](AndorAssets/InviteFight.png)
+![FightInvitation](AndorAssets/FightInvitation.png)
+![InFight](AndorAssets/InFight.png)
+![Rewards](AndorAssets/Rewards.png)
 
 #### chat
 
@@ -108,9 +112,9 @@ There is a pop-up chat window on the side which you can chat with other users fr
 
 #### trade
 
-![InFight](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
+![Trade](AndorAssets/Trade.png)
 
 #### buy
 
 When player moves to a region where there is a merchant legend on it. There will be a merchant button on the side which allows player buy stuff.
-![Merchant](https://github.com/Eric1129/Legends-Of-Andor/raw/master/AndorAssets/TimeMark.png)
+![Merchant](AndorAssets/Merchant.png)
