@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,7 +32,6 @@ public class RoomLobbyController : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             startButton.gameObject.SetActive(true);
-
         }
         else
         {
@@ -120,9 +118,8 @@ public class RoomLobbyController : MonoBehaviour
                 startButton.interactable = false;
             }
         }
-        
-
     }
+
     public void listPlayer(Andor.Player player)
     {
 
@@ -147,18 +144,14 @@ public class RoomLobbyController : MonoBehaviour
         }
     }
 
-
     private void removePlayers()
     {
-
         // Remove previous player listings
         for (int i = playerPanel.childCount - 1; i >= 0; i--)
         {
             Destroy(playerPanel.GetChild(0).gameObject);
-
         }
         playerPanel.DetachChildren();
-
     }
 
     private void removePlayerBorders()
@@ -185,7 +178,6 @@ public class RoomLobbyController : MonoBehaviour
             }
         }
     }
-
 
     // Disables heros that are already chosen 
     private void characterControl()
@@ -226,8 +218,6 @@ public class RoomLobbyController : MonoBehaviour
         Game.destroyPV();
         PhotonNetwork.LoadLevel("Game");
     }
-
-
 
     #region fromSavedGameLogic
     public void playerListUpdateLOADED(List<Andor.Player> players)
@@ -276,8 +266,6 @@ public class RoomLobbyController : MonoBehaviour
                 startButton.interactable = false;
             }
         }
-
-
     }
 
     public void listPlayerLOADED(Andor.Player player)
@@ -301,9 +289,6 @@ public class RoomLobbyController : MonoBehaviour
         }
 
     }
-
-
-
 
     #endregion
 

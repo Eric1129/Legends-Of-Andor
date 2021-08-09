@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -61,22 +60,24 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
 
     }
+
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
     }
+
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
         Debug.Log("Created room!");
         Debug.Log("Joining Room...");
-
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) //create room will fail if room already exists
     {
         Debug.Log("Tried to create a new room but failed, there must already be a room with the same name");
     }
+
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
@@ -89,10 +90,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         Debug.Log("Joined Room: " + PhotonNetwork.CurrentRoom.Name);
     }
+
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         base.OnJoinRoomFailed(returnCode, message);
-
     }
 
     public override void OnLeftRoom()
@@ -109,9 +110,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         }
     }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
         NetworkController.roomList = roomList;
     }
+
 }

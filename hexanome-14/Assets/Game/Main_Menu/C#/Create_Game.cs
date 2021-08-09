@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Create_Game : MonoBehaviour
@@ -23,9 +20,6 @@ public class Create_Game : MonoBehaviour
     public static string DIFFICULTY;
 
     public static string ROOMNAME = "";
-
-
-
 
     void Start()
     {
@@ -90,12 +84,8 @@ public class Create_Game : MonoBehaviour
             return;
         }
 
-
         Debug.Log("Creating room...");
         Create_Game.ROOMNAME = game_name_input.text;
-
-        
-
 
         if (PhotonNetwork.InLobby)
         {
@@ -114,6 +104,5 @@ public class Create_Game : MonoBehaviour
             Debug.Log("Not in Lobby1?");
         }
     }
-
 
 }

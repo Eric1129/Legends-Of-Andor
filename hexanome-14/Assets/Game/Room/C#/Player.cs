@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
-using System;
-using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 
 namespace Andor
@@ -25,7 +21,6 @@ namespace Andor
         private byte[] color;
         public bool ready = false;
 
-
         private Hero myHero;
         // Will need to use this to verify things like: 
         // showTradeRequest() { if player.lookingAt != Battle then showTradeRequest() }
@@ -42,6 +37,7 @@ namespace Andor
         {
             return networkID;
         }
+
         public void setNetworkID(string nid)
         {
             networkID = nid;
@@ -51,6 +47,7 @@ namespace Andor
         {
             myHero = hero;
         }
+
         public Hero getHero()
         {
             return myHero;
@@ -60,6 +57,7 @@ namespace Andor
         {
             return myHero.getHeroType();
         }
+
         public void setHeroType(string hero)
         {
             myHero.setHeroType(hero);
@@ -69,21 +67,21 @@ namespace Andor
         {
             return myHero.getHeroRank();
         }
+
         public void setHeroRank(int rank)
         {
             myHero.setHeroRank(rank);
         }
 
-
         public Color32 getColor(int alpha = 255)
         {
             return new Color32(this.color[0], this.color[1], this.color[2], (byte)alpha);
         }
+
         public void setColor(byte[] color)
         {
             this.color = color;
         }
-
 
         public override string ToString()
         {

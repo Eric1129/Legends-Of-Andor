@@ -15,8 +15,6 @@ public class CreatureTurn : Action
         type = Type.CreatureTurn;
         this.players = players;
         this.creatureDiceRoll = creatureDiceRoll;
-        
-        
     }
 
     public string[] playersInvolved()
@@ -30,10 +28,7 @@ public class CreatureTurn : Action
 
     public void execute(GameState gs)
     {
-       
         GameController.instance.fsc.creatureTurnResponse(creatureDiceRoll);
-        
-
     }
 
     public bool isLegal(GameState gs)

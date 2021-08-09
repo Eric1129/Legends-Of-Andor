@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,9 +24,6 @@ public class SaveGameDetails : MonoBehaviour
         Debug.Log(RoomLobbyController.preLoadedGameState);
         Debug.Log("Creating room...");
         Create_Game.ROOMNAME = gameNameLabel.text;
-
-
-
 
         if (PhotonNetwork.InLobby)
         {

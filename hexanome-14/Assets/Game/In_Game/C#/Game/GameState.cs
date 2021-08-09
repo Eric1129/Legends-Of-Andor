@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Andor;
 using UnityEngine;
@@ -169,6 +168,7 @@ public class GameState
     {
         return gors;
     }
+
     public void addGor(Gor g)
     {
         gors.Add(g, g.getLocation());
@@ -365,11 +365,13 @@ public class GameState
 
         return interactable;
     }
+
     public void addPlayerInteractable(string playerID, Interactable interactable)
     {
         interactable.setInteractableID(playerInteractables[playerID].Count);
         playerInteractables[playerID].Add(interactable);
     }
+
     public List<Interactable> getInteractables(string playerID)
     {
         return playerInteractables[playerID];
@@ -379,6 +381,7 @@ public class GameState
     {
         return playerInteractables[playerID][interactableID];
     }
+
     public Interactable getNodeInteractable(int NodeID, int interactableID)
     {
         return positionGraph.getNode(NodeID).getInteractables()[interactableID];
@@ -427,6 +430,7 @@ public class GameState
     {
         return this.merchants;
     }
+
     public Article removeFromEquimentBoard(string articleName)
     {
         Debug.Log("removing article: "+ articleName);

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RoomController : MonoBehaviourPunCallbacks
 {
@@ -26,7 +24,6 @@ public class RoomController : MonoBehaviourPunCallbacks
         base.OnRoomListUpdate(roomList);
         removePrevRooms();
 
-
         foreach(RoomInfo ri in roomList)
         {
             Debug.Log(ri.Name + " - Capacitiy: " + ri.PlayerCount + "/" + ri.MaxPlayers);
@@ -41,6 +38,7 @@ public class RoomController : MonoBehaviourPunCallbacks
             Destroy(roomListingPanel.GetChild(0).gameObject);
         }
     }
+
     private void listRoom(RoomInfo roomInfo)
     {
         if(roomInfo.IsOpen && roomInfo.MaxPlayers != 0)
@@ -76,4 +74,5 @@ public class RoomController : MonoBehaviourPunCallbacks
         base.OnJoinRoomFailed(returnCode, message);
         Debug.Log("Could not join room!");
     }
+
 }

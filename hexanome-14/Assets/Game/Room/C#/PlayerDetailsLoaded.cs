@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerDetailsLoaded : MonoBehaviour
 {
-
     public Text nameLabel;
     public Dropdown playerDropdown;
     public Button readyButton;
@@ -13,11 +11,8 @@ public class PlayerDetailsLoaded : MonoBehaviour
 
     private bool ready = false;
 
-    private void Start()
-    {
-        
+    private void Start() { }
 
-    }
     public void init(Andor.Player p)
     {
         List<string> options = new List<string>();
@@ -46,10 +41,8 @@ public class PlayerDetailsLoaded : MonoBehaviour
         {
             playerDropdown.interactable = false;
         }
-
-
-
     }
+
     private void selectvalue()
     {
         Debug.Log("val: " + playerDropdown.value);
@@ -93,7 +86,6 @@ public class PlayerDetailsLoaded : MonoBehaviour
         readyButton.colors = buttonColors;
     }
 
-
     public void readyClick()
     {
         if(Game.myPlayer.getHero().getGold() != 0)
@@ -105,8 +97,7 @@ public class PlayerDetailsLoaded : MonoBehaviour
             Debug.Log("Ready Pressed! Current state: " + this.ready);
 
             setReady(this.ready);
-        }
-        
+        } 
     }
 }
 
